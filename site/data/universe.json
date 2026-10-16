@@ -1,0 +1,503 @@
+{
+ "built": "2026-10-16T07:54:06+00:00",
+ "layers": [
+  {
+   "n": 1,
+   "name": "Tools & design software",
+   "short": "Tools & EDA",
+   "neck": "EUV lithography has one supplier"
+  },
+  {
+   "n": 2,
+   "name": "Chip designers",
+   "short": "Chip designers",
+   "neck": "Wafer and packaging allocation at TSMC"
+  },
+  {
+   "n": 3,
+   "name": "Foundry & packaging",
+   "short": "Foundry & packaging",
+   "neck": "CoWoS advanced-packaging capacity"
+  },
+  {
+   "n": 4,
+   "name": "Memory & storage",
+   "short": "Memory & storage",
+   "neck": "HBM supply and HBM4 qualification"
+  },
+  {
+   "n": 5,
+   "name": "Networking & optics",
+   "short": "Networking & optics",
+   "neck": "1.6T optics and laser capacity"
+  },
+  {
+   "n": 6,
+   "name": "Servers & assembly",
+   "short": "Servers & assembly",
+   "neck": "Rack-scale integration and liquid cooling"
+  },
+  {
+   "n": 7,
+   "name": "Power & data centres",
+   "short": "Power & DCs",
+   "neck": "Grid hook-ups, gas turbines, transformers"
+  },
+  {
+   "n": 8,
+   "name": "Compute providers",
+   "short": "Compute providers",
+   "neck": "Capex budgets; neocloud financing"
+  },
+  {
+   "n": 9,
+   "name": "Models & applications",
+   "short": "Models & apps",
+   "neck": "Paid AI usage that justifies the capex"
+  }
+ ],
+ "companies": [
+  {
+   "id": "ASML",
+   "label": "ASML",
+   "name": "ASML Holding",
+   "layer": 1,
+   "segment": "Lithography",
+   "yf": "ASML",
+   "sec": "ASML",
+   "role": "Sole supplier of EUV lithography tools"
+  },
+  {
+   "id": "AMAT",
+   "label": "AMAT",
+   "name": "Applied Materials",
+   "layer": 1,
+   "segment": "Deposition & etch",
+   "yf": "AMAT",
+   "sec": "AMAT",
+   "role": "Broadest wafer-fab equipment portfolio"
+  },
+  {
+   "id": "LRCX",
+   "label": "LRCX",
+   "name": "Lam Research",
+   "layer": 1,
+   "segment": "Etch & deposition",
+   "yf": "LRCX",
+   "sec": "LRCX",
+   "role": "Etch and deposition, heavy memory exposure"
+  },
+  {
+   "id": "KLAC",
+   "label": "KLAC",
+   "name": "KLA Corp",
+   "layer": 1,
+   "segment": "Process control",
+   "yf": "KLAC",
+   "sec": "KLAC",
+   "role": "Inspection and metrology"
+  },
+  {
+   "id": "SNPS",
+   "label": "SNPS",
+   "name": "Synopsys",
+   "layer": 1,
+   "segment": "EDA",
+   "yf": "SNPS",
+   "sec": "SNPS",
+   "role": "Chip design software and IP; owns Ansys"
+  },
+  {
+   "id": "CDNS",
+   "label": "CDNS",
+   "name": "Cadence Design Systems",
+   "layer": 1,
+   "segment": "EDA",
+   "yf": "CDNS",
+   "sec": "CDNS",
+   "role": "Chip design software and emulation hardware"
+  },
+  {
+   "id": "NVDA",
+   "label": "NVDA",
+   "name": "NVIDIA",
+   "layer": 2,
+   "segment": "GPUs & systems",
+   "yf": "NVDA",
+   "sec": "NVDA",
+   "role": "AI accelerators, NVLink, networking, CUDA"
+  },
+  {
+   "id": "AMD",
+   "label": "AMD",
+   "name": "Advanced Micro Devices",
+   "layer": 2,
+   "segment": "GPUs & CPUs",
+   "yf": "AMD",
+   "sec": "AMD",
+   "role": "MI-series GPUs and EPYC CPUs"
+  },
+  {
+   "id": "AVGO",
+   "label": "AVGO",
+   "name": "Broadcom",
+   "layer": 2,
+   "segment": "Custom ASICs & switching",
+   "yf": "AVGO",
+   "sec": "AVGO",
+   "role": "Custom accelerators (Google TPU) and Ethernet switch chips"
+  },
+  {
+   "id": "MRVL",
+   "label": "MRVL",
+   "name": "Marvell Technology",
+   "layer": 2,
+   "segment": "Custom ASICs & optics DSP",
+   "yf": "MRVL",
+   "sec": "MRVL",
+   "role": "Custom silicon and optical DSPs"
+  },
+  {
+   "id": "ARM",
+   "label": "ARM",
+   "name": "Arm Holdings",
+   "layer": 2,
+   "segment": "CPU IP",
+   "yf": "ARM",
+   "sec": "ARM",
+   "role": "CPU architecture licensing and royalties"
+  },
+  {
+   "id": "INTC",
+   "label": "INTC",
+   "name": "Intel",
+   "layer": 2,
+   "segment": "CPUs & foundry",
+   "yf": "INTC",
+   "sec": "INTC",
+   "role": "Server CPUs and Intel Foundry"
+  },
+  {
+   "id": "TSM",
+   "label": "TSM",
+   "name": "TSMC",
+   "layer": 3,
+   "segment": "Foundry",
+   "yf": "TSM",
+   "sec": "TSM",
+   "role": "Leading-edge foundry and CoWoS packaging"
+  },
+  {
+   "id": "005930.KS",
+   "label": "Samsung",
+   "name": "Samsung Electronics",
+   "layer": 3,
+   "segment": "Foundry & memory",
+   "yf": "005930.KS",
+   "sec": null,
+   "role": "Memory and foundry; HBM challenger"
+  },
+  {
+   "id": "AMKR",
+   "label": "AMKR",
+   "name": "Amkor Technology",
+   "layer": 3,
+   "segment": "OSAT",
+   "yf": "AMKR",
+   "sec": "AMKR",
+   "role": "Outsourced assembly, test and advanced packaging"
+  },
+  {
+   "id": "000660.KS",
+   "label": "SK Hynix",
+   "name": "SK Hynix",
+   "layer": 4,
+   "segment": "DRAM & HBM",
+   "yf": "000660.KS",
+   "sec": null,
+   "role": "HBM market leader"
+  },
+  {
+   "id": "MU",
+   "label": "MU",
+   "name": "Micron Technology",
+   "layer": 4,
+   "segment": "DRAM & HBM",
+   "yf": "MU",
+   "sec": "MU",
+   "role": "DRAM, HBM and NAND"
+  },
+  {
+   "id": "SNDK",
+   "label": "SNDK",
+   "name": "SanDisk",
+   "layer": 4,
+   "segment": "NAND & SSD",
+   "yf": "SNDK",
+   "sec": "SNDK",
+   "role": "NAND flash and enterprise SSDs"
+  },
+  {
+   "id": "WDC",
+   "label": "WDC",
+   "name": "Western Digital",
+   "layer": 4,
+   "segment": "Hard drives",
+   "yf": "WDC",
+   "sec": "WDC",
+   "role": "Nearline hard drives for data lakes"
+  },
+  {
+   "id": "ANET",
+   "label": "ANET",
+   "name": "Arista Networks",
+   "layer": 5,
+   "segment": "Ethernet switches",
+   "yf": "ANET",
+   "sec": "ANET",
+   "role": "Data-centre Ethernet switching"
+  },
+  {
+   "id": "COHR",
+   "label": "COHR",
+   "name": "Coherent",
+   "layer": 5,
+   "segment": "Optical transceivers",
+   "yf": "COHR",
+   "sec": "COHR",
+   "role": "800G/1.6T transceivers and lasers"
+  },
+  {
+   "id": "LITE",
+   "label": "LITE",
+   "name": "Lumentum",
+   "layer": 5,
+   "segment": "Lasers & optical switches",
+   "yf": "LITE",
+   "sec": "LITE",
+   "role": "Lasers and optical circuit switches"
+  },
+  {
+   "id": "CRDO",
+   "label": "CRDO",
+   "name": "Credo Technology",
+   "layer": 5,
+   "segment": "Copper interconnect",
+   "yf": "CRDO",
+   "sec": "CRDO",
+   "role": "Active electrical cables and SerDes"
+  },
+  {
+   "id": "ALAB",
+   "label": "ALAB",
+   "name": "Astera Labs",
+   "layer": 5,
+   "segment": "Connectivity chips",
+   "yf": "ALAB",
+   "sec": "ALAB",
+   "role": "PCIe/CXL retimers and fabric switches"
+  },
+  {
+   "id": "DELL",
+   "label": "DELL",
+   "name": "Dell Technologies",
+   "layer": 6,
+   "segment": "AI servers",
+   "yf": "DELL",
+   "sec": "DELL",
+   "role": "AI servers for neoclouds and enterprises"
+  },
+  {
+   "id": "SMCI",
+   "label": "SMCI",
+   "name": "Super Micro Computer",
+   "layer": 6,
+   "segment": "AI servers",
+   "yf": "SMCI",
+   "sec": "SMCI",
+   "role": "Liquid-cooled GPU servers"
+  },
+  {
+   "id": "HPE",
+   "label": "HPE",
+   "name": "Hewlett Packard Enterprise",
+   "layer": 6,
+   "segment": "AI systems",
+   "yf": "HPE",
+   "sec": "HPE",
+   "role": "AI systems and networking (Juniper)"
+  },
+  {
+   "id": "2317.TW",
+   "label": "Hon Hai",
+   "name": "Hon Hai Precision (Foxconn)",
+   "layer": 6,
+   "segment": "ODM",
+   "yf": "2317.TW",
+   "sec": null,
+   "role": "Assembles rack-scale NVIDIA systems"
+  },
+  {
+   "id": "VRT",
+   "label": "VRT",
+   "name": "Vertiv",
+   "layer": 7,
+   "segment": "Power & cooling",
+   "yf": "VRT",
+   "sec": "VRT",
+   "role": "Power and liquid cooling for AI racks"
+  },
+  {
+   "id": "ETN",
+   "label": "ETN",
+   "name": "Eaton",
+   "layer": 7,
+   "segment": "Electrical equipment",
+   "yf": "ETN",
+   "sec": "ETN",
+   "role": "Switchgear and power distribution"
+  },
+  {
+   "id": "GEV",
+   "label": "GEV",
+   "name": "GE Vernova",
+   "layer": 7,
+   "segment": "Generation & grid",
+   "yf": "GEV",
+   "sec": "GEV",
+   "role": "Gas turbines and grid equipment"
+  },
+  {
+   "id": "CEG",
+   "label": "CEG",
+   "name": "Constellation Energy",
+   "layer": 7,
+   "segment": "Power generation",
+   "yf": "CEG",
+   "sec": "CEG",
+   "role": "Nuclear power supplied under hyperscaler PPAs"
+  },
+  {
+   "id": "EQIX",
+   "label": "EQIX",
+   "name": "Equinix",
+   "layer": 7,
+   "segment": "Data-centre REIT",
+   "yf": "EQIX",
+   "sec": "EQIX",
+   "role": "Colocation and interconnection"
+  },
+  {
+   "id": "MSFT",
+   "label": "MSFT",
+   "name": "Microsoft",
+   "layer": 8,
+   "segment": "Hyperscaler",
+   "yf": "MSFT",
+   "sec": "MSFT",
+   "role": "Azure cloud; OpenAI partner"
+  },
+  {
+   "id": "AMZN",
+   "label": "AMZN",
+   "name": "Amazon",
+   "layer": 8,
+   "segment": "Hyperscaler",
+   "yf": "AMZN",
+   "sec": "AMZN",
+   "role": "AWS cloud; Trainium chips"
+  },
+  {
+   "id": "GOOGL",
+   "label": "GOOGL",
+   "name": "Alphabet",
+   "layer": 8,
+   "segment": "Hyperscaler",
+   "yf": "GOOGL",
+   "sec": "GOOGL",
+   "role": "Google Cloud; TPUs"
+  },
+  {
+   "id": "ORCL",
+   "label": "ORCL",
+   "name": "Oracle",
+   "layer": 8,
+   "segment": "Hyperscaler",
+   "yf": "ORCL",
+   "sec": "ORCL",
+   "role": "OCI cloud with large AI contracts"
+  },
+  {
+   "id": "CRWV",
+   "label": "CRWV",
+   "name": "CoreWeave",
+   "layer": 8,
+   "segment": "Neocloud",
+   "yf": "CRWV",
+   "sec": "CRWV",
+   "role": "GPU cloud"
+  },
+  {
+   "id": "NBIS",
+   "label": "NBIS",
+   "name": "Nebius Group",
+   "layer": 8,
+   "segment": "Neocloud",
+   "yf": "NBIS",
+   "sec": "NBIS",
+   "role": "GPU cloud"
+  },
+  {
+   "id": "META",
+   "label": "META",
+   "name": "Meta Platforms",
+   "layer": 9,
+   "segment": "Consumer AI & ads",
+   "yf": "META",
+   "sec": "META",
+   "role": "Llama models; AI in ads and apps"
+  },
+  {
+   "id": "PLTR",
+   "label": "PLTR",
+   "name": "Palantir",
+   "layer": 9,
+   "segment": "Enterprise AI software",
+   "yf": "PLTR",
+   "sec": "PLTR",
+   "role": "Enterprise AI platform"
+  },
+  {
+   "id": "NOW",
+   "label": "NOW",
+   "name": "ServiceNow",
+   "layer": 9,
+   "segment": "Enterprise AI software",
+   "yf": "NOW",
+   "sec": "NOW",
+   "role": "Workflow software with AI agents"
+  },
+  {
+   "id": "OpenAI",
+   "label": "OpenAI",
+   "name": "OpenAI",
+   "layer": 9,
+   "segment": "Model lab (private)",
+   "yf": null,
+   "sec": null,
+   "private": true,
+   "role": "Largest single buyer of new compute"
+  },
+  {
+   "id": "Anthropic",
+   "label": "Anthropic",
+   "name": "Anthropic",
+   "layer": 9,
+   "segment": "Model lab (private)",
+   "yf": null,
+   "sec": null,
+   "private": true,
+   "role": "Large buyer of AWS and Google compute"
+  }
+ ]
+}

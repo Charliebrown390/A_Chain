@@ -1,0 +1,147 @@
+# A_Chain relationship map. Edit by hand; compiled to site/data/ by scripts/build_site_data.py.
+#
+# from / to   company ids from universe.yaml. For "supply" and "contract" edges, `from` sells to `to`.
+#             For "capital" edges, `from` invests in (or grants equity to) `to`.
+# type        supply   = ongoing product or service sales
+#             contract = a specific announced multi-year purchase commitment
+#             capital  = equity stake, investment, warrants or financing backstop
+# strength    H / M / L: importance of the link to the seller (supply/contract) or the investee (capital)
+# pct         share of the SELLER's revenue from this buyer, when disclosed or estimated (number, %)
+# usd_bn, gw  headline contract value / capacity, when announced
+# conf        D = disclosed by a party in a filing or official release
+#             E = estimated, or reported by media/analysts but not confirmed by the parties
+#             I = inferred from known product relationships; size not disclosed
+# as_of       date or period the figure refers to
+# src         short source label; url is the link
+#
+# Customer % figures pulled automatically from XBRL land in data/raw/sec_concentration.json
+# and are merged in by scripts/build_site_data.py (see `xbrl` keys below).
+
+edges:
+  # ---------- L1 tools -> fabs ----------
+  - {from: ASML, to: TSM, type: supply, strength: H, conf: I, note: "EUV and DUV lithography for leading-edge logic"}
+  - {from: ASML, to: "005930.KS", type: supply, strength: H, conf: I, note: "EUV for DRAM and foundry"}
+  - {from: ASML, to: "000660.KS", type: supply, strength: M, conf: I, note: "EUV for DRAM / HBM"}
+  - {from: ASML, to: MU, type: supply, strength: M, conf: I, note: "EUV for DRAM"}
+  - {from: ASML, to: INTC, type: supply, strength: M, conf: I, note: "EUV incl. first High-NA tools"}
+  - {from: AMAT, to: TSM, type: supply, strength: H, conf: I, note: "Deposition, etch, CMP, packaging tools"}
+  - {from: AMAT, to: "005930.KS", type: supply, strength: H, conf: I, note: "Memory and foundry tools"}
+  - {from: AMAT, to: INTC, type: supply, strength: M, conf: I, note: "Logic tools"}
+  - {from: AMAT, to: MU, type: supply, strength: M, conf: I, note: "Memory tools"}
+  - {from: LRCX, to: "005930.KS", type: supply, strength: H, conf: I, note: "Etch and deposition, NAND and DRAM"}
+  - {from: LRCX, to: TSM, type: supply, strength: H, conf: I, note: "Etch and deposition"}
+  - {from: LRCX, to: "000660.KS", type: supply, strength: M, conf: I, note: "HBM / DRAM etch, TSV"}
+  - {from: LRCX, to: MU, type: supply, strength: M, conf: I, note: "Memory tools"}
+  - {from: KLAC, to: TSM, type: supply, strength: H, conf: I, note: "Inspection and metrology"}
+  - {from: KLAC, to: "005930.KS", type: supply, strength: M, conf: I, note: "Inspection"}
+  - {from: SNPS, to: NVDA, type: supply, strength: M, conf: I, note: "EDA licences and IP"}
+  - {from: SNPS, to: AMD, type: supply, strength: M, conf: I, note: "EDA licences and IP"}
+  - {from: SNPS, to: AVGO, type: supply, strength: M, conf: I, note: "EDA licences and IP"}
+  - {from: CDNS, to: NVDA, type: supply, strength: M, conf: I, note: "EDA and emulation hardware"}
+  - {from: CDNS, to: AVGO, type: supply, strength: M, conf: I, note: "EDA licences"}
+  - {from: CDNS, to: AMD, type: supply, strength: M, conf: I, note: "EDA licences"}
+
+  # ---------- L3 foundry & L4 memory -> chip designers ----------
+  - {from: TSM, to: NVDA, type: supply, strength: H, conf: E, as_of: "2025", note: "N4/N3 wafers and CoWoS; NVIDIA reported as TSMC's largest customer in 2025", src: "Notebookcheck, citing NVIDIA CEO", url: "https://www.notebookcheck.net/Nvidia-reportedly-overtook-Apple-to-become-TSMC-s-biggest-customer-in-2025-due-to-exceptional-Data-Center-revenue-growth.1208840.0.html"}
+  - {from: TSM, to: AMD, type: supply, strength: H, conf: I, note: "N3/N2 wafers and packaging"}
+  - {from: TSM, to: AVGO, type: supply, strength: H, conf: I, note: "Custom ASIC wafers incl. Google TPU"}
+  - {from: TSM, to: MRVL, type: supply, strength: M, conf: I, note: "Custom ASIC wafers"}
+  - {from: AMKR, to: TSM, type: supply, strength: M, conf: I, note: "Outsourced advanced packaging capacity, incl. Arizona"}
+  - {from: "000660.KS", to: NVDA, type: supply, strength: H, conf: E, as_of: "Q2 2026", note: "Main HBM supplier; SK Hynix holds ~50% of HBM market by revenue", src: "Counterpoint Research", url: "https://counterpointresearch.com/cn/insights/global-dram-and-hbm-market-share"}
+  - {from: MU, to: NVDA, type: supply, strength: H, conf: E, as_of: "Q2 2026", note: "HBM supplier; Micron ~18% of HBM market", src: "Counterpoint Research", url: "https://counterpointresearch.com/cn/insights/global-dram-and-hbm-market-share"}
+  - {from: "005930.KS", to: NVDA, type: supply, strength: M, conf: E, as_of: "Q2 2026", note: "HBM supplier; Samsung ~33% of HBM market", src: "Counterpoint Research", url: "https://counterpointresearch.com/cn/insights/global-dram-and-hbm-market-share"}
+  - {from: MU, to: AMD, type: supply, strength: M, conf: I, note: "HBM for MI-series"}
+  - {from: INTC, to: NVDA, type: supply, strength: M, conf: D, as_of: "Sep 2025", note: "Custom x86 CPUs for NVIDIA platforms under 2025 collaboration", src: "TechRepublic", url: "https://www.techrepublic.com/article/news-nvidia-intel-deal/"}
+
+  # ---------- L2 chip designers -> systems & clouds ----------
+  - {from: NVDA, to: "2317.TW", type: supply, strength: H, conf: E, note: "Direct customer: assembles GB-series racks", xbrl: {company: NVDA, member: CustomerA}}
+  - {from: NVDA, to: DELL, type: supply, strength: M, conf: I, note: "GPU systems"}
+  - {from: NVDA, to: SMCI, type: supply, strength: M, conf: I, note: "GPU systems"}
+  - {from: NVDA, to: HPE, type: supply, strength: L, conf: I, note: "GPU systems"}
+  - {from: NVDA, to: MSFT, type: supply, strength: H, conf: I, note: "End demand via ODMs"}
+  - {from: NVDA, to: META, type: supply, strength: H, conf: I, note: "End demand via ODMs"}
+  - {from: NVDA, to: ORCL, type: supply, strength: H, conf: E, as_of: "May 2025", usd_bn: 40, note: "Reported ~$40B of GB200 chips for Stargate Abilene", src: "FT via Fierce Network", url: "https://www.fierce-network.com/cloud/fierce-networks-encyclopedia-ai-deals"}
+  - {from: NVDA, to: AMZN, type: supply, strength: M, conf: I, note: "End demand via ODMs"}
+  - {from: NVDA, to: GOOGL, type: supply, strength: M, conf: I, note: "End demand via ODMs"}
+  - {from: NVDA, to: CRWV, type: supply, strength: H, conf: I, note: "CoreWeave fleet is almost entirely NVIDIA"}
+  - {from: NVDA, to: NBIS, type: supply, strength: M, conf: I, note: "Nebius fleet is NVIDIA"}
+  - {from: NVDA, to: OpenAI, type: contract, strength: H, conf: D, as_of: "Sep 2025", gw: 10, note: "LOI to deploy 10 GW of NVIDIA systems", src: "Fierce Network deal list", url: "https://www.fierce-network.com/cloud/fierce-networks-encyclopedia-ai-deals"}
+  - {from: AMD, to: OpenAI, type: contract, strength: H, conf: D, as_of: "Oct 2025", gw: 6, note: "6 GW of Instinct GPUs; first 1 GW from 2H 2026", src: "Fierce Network deal list", url: "https://www.fierce-network.com/cloud/fierce-networks-encyclopedia-ai-deals"}
+  - {from: AMD, to: ORCL, type: contract, strength: M, conf: D, as_of: "Oct 2025", note: "50,000 MI450 GPUs from calendar Q3 2026", src: "Fierce Network deal list", url: "https://www.fierce-network.com/cloud/fierce-networks-encyclopedia-ai-deals"}
+  - {from: AMD, to: MSFT, type: supply, strength: M, conf: I, note: "MI-series GPUs, EPYC CPUs"}
+  - {from: AMD, to: META, type: supply, strength: M, conf: I, note: "MI-series GPUs, EPYC CPUs"}
+  - {from: AVGO, to: GOOGL, type: supply, strength: H, conf: I, note: "TPU co-design and supply"}
+  - {from: AVGO, to: META, type: supply, strength: M, conf: I, note: "MTIA custom accelerator, Ethernet"}
+  - {from: AVGO, to: OpenAI, type: contract, strength: H, conf: D, as_of: "Oct 2025", gw: 10, note: "10 GW custom accelerators from 2H 2026", src: "Fierce Network deal list", url: "https://www.fierce-network.com/cloud/fierce-networks-encyclopedia-ai-deals"}
+  - {from: AVGO, to: Anthropic, type: contract, strength: M, conf: D, as_of: "Apr 2026", gw: 3.5, note: "TPU-based capacity from 2027, with Google; 3.5 GW per Broadcom filing", src: "TechCrunch", url: "https://techcrunch.com/2026/04/24/google-to-invest-up-to-40b-in-anthropic-in-cash-and-compute/"}
+  - {from: MRVL, to: AMZN, type: supply, strength: H, conf: I, note: "Trainium custom silicon and optical DSPs"}
+  - {from: MRVL, to: MSFT, type: supply, strength: M, conf: I, note: "Maia custom silicon"}
+  - {from: ARM, to: NVDA, type: supply, strength: M, conf: I, note: "Licence for Grace/Vera CPUs"}
+  - {from: ARM, to: AMZN, type: supply, strength: M, conf: I, note: "Graviton royalties"}
+  - {from: ARM, to: GOOGL, type: supply, strength: L, conf: I, note: "Axion royalties"}
+  - {from: ARM, to: MSFT, type: supply, strength: L, conf: I, note: "Cobalt royalties"}
+
+  # ---------- L5 networking & optics ----------
+  - {from: ANET, to: MSFT, type: supply, strength: H, conf: D, note: "Disclosed >10% customer", xbrl: {company: ANET, member: Microsoft}}
+  - {from: ANET, to: META, type: supply, strength: H, conf: D, note: "Disclosed >10% customer", xbrl: {company: ANET, member: Meta}}
+  - {from: COHR, to: NVDA, type: supply, strength: M, conf: I, note: "800G/1.6T transceivers"}
+  - {from: LITE, to: GOOGL, type: supply, strength: H, conf: I, note: "Optical circuit switches and lasers"}
+  - {from: LITE, to: NVDA, type: supply, strength: M, conf: I, note: "Lasers for optical modules"}
+  - {from: CRDO, to: AMZN, type: supply, strength: H, conf: I, note: "Active electrical cables; largest customer"}
+  - {from: ALAB, to: AMZN, type: supply, strength: H, conf: I, note: "Retimers and switches"}
+  - {from: ALAB, to: NVDA, type: supply, strength: M, conf: I, note: "Platform attach on NVIDIA systems"}
+
+  # ---------- L6 servers & assembly ----------
+  - {from: "2317.TW", to: MSFT, type: supply, strength: M, conf: I, note: "GB-series racks"}
+  - {from: "2317.TW", to: AMZN, type: supply, strength: M, conf: I, note: "Servers"}
+  - {from: "2317.TW", to: ORCL, type: supply, strength: M, conf: I, note: "GB-series racks"}
+  - {from: "2317.TW", to: GOOGL, type: supply, strength: M, conf: I, note: "Servers"}
+  - {from: DELL, to: CRWV, type: supply, strength: H, conf: I, note: "AI servers; CoreWeave is a major Dell AI customer"}
+  - {from: SMCI, to: CRWV, type: supply, strength: L, conf: I, note: "GPU servers"}
+  - {from: HPE, to: MSFT, type: supply, strength: L, conf: I, note: "Servers and networking"}
+
+  # ---------- L7 power & data centres ----------
+  - {from: VRT, to: MSFT, type: supply, strength: M, conf: I, note: "Power and cooling"}
+  - {from: VRT, to: CRWV, type: supply, strength: L, conf: I, note: "Liquid cooling"}
+  - {from: VRT, to: EQIX, type: supply, strength: L, conf: I, note: "Power systems"}
+  - {from: ETN, to: MSFT, type: supply, strength: L, conf: I, note: "Switchgear and distribution"}
+  - {from: GEV, to: OpenAI, type: supply, strength: L, conf: I, note: "Aeroderivative gas turbines for Stargate sites (via Crusoe)"}
+  - {from: CEG, to: MSFT, type: contract, strength: H, conf: D, as_of: "Sep 2024", note: "20-year PPA to restart Crane Clean Energy Center (Three Mile Island Unit 1)", src: "Orrick (counsel to Microsoft)", url: "https://www.orrick.com/en/News/2024/10/Microsoft-Signs-20-Year-PPA-with-Constellation"}
+  - {from: CEG, to: META, type: contract, strength: M, conf: D, as_of: "Jun 2025", note: "20-year PPA from Clinton nuclear plant", src: "Constellation press release", url: "https://www.constellationenergy.com/newsroom/2025/constellation-meta-sign-20-year-deal-for-clean-reliable-nuclear-energy-in-illinois.html"}
+  - {from: EQIX, to: AMZN, type: supply, strength: M, conf: I, note: "Colocation and interconnection"}
+  - {from: EQIX, to: MSFT, type: supply, strength: M, conf: I, note: "Colocation and interconnection"}
+  - {from: EQIX, to: GOOGL, type: supply, strength: M, conf: I, note: "Colocation and interconnection"}
+  - {from: WDC, to: AMZN, type: supply, strength: M, conf: I, note: "Nearline HDDs"}
+  - {from: WDC, to: MSFT, type: supply, strength: M, conf: I, note: "Nearline HDDs"}
+  - {from: WDC, to: GOOGL, type: supply, strength: M, conf: I, note: "Nearline HDDs"}
+  - {from: SNDK, to: AMZN, type: supply, strength: L, conf: I, note: "Enterprise SSDs"}
+
+  # ---------- L8 compute providers -> users ----------
+  - {from: CRWV, to: MSFT, type: supply, strength: H, conf: D, as_of: "FY2025", pct: 67, note: "Largest customer, named in the 10-K; AR 68% from one customer at Dec 2025", src: "CoreWeave 10-K via sec-api.io", url: "https://sec-api.io/insights/coreweave-crwv-2026-revenue-analysis-top-customer-concentration-exposure"}
+  - {from: CRWV, to: OpenAI, type: contract, strength: H, conf: D, as_of: "Sep 2025", usd_bn: 22.4, note: "Three contracts: $11.9B, $4B, $6.5B", src: "Fierce Network deal list", url: "https://www.fierce-network.com/cloud/fierce-networks-encyclopedia-ai-deals"}
+  - {from: CRWV, to: META, type: contract, strength: H, conf: D, as_of: "Sep 2025", usd_bn: 14.2, note: "Multi-year capacity agreement", src: "PYMNTS", url: "https://www.pymnts.com/news/artificial-intelligence/2025/ai-hyperscaler-coreweave-signs-14-billion-dollar-deal-with-meta/"}
+  - {from: NBIS, to: MSFT, type: contract, strength: H, conf: D, as_of: "Sep 2025", usd_bn: 19.4, note: "$17.4B over 5 years, up to $19.4B with add-ons", src: "Motley Fool via AOL", url: "https://www.aol.com/articles/nebius-just-signed-46-billion-133600114.html"}
+  - {from: NBIS, to: META, type: contract, strength: H, conf: D, as_of: "2026", usd_bn: 27, note: "$3B initial deal, extended by $12B plus up to $15B; backlog ~ $46B", src: "Motley Fool via AOL", url: "https://www.aol.com/articles/nebius-just-signed-46-billion-133600114.html"}
+  - {from: ORCL, to: OpenAI, type: contract, strength: H, conf: E, as_of: "Jul 2025", usd_bn: 300, gw: 4.5, note: "Reported >$300B over 5 years; OpenAI confirmed 4.5 GW. Oracle RPO $664B at 31 Aug 2026, ~13% due within 12 months", src: "Oracle 10-Q (Aug 2026)", url: "https://www.sec.gov/Archives/edgar/data/0001341439/000119312526389274/orcl-20260831.htm"}
+  - {from: ORCL, to: META, type: contract, strength: M, conf: E, as_of: "Oct 2025", usd_bn: 20, note: "Reported cloud infrastructure contract", src: "Fierce Network deal list", url: "https://www.fierce-network.com/cloud/fierce-networks-encyclopedia-ai-deals"}
+  - {from: MSFT, to: OpenAI, type: contract, strength: H, conf: D, as_of: "Oct 2025", usd_bn: 250, note: "Incremental Azure commitment under the 2025 restructuring; Azure exclusive for OpenAI's API", src: "SCMP", url: "https://www.scmp.com/tech/big-tech/article/3330714/microsoft-holds-27-openai-revamped-partnership"}
+  - {from: AMZN, to: OpenAI, type: contract, strength: M, conf: D, as_of: "Nov 2025", usd_bn: 38, gw: 2, note: "$38B AWS deal (Nov 2025); 2 GW of Trainium capacity added with Feb 2026 investment", src: "Yahoo Finance / Reuters", url: "https://finance.yahoo.com/news/openais-110-billion-funding-round-145925079.html"}
+  - {from: GOOGL, to: Anthropic, type: contract, strength: H, conf: D, as_of: "Apr 2026", gw: 5, note: "Up to 1M TPUs (Oct 2025); 5 GW of new Google Cloud capacity over five years (Apr 2026)", src: "TechCrunch", url: "https://techcrunch.com/2026/04/24/google-to-invest-up-to-40b-in-anthropic-in-cash-and-compute/"}
+  - {from: AMZN, to: Anthropic, type: contract, strength: H, conf: D, as_of: "Apr 2026", gw: 5, note: "Primary cloud and training partner (Project Rainier); up to ~5 GW over time", src: "TechCrunch", url: "https://techcrunch.com/2026/04/24/google-to-invest-up-to-40b-in-anthropic-in-cash-and-compute/"}
+  - {from: MSFT, to: Anthropic, type: contract, strength: M, conf: D, as_of: "Nov 2025", usd_bn: 30, note: "Anthropic commits $30B of Azure compute", src: "SCMP", url: "https://www.scmp.com/tech/big-tech/article/3333330/microsoft-nvidia-invest-anthropic-claude-maker-commits-us30-billion-azure"}
+  - {from: GOOGL, to: META, type: contract, strength: L, conf: E, as_of: "Aug 2025", usd_bn: 10, note: "Reported >$10B, six-year Google Cloud deal", src: "Data Centre Review", url: "https://datacentrereview.com/2025/08/meta-signs-six-year-10-billion-cloud-deal-with-google/"}
+  - {from: AMZN, to: PLTR, type: supply, strength: L, conf: I, note: "Palantir platforms run on AWS"}
+  - {from: MSFT, to: NOW, type: supply, strength: L, conf: I, note: "ServiceNow hosts on Azure"}
+
+  # ---------- capital ties ----------
+  - {from: NVDA, to: OpenAI, type: capital, strength: H, conf: D, as_of: "Feb 2026", usd_bn: 30, note: "$30B in the $110B round; unclear whether it replaces the Sep 2025 LOI to invest up to $100B", src: "Yahoo Finance / Reuters", url: "https://finance.yahoo.com/news/openais-110-billion-funding-round-145925079.html"}
+  - {from: AMZN, to: OpenAI, type: capital, strength: H, conf: D, as_of: "Feb 2026", usd_bn: 50, note: "$15B upfront, $35B on conditions", src: "Yahoo Finance / Reuters", url: "https://finance.yahoo.com/news/openais-110-billion-funding-round-145925079.html"}
+  - {from: MSFT, to: OpenAI, type: capital, strength: H, conf: D, as_of: "Oct 2025", note: "~27% stake in OpenAI Group PBC after restructuring", src: "SCMP", url: "https://www.scmp.com/tech/big-tech/article/3330714/microsoft-holds-27-openai-revamped-partnership"}
+  - {from: AMD, to: OpenAI, type: capital, strength: M, conf: D, as_of: "Oct 2025", note: "Warrant for up to 160M AMD shares, vesting with GPU deployments", src: "Fierce Network deal list", url: "https://www.fierce-network.com/cloud/fierce-networks-encyclopedia-ai-deals"}
+  - {from: NVDA, to: CRWV, type: capital, strength: H, conf: D, as_of: "Sep 2025", usd_bn: 6.3, note: "Equity stake plus $6.3B agreement to buy unused capacity through 2032", src: "Fierce Network deal list", url: "https://www.fierce-network.com/cloud/fierce-networks-encyclopedia-ai-deals"}
+  - {from: NVDA, to: NBIS, type: capital, strength: M, conf: D, note: "Equity investment", src: "Motley Fool via AOL", url: "https://www.aol.com/articles/nebius-just-signed-46-billion-133600114.html"}
+  - {from: NVDA, to: INTC, type: capital, strength: M, conf: D, as_of: "Sep 2025", usd_bn: 5, note: "$5B equity investment alongside product collaboration", src: "TechRepublic", url: "https://www.techrepublic.com/article/news-nvidia-intel-deal/"}
+  - {from: NVDA, to: Anthropic, type: capital, strength: M, conf: D, as_of: "Nov 2025", usd_bn: 10, note: "Up to $10B", src: "SCMP", url: "https://www.scmp.com/tech/big-tech/article/3333330/microsoft-nvidia-invest-anthropic-claude-maker-commits-us30-billion-azure"}
+  - {from: MSFT, to: Anthropic, type: capital, strength: M, conf: D, as_of: "Nov 2025", usd_bn: 5, note: "Up to $5B", src: "SCMP", url: "https://www.scmp.com/tech/big-tech/article/3333330/microsoft-nvidia-invest-anthropic-claude-maker-commits-us30-billion-azure"}
+  - {from: GOOGL, to: Anthropic, type: capital, strength: H, conf: D, as_of: "Apr 2026", usd_bn: 40, note: "$10B now, up to $30B more on milestones", src: "TechCrunch", url: "https://techcrunch.com/2026/04/24/google-to-invest-up-to-40b-in-anthropic-in-cash-and-compute/"}
+  - {from: AMZN, to: Anthropic, type: capital, strength: H, conf: D, as_of: "Apr 2026", note: "Long-standing investor; further $5B in Apr 2026", src: "TechCrunch", url: "https://techcrunch.com/2026/04/24/google-to-invest-up-to-40b-in-anthropic-in-cash-and-compute/"}
