@@ -21,6 +21,13 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
+      - name: Probe SEC access
+        run: |
+          for ua in "A_Chain research charliebrown390@users.noreply.github.com" "Charliebrown390 achain.research@gmail.com" "Mozilla/5.0 (compatible; A_Chain/1.0; +https://github.com/Charliebrown390/A_Chain)"; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" -A "$ua" https://www.sec.gov/files/company_tickers.json)
+            code2=$(curl -s -o /dev/null -w "%{http_code}" -A "$ua" https://data.sec.gov/submissions/CIK0001045810.json)
+            echo "$code $code2 :: $ua"
+          done
       - run: python scripts/sec_concentration.py
       - name: Commit results
         run: |
