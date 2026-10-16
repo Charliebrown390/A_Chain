@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>*,*::before,*::after{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>AI Supply Chain Monitor</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: stacked supply-chain layers (upstream at top → downstream at bottom), copper "interconnect" wires drawn between linked companies; detail panel docked right on desktop, bottom sheet on phones */
+:root{
+  --bg:#edf0f3; --surface:#fbfcfd; --surface-2:#e2e7ed; --ink:#132130; --muted:#566576; --line:#cbd3dc;
+  --copper:#ad5f27; --fin:#4f5dc4; --up:#11795a; --down:#bd3346; --warn:#93670c;
+  --scrim:rgba(19,33,48,.38);
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0c131b; --surface:#131e2b; --surface-2:#1a2838; --ink:#e3eaf1; --muted:#90a0b1; --line:#26374b;
+  --copper:#e28a4b; --fin:#929dff; --up:#3fc596; --down:#f06b7d; --warn:#e3b24c; --scrim:rgba(0,0,0,.55); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c131b; --surface:#131e2b; --surface-2:#1a2838; --ink:#e3eaf1; --muted:#90a0b1; --line:#26374b;
+  --copper:#e28a4b; --fin:#929dff; --up:#3fc596; --down:#f06b7d; --warn:#e3b24c; --scrim:rgba(0,0,0,.55); color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.5}
+.wrap{max-width:1320px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:22px 120px}
+h1,h2,h3{font-family:var(--f-display);font-stretch:82%;text-wrap:balance;margin:0;letter-spacing:-.01em}
+.mono,.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--copper);margin:0 0 6px}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+
+/* Header */
+.top{display:flex;flex-wrap:wrap;gap:16px 32px;align-items:flex-end;justify-content:space-between;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.top h1{font-size:clamp(30px,5.2vw,46px);font-weight:750;line-height:1}
+.top .sub{margin:10px 0 0;color:var(--muted);max-width:60ch}
+.stamp{display:grid;gap:6px;justify-items:start;font-size:12px;color:var(--muted);max-width:34ch}
+.badge{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:4px;border:1px solid var(--warn);color:var(--warn)}
+
+/* Pulse */
+.pulse{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));margin-top:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.card h2{font-size:18px;font-weight:650}
+.card .hint{color:var(--muted);font-size:12px;margin:2px 0 10px}
+.heat{display:grid;gap:5px}
+.heatrow{display:grid;grid-template-columns:150px 1fr 62px;gap:10px;align-items:center;font-size:12.5px;background:none;border:0;padding:2px 0;text-align:left;cursor:pointer}
+.heatrow:hover .hname{color:var(--copper)}
+.hbar{position:relative;height:10px;background:var(--surface-2);border-radius:3px;overflow:hidden}
+.hbar i{position:absolute;top:0;bottom:0;border-radius:2px}
+.hbar::after{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--muted);opacity:.6}
+.circ{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.circ li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:baseline;font-size:12.5px}
+.circ .pair{font-family:var(--f-mono);font-weight:600;color:var(--fin);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--fin) 40%,transparent);text-underline-offset:3px}
+
+/* Controls */
+.controls{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between;margin:22px 0 4px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:none;padding:7px 12px;font-size:12.5px;cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.ctl-label{font-size:12px;color:var(--muted);margin-right:8px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--muted);align-items:center}
+.legend .sw{display:inline-block;width:26px;height:0;border-top:3px solid var(--copper);vertical-align:middle;margin-right:6px}
+.legend .sw.f{border-top:2px dashed var(--fin)}
+.scale{display:inline-flex;align-items:center;gap:6px}
+.scale b{display:inline-block;width:90px;height:8px;border-radius:2px;background:linear-gradient(90deg,var(--down),var(--surface-2),var(--up))}
+
+/* Main */
+.main{display:grid;gap:24px;margin-top:10px}
+.map{position:relative;min-width:0}
+#wires{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:visible}
+.layer{position:relative;display:grid;grid-template-columns:210px minmax(0,1fr);gap:18px;padding-block:14px;border-top:1px solid var(--line)}
+.layer:first-of-type{border-top:0}
+.lhead{display:grid;gap:2px;align-content:start}
+.lnum{font-family:var(--f-mono);font-size:11px;color:var(--copper);letter-spacing:.08em}
+.lname{font-family:var(--f-display);font-stretch:85%;font-weight:650;font-size:17px;line-height:1.2}
+.lneck{font-size:12px;color:var(--muted)}
+.lstat{font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;align-content:start}
+.chip{position:relative;z-index:1;display:grid;gap:1px;min-width:84px;padding:7px 10px;border:1px solid var(--line);border-radius:6px;background:var(--chipbg,var(--surface));text-align:left;cursor:pointer;transition:opacity .18s,transform .12s}
+.chip:hover{transform:translateY(-1px)}
+.chip .tk{font-family:var(--f-mono);font-weight:600;font-size:13px;line-height:1.2}
+.chip .mv{font-family:var(--f-mono);font-size:11px;font-variant-numeric:tabular-nums;color:var(--ink);opacity:.78}
+.chip.private{border-style:dashed;background:var(--bg)}
+.chip.sel{outline:2px solid var(--copper);outline-offset:1px}
+.map.has-sel .chip:not(.sel):not(.linked){opacity:.3}
+.chip.linked{border-color:var(--copper)}
+
+/* Panel */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}
+.ph{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:start}
+.ph h2{font-size:28px;font-weight:750;line-height:1}
+.ph .nm{color:var(--muted);font-size:13px;grid-column:1/2}
+.ph .px{font-family:var(--f-mono);font-size:22px;font-weight:600;text-align:right}
+.ph .chg{text-align:right;font-family:var(--f-mono);font-size:12.5px}
+.close{display:none;border:1px solid var(--line);background:var(--surface-2);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:12px}
+.up{color:var(--up)} .down{color:var(--down)} .mut{color:var(--muted)}
+.tabs{display:flex;gap:2px;margin:14px 0 12px;border-bottom:1px solid var(--line);overflow-x:auto}
+.tabs button{border:0;background:none;padding:8px 10px;font-size:13px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--copper);font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+.stat{background:var(--bg);border-radius:7px;padding:8px 10px;min-width:0}
+.stat .k{font-size:11px;color:var(--muted)}
+.stat .v{font-family:var(--f-mono);font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;font-family:var(--f-mono);font-size:11px;padding:2px 7px;border-radius:999px;border:1px solid currentColor}
+.svgbox{width:100%;overflow:hidden}
+.svgbox svg{display:block;width:100%;height:auto}
+table.fin{width:100%;border-collapse:collapse;font-size:13px}
+table.fin td{padding:7px 0;border-bottom:1px solid var(--line)}
+table.fin td:last-child{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.stack{display:flex;height:14px;border-radius:4px;overflow:hidden;margin:6px 0 4px}
+.stack i{display:block}
+.tbar{position:relative;height:34px;margin:26px 0 8px}
+.tbar .rng{position:absolute;top:14px;height:6px;background:color-mix(in srgb,var(--copper) 35%,var(--surface-2));border-radius:3px}
+.tbar .mk{position:absolute;top:6px;width:2px;height:22px;background:var(--ink)}
+.tbar .mk span{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);font-family:var(--f-mono);font-size:10.5px;white-space:nowrap;color:var(--ink)}
+.tbar .mk.px{background:var(--copper)} .tbar .mk.px span{top:24px;bottom:auto;color:var(--copper)}
+.sec{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:16px 0 6px}
+.links{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.links li{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:baseline;padding:6px 0;border-bottom:1px solid var(--line);font-size:12.5px}
+.links .go{font-family:var(--f-mono);font-weight:600;border:1px solid var(--line);background:var(--bg);border-radius:5px;padding:2px 7px;cursor:pointer;font-size:12px}
+.links .go:hover{border-color:var(--copper);color:var(--copper)}
+.conf{font-family:var(--f-mono);font-size:10.5px;padding:1px 6px;border-radius:4px;background:var(--surface-2);color:var(--muted)}
+.conf.D{background:color-mix(in srgb,var(--up) 18%,var(--surface));color:var(--up)}
+.flag{margin-top:10px;padding:9px 11px;border-radius:7px;border:1px dashed var(--fin);color:var(--ink);font-size:12.5px;background:color-mix(in srgb,var(--fin) 8%,var(--surface))}
+.thesis p{margin:4px 0 0;max-width:62ch}
+.note{font-size:11.5px;color:var(--muted);margin-top:12px}
+.minibar,.scrim{display:none}
+footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+footer h3{font-size:15px;color:var(--ink);font-weight:650;margin-bottom:4px}
+footer p{margin:0}
+
+@media (min-width:1040px){
+  .main{grid-template-columns:minmax(0,1fr) 420px;align-items:start}
+  .panel{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);max-height:calc(100vh - 32px);overflow:auto}
+}
+@media (max-width:1039px){
+  .panel{position:fixed;left:0;right:0;bottom:0;z-index:40;max-height:86vh;overflow:auto;border-radius:16px 16px 0 0;border-bottom:0;
+    padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-bottom:calc(18px + env(safe-area-inset-bottom,0px));
+    transform:translateY(105%);transition:transform .25s ease;visibility:hidden}
+  .panel.open{transform:none;visibility:visible}
+  .close{display:inline-block}
+  .scrim{position:fixed;inset:0;background:var(--scrim);z-index:35}
+  .scrim.on{display:block}
+  .minibar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;gap:12px;align-items:center;justify-content:space-between;background:var(--surface);border-top:1px solid var(--line);
+    padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+  .minibar .who{min-width:0;font-size:12.5px}
+  .minibar .who b{font-family:var(--f-mono);font-size:15px;margin-right:8px}
+  .minibar button{border:0;background:var(--ink);color:var(--bg);border-radius:7px;padding:9px 14px;font-weight:600;cursor:pointer;white-space:nowrap}
+}
+@media (max-width:700px){
+  .layer{grid-template-columns:minmax(0,1fr);gap:8px}
+  .lhead{grid-template-columns:auto 1fr;column-gap:8px}
+  .lhead .lnum{align-self:center}
+  .lneck,.lstat{grid-column:1/-1}
+  .heatrow{grid-template-columns:110px 1fr 56px}
+  .chip{min-width:74px;padding:6px 8px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <p class="eyebrow">Silicon → systems → services</p>
+      <h1>AI Supply Chain Monitor</h1>
+      <p class="sub">42 companies across nine layers of the AI build-out. Tap any company to trace who it sells to and who it depends on. Then open its price, financials, analyst view and thesis.</p>
+    </div>
+    <div class="stamp">
+      <span class="badge">Sample data · prototype</span>
+      <span>Prices, financials, ratings and link weights here are illustrative. The live build refreshes them nightly from free sources.</span>
+    </div>
+  </header>
+
+  <section class="pulse">
+    <div class="card">
+      <h2>Layer momentum</h2>
+      <p class="hint">Median 1-month share price change per layer. Tap a layer to jump to it.</p>
+      <div class="heat" id="heat"></div>
+    </div>
+    <div class="card">
+      <h2>Circularity watch</h2>
+      <p class="hint">Pairs where one company has a capital tie to the other and they also trade. Demand that is partly vendor-financed.</p>
+      <ul class="circ" id="circ"></ul>
+    </div>
+  </section>
+
+  <div class="controls">
+    <div><span class="ctl-label">Colour by</span>
+      <div class="seg" id="seg" role="group" aria-label="Colour companies by">
+        <button id="cb-ret" data-m="ret" aria-pressed="true">1M return</button>
+        <button id="cb-up" data-m="up" aria-pressed="false">Upside to target</button>
+        <button id="cb-pe" data-m="pe" aria-pressed="false">Fwd P/E</button>
+      </div>
+    </div>
+    <div class="legend">
+      <span><span class="sw"></span>Sells to (thicker = larger share of seller revenue)</span>
+      <span><span class="sw f"></span>Capital tie</span>
+      <span class="scale" id="scale"><span id="sc-lo">−20%</span><b></b><span id="sc-hi">+20%</span></span>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="map" id="map"><svg id="wires" aria-hidden="true"></svg></div>
+    <aside class="panel" id="panel" aria-label="Company detail"></aside>
+  </div>
+
+  <footer>
+    <div><h3>Where live data will come from</h3><p>Prices, technicals and analyst ratings and targets from Yahoo Finance via yfinance. Financials from SEC EDGAR's XBRL API. TSMC, Hon Hai and other Taiwan suppliers publish monthly sales, which give an early read on demand.</p></div>
+    <div><h3>How the link weights are sourced</h3><p>D = disclosed in a filing (for example, customers above 10% of revenue). E = estimated from filings, earnings calls or sell-side work. I = inferred from known relationships. Each link records its source.</p></div>
+    <div><h3>How it refreshes</h3><p>A GitHub Actions job runs nightly, writes JSON data files to the repository, and GitHub Pages serves this page from them. This is an analytical tool, not investment advice.</p></div>
+  </footer>
+</div>
+
+<div class="minibar" id="minibar"><div class="who" id="mini"></div><button id="openDetail" type="button">Details</button></div>
+<div class="scrim" id="scrim"></div>
+
+<script>
+const LAYERS=[
+ {n:1,name:"Tools & design software",short:"Tools & EDA",neck:"Bottleneck: EUV lithography (one supplier)"},
+ {n:2,name:"Chip designers",short:"Chip designers",neck:"Bottleneck: TSMC wafer and packaging allocation"},
+ {n:3,name:"Foundry & packaging",short:"Foundry & packaging",neck:"Bottleneck: CoWoS advanced-packaging capacity"},
+ {n:4,name:"Memory & storage",short:"Memory & storage",neck:"Bottleneck: HBM supply and HBM4 qualification"},
+ {n:5,name:"Networking & optics",short:"Networking & optics",neck:"Bottleneck: 1.6T optics and laser capacity"},
+ {n:6,name:"Servers & assembly",short:"Servers & assembly",neck:"Bottleneck: rack-scale integration, liquid cooling"},
+ {n:7,name:"Power & data centres",short:"Power & DCs",neck:"Bottleneck: grid hook-ups, gas turbines, transformers"},
+ {n:8,name:"Compute providers",short:"Compute providers",neck:"Driver: capex budgets · Risk: neocloud debt"},
+ {n:9,name:"Models & applications",short:"Models & apps",neck:"Driver: paid AI usage that justifies the capex"}
+];
+// t, label, name, layer, px, mcap$B, revTTM$B, revG%, GM%, OpM%, FCF$B, fwdPE, buy, hold, sell, bull, bear, kpis
+const CO=[
+["ASML","ASML","ASML Holding",1,1050,410,36,12,52,34,10,32,24,6,1,"Sole EUV supplier; High-NA tools add content per wafer","China export curbs and lumpy chipmaker capex","EUV bookings, backlog, China share of sales"],
+["AMAT","AMAT","Applied Materials",1,230,185,29,8,48,30,7,22,22,9,1,"Broadest tool range; gate-all-around and packaging tailwinds","China is a large share of sales and exposed to export rules","Foundry vs memory mix, China share"],
+["LRCX","LRCX","Lam Research",1,140,180,19,20,49,32,5,30,24,7,0,"Etch and deposition leader; gains most from NAND and HBM upgrades","Memory capex is the most cyclical spend","WFE outlook, NAND upgrade spend"],
+["KLAC","KLAC","KLA Corp",1,1000,133,12.5,15,61,42,4,30,15,10,1,"Process-control intensity rises at every node","Premium multiple for a cyclical business","Leading-edge foundry spend, margins"],
+["SNPS","SNPS","Synopsys",1,520,95,7.5,20,80,30,1.6,38,14,4,0,"EDA duopoly; every custom AI chip needs its tools","Ansys integration and China exposure","Backlog, AI design starts"],
+["CDNS","CDNS","Cadence Design",1,340,93,5.3,13,87,33,1.5,48,16,5,0,"EDA duopoly; emulation hardware demand from AI chips","Valuation leaves little room for a miss","Backlog, hardware system sales"],
+["NVDA","NVDA","NVIDIA",2,190,4600,210,60,72,62,100,32,58,6,1,"Full stack: GPUs, NVLink, networking and CUDA software","Customer concentration, custom ASICs, vendor-financed demand","Data-centre revenue, gross margin, Rubin ramp"],
+["AMD","AMD","Advanced Micro Devices",2,230,375,34,30,54,12,5,40,38,12,0,"Credible second GPU source; OpenAI deal validates MI-series","Software gap to CUDA; warrant dilution tied to the OpenAI deal","Data-centre GPU revenue, MI450 ramp"],
+["AVGO","AVGO","Broadcom",2,360,1700,68,25,77,40,30,38,34,4,0,"Custom ASIC partner for Google TPU, Meta and OpenAI; Ethernet switches","ASIC customers can switch partners or bring design in-house","AI semiconductor revenue, number of XPU customers"],
+["MRVL","MRVL","Marvell Technology",2,85,73,8.5,45,51,10,1.6,30,30,6,0,"Custom silicon and optical DSPs for AWS and Microsoft","Lumpy design-win cadence; risk of losing a socket","Custom XPU revenue, optics growth"],
+["ARM","ARM","Arm Holdings",2,160,170,4.5,20,96,20,0.5,80,22,8,2,"Royalties on every Arm CPU in AI servers","Very high multiple; licensing disputes","Royalty rate, data-centre share"],
+["INTC","INTC","Intel",2,38,170,53,0,38,-2,-8,60,6,30,5,"Foundry optionality and US policy support","Losing share; foundry needs outside customers","18A yields, foundry customer wins"],
+["TSM","TSM","TSMC",3,300,1550,115,35,59,49,32,24,18,2,0,"Makes nearly every leading AI chip; strong pricing power","Taiwan geopolitics; margin dilution from overseas fabs","Monthly sales, CoWoS capacity, N2 ramp"],
+["005930.KS","Samsung","Samsung Electronics",3,62,400,220,10,39,12,15,14,30,4,0,"Memory upcycle; catching up on HBM for NVIDIA","Late HBM qualification; foundry losses","HBM4 qualification, memory pricing"],
+["AMKR","AMKR","Amkor Technology",3,32,8,6.5,5,13,6,0.4,18,6,4,1,"Outsourced advanced packaging as CoWoS overflows","Thin margins; smaller AI share than peers","Advanced packaging revenue mix"],
+["000660.KS","SK Hynix","SK Hynix",4,290,210,60,55,60,47,18,7,32,2,0,"HBM leader with the majority of NVIDIA's supply","Memory cycles; HBM pricing as rivals catch up","HBM share, DRAM contract prices"],
+["MU","MU","Micron Technology",4,200,225,40,45,45,28,5,11,28,5,1,"HBM share gains; the only US memory maker","Commodity DRAM and NAND price swings","HBM revenue, gross margin"],
+["SNDK","SNDK","SanDisk",4,120,17,8,15,30,10,0.5,18,10,5,0,"AI data growth lifts enterprise SSD demand","NAND oversupply risk","Enterprise SSD bit growth, pricing"],
+["WDC","WDC","Western Digital",4,110,38,10,30,40,25,1.5,16,18,4,0,"Nearline hard drives for AI data lakes","Lumpy hyperscaler order timing","Exabytes shipped, pricing"],
+["ANET","ANET","Arista Networks",5,140,175,8.5,28,64,43,3.5,45,20,5,0,"Ethernet is winning AI back-end networks","Two customers above 10% each; competition from NVIDIA networking","AI networking revenue, customer mix"],
+["COHR","COHR","Coherent",5,110,17,6,20,37,12,0.4,28,14,3,0,"800G and 1.6T transceivers; indium-phosphide lasers","Patchy execution and margin history","Datacom revenue, laser capacity"],
+["LITE","LITE","Lumentum",5,160,11,2,45,35,10,0.1,40,12,4,0,"Optical circuit switches and lasers for Google and NVIDIA","Concentrated customer base","Cloud revenue, OCS shipments"],
+["CRDO","CRDO","Credo Technology",5,140,24,0.9,140,64,30,0.2,60,12,1,0,"Active electrical cables for in-rack links","Heavy reliance on one hyperscaler","Customer diversification"],
+["ALAB","ALAB","Astera Labs",5,170,28,0.7,90,76,20,0.2,75,14,2,0,"PCIe/CXL retimers and switches inside AI racks","Product cycles depend on NVIDIA design choices","Scorpio switch ramp"],
+["DELL","DELL","Dell Technologies",6,140,95,105,15,21,7,4,13,18,5,0,"AI server backlog from neoclouds and enterprises","Thin margins on AI servers","AI server orders and backlog"],
+["SMCI","SMCI","Super Micro Computer",6,45,27,24,20,10,5,0.5,15,6,8,2,"Fast time-to-market on liquid-cooled racks","Governance history; margin compression","Gross margin, timely filings"],
+["HPE","HPE","Hewlett Packard Enterprise",6,24,32,33,15,30,7,1.5,11,8,12,1,"Sovereign and enterprise AI; networking via Juniper","Small AI share; integration risk","AI systems backlog"],
+["2317.TW","Hon Hai","Hon Hai (Foxconn)",6,7.0,95,230,18,6,3,3,14,20,2,0,"Assembles most NVIDIA rack-scale systems","Very thin margins","Monthly sales, AI server share"],
+["VRT","VRT","Vertiv",7,160,61,10,25,37,19,1.7,38,18,3,0,"Power and liquid cooling for dense AI racks","Order cyclicality; competition from Schneider and Eaton","Orders, book-to-bill"],
+["ETN","ETN","Eaton",7,380,150,26,8,38,20,4,32,16,8,0,"Electrical gear for data centres and the grid","Rich multiple for an industrial","Data-centre orders, backlog"],
+["GEV","GEV","GE Vernova",7,620,170,38,12,20,9,3,55,22,6,1,"Gas turbines sold out for years; grid equipment","Wind segment execution; capacity limits","Turbine slot reservations"],
+["CEG","CEG","Constellation Energy",7,340,106,25,5,30,18,2,30,12,5,0,"Nuclear power deals with hyperscalers","Regulatory pushback on co-located data centres","New PPAs, power prices"],
+["EQIX","EQIX","Equinix",7,820,80,9.3,6,50,20,1.5,21,22,5,0,"Interconnection hubs for AI inference","Capital intensity; rate sensitivity","AFFO growth, pricing (P/E shown is P/AFFO)"],
+["MSFT","MSFT","Microsoft",8,520,3870,300,15,69,46,70,33,52,3,0,"Azure growth plus its OpenAI stake","Capex intensity weighs on free cash flow","Azure growth, capex, RPO"],
+["AMZN","AMZN","Amazon",8,230,2450,700,11,50,11,30,32,60,4,0,"AWS scale plus Trainium cost advantage","Capex load and retail margins","AWS growth, backlog"],
+["GOOGL","GOOGL","Alphabet",8,250,3000,400,13,59,33,70,24,45,10,0,"TPUs give a cost edge; growing Cloud backlog","Chatbots could erode Search","Cloud growth, external TPU sales"],
+["ORCL","ORCL","Oracle",8,280,790,62,14,69,31,-5,38,28,10,1,"Very large RPO from AI compute contracts","Debt-funded build-out; reliance on OpenAI","RPO conversion, FCF, debt"],
+["CRWV","CRWV","CoreWeave",8,120,60,5,180,74,4,-6,null,12,10,2,"Fast-growing GPU cloud with long contracts","High leverage; few customers; NVIDIA-linked","Backlog, cost of debt, utilisation"],
+["NBIS","NBIS","Nebius Group",8,100,25,0.5,400,70,-40,-2,null,8,1,0,"GPU cloud with a Microsoft anchor contract","Early stage and burning cash","Contracted capacity, ARR"],
+["META","META","Meta Platforms",9,720,1810,190,22,82,42,50,26,55,7,1,"AI improves ad targeting and engagement","Heavy capex with no cloud business to resell it","Ad growth, capex guidance"],
+["PLTR","PLTR","Palantir",9,180,425,4,45,81,25,2,200,8,15,4,"Enterprise AI platform adoption","Extreme valuation","US commercial growth"],
+["NOW","NOW","ServiceNow",9,950,197,13,20,79,13,4,55,35,4,0,"Workflow AI agents sold per seat","Seat-based pricing under pressure from AI","Pro Plus adoption, cRPO"],
+["OpenAI","OpenAI","OpenAI (private)",9,null,null,null,null,null,null,null,null,0,0,0,"Largest single source of new compute commitments","Commitments far exceed current revenue","Revenue run-rate, funding rounds"],
+["Anthropic","Anthropic","Anthropic (private)",9,null,null,null,null,null,null,null,null,0,0,0,"Large buyer of AWS Trainium and Google TPU capacity","Ongoing funding needs","Revenue run-rate, compute deals"]
+];
+// from(seller/investor), to(buyer/investee), type s=sells to f=capital tie, % of seller revenue, confidence, note
+const ED=[
+["ASML","TSM","s",30,"E","EUV and DUV lithography"],["ASML","005930.KS","s",15,"E","EUV for memory and foundry"],["ASML","INTC","s",10,"E","EUV incl. High-NA"],["ASML","000660.KS","s",10,"E","EUV for DRAM"],["ASML","MU","s",6,"E","EUV for DRAM"],
+["AMAT","TSM","s",20,"E","Deposition, etch, CMP"],["AMAT","005930.KS","s",12,"E","Memory and foundry tools"],["AMAT","INTC","s",10,"E","Logic tools"],
+["LRCX","005930.KS","s",15,"E","Etch and deposition"],["LRCX","TSM","s",15,"E","Etch and deposition"],["LRCX","000660.KS","s",10,"E","HBM/DRAM etch"],["LRCX","MU","s",8,"E","Memory tools"],
+["KLAC","TSM","s",25,"E","Inspection and metrology"],["KLAC","005930.KS","s",10,"E","Inspection"],
+["SNPS","NVDA","s",8,"I","EDA licences"],["SNPS","AMD","s",5,"I","EDA licences"],["SNPS","TSM","s",4,"I","IP and design enablement"],
+["CDNS","NVDA","s",8,"I","EDA and emulation"],["CDNS","AVGO","s",5,"I","EDA licences"],
+["TSM","NVDA","s",22,"E","N4/N3 wafers plus CoWoS"],["TSM","AMD","s",7,"E","N3/N2 wafers"],["TSM","AVGO","s",7,"E","Custom ASIC wafers"],["TSM","MRVL","s",2,"E","Custom ASIC wafers"],
+["AMKR","TSM","s",5,"I","Overflow advanced packaging"],
+["000660.KS","NVDA","s",35,"E","HBM3E stacks"],["MU","NVDA","s",15,"E","HBM3E stacks"],["005930.KS","NVDA","s",4,"E","HBM and DRAM"],["MU","AMD","s",3,"I","HBM for MI-series"],
+["AVGO","GOOGL","s",20,"E","TPU co-design and supply"],["AVGO","META","s",8,"E","MTIA custom accelerator"],["AVGO","OpenAI","s",2,"I","Custom accelerator, ramping"],
+["MRVL","AMZN","s",25,"E","Trainium and optical DSPs"],["MRVL","MSFT","s",8,"E","Maia custom silicon"],
+["ARM","NVDA","s",4,"I","Grace CPU licence"],["ARM","AMZN","s",3,"I","Graviton royalties"],
+["NVDA","2317.TW","s",12,"E","Direct customer for rack assembly"],["NVDA","DELL","s",8,"E","GPU systems"],["NVDA","SMCI","s",6,"E","GPU systems"],["NVDA","HPE","s",2,"E","GPU systems"],
+["NVDA","MSFT","s",15,"E","End demand (via ODMs)"],["NVDA","META","s",10,"E","End demand"],["NVDA","AMZN","s",8,"E","End demand"],["NVDA","GOOGL","s",7,"E","End demand"],["NVDA","ORCL","s",6,"E","End demand"],["NVDA","CRWV","s",5,"E","End demand"],["NVDA","NBIS","s",1,"E","End demand"],["NVDA","OpenAI","s",2,"I","Systems for OpenAI-run sites, ramping"],
+["AMD","MSFT","s",10,"E","MI-series GPUs"],["AMD","META","s",8,"E","MI-series GPUs"],["AMD","ORCL","s",5,"E","MI-series clusters"],["AMD","OpenAI","s",3,"I","Multi-GW GPU deal, ramping"],
+["ANET","MSFT","s",20,"D","Disclosed >10% customer"],["ANET","META","s",15,"D","Disclosed >10% customer"],
+["COHR","NVDA","s",8,"E","800G/1.6T transceivers"],["LITE","GOOGL","s",15,"E","Optical circuit switches"],["LITE","NVDA","s",10,"E","Lasers for optics"],
+["CRDO","AMZN","s",40,"E","Active electrical cables"],["ALAB","AMZN","s",25,"E","Retimers and switches"],["ALAB","NVDA","s",15,"I","Platform attach"],
+["DELL","CRWV","s",8,"E","AI servers"],
+["2317.TW","MSFT","s",10,"E","GB-series racks"],["2317.TW","AMZN","s",6,"E","Servers"],["2317.TW","ORCL","s",5,"E","GB-series racks"],
+["VRT","MSFT","s",10,"I","Power and cooling"],["VRT","CRWV","s",3,"I","Liquid cooling"],["VRT","EQIX","s",4,"I","Power systems"],["ETN","MSFT","s",3,"I","Switchgear"],
+["CEG","MSFT","s",3,"E","Nuclear PPA"],["CEG","META","s",2,"E","Nuclear PPA"],
+["EQIX","AMZN","s",5,"I","Colocation and interconnect"],["EQIX","MSFT","s",5,"I","Colocation and interconnect"],
+["WDC","AMZN","s",12,"I","Nearline HDDs"],["WDC","MSFT","s",10,"I","Nearline HDDs"],["SNDK","AMZN","s",6,"I","Enterprise SSDs"],
+["CRWV","MSFT","s",60,"D","Largest customer in 10-K"],["CRWV","OpenAI","s",20,"E","Multi-year contracts"],["CRWV","META","s",10,"E","Capacity contract"],
+["NBIS","MSFT","s",40,"E","Multi-year capacity contract"],["ORCL","OpenAI","s",25,"E","OCI contracts in RPO"],["MSFT","OpenAI","s",5,"E","Azure compute"],
+["AMZN","Anthropic","s",3,"E","AWS and Trainium capacity"],["GOOGL","Anthropic","s",2,"E","TPU capacity"],["GOOGL","META","s",1,"E","Cloud contract"],
+["NVDA","OpenAI","f",null,"E","Staged equity investment"],["NVDA","CRWV","f",null,"D","Equity stake and capacity backstop"],["NVDA","NBIS","f",null,"D","Equity stake"],
+["AMD","OpenAI","f",null,"D","Warrants for AMD shares"],["MSFT","OpenAI","f",null,"D","Equity stake"],["AMZN","Anthropic","f",null,"D","Equity investment"],["GOOGL","Anthropic","f",null,"D","Equity investment"]
+];
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const hash=s=>{let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
+const rng=seed=>()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+const minus=s=>String(s).replace(/^-/,"−");
+const pct=(v,d=1)=>v==null?"—":minus((v>0?"+":"")+v.toFixed(d))+"%";
+const pctP=v=>v==null?"—":minus(v.toFixed(0))+"%";
+const usd=v=>v==null?"—":(Math.abs(v)>=1000?"$"+(v/1000).toFixed(1)+"T":Math.abs(v)<10?minus("$"+v.toFixed(1)+"B"):minus("$"+Math.round(v)+"B"));
+const px=v=>"$"+(v>=1000?v.toLocaleString("en-US",{maximumFractionDigits:0}):v.toFixed(2));
+const cls=v=>v>0?"up":v<0?"down":"mut";
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* business-day calendar ending 16 Oct 2026 */
+const N=460, DATES=[];
+{let d=new Date(Date.UTC(2026,9,16));while(DATES.length<N){const w=d.getUTCDay();if(w&&w<6)DATES.unshift(new Date(d));d=new Date(d.getTime()-864e5)}}
+const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+const sma=(a,n)=>a.map((_,i)=>i<n-1?null:a.slice(i-n+1,i+1).reduce((x,y)=>x+y,0)/n);
+function rsi(a,n=14){let g=0,l=0;for(let i=1;i<=n;i++){const d=a[i]-a[i-1];d>0?g+=d:l-=d}g/=n;l/=n;for(let i=n+1;i<a.length;i++){const d=a[i]-a[i-1];g=(g*(n-1)+Math.max(d,0))/n;l=(l*(n-1)+Math.max(-d,0))/n}return l===0?100:100-100/(1+g/l)}
+
+const BY={};
+const COS=CO.map(r=>{
+  const [t,lab,name,layer,p,mcap,rev,g,gm,opm,fcf,pe,b,h,s,bull,bear,kpi]=r;
+  const c={t,lab,name,layer,px:p,mcap,rev,g,gm,opm,fcf,pe,b,h,s,bull,bear,kpi,priv:p==null};
+  if(!c.priv){
+    const R=rng(hash(t));
+    const hot=(t==="CRWV"||t==="NBIS"||t==="SMCI");
+    const mu=-0.2+R()*1.0, sig=(hot?0.55:0.24)+R()*0.3;
+    const cl=new Array(N);cl[N-1]=p;
+    for(let i=N-2;i>=0;i--){const z=Math.sqrt(-2*Math.log(R()+1e-12))*Math.cos(2*Math.PI*R());cl[i]=cl[i+1]/Math.exp((mu-sig*sig/2)/252+sig/Math.sqrt(252)*z)}
+    c.cl=cl;c.d50=sma(cl,50);c.d200=sma(cl,200);
+    c.r1m=(p/cl[N-22]-1)*100;
+    const y0=DATES.findIndex(d=>d.getUTCFullYear()===2026);c.ytd=(p/cl[y0-1]-1)*100;
+    c.rsi=rsi(cl.slice(-120));
+    const a50=c.d50[N-1],a200=c.d200[N-1];
+    c.trend=p>a50&&a50>a200?"Uptrend":p<a50&&a50<a200?"Downtrend":"Mixed";
+    const n=b+h+s, score=(b*5+h*3+s*1)/n;
+    c.cons=score>=4.4?"Strong buy":score>=3.8?"Buy":score>=2.9?"Hold":"Sell";
+    const u=(score-3.4)*0.18+(R()-0.5)*0.12;
+    c.tm=p*(1+u);c.tl=c.tm*(0.62+R()*0.14);c.th=c.tm*(1.2+R()*0.22);c.upside=u*100;
+    c.hist=[rev];for(let k=0;k<4;k++){c.hist.unshift(c.hist[0]/(1+(g/100)*(0.6+R()*0.8)))}
+  }
+  BY[t]=c;return c;
+});
+const EDGES=ED.map(([f,t,ty,p,cf,note])=>({f,t,ty,p,cf,note}));
+const median=a=>{const s=[...a].sort((x,y)=>x-y),m=s.length>>1;return s.length%2?s[m]:(s[m-1]+s[m])/2};
+
+/* ---------- colour modes ---------- */
+let MODE="ret";
+try{const m=localStorage.getItem("aiscm-mode");if(m)MODE=m}catch(e){}
+const MODES={
+  ret:{get:c=>c.r1m,lo:-20,hi:20,mid:0,inv:false,fmt:c=>pct(c.r1m),lab:["−20%","+20%"]},
+  up:{get:c=>c.upside,lo:-10,hi:30,mid:10,inv:false,fmt:c=>pct(c.upside,0)+" upside",lab:["−10%","+30%"]},
+  pe:{get:c=>c.pe,lo:10,hi:60,mid:30,inv:true,fmt:c=>c.pe==null?"n/m":c.pe.toFixed(0)+"× P/E",lab:["60×","10×"]}
+};
+function chipBg(c){
+  if(c.priv)return "";
+  const M=MODES[MODE],v=M.get(c);if(v==null)return "var(--surface)";
+  let x=Math.max(M.lo,Math.min(M.hi,v));let f=x>=M.mid?(x-M.mid)/(M.hi-M.mid):-(M.mid-x)/(M.mid-M.lo);if(M.inv)f=-f;
+  const k=Math.round(Math.abs(f)*48);return `color-mix(in srgb, var(${f>=0?"--up":"--down"}) ${k}%, var(--surface))`;
+}
+
+/* ---------- render map ---------- */
+const map=$("#map");
+LAYERS.forEach(L=>{
+  const cs=COS.filter(c=>c.layer===L.n);
+  const sec=document.createElement("section");sec.className="layer";sec.id="layer-"+L.n;
+  const pub=cs.filter(c=>!c.priv);
+  sec.innerHTML=`<div class="lhead"><span class="lnum">L${L.n}</span><span class="lname">${L.name}</span><span class="lneck">${L.neck}</span><span class="lstat" id="ls-${L.n}"></span></div><div class="chips"></div>`;
+  const box=sec.querySelector(".chips");
+  cs.forEach(c=>{
+    const b=document.createElement("button");b.type="button";b.className="chip"+(c.priv?" private":"");b.dataset.t=c.t;
+    b.id="chip-"+c.t.replace(/\W/g,"_");
+    b.setAttribute("aria-label",c.name);
+    b.innerHTML=`<span class="tk">${esc(c.lab)}</span><span class="mv"></span>`;
+    b.addEventListener("click",()=>select(c.t));
+    box.appendChild(b);
+  });
+  map.appendChild(sec);
+  L.med=median(pub.map(c=>c.r1m));
+  $("#ls-"+L.n).textContent=`${cs.length} names · 1M median ${pct(L.med)}`;
+});
+function paintChips(){
+  const M=MODES[MODE];
+  document.querySelectorAll(".chip").forEach(el=>{const c=BY[el.dataset.t];el.style.setProperty("--chipbg",chipBg(c)||"var(--bg)");el.querySelector(".mv").textContent=c.priv?"private":M.fmt(c)});
+  $("#sc-lo").textContent=M.lab[0];$("#sc-hi").textContent=M.lab[1];
+  document.querySelectorAll("#seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.m===MODE));
+}
+document.querySelectorAll("#seg button").forEach(b=>b.addEventListener("click",()=>{MODE=b.dataset.m;try{localStorage.setItem("aiscm-mode",MODE)}catch(e){}paintChips()}));
+
+/* pulse: heat + circularity */
+{
+  const H=$("#heat");
+  LAYERS.forEach(L=>{
+    const v=L.med,w=Math.min(Math.abs(v),20)/20*50;
+    const r=document.createElement("button");r.type="button";r.className="heatrow";
+    r.innerHTML=`<span class="hname">L${L.n} · ${L.short}</span><span class="hbar"><i style="${v>=0?`left:50%;width:${w}%;background:var(--up)`:`right:50%;width:${w}%;background:var(--down)`}"></i></span><span class="num ${cls(v)}" style="text-align:right">${pct(v)}</span>`;
+    r.addEventListener("click",()=>document.getElementById("layer-"+L.n).scrollIntoView({behavior:"smooth",block:"start"}));
+    H.appendChild(r);
+  });
+  const U=$("#circ");
+  EDGES.filter(e=>e.ty==="f").forEach(f=>{
+    const s=EDGES.find(e=>e.ty==="s"&&((e.f===f.f&&e.t===f.t)||(e.f===f.t&&e.t===f.f)));if(!s)return;
+    const li=document.createElement("li");
+    li.innerHTML=`<button class="pair" type="button">${esc(BY[f.f].lab)} ↔ ${esc(BY[f.t].lab)}</button><span>${esc(BY[f.f].lab)}: ${esc(f.note.toLowerCase())} in ${esc(BY[f.t].lab)}. ${esc(BY[s.t].lab)} also buys from ${esc(BY[s.f].lab)}.</span>`;
+    li.querySelector("button").addEventListener("click",()=>select(f.t==="OpenAI"||f.t==="Anthropic"?f.f:f.t));
+    U.appendChild(li);
+  });
+}
+
+/* ---------- wires ---------- */
+let SEL=null;
+const svg=$("#wires");
+function drawWires(){
+  const R=map.getBoundingClientRect();
+  svg.setAttribute("viewBox",`0 0 ${R.width} ${R.height}`);
+  if(!SEL){svg.innerHTML="";return}
+  const pos=t=>{const el=document.querySelector(`.chip[data-t="${CSS.escape(t)}"]`);const r=el.getBoundingClientRect();return{x:r.left-R.left+r.width/2,y:r.top-R.top+r.height/2,h:r.height}};
+  let out="";
+  EDGES.filter(e=>e.f===SEL||e.t===SEL).forEach(e=>{
+    const a=pos(e.f),b=pos(e.t);let d;
+    if(Math.abs(a.y-b.y)<8){const up=Math.max(28,Math.abs(a.x-b.x)*0.25);d=`M${a.x} ${a.y-a.h/2}C${a.x} ${a.y-up} ${b.x} ${b.y-up} ${b.x} ${b.y-b.h/2}`}
+    else{const dir=b.y>a.y?1:-1,dy=Math.max(30,Math.abs(b.y-a.y)*0.45);d=`M${a.x} ${a.y+dir*a.h/2}C${a.x} ${a.y+dir*dy} ${b.x} ${b.y-dir*dy} ${b.x} ${b.y-dir*b.h/2}`}
+    const w=e.ty==="f"?1.6:Math.min(5,1+(e.p||1)/8);
+    out+=`<path d="${d}" fill="none" stroke="var(${e.ty==="f"?"--fin":"--copper"})" stroke-width="${w}" stroke-linecap="round" ${e.ty==="f"?'stroke-dasharray="5 4"':""} opacity=".85"/>`;
+  });
+  svg.innerHTML=out;
+}
+window.addEventListener("resize",()=>requestAnimationFrame(drawWires));
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(drawWires);
+
+/* ---------- panel ---------- */
+const panel=$("#panel");let TAB="price";
+const TABS=[["price","Price"],["fin","Financials"],["ana","Analysts"],["links","Links"],["thesis","Thesis"]];
+
+function priceSVG(c){
+  const n=252,cl=c.cl.slice(-n),m50=c.d50.slice(-n),m200=c.d200.slice(-n),ds=DATES.slice(-n);
+  const W=640,H=230,L=6,Rr=58,T=12,B=26,iw=W-L-Rr,ih=H-T-B;
+  const all=[...cl,...m50.filter(Boolean),...m200.filter(Boolean)];let lo=Math.min(...all),hi=Math.max(...all);const pad=(hi-lo)*0.06;lo-=pad;hi+=pad;
+  const X=i=>L+i/(n-1)*iw,Y=v=>T+(1-(v-lo)/(hi-lo))*ih;
+  const line=a=>a.map((v,i)=>v==null?"":`${i&&a[i-1]!=null?"L":"M"}${X(i).toFixed(1)} ${Y(v).toFixed(1)}`).join("");
+  let g="";
+  for(let k=0;k<=4;k++){const v=lo+(hi-lo)*k/4,y=Y(v);g+=`<line x1="${L}" x2="${L+iw}" y1="${y}" y2="${y}" stroke="var(--line)" stroke-width="1"/><text x="${W-4}" y="${y+4}" text-anchor="end" font-size="11" font-family="IBM Plex Mono, monospace" fill="var(--muted)">${v>=1000?Math.round(v).toLocaleString("en-US"):v.toFixed(v<20?1:0)}</text>`}
+  let lm=-1;ds.forEach((d,i)=>{const m=d.getUTCMonth();if(m!==lm&&i>3){if(m%2===0)g+=`<text x="${X(i)}" y="${H-7}" font-size="11" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="var(--muted)">${MON[m]}</text>`;lm=m}else if(lm===-1)lm=m});
+  const area=line(cl)+`L${X(n-1)} ${T+ih}L${X(0)} ${T+ih}Z`;
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="One-year price chart for ${esc(c.name)}">${g}
+  <path d="${area}" fill="var(--copper)" fill-opacity=".09"/>
+  <path d="${line(m200)}" fill="none" stroke="var(--fin)" stroke-width="1.4" stroke-dasharray="4 3"/>
+  <path d="${line(m50)}" fill="none" stroke="var(--muted)" stroke-width="1.4"/>
+  <path d="${line(cl)}" fill="none" stroke="var(--copper)" stroke-width="2"/>
+  <circle cx="${X(n-1)}" cy="${Y(cl[n-1])}" r="4" fill="var(--copper)" stroke="var(--surface)" stroke-width="2"/></svg>`;
+}
+function revSVG(c){
+  const W=640,H=150,T=22,B=24,n=5,mx=Math.max(...c.hist)*1.1,bw=70,gap=(W-n*bw)/(n+1);const lab=["Y−4","Y−3","Y−2","Y−1","TTM"];
+  let s="";c.hist.forEach((v,i)=>{const h=(v/mx)*(H-T-B),x=gap+i*(bw+gap),y=H-B-h;
+    s+=`<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="3" fill="var(${i===4?"--copper":"--surface-2"})"/><text x="${x+bw/2}" y="${y-6}" text-anchor="middle" font-size="12" font-family="IBM Plex Mono, monospace" fill="var(--ink)">${usd(v)}</text><text x="${x+bw/2}" y="${H-6}" text-anchor="middle" font-size="11" font-family="IBM Plex Mono, monospace" fill="var(--muted)">${lab[i]}</text>`});
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Revenue history">${s}</svg>`;
+}
+const stat=(k,v,c="")=>`<div class="stat"><div class="k">${k}</div><div class="v ${c}">${v}</div></div>`;
+
+function tabPrice(c){
+  const a50=c.d50[N-1],a200=c.d200[N-1];
+  const tc=c.trend==="Uptrend"?"up":c.trend==="Downtrend"?"down":"mut";
+  const rs=c.rsi>70?"Overbought":c.rsi<30?"Oversold":"Neutral";
+  return `<div class="svgbox">${priceSVG(c)}</div>
+  <div class="legend" style="margin-top:6px"><span><span class="sw" style="border-top-width:2px"></span>Price</span><span><span class="sw" style="border-top:2px solid var(--muted)"></span>50-day</span><span><span class="sw f"></span>200-day</span></div>
+  <div class="stats">${stat("1 month",pct(c.r1m),cls(c.r1m))}${stat("Year to date",pct(c.ytd),cls(c.ytd))}${stat("Trend",c.trend,tc)}${stat("vs 50-day",pct((c.px/a50-1)*100),cls(c.px-a50))}${stat("vs 200-day",pct((c.px/a200-1)*100),cls(c.px-a200))}${stat("RSI (14)",c.rsi.toFixed(0)+" · "+rs)}</div>
+  <p class="note">Live build adds relative strength vs the SOX index and your momentum early-warning signals.</p>`;
+}
+function tabFin(c){
+  const ps=c.mcap/c.rev,fm=c.fcf/c.rev*100;
+  return `<p class="sec">Revenue, last five years</p><div class="svgbox">${revSVG(c)}</div>
+  <table class="fin"><tbody>
+  <tr><td>Market cap</td><td>${usd(c.mcap)}</td></tr>
+  <tr><td>Revenue (TTM)</td><td>${usd(c.rev)}</td></tr>
+  <tr><td>Revenue growth (YoY)</td><td class="${cls(c.g)}">${pct(c.g,0)}</td></tr>
+  <tr><td>Gross margin</td><td>${pctP(c.gm)}</td></tr>
+  <tr><td>Operating margin</td><td class="${c.opm<0?"down":""}">${pctP(c.opm)}</td></tr>
+  <tr><td>Free cash flow (TTM)</td><td class="${c.fcf<0?"down":""}">${usd(c.fcf)} · ${pctP(fm)} margin</td></tr>
+  <tr><td>Forward P/E</td><td>${c.pe==null?"n/m (loss-making)":c.pe.toFixed(0)+"×"}</td></tr>
+  <tr><td>Price / sales</td><td>${ps.toFixed(1)}×</td></tr>
+  <tr><td>Growth-adjusted P/E</td><td>${c.pe&&c.g>0?(c.pe/c.g).toFixed(2):"—"}</td></tr>
+  </tbody></table>
+  <p class="note">Non-US listings shown in USD. Live build pulls these from SEC filings and Yahoo Finance.</p>`;
+}
+function tabAna(c){
+  const n=c.b+c.h+c.s,lo=Math.min(c.tl,c.px)*0.92,hi=Math.max(c.th,c.px)*1.04,P=v=>((v-lo)/(hi-lo)*100).toFixed(1);
+  return `<div class="stats" style="grid-template-columns:repeat(3,minmax(0,1fr))">${stat("Consensus",c.cons,c.cons.includes("uy")?"up":c.cons==="Sell"?"down":"")}${stat("Analysts",n)}${stat("Upside to mean",pct(c.upside,0),cls(c.upside))}</div>
+  <p class="sec">Ratings</p>
+  <div class="stack"><i style="width:${c.b/n*100}%;background:var(--up)"></i><i style="width:${c.h/n*100}%;background:var(--muted);opacity:.55"></i><i style="width:${c.s/n*100}%;background:var(--down)"></i></div>
+  <div class="legend"><span class="up">Buy ${c.b}</span><span>Hold ${c.h}</span><span class="down">Sell ${c.s}</span></div>
+  <p class="sec">12-month price targets</p>
+  <div class="tbar"><div class="rng" style="left:${P(c.tl)}%;width:${(P(c.th)-P(c.tl)).toFixed(1)}%"></div>
+  <div class="mk" style="left:${P(c.tl)}%"><span>Low ${px(c.tl)}</span></div><div class="mk" style="left:${P(c.tm)}%"><span>Mean ${px(c.tm)}</span></div><div class="mk" style="left:${P(c.th)}%"><span>High ${px(c.th)}</span></div><div class="mk px" style="left:${P(c.px)}%"><span>Now ${px(c.px)}</span></div></div>
+  <p class="note" style="margin-top:34px">Sample counts and targets. Live build pulls consensus ratings, targets and recent upgrades/downgrades from Yahoo Finance.</p>`;
+}
+function linkRow(o,text,e){return `<li><button class="go" type="button" data-go="${esc(o)}">${esc(BY[o].lab)}</button><span>${text}</span><span class="conf ${e.cf}" title="${e.cf==="D"?"Disclosed":e.cf==="E"?"Estimated":"Inferred"}">${e.cf}</span></li>`}
+function tabLinks(c){
+  const sells=EDGES.filter(e=>e.ty==="s"&&e.f===c.t).sort((a,b)=>b.p-a.p);
+  const buys=EDGES.filter(e=>e.ty==="s"&&e.t===c.t).sort((a,b)=>b.p-a.p);
+  const fin=EDGES.filter(e=>e.ty==="f"&&(e.f===c.t||e.t===c.t));
+  let h="";
+  if(sells.length){
+    const tot=sells.reduce((x,e)=>x+e.p,0),top=sells[0],hhi=sells.reduce((x,e)=>x+(e.p/100)**2,0);
+    h+=`<div class="stats">${stat("Mapped customer share",pctP(tot))}${stat("Largest customer",BY[top.t].lab+" "+pctP(top.p))}${stat("Concentration (HHI)",hhi.toFixed(2),hhi>0.15?"down":"")}</div>`;
+    h+=`<p class="sec">Sells to · share of ${esc(c.lab)} revenue</p><ul class="links">${sells.map(e=>linkRow(e.t,`≈${e.p}% · ${esc(e.note)}`,e)).join("")}</ul>`;
+  }
+  if(buys.length)h+=`<p class="sec">Buys from · share of supplier's revenue</p><ul class="links">${buys.map(e=>linkRow(e.f,`≈${e.p}% of ${esc(BY[e.f].lab)} revenue · ${esc(e.note)}`,e)).join("")}</ul>`;
+  if(fin.length)h+=`<p class="sec">Capital ties</p><ul class="links">${fin.map(e=>{const o=e.f===c.t?e.t:e.f;return linkRow(o,`${e.f===c.t?"Invests in":"Backed by"} ${esc(BY[o].lab)} · ${esc(e.note)}`,e)}).join("")}</ul>`;
+  const circ=fin.filter(f=>EDGES.some(e=>e.ty==="s"&&((e.f===f.f&&e.t===f.t)||(e.f===f.t&&e.t===f.f))));
+  if(circ.length)h+=`<div class="flag"><b>Circularity flag.</b> ${esc(c.lab)} has capital ties to ${circ.map(f=>esc(BY[f.f===c.t?f.t:f.f].lab)).join(", ")} and also trades with them. Part of this demand is financed by the supplier.</div>`;
+  h+=`<p class="note">D = disclosed in filings · E = estimated · I = inferred. Weights are illustrative in this sample.</p>`;
+  return h;
+}
+function tabThesis(c){
+  return `<div class="thesis"><p class="sec">Bull case</p><p>${esc(c.bull)}.</p><p class="sec">Bear case</p><p>${esc(c.bear)}.</p><p class="sec">What to watch</p><p>${esc(c.kpi)}.</p>
+  <p class="sec">Position in the chain</p><p>Layer ${c.layer} of 9: ${LAYERS[c.layer-1].name}. ${LAYERS[c.layer-1].neck}.</p></div>
+  <p class="note">Thesis notes are maintained by hand in the repository and versioned, so you can see how a view changed over time.</p>`;
+}
+
+function renderPanel(){
+  const c=BY[SEL];if(!c){panel.innerHTML="";return}
+  const L=LAYERS[c.layer-1];
+  let head=`<div class="ph"><div><p class="eyebrow">L${L.n} · ${L.short}</p><h2>${esc(c.lab)}</h2></div>`;
+  head+=c.priv?`<button class="close" type="button" id="closeP">Close</button>`:`<div><div class="px">${px(c.px)}</div><div class="chg ${cls(c.r1m)}">${pct(c.r1m)} 1M</div></div>`;
+  head+=`<div class="nm">${esc(c.name)}${c.priv?"":` · ${usd(c.mcap)} market cap`}</div>${c.priv?"":`<button class="close" type="button" id="closeP">Close</button>`}</div>`;
+  let body;
+  if(c.priv){
+    body=`<div class="flag" style="border-color:var(--line);margin-top:12px">Private company. No share price or analyst coverage. It is tracked as a demand node so you can see who depends on its spending.</div>${tabLinks(c)}${tabThesis(c)}`;
+  }else{
+    const tabs=`<div class="tabs" role="tablist">${TABS.map(([k,l])=>`<button role="tab" type="button" id="tab-${k}" data-tab="${k}" aria-selected="${k===TAB}">${l}</button>`).join("")}</div>`;
+    const fn={price:tabPrice,fin:tabFin,ana:tabAna,links:tabLinks,thesis:tabThesis}[TAB];
+    body=tabs+`<div role="tabpanel">${fn(c)}</div>`;
+  }
+  panel.innerHTML=head+body;
+  panel.querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()=>{TAB=b.dataset.tab;renderPanel()}));
+  panel.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>select(b.dataset.go,true)));
+  const cp=panel.querySelector("#closeP");if(cp)cp.addEventListener("click",closeSheet);
+}
+
+/* ---------- selection + sheet ---------- */
+const narrow=()=>window.matchMedia("(max-width:1039px)").matches;
+function select(t,keepOpen){
+  SEL=t;const c=BY[t];
+  const linked=new Set();EDGES.forEach(e=>{if(e.f===t)linked.add(e.t);if(e.t===t)linked.add(e.f)});
+  map.classList.add("has-sel");
+  document.querySelectorAll(".chip").forEach(el=>{el.classList.toggle("sel",el.dataset.t===t);el.classList.toggle("linked",linked.has(el.dataset.t))});
+  $("#mini").innerHTML=`<b>${esc(c.lab)}</b>${c.priv?"Private · "+linked.size+" links":`${px(c.px)} <span class="${cls(c.r1m)} num">${pct(c.r1m)}</span> · ${linked.size} links`}`;
+  renderPanel();drawWires();
+  try{history.replaceState(null,"","#"+t)}catch(e){}
+  if(keepOpen&&narrow())openSheet();
+}
+function openSheet(){panel.classList.add("open");$("#scrim").classList.add("on")}
+function closeSheet(){panel.classList.remove("open");$("#scrim").classList.remove("on")}
+$("#openDetail").addEventListener("click",openSheet);
+$("#scrim").addEventListener("click",closeSheet);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSheet()});
+
+paintChips();
+let start="NVDA";try{const h=decodeURIComponent(location.hash.slice(1));if(BY[h])start=h}catch(e){}
+select(start);
+</script>
+
+</body>
+</html>
