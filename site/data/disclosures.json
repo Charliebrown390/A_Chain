@@ -1,6 +1,6 @@
 {
- "built": "2026-10-16T07:59:41+00:00",
- "sec_pulled": "2026-10-16T07:54:36+00:00",
+ "built": "2026-10-16T08:01:40+00:00",
+ "sec_pulled": "2026-10-16T08:01:00+00:00",
  "companies": {
   "ASML": {
    "cik": 937966,
@@ -430,7 +430,34 @@
   },
   "AMD": {
    "cik": 2488,
-   "filings": [],
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-02-04",
+     "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+     "rows": [
+      {
+       "customer": "Customer A",
+       "member": "amd:CustomerAMember",
+       "basis": "revenue",
+       "pct": 18.0,
+       "start": "2023-01-01",
+       "end": "2023-12-30",
+       "months": 12
+      },
+      {
+       "customer": "Top Customer One",
+       "member": "amd:TopCustomerOneMember",
+       "basis": "receivables",
+       "pct": 11.0,
+       "start": "2024-12-29",
+       "end": "2025-12-27",
+       "months": 12
+      }
+     ]
+    }
+   ],
    "rpo": {
     "usd_bn": 0.22,
     "end": "2026-06-27",
@@ -1726,8 +1753,49 @@
   },
   "NBIS": {
    "cik": 1513845,
-   "filings": [],
-   "rpo": null
+   "filings": [
+    {
+     "form": "20-F",
+     "kind": "annual",
+     "filed": "2026-04-30",
+     "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm",
+     "rows": [
+      {
+       "customer": "Customera",
+       "member": "nbis:CustomeraMember",
+       "basis": "revenue",
+       "pct": 25.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      },
+      {
+       "customer": "Customerb",
+       "member": "nbis:CustomerbMember",
+       "basis": "revenue",
+       "pct": 15.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      },
+      {
+       "customer": "Customerd",
+       "member": "nbis:CustomerdMember",
+       "basis": "receivables",
+       "pct": 83.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      }
+     ]
+    }
+   ],
+   "rpo": {
+    "usd_bn": 21.33,
+    "end": "2025-12-31",
+    "form": "20-F",
+    "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm"
+   }
   },
   "META": {
    "cik": 1326801,
