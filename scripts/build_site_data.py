@@ -42,6 +42,7 @@ def clean_member(m):
     """nvda:CustomerAMember -> Customer A ; anet:MicrosoftCorporationMember -> Microsoft Corporation"""
     name = m.split(":", 1)[-1]
     name = re.sub(r"Member$", "", name)
+    name = re.sub(r"^Customer([a-z])$", lambda m: "Customer" + m.group(1).upper(), name)
     name = re.sub(r"(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])", " ", name)
     return name.strip()
 
