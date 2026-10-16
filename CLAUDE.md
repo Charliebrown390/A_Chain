@@ -8,5 +8,6 @@ Conventions
 - SEC requests need the `SEC_USER_AGENT` secret ("Name email"); SEC rejects GitHub noreply addresses. The sandbox shell cannot reach SEC or Yahoo, so run pulls via GitHub Actions.
 - Free data sources only unless a paid API is critically required: SEC EDGAR XBRL, yfinance, company IR pages, Taiwan monthly sales.
 - Every relationship edge carries a confidence tag: D (disclosed in filings), E (estimated), I (inferred), plus a source note.
-- Keep sample/illustrative data clearly labelled on the page until replaced by live data.
+- Market data comes from Yahoo Finance via yfinance (works from the sandbox too). Implied vol is computed from option mid-quotes in `--mode options`, which must run during US trading hours; Yahoo's own IV field is unreliable outside them.
+- Thesis notes: `data/theses.yaml`. The page is a single file, `site/index.html`.
 - Universe: core ~40 names across 9 layers.

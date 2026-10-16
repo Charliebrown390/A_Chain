@@ -1,0 +1,267 @@
+# Thesis notes per company. Edit freely; the page shows these on the Thesis tab.
+# status: draft | active | watch | avoid    updated: date you last revised the view
+theses:
+  ASML:
+    bull: Sole EUV supplier; High-NA tools add content per wafer
+    bear: China export curbs and lumpy chipmaker capex
+    watch: EUV bookings, backlog, China share of sales
+    updated: '2026-10-16'
+    status: draft
+  AMAT:
+    bull: Broadest tool range; gate-all-around and packaging tailwinds
+    bear: China is a large share of sales and exposed to export rules
+    watch: Foundry vs memory mix, China share
+    updated: '2026-10-16'
+    status: draft
+  LRCX:
+    bull: Etch and deposition leader; gains most from NAND and HBM upgrades
+    bear: Memory capex is the most cyclical spend
+    watch: WFE outlook, NAND upgrade spend
+    updated: '2026-10-16'
+    status: draft
+  KLAC:
+    bull: Process-control intensity rises at every node
+    bear: Premium multiple for a cyclical business
+    watch: Leading-edge foundry spend, margins
+    updated: '2026-10-16'
+    status: draft
+  SNPS:
+    bull: EDA duopoly; every custom AI chip needs its tools
+    bear: Ansys integration and China exposure
+    watch: Backlog, AI design starts
+    updated: '2026-10-16'
+    status: draft
+  CDNS:
+    bull: EDA duopoly; emulation hardware demand from AI chips
+    bear: Valuation leaves little room for a miss
+    watch: Backlog, hardware system sales
+    updated: '2026-10-16'
+    status: draft
+  NVDA:
+    bull: 'Full stack: GPUs, NVLink, networking and CUDA software'
+    bear: Customer concentration, custom ASICs, vendor-financed demand
+    watch: Data-centre revenue, gross margin, Rubin ramp
+    updated: '2026-10-16'
+    status: draft
+  AMD:
+    bull: Credible second GPU source; OpenAI deal validates MI-series
+    bear: Software gap to CUDA; warrant dilution tied to the OpenAI deal
+    watch: Data-centre GPU revenue, MI450 ramp
+    updated: '2026-10-16'
+    status: draft
+  AVGO:
+    bull: Custom ASIC partner for Google TPU, Meta and OpenAI; Ethernet switches
+    bear: ASIC customers can switch partners or bring design in-house
+    watch: AI semiconductor revenue, number of XPU customers
+    updated: '2026-10-16'
+    status: draft
+  MRVL:
+    bull: Custom silicon and optical DSPs for AWS and Microsoft
+    bear: Lumpy design-win cadence; risk of losing a socket
+    watch: Custom XPU revenue, optics growth
+    updated: '2026-10-16'
+    status: draft
+  ARM:
+    bull: Royalties on every Arm CPU in AI servers
+    bear: Very high multiple; licensing disputes
+    watch: Royalty rate, data-centre share
+    updated: '2026-10-16'
+    status: draft
+  INTC:
+    bull: Foundry optionality and US policy support
+    bear: Losing share; foundry needs outside customers
+    watch: 18A yields, foundry customer wins
+    updated: '2026-10-16'
+    status: draft
+  TSM:
+    bull: Makes nearly every leading AI chip; strong pricing power
+    bear: Taiwan geopolitics; margin dilution from overseas fabs
+    watch: Monthly sales, CoWoS capacity, N2 ramp
+    updated: '2026-10-16'
+    status: draft
+  005930.KS:
+    bull: Memory upcycle; catching up on HBM for NVIDIA
+    bear: Late HBM qualification; foundry losses
+    watch: HBM4 qualification, memory pricing
+    updated: '2026-10-16'
+    status: draft
+  AMKR:
+    bull: Outsourced advanced packaging as CoWoS overflows
+    bear: Thin margins; smaller AI share than peers
+    watch: Advanced packaging revenue mix
+    updated: '2026-10-16'
+    status: draft
+  000660.KS:
+    bull: HBM leader with the majority of NVIDIA's supply
+    bear: Memory cycles; HBM pricing as rivals catch up
+    watch: HBM share, DRAM contract prices
+    updated: '2026-10-16'
+    status: draft
+  MU:
+    bull: HBM share gains; the only US memory maker
+    bear: Commodity DRAM and NAND price swings
+    watch: HBM revenue, gross margin
+    updated: '2026-10-16'
+    status: draft
+  SNDK:
+    bull: AI data growth lifts enterprise SSD demand
+    bear: NAND oversupply risk
+    watch: Enterprise SSD bit growth, pricing
+    updated: '2026-10-16'
+    status: draft
+  WDC:
+    bull: Nearline hard drives for AI data lakes
+    bear: Lumpy hyperscaler order timing
+    watch: Exabytes shipped, pricing
+    updated: '2026-10-16'
+    status: draft
+  ANET:
+    bull: Ethernet is winning AI back-end networks
+    bear: Two customers above 10% each; competition from NVIDIA networking
+    watch: AI networking revenue, customer mix
+    updated: '2026-10-16'
+    status: draft
+  COHR:
+    bull: 800G and 1.6T transceivers; indium-phosphide lasers
+    bear: Patchy execution and margin history
+    watch: Datacom revenue, laser capacity
+    updated: '2026-10-16'
+    status: draft
+  LITE:
+    bull: Optical circuit switches and lasers for Google and NVIDIA
+    bear: Concentrated customer base
+    watch: Cloud revenue, OCS shipments
+    updated: '2026-10-16'
+    status: draft
+  CRDO:
+    bull: Active electrical cables for in-rack links
+    bear: Heavy reliance on one hyperscaler
+    watch: Customer diversification
+    updated: '2026-10-16'
+    status: draft
+  ALAB:
+    bull: PCIe/CXL retimers and switches inside AI racks
+    bear: Product cycles depend on NVIDIA design choices
+    watch: Scorpio switch ramp
+    updated: '2026-10-16'
+    status: draft
+  DELL:
+    bull: AI server backlog from neoclouds and enterprises
+    bear: Thin margins on AI servers
+    watch: AI server orders and backlog
+    updated: '2026-10-16'
+    status: draft
+  SMCI:
+    bull: Fast time-to-market on liquid-cooled racks
+    bear: Governance history; margin compression
+    watch: Gross margin, timely filings
+    updated: '2026-10-16'
+    status: draft
+  HPE:
+    bull: Sovereign and enterprise AI; networking via Juniper
+    bear: Small AI share; integration risk
+    watch: AI systems backlog
+    updated: '2026-10-16'
+    status: draft
+  2317.TW:
+    bull: Assembles most NVIDIA rack-scale systems
+    bear: Very thin margins
+    watch: Monthly sales, AI server share
+    updated: '2026-10-16'
+    status: draft
+  VRT:
+    bull: Power and liquid cooling for dense AI racks
+    bear: Order cyclicality; competition from Schneider and Eaton
+    watch: Orders, book-to-bill
+    updated: '2026-10-16'
+    status: draft
+  ETN:
+    bull: Electrical gear for data centres and the grid
+    bear: Rich multiple for an industrial
+    watch: Data-centre orders, backlog
+    updated: '2026-10-16'
+    status: draft
+  GEV:
+    bull: Gas turbines sold out for years; grid equipment
+    bear: Wind segment execution; capacity limits
+    watch: Turbine slot reservations
+    updated: '2026-10-16'
+    status: draft
+  CEG:
+    bull: Nuclear power deals with hyperscalers
+    bear: Regulatory pushback on co-located data centres
+    watch: New PPAs, power prices
+    updated: '2026-10-16'
+    status: draft
+  EQIX:
+    bull: Interconnection hubs for AI inference
+    bear: Capital intensity; rate sensitivity
+    watch: AFFO growth, pricing (P/E shown is P/AFFO)
+    updated: '2026-10-16'
+    status: draft
+  MSFT:
+    bull: Azure growth plus its OpenAI stake
+    bear: Capex intensity weighs on free cash flow
+    watch: Azure growth, capex, RPO
+    updated: '2026-10-16'
+    status: draft
+  AMZN:
+    bull: AWS scale plus Trainium cost advantage
+    bear: Capex load and retail margins
+    watch: AWS growth, backlog
+    updated: '2026-10-16'
+    status: draft
+  GOOGL:
+    bull: TPUs give a cost edge; growing Cloud backlog
+    bear: Chatbots could erode Search
+    watch: Cloud growth, external TPU sales
+    updated: '2026-10-16'
+    status: draft
+  ORCL:
+    bull: Very large RPO from AI compute contracts
+    bear: Debt-funded build-out; reliance on OpenAI
+    watch: RPO conversion, FCF, debt
+    updated: '2026-10-16'
+    status: draft
+  CRWV:
+    bull: Fast-growing GPU cloud with long contracts
+    bear: High leverage; few customers; NVIDIA-linked
+    watch: Backlog, cost of debt, utilisation
+    updated: '2026-10-16'
+    status: draft
+  NBIS:
+    bull: GPU cloud with a Microsoft anchor contract
+    bear: Early stage and burning cash
+    watch: Contracted capacity, ARR
+    updated: '2026-10-16'
+    status: draft
+  META:
+    bull: AI improves ad targeting and engagement
+    bear: Heavy capex with no cloud business to resell it
+    watch: Ad growth, capex guidance
+    updated: '2026-10-16'
+    status: draft
+  PLTR:
+    bull: Enterprise AI platform adoption
+    bear: Extreme valuation
+    watch: US commercial growth
+    updated: '2026-10-16'
+    status: draft
+  NOW:
+    bull: Workflow AI agents sold per seat
+    bear: Seat-based pricing under pressure from AI
+    watch: Pro Plus adoption, cRPO
+    updated: '2026-10-16'
+    status: draft
+  OpenAI:
+    bull: Largest single source of new compute commitments
+    bear: Commitments far exceed current revenue
+    watch: Revenue run-rate, funding rounds
+    updated: '2026-10-16'
+    status: draft
+  Anthropic:
+    bull: Large buyer of AWS Trainium and Google TPU capacity
+    bear: Ongoing funding needs
+    watch: Revenue run-rate, compute deals
+    updated: '2026-10-16'
+    status: draft

@@ -10,7 +10,8 @@ A network model of the AI build-out, from chip tools to applications. It maps wh
 |---|---|---|
 | 0 | Prototype dashboard (sample data) | Done |
 | 1 | Company universe, layer taxonomy, sourced relationship map, SEC customer-concentration pull | Done |
-| 2 | Market data pipeline: prices, financials, analyst ratings (yfinance), Taiwan monthly sales | Next |
+| 2 | Market data: prices, fundamentals, analyst ratings and rating changes, implied vs realised vol, beta, news (Yahoo Finance) | Done |
+| 3 | Analytics: screening and scoring across the chain, Taiwan monthly sales | Next |
 | 3 | Analytics: fundamentals, technicals, network metrics | Planned |
 | 4 | Dashboard wired to live data | Planned |
 | 5 | Thesis notes and nightly refresh via GitHub Actions | Planned |
@@ -23,7 +24,10 @@ A network model of the AI build-out, from chip tools to applications. It maps wh
 - `scripts/sec_concentration.py` — the SEC pull; needs the `SEC_USER_AGENT` repository secret
 - `scripts/build_site_data.py` — validates the map, merges filing figures into links, writes `site/data/*.json`
 - `site/` — the static web page served by GitHub Pages
-- `.github/workflows/` — `pages.yml` (build and deploy on every push), `sec-extract.yml` (weekly SEC pull, then deploy)
+- `data/theses.yaml` — bull/bear/what-to-watch notes per company (edit by hand)
+- `data/history/iv.csv` — daily 30-day implied vol log, so IV percentiles build up over time
+- `scripts/market_data.py` — Yahoo Finance pull: `--mode full` (prices, fundamentals, analysts, news), `options` (implied vol), `news`
+- `.github/workflows/` — `pages.yml` (build and deploy on every push), `sec-extract.yml` (weekly SEC pull), `market-data.yml` (full refresh after each US close, IV snapshot during US hours, news every 3 hours)
 
 ## How links are tagged
 

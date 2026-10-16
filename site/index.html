@@ -163,33 +163,84 @@ footer p{margin:0}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+<style>
+/* Phase 2 additions: chart crosshair, ranges, movers, vol, analyst actions, news */
+.pulse.three{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+.chartwrap{display:grid;gap:6px}
+.ranges{display:flex;gap:4px;justify-content:flex-end}
+.ranges button{border:1px solid var(--line);background:var(--surface);border-radius:5px;padding:3px 9px;font-family:var(--f-mono);font-size:11.5px;color:var(--muted);cursor:pointer}
+.ranges button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.svgbox{position:relative}
+.svgbox svg.interactive{touch-action:pan-y;cursor:crosshair}
+.tip{position:absolute;top:4px;pointer-events:none;background:var(--ink);color:var(--bg);border-radius:6px;padding:5px 8px;font-family:var(--f-mono);font-size:11.5px;line-height:1.35;white-space:nowrap;font-variant-numeric:tabular-nums;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.tip b{font-weight:600}
+.tip .mutd{opacity:.72}
+.movers{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.movers li{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;align-items:baseline;font-size:12.5px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.movers li:last-child{border-bottom:0;padding-bottom:0}
+.movers .mv1{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.movers .hl{grid-column:2;min-width:0;overflow-wrap:anywhere}
+.movers .hl a{color:var(--ink);text-decoration:none}
+.movers .hl a:hover{text-decoration:underline}
+.go{font-family:var(--f-mono);font-weight:600;border:1px solid var(--line);background:var(--bg);border-radius:5px;padding:2px 7px;cursor:pointer;font-size:12px}
+.go:hover{border-color:var(--copper);color:var(--copper)}
+.vchip{display:inline-block;font-family:var(--f-mono);font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:999px}
+.vchip.cheap{background:color-mix(in srgb,var(--up) 18%,var(--surface));color:var(--up)}
+.vchip.rich{background:color-mix(in srgb,var(--down) 16%,var(--surface));color:var(--down)}
+.vchip.fair{background:var(--surface-2);color:var(--muted)}
+.pbar{position:relative;height:8px;border-radius:4px;background:linear-gradient(90deg,color-mix(in srgb,var(--up) 45%,var(--surface-2)),var(--surface-2),color-mix(in srgb,var(--down) 45%,var(--surface-2)));margin:8px 0 4px}
+.pbar i{position:absolute;top:-4px;width:3px;height:16px;background:var(--ink);border-radius:2px;transform:translateX(-50%)}
+.pscale{display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);font-family:var(--f-mono)}
+.acts{list-style:none;margin:0;padding:0;display:grid}
+.acts li{display:grid;grid-template-columns:76px 1fr auto;gap:8px;padding:6px 0;border-bottom:1px solid var(--line);font-size:12.5px;align-items:baseline}
+.acts .dt{font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
+.acts .pt{font-family:var(--f-mono);font-size:11.5px;text-align:right;white-space:nowrap}
+.news{list-style:none;margin:0;padding:0;display:grid}
+.news li{padding:8px 0;border-bottom:1px solid var(--line);font-size:13px}
+.news a{color:var(--ink);text-decoration:none}
+.news a:hover{color:var(--copper)}
+.news .meta{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
+.warnbox{margin-top:10px;padding:8px 10px;border-radius:7px;border:1px solid var(--warn);color:var(--ink);font-size:12.5px;background:color-mix(in srgb,var(--warn) 8%,var(--surface))}
+.seg{flex-wrap:wrap}
+@media (max-width:700px){.acts li{grid-template-columns:64px 1fr}.acts .pt{grid-column:2;text-align:left}}
+</style>
+
 </head>
 <body>
-
 
 <div class="wrap">
   <header class="top">
     <div>
       <p class="eyebrow">Silicon → systems → services</p>
       <h1>AI Supply Chain Monitor</h1>
-      <p class="sub">44 companies across nine layers of the AI build-out, linked by sourced supply, contract and capital relationships. Tap any company to trace who it sells to and who it depends on, then open its price, financials, analyst view and thesis.</p>
+      <p class="sub">44 companies across nine layers of the AI build-out, linked by sourced supply, contract and capital relationships. Tap any company to trace who it sells to and who it depends on, then open its price, volatility, financials, analyst calls and news.</p>
     </div>
     <div class="stamp">
-      <span class="badge">Map: sourced · Market data: sample</span>
-      <span>Relationships come from filings and announcements, each tagged by confidence. Prices, financials and analyst ratings are still illustrative until phase 2.</span>
+      <span class="badge" id="badge">Loading data…</span>
+      <span id="stampText">Relationships come from filings and announcements, each tagged by confidence. Market data is refreshed from Yahoo Finance.</span>
       <span class="mono" id="built"></span>
     </div>
   </header>
 
-  <section class="pulse">
+  <section class="pulse three">
+    <div class="card">
+      <h2>Biggest moves</h2>
+      <p class="hint">Latest daily move measured in standard deviations of each stock's own 20-day volatility, with the newest headline.</p>
+      <ul class="movers" id="movers"></ul>
+    </div>
     <div class="card">
       <h2>Layer momentum</h2>
-      <p class="hint">Median 1-month share price change per layer. Tap a layer to jump to it.</p>
+      <p class="hint" id="heatHint">Median share price change per layer. Tap a layer to jump to it.</p>
+      <div class="seg" id="heatSeg" role="group" aria-label="Momentum period" style="margin-bottom:10px">
+        <button type="button" id="hm-1d" data-k="chg1d" aria-pressed="false">1D</button>
+        <button type="button" id="hm-1m" data-k="r1m" aria-pressed="true">1M</button>
+        <button type="button" id="hm-ytd" data-k="ytd" aria-pressed="false">YTD</button>
+      </div>
       <div class="heat" id="heat"></div>
     </div>
     <div class="card">
       <h2>Circularity watch</h2>
-      <p class="hint">Pairs where one company has a capital tie to the other and they also trade. Demand that is partly vendor-financed.</p>
+      <p class="hint">Pairs where one company has a capital tie to the other and they also trade, so part of the demand is financed within the relationship.</p>
       <ul class="circ" id="circ"></ul>
     </div>
   </section>
@@ -197,15 +248,18 @@ footer p{margin:0}
   <div class="controls">
     <div><span class="ctl-label">Colour by</span>
       <div class="seg" id="seg" role="group" aria-label="Colour companies by">
-        <button id="cb-ret" data-m="ret" aria-pressed="true">1M return</button>
-        <button id="cb-up" data-m="up" aria-pressed="false">Upside to target</button>
-        <button id="cb-pe" data-m="pe" aria-pressed="false">Fwd P/E</button>
+        <button type="button" id="cb-1d" data-m="d1" aria-pressed="false">1D</button>
+        <button type="button" id="cb-ret" data-m="ret" aria-pressed="true">1M</button>
+        <button type="button" id="cb-up" data-m="up" aria-pressed="false">Upside</button>
+        <button type="button" id="cb-pe" data-m="pe" aria-pressed="false">Fwd P/E</button>
+        <button type="button" id="cb-iv" data-m="iv" aria-pressed="false">Vol cheap/rich</button>
       </div>
     </div>
     <div class="legend">
-      <span><span class="sw"></span>Sells to (thicker = more important to the seller)</span><span><span class="sw" style="border-top:3px dotted var(--copper)"></span>Inferred, size unknown</span>
+      <span><span class="sw"></span>Sells to (thicker = more important)</span>
+      <span><span class="sw" style="border-top:3px dotted var(--copper)"></span>Inferred, size unknown</span>
       <span><span class="sw f"></span>Capital tie</span>
-      <span class="scale" id="scale"><span id="sc-lo">−20%</span><b></b><span id="sc-hi">+20%</span></span>
+      <span class="scale"><span id="sc-lo">−20%</span><b></b><span id="sc-hi">+20%</span></span>
     </div>
   </div>
 
@@ -215,9 +269,9 @@ footer p{margin:0}
   </div>
 
   <footer>
-    <div><h3>Where live data will come from</h3><p>Prices, technicals and analyst ratings and targets from Yahoo Finance via yfinance. Financials from SEC EDGAR's XBRL API. TSMC, Hon Hai and other Taiwan suppliers publish monthly sales, which give an early read on demand.</p></div>
-    <div><h3>How links are sourced</h3><p>D = disclosed by a party in a filing or official release. E = estimated, or reported by the press but not confirmed by the parties. I = inferred from known product relationships, with size not disclosed. Each link names its source. Customer percentages are pulled automatically from SEC XBRL filings each week.</p></div>
-    <div><h3>How it refreshes</h3><p>A GitHub Actions job runs nightly, writes JSON data files to the repository, and GitHub Pages serves this page from them. This is an analytical tool, not investment advice.</p></div>
+    <div><h3>Data sources</h3><p>Prices, fundamentals, analyst ratings, price targets and recent rating changes come from Yahoo Finance and refresh every weekday after the US close. Headlines come from Yahoo Finance's public feeds and refresh every three hours. Customer concentration and backlog come from SEC XBRL filings and refresh weekly.</p></div>
+    <div><h3>Volatility</h3><p>Implied vol is a 30-day at-the-money figure that we compute from option mid-quotes during US trading hours. Realised vol is from daily closes. Implied vol usually sits above realised vol, so a ratio under 1.0 reads as cheap and over 1.3 as rich. An implied-vol percentile appears once a few weeks of history have built up.</p></div>
+    <div><h3>How links are sourced</h3><p>D = disclosed by a party in a filing or official release. E = estimated, or reported but not confirmed. I = inferred from known product relationships, with size not disclosed. This is an analytical tool, not investment advice.</p></div>
   </footer>
 </div>
 
@@ -225,189 +279,143 @@ footer p{margin:0}
 <div class="scrim" id="scrim"></div>
 
 <script>
-let LAYERS=[];// SAMPLE market data until phase 2: id, label, name, layer, px, mcap$B, revTTM$B, revG%, GM%, OpM%, FCF$B, fwdPE, buy, hold, sell, bull, bear, kpis
-const CO=[
-["ASML","ASML","ASML Holding",1,1050,410,36,12,52,34,10,32,24,6,1,"Sole EUV supplier; High-NA tools add content per wafer","China export curbs and lumpy chipmaker capex","EUV bookings, backlog, China share of sales"],
-["AMAT","AMAT","Applied Materials",1,230,185,29,8,48,30,7,22,22,9,1,"Broadest tool range; gate-all-around and packaging tailwinds","China is a large share of sales and exposed to export rules","Foundry vs memory mix, China share"],
-["LRCX","LRCX","Lam Research",1,140,180,19,20,49,32,5,30,24,7,0,"Etch and deposition leader; gains most from NAND and HBM upgrades","Memory capex is the most cyclical spend","WFE outlook, NAND upgrade spend"],
-["KLAC","KLAC","KLA Corp",1,1000,133,12.5,15,61,42,4,30,15,10,1,"Process-control intensity rises at every node","Premium multiple for a cyclical business","Leading-edge foundry spend, margins"],
-["SNPS","SNPS","Synopsys",1,520,95,7.5,20,80,30,1.6,38,14,4,0,"EDA duopoly; every custom AI chip needs its tools","Ansys integration and China exposure","Backlog, AI design starts"],
-["CDNS","CDNS","Cadence Design",1,340,93,5.3,13,87,33,1.5,48,16,5,0,"EDA duopoly; emulation hardware demand from AI chips","Valuation leaves little room for a miss","Backlog, hardware system sales"],
-["NVDA","NVDA","NVIDIA",2,190,4600,210,60,72,62,100,32,58,6,1,"Full stack: GPUs, NVLink, networking and CUDA software","Customer concentration, custom ASICs, vendor-financed demand","Data-centre revenue, gross margin, Rubin ramp"],
-["AMD","AMD","Advanced Micro Devices",2,230,375,34,30,54,12,5,40,38,12,0,"Credible second GPU source; OpenAI deal validates MI-series","Software gap to CUDA; warrant dilution tied to the OpenAI deal","Data-centre GPU revenue, MI450 ramp"],
-["AVGO","AVGO","Broadcom",2,360,1700,68,25,77,40,30,38,34,4,0,"Custom ASIC partner for Google TPU, Meta and OpenAI; Ethernet switches","ASIC customers can switch partners or bring design in-house","AI semiconductor revenue, number of XPU customers"],
-["MRVL","MRVL","Marvell Technology",2,85,73,8.5,45,51,10,1.6,30,30,6,0,"Custom silicon and optical DSPs for AWS and Microsoft","Lumpy design-win cadence; risk of losing a socket","Custom XPU revenue, optics growth"],
-["ARM","ARM","Arm Holdings",2,160,170,4.5,20,96,20,0.5,80,22,8,2,"Royalties on every Arm CPU in AI servers","Very high multiple; licensing disputes","Royalty rate, data-centre share"],
-["INTC","INTC","Intel",2,38,170,53,0,38,-2,-8,60,6,30,5,"Foundry optionality and US policy support","Losing share; foundry needs outside customers","18A yields, foundry customer wins"],
-["TSM","TSM","TSMC",3,300,1550,115,35,59,49,32,24,18,2,0,"Makes nearly every leading AI chip; strong pricing power","Taiwan geopolitics; margin dilution from overseas fabs","Monthly sales, CoWoS capacity, N2 ramp"],
-["005930.KS","Samsung","Samsung Electronics",3,62,400,220,10,39,12,15,14,30,4,0,"Memory upcycle; catching up on HBM for NVIDIA","Late HBM qualification; foundry losses","HBM4 qualification, memory pricing"],
-["AMKR","AMKR","Amkor Technology",3,32,8,6.5,5,13,6,0.4,18,6,4,1,"Outsourced advanced packaging as CoWoS overflows","Thin margins; smaller AI share than peers","Advanced packaging revenue mix"],
-["000660.KS","SK Hynix","SK Hynix",4,290,210,60,55,60,47,18,7,32,2,0,"HBM leader with the majority of NVIDIA's supply","Memory cycles; HBM pricing as rivals catch up","HBM share, DRAM contract prices"],
-["MU","MU","Micron Technology",4,200,225,40,45,45,28,5,11,28,5,1,"HBM share gains; the only US memory maker","Commodity DRAM and NAND price swings","HBM revenue, gross margin"],
-["SNDK","SNDK","SanDisk",4,120,17,8,15,30,10,0.5,18,10,5,0,"AI data growth lifts enterprise SSD demand","NAND oversupply risk","Enterprise SSD bit growth, pricing"],
-["WDC","WDC","Western Digital",4,110,38,10,30,40,25,1.5,16,18,4,0,"Nearline hard drives for AI data lakes","Lumpy hyperscaler order timing","Exabytes shipped, pricing"],
-["ANET","ANET","Arista Networks",5,140,175,8.5,28,64,43,3.5,45,20,5,0,"Ethernet is winning AI back-end networks","Two customers above 10% each; competition from NVIDIA networking","AI networking revenue, customer mix"],
-["COHR","COHR","Coherent",5,110,17,6,20,37,12,0.4,28,14,3,0,"800G and 1.6T transceivers; indium-phosphide lasers","Patchy execution and margin history","Datacom revenue, laser capacity"],
-["LITE","LITE","Lumentum",5,160,11,2,45,35,10,0.1,40,12,4,0,"Optical circuit switches and lasers for Google and NVIDIA","Concentrated customer base","Cloud revenue, OCS shipments"],
-["CRDO","CRDO","Credo Technology",5,140,24,0.9,140,64,30,0.2,60,12,1,0,"Active electrical cables for in-rack links","Heavy reliance on one hyperscaler","Customer diversification"],
-["ALAB","ALAB","Astera Labs",5,170,28,0.7,90,76,20,0.2,75,14,2,0,"PCIe/CXL retimers and switches inside AI racks","Product cycles depend on NVIDIA design choices","Scorpio switch ramp"],
-["DELL","DELL","Dell Technologies",6,140,95,105,15,21,7,4,13,18,5,0,"AI server backlog from neoclouds and enterprises","Thin margins on AI servers","AI server orders and backlog"],
-["SMCI","SMCI","Super Micro Computer",6,45,27,24,20,10,5,0.5,15,6,8,2,"Fast time-to-market on liquid-cooled racks","Governance history; margin compression","Gross margin, timely filings"],
-["HPE","HPE","Hewlett Packard Enterprise",6,24,32,33,15,30,7,1.5,11,8,12,1,"Sovereign and enterprise AI; networking via Juniper","Small AI share; integration risk","AI systems backlog"],
-["2317.TW","Hon Hai","Hon Hai (Foxconn)",6,7.0,95,230,18,6,3,3,14,20,2,0,"Assembles most NVIDIA rack-scale systems","Very thin margins","Monthly sales, AI server share"],
-["VRT","VRT","Vertiv",7,160,61,10,25,37,19,1.7,38,18,3,0,"Power and liquid cooling for dense AI racks","Order cyclicality; competition from Schneider and Eaton","Orders, book-to-bill"],
-["ETN","ETN","Eaton",7,380,150,26,8,38,20,4,32,16,8,0,"Electrical gear for data centres and the grid","Rich multiple for an industrial","Data-centre orders, backlog"],
-["GEV","GEV","GE Vernova",7,620,170,38,12,20,9,3,55,22,6,1,"Gas turbines sold out for years; grid equipment","Wind segment execution; capacity limits","Turbine slot reservations"],
-["CEG","CEG","Constellation Energy",7,340,106,25,5,30,18,2,30,12,5,0,"Nuclear power deals with hyperscalers","Regulatory pushback on co-located data centres","New PPAs, power prices"],
-["EQIX","EQIX","Equinix",7,820,80,9.3,6,50,20,1.5,21,22,5,0,"Interconnection hubs for AI inference","Capital intensity; rate sensitivity","AFFO growth, pricing (P/E shown is P/AFFO)"],
-["MSFT","MSFT","Microsoft",8,520,3870,300,15,69,46,70,33,52,3,0,"Azure growth plus its OpenAI stake","Capex intensity weighs on free cash flow","Azure growth, capex, RPO"],
-["AMZN","AMZN","Amazon",8,230,2450,700,11,50,11,30,32,60,4,0,"AWS scale plus Trainium cost advantage","Capex load and retail margins","AWS growth, backlog"],
-["GOOGL","GOOGL","Alphabet",8,250,3000,400,13,59,33,70,24,45,10,0,"TPUs give a cost edge; growing Cloud backlog","Chatbots could erode Search","Cloud growth, external TPU sales"],
-["ORCL","ORCL","Oracle",8,280,790,62,14,69,31,-5,38,28,10,1,"Very large RPO from AI compute contracts","Debt-funded build-out; reliance on OpenAI","RPO conversion, FCF, debt"],
-["CRWV","CRWV","CoreWeave",8,120,60,5,180,74,4,-6,null,12,10,2,"Fast-growing GPU cloud with long contracts","High leverage; few customers; NVIDIA-linked","Backlog, cost of debt, utilisation"],
-["NBIS","NBIS","Nebius Group",8,100,25,0.5,400,70,-40,-2,null,8,1,0,"GPU cloud with a Microsoft anchor contract","Early stage and burning cash","Contracted capacity, ARR"],
-["META","META","Meta Platforms",9,720,1810,190,22,82,42,50,26,55,7,1,"AI improves ad targeting and engagement","Heavy capex with no cloud business to resell it","Ad growth, capex guidance"],
-["PLTR","PLTR","Palantir",9,180,425,4,45,81,25,2,200,8,15,4,"Enterprise AI platform adoption","Extreme valuation","US commercial growth"],
-["NOW","NOW","ServiceNow",9,950,197,13,20,79,13,4,55,35,4,0,"Workflow AI agents sold per seat","Seat-based pricing under pressure from AI","Pro Plus adoption, cRPO"],
-["OpenAI","OpenAI","OpenAI (private)",9,null,null,null,null,null,null,null,null,0,0,0,"Largest single source of new compute commitments","Commitments far exceed current revenue","Revenue run-rate, funding rounds"],
-["Anthropic","Anthropic","Anthropic (private)",9,null,null,null,null,null,null,null,null,0,0,0,"Large buyer of AWS Trainium and Google TPU capacity","Ongoing funding needs","Revenue run-rate, compute deals"]
-];
-
 /* ---------- helpers ---------- */
 const $=s=>document.querySelector(s);
-const hash=s=>{let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
-const rng=seed=>()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
 const minus=s=>String(s).replace(/^-/,"−");
-const pct=(v,d=1)=>v==null?"—":minus((v>0?"+":"")+v.toFixed(d))+"%";
-const pctP=v=>v==null?"—":minus(v.toFixed(0))+"%";
-const usd=v=>v==null?"—":(Math.abs(v)>=1000?"$"+(v/1000).toFixed(1)+"T":Math.abs(v)<10?minus("$"+v.toFixed(1)+"B"):minus("$"+Math.round(v)+"B"));
-const px=v=>"$"+(v>=1000?v.toLocaleString("en-US",{maximumFractionDigits:0}):v.toFixed(2));
+const pct=(v,d=1)=>v==null?"—":minus((v>0?"+":"")+Number(v).toFixed(d))+"%";
+const pctP=v=>v==null?"—":minus(Number(v).toFixed(0))+"%";
+const usd=v=>v==null?"—":(Math.abs(v)>=1000?minus("$"+(v/1000).toFixed(2)+"T"):Math.abs(v)<10?minus("$"+v.toFixed(1)+"B"):minus("$"+Math.round(v)+"B"));
+const CUR={USD:"$",KRW:"₩",TWD:"NT$",EUR:"€",JPY:"¥",GBP:"£"};
+const fpx=(v,ccy)=>{if(v==null)return "—";const s=CUR[ccy]??"";const n=Math.abs(v)>=1000?Math.round(v).toLocaleString("en-US"):Number(v).toFixed(2);return s?s+n:n+" "+(ccy||"")};
 const cls=v=>v>0?"up":v<0?"down":"mut";
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-
-/* business-day calendar ending 16 Oct 2026 */
-const N=460, DATES=[];
-{let d=new Date(Date.UTC(2026,9,16));while(DATES.length<N){const w=d.getUTCDay();if(w&&w<6)DATES.unshift(new Date(d));d=new Date(d.getTime()-864e5)}}
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-
-const sma=(a,n)=>a.map((_,i)=>i<n-1?null:a.slice(i-n+1,i+1).reduce((x,y)=>x+y,0)/n);
-function rsi(a,n=14){let g=0,l=0;for(let i=1;i<=n;i++){const d=a[i]-a[i-1];d>0?g+=d:l-=d}g/=n;l/=n;for(let i=n+1;i<a.length;i++){const d=a[i]-a[i-1];g=(g*(n-1)+Math.max(d,0))/n;l=(l*(n-1)+Math.max(-d,0))/n}return l===0?100:100-100/(1+g/l)}
+const fdate=s=>{const [y,m,d]=s.split("-");return `${+d} ${MON[+m-1]} ${y}`};
+const ago=iso=>{const h=(Date.now()-new Date(iso).getTime())/36e5;return h<1?Math.max(1,Math.round(h*60))+"m ago":h<48?Math.round(h)+"h ago":Math.round(h/24)+"d ago"};
+const ord=n=>{n=Math.round(n);const s=["th","st","nd","rd"],v=n%100;return n+(s[(v-20)%10]||s[v]||s[0])};
+const median=a=>{const s=a.filter(x=>x!=null).sort((x,y)=>x-y),m=s.length>>1;return !s.length?null:s.length%2?s[m]:(s[m-1]+s[m])/2};
+const sma=(a,n)=>{const o=new Array(a.length).fill(null);let s=0;for(let i=0;i<a.length;i++){s+=a[i];if(i>=n)s-=a[i-n];if(i>=n-1)o[i]=s/n}return o};
+const stat=(k,v,c="")=>`<div class="stat"><div class="k">${k}</div><div class="v ${c}">${v}</div></div>`;
+const load=u=>fetch(u,{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error(u+" "+r.status);return r.json()});
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
 
 (async()=>{
-const load=u=>fetch(u,{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error(u+" "+r.status);return r.json()});
-let U,E,D;
-try{[U,E,D]=await Promise.all([load("data/universe.json"),load("data/edges.json"),load("data/disclosures.json").catch(()=>({companies:{}}))])}
-catch(err){document.getElementById("map").insertAdjacentHTML("beforeend",`<p class="flag">The data files could not be loaded (${esc(err.message)}). Refresh the page; if it persists, the last data build may have failed.</p>`);return}
-LAYERS=U.layers;
-$("#built").textContent="Map built "+(E.built||"").slice(0,10)+(D.sec_pulled?" · SEC filings pulled "+D.sec_pulled.slice(0,10):"");
+let U,E,D,M,NW,IV;
+try{
+  [U,E]=await Promise.all([load("data/universe.json"),load("data/edges.json")]);
+  [D,M,NW,IV]=await Promise.all(["data/disclosures.json","data/market.json","data/news.json","data/iv.json"].map(u=>load(u).catch(()=>({companies:{}}))));
+}catch(err){$("#map").insertAdjacentHTML("beforeend",`<p class="flag">The data files could not be loaded (${esc(err.message)}). Refresh the page; if it persists, the last data build may have failed.</p>`);return}
+
+const LAYERS=U.layers, MK=M.companies||{}, NEWS=NW.companies||{}, IVS=IV.companies||{}, DISC=D.companies||{};
 const BY={};
-const SAMPLE={};CO.forEach(r=>SAMPLE[r[0]]=r);
 const COS=U.companies.map(u=>{
-  const r=SAMPLE[u.id]||[u.id,u.label,u.name,u.layer,null,null,null,null,null,null,null,null,0,0,0,"","",""];
-  const [,,,,p,mcap,rev,g,gm,opm,fcf,pe,b,h,s,bull,bear,kpi]=r;
-  const t=u.id,lab=u.label,name=u.name,layer=u.layer;
-  const c={t,lab,name,layer,seg:u.segment,role:u.role,px:p,mcap,rev,g,gm,opm,fcf,pe,b,h,s,bull,bear,kpi,priv:!!u.private||p==null};
-  if(!c.priv){
-    const R=rng(hash(t));
-    const hot=(t==="CRWV"||t==="NBIS"||t==="SMCI");
-    const mu=-0.2+R()*1.0, sig=(hot?0.55:0.24)+R()*0.3;
-    const cl=new Array(N);cl[N-1]=p;
-    for(let i=N-2;i>=0;i--){const z=Math.sqrt(-2*Math.log(R()+1e-12))*Math.cos(2*Math.PI*R());cl[i]=cl[i+1]/Math.exp((mu-sig*sig/2)/252+sig/Math.sqrt(252)*z)}
-    c.cl=cl;c.d50=sma(cl,50);c.d200=sma(cl,200);
-    c.r1m=(p/cl[N-22]-1)*100;
-    const y0=DATES.findIndex(d=>d.getUTCFullYear()===2026);c.ytd=(p/cl[y0-1]-1)*100;
-    c.rsi=rsi(cl.slice(-120));
-    const a50=c.d50[N-1],a200=c.d200[N-1];
-    c.trend=p>a50&&a50>a200?"Uptrend":p<a50&&a50<a200?"Downtrend":"Mixed";
-    const n=b+h+s, score=(b*5+h*3+s*1)/n;
-    c.cons=score>=4.4?"Strong buy":score>=3.8?"Buy":score>=2.9?"Hold":"Sell";
-    const u=(score-3.4)*0.18+(R()-0.5)*0.12;
-    c.tm=p*(1+u);c.tl=c.tm*(0.62+R()*0.14);c.th=c.tm*(1.2+R()*0.22);c.upside=u*100;
-    c.hist=[rev];for(let k=0;k<4;k++){c.hist.unshift(c.hist[0]/(1+(g/100)*(0.6+R()*0.8)))}
-  }
-  BY[t]=c;return c;
+  const m=MK[u.id]||{};
+  const c={...m,...u,t:u.id,lab:u.label,priv:!!u.private,th:u.thesis||null,px:m.last??null,ccy:m.ccy||"USD"};
+  c.has=c.px!=null;
+  const iv=IVS[u.id];c.iv=iv?.iv30??null;c.ivDate=iv?.date??null;c.ivHist=iv?.hist||[];
+  c.ivr=c.iv&&c.hv60?c.iv/c.hv60:null;
+  if(c.ivHist.length>=20){const h=c.ivHist.map(x=>x[1]);c.ivPct=h.filter(x=>x<c.iv).length/h.length*100}
+  c.upside=c.has&&c.tgt_mean&&!c.tgt_suspect?(c.tgt_mean/c.px-1)*100:null;
+  c.news=NEWS[u.id]||[];
+  BY[c.t]=c;return c;
 });
 const EDGES=E.edges.map(e=>({f:e.from,t:e.to,ty:e.type,st:e.strength,p:e.pct??null,usd:e.usd_bn??null,gw:e.gw??null,cf:e.conf,note:e.note||"",src:e.src||"",url:e.url||"",asof:e.as_of||""}));
-const DISC=D.companies||{};
-const median=a=>{const s=[...a].sort((x,y)=>x-y),m=s.length>>1;return s.length%2?s[m]:(s[m-1]+s[m])/2};
+
+const live=COS.some(c=>c.has);
+const pxDate=median(COS.filter(c=>c.has&&c.ccy==="USD").map(c=>Date.parse(c.date)));
+$("#badge").textContent=live?"Live data":"Market data unavailable";
+if(!live)$("#badge").style.borderColor="var(--down)";
+$("#built").textContent=[live&&pxDate?"Prices to "+fdate(new Date(pxDate).toISOString().slice(0,10)):"",M.built?"market data "+M.built.slice(0,16).replace("T"," ")+" UTC":"",NW.built?"news "+NW.built.slice(0,16).replace("T"," ")+" UTC":""].filter(Boolean).join(" · ");
 
 /* ---------- colour modes ---------- */
-let MODE="ret";
-try{const m=localStorage.getItem("aiscm-mode");if(m)MODE=m}catch(e){}
+let MODE=store.get("aiscm-mode")||"ret";
+const ivClass=r=>r==null?null:r<1?"cheap":r>1.3?"rich":"fair";
 const MODES={
-  ret:{get:c=>c.r1m,lo:-20,hi:20,mid:0,inv:false,fmt:c=>pct(c.r1m),lab:["−20%","+20%"]},
-  up:{get:c=>c.upside,lo:-10,hi:30,mid:10,inv:false,fmt:c=>pct(c.upside,0)+" upside",lab:["−10%","+30%"]},
-  pe:{get:c=>c.pe,lo:10,hi:60,mid:30,inv:true,fmt:c=>c.pe==null?"n/m":c.pe.toFixed(0)+"× P/E",lab:["60×","10×"]}
+  d1:{get:c=>c.chg1d,lo:-5,hi:5,mid:0,fmt:c=>pct(c.chg1d),lab:["−5%","+5%"]},
+  ret:{get:c=>c.r1m,lo:-20,hi:20,mid:0,fmt:c=>pct(c.r1m),lab:["−20%","+20%"]},
+  up:{get:c=>c.upside,lo:-10,hi:40,mid:10,fmt:c=>c.upside==null?"n/a":pct(c.upside,0)+" upside",lab:["−10%","+40%"]},
+  pe:{get:c=>c.fwd_pe,lo:10,hi:60,mid:28,inv:true,fmt:c=>c.fwd_pe==null?"n/m":c.fwd_pe.toFixed(0)+"× P/E",lab:["60×","10×"]},
+  iv:{get:c=>c.ivr,lo:0.8,hi:1.6,mid:1.15,inv:true,fmt:c=>c.ivr==null?(c.has?"no IV":"—"):"IV/RV "+c.ivr.toFixed(2),lab:["rich","cheap"]}
 };
+if(!MODES[MODE])MODE="ret";
 function chipBg(c){
-  if(c.priv)return "";
+  if(c.priv)return "var(--bg)";
   const M=MODES[MODE],v=M.get(c);if(v==null)return "var(--surface)";
-  let x=Math.max(M.lo,Math.min(M.hi,v));let f=x>=M.mid?(x-M.mid)/(M.hi-M.mid):-(M.mid-x)/(M.mid-M.lo);if(M.inv)f=-f;
-  const k=Math.round(Math.abs(f)*48);return `color-mix(in srgb, var(${f>=0?"--up":"--down"}) ${k}%, var(--surface))`;
+  const x=Math.max(M.lo,Math.min(M.hi,v));let f=x>=M.mid?(x-M.mid)/(M.hi-M.mid):-(M.mid-x)/(M.mid-M.lo);if(M.inv)f=-f;
+  return `color-mix(in srgb, var(${f>=0?"--up":"--down"}) ${Math.round(Math.abs(f)*48)}%, var(--surface))`;
 }
 
-/* ---------- render map ---------- */
+/* ---------- map ---------- */
 const map=$("#map");
 LAYERS.forEach(L=>{
   const cs=COS.filter(c=>c.layer===L.n);
   const sec=document.createElement("section");sec.className="layer";sec.id="layer-"+L.n;
-  const pub=cs.filter(c=>!c.priv);
-  sec.innerHTML=`<div class="lhead"><span class="lnum">L${L.n}</span><span class="lname">${L.name}</span><span class="lneck">${L.neck}</span><span class="lstat" id="ls-${L.n}"></span></div><div class="chips"></div>`;
+  sec.innerHTML=`<div class="lhead"><span class="lnum">L${L.n}</span><span class="lname">${esc(L.name)}</span><span class="lneck">${esc(L.neck)}</span><span class="lstat" id="ls-${L.n}"></span></div><div class="chips"></div>`;
   const box=sec.querySelector(".chips");
   cs.forEach(c=>{
     const b=document.createElement("button");b.type="button";b.className="chip"+(c.priv?" private":"");b.dataset.t=c.t;
-    b.id="chip-"+c.t.replace(/\W/g,"_");
-    b.setAttribute("aria-label",c.name);
+    b.id="chip-"+c.t.replace(/\W/g,"_");b.setAttribute("aria-label",c.name);
     b.innerHTML=`<span class="tk">${esc(c.lab)}</span><span class="mv"></span>`;
-    b.addEventListener("click",()=>select(c.t));
-    box.appendChild(b);
+    b.addEventListener("click",()=>select(c.t));box.appendChild(b);
   });
   map.appendChild(sec);
-  L.med=pub.length?median(pub.map(c=>c.r1m)):0;
-  $("#ls-"+L.n).textContent=`${cs.length} names · 1M median ${pct(L.med)}`;
 });
 function paintChips(){
   const M=MODES[MODE];
-  document.querySelectorAll(".chip").forEach(el=>{const c=BY[el.dataset.t];el.style.setProperty("--chipbg",chipBg(c)||"var(--bg)");el.querySelector(".mv").textContent=c.priv?"private":M.fmt(c)});
+  document.querySelectorAll(".chip").forEach(el=>{const c=BY[el.dataset.t];el.style.setProperty("--chipbg",chipBg(c));el.querySelector(".mv").textContent=c.priv?"private":M.fmt(c)});
   $("#sc-lo").textContent=M.lab[0];$("#sc-hi").textContent=M.lab[1];
   document.querySelectorAll("#seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.m===MODE));
 }
-document.querySelectorAll("#seg button").forEach(b=>b.addEventListener("click",()=>{MODE=b.dataset.m;try{localStorage.setItem("aiscm-mode",MODE)}catch(e){}paintChips()}));
+document.querySelectorAll("#seg button").forEach(b=>b.addEventListener("click",()=>{MODE=b.dataset.m;store.set("aiscm-mode",MODE);paintChips()}));
 
-/* pulse: heat + circularity */
-{
-  const H=$("#heat");
+/* ---------- pulse cards ---------- */
+let HK="r1m";
+function paintHeat(){
+  const H=$("#heat");H.innerHTML="";const cap=HK==="chg1d"?5:HK==="r1m"?20:60;
   LAYERS.forEach(L=>{
-    const v=L.med,w=Math.min(Math.abs(v),20)/20*50;
+    const v=median(COS.filter(c=>c.layer===L.n&&c.has).map(c=>c[HK]));
+    $("#ls-"+L.n).textContent=`${COS.filter(c=>c.layer===L.n).length} names · ${({chg1d:"1D",r1m:"1M",ytd:"YTD"})[HK]} median ${pct(v)}`;
+    const w=v==null?0:Math.min(Math.abs(v),cap)/cap*50;
     const r=document.createElement("button");r.type="button";r.className="heatrow";
-    r.innerHTML=`<span class="hname">L${L.n} · ${L.short}</span><span class="hbar"><i style="${v>=0?`left:50%;width:${w}%;background:var(--up)`:`right:50%;width:${w}%;background:var(--down)`}"></i></span><span class="num ${cls(v)}" style="text-align:right">${pct(v)}</span>`;
+    r.innerHTML=`<span class="hname">L${L.n} · ${esc(L.short)}</span><span class="hbar"><i style="${(v??0)>=0?`left:50%;width:${w}%;background:var(--up)`:`right:50%;width:${w}%;background:var(--down)`}"></i></span><span class="num ${cls(v)}" style="text-align:right">${pct(v)}</span>`;
     r.addEventListener("click",()=>document.getElementById("layer-"+L.n).scrollIntoView({behavior:"smooth",block:"start"}));
     H.appendChild(r);
   });
-  const U2=$("#circ");
+  document.querySelectorAll("#heatSeg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.k===HK));
+}
+document.querySelectorAll("#heatSeg button").forEach(b=>b.addEventListener("click",()=>{HK=b.dataset.k;paintHeat()}));
+paintHeat();
+{
+  const top=COS.filter(c=>c.has&&c.z1d!=null).sort((a,b)=>Math.abs(b.z1d)-Math.abs(a.z1d)).slice(0,6);
+  const UL=$("#movers");
+  if(!top.length)UL.innerHTML=`<li><span></span><span class="mut">No price data yet.</span></li>`;
+  top.forEach(c=>{
+    const n=c.news.find(x=>x.r);const li=document.createElement("li");
+    li.innerHTML=`<button class="go" type="button">${esc(c.lab)}</button><span class="mv1"><b class="num ${cls(c.chg1d)}">${pct(c.chg1d)}</b><span class="num mut">${c.z1d>0?"+":"−"}${Math.abs(c.z1d).toFixed(1)}σ${c.vol_ratio?` · vol ${c.vol_ratio.toFixed(1)}×`:""}</span><span class="mut">${esc(c.date?fdate(c.date):"")}</span></span>${n?`<span class="hl"><a href="${esc(n.u)}" target="_blank" rel="noopener">${esc(n.t)}</a> <span class="mut">· ${esc(n.src)} · ${ago(n.at)}</span></span>`:`<span class="hl mut">No company-specific headline in the feed</span>`}`;
+    li.querySelector("button").addEventListener("click",()=>{select(c.t,true);TAB="news";renderPanel()});
+    UL.appendChild(li);
+  });
+  const C=$("#circ");
   EDGES.filter(e=>e.ty==="capital").forEach(f=>{
     const s=EDGES.find(e=>e.ty!=="capital"&&((e.f===f.f&&e.t===f.t)||(e.f===f.t&&e.t===f.f)));if(!s)return;
     const li=document.createElement("li");
     li.innerHTML=`<button class="pair" type="button">${esc(BY[f.f].lab)} ↔ ${esc(BY[f.t].lab)}</button><span>${esc(BY[f.f].lab)} → ${esc(BY[f.t].lab)}: ${esc(f.note)}. ${esc(BY[s.f].lab)} also sells to ${esc(BY[s.t].lab)}${s.usd?` ($${s.usd}B)`:s.gw?` (${s.gw} GW)`:""}.</span>`;
-    li.querySelector("button").addEventListener("click",()=>select(BY[f.t].priv?f.f:f.t));
-    U2.appendChild(li);
+    li.querySelector("button").addEventListener("click",()=>select(BY[f.t].priv?f.f:f.t,true));
+    C.appendChild(li);
   });
-
 }
 
 /* ---------- wires ---------- */
-let SEL=null;
-const svg=$("#wires");
+let SEL=null;const svg=$("#wires");
 function drawWires(){
-  const R=map.getBoundingClientRect();
-  svg.setAttribute("viewBox",`0 0 ${R.width} ${R.height}`);
+  const R=map.getBoundingClientRect();svg.setAttribute("viewBox",`0 0 ${R.width} ${R.height}`);
   if(!SEL){svg.innerHTML="";return}
-  const pos=t=>{const el=document.querySelector(`.chip[data-t="${CSS.escape(t)}"]`);const r=el.getBoundingClientRect();return{x:r.left-R.left+r.width/2,y:r.top-R.top+r.height/2,h:r.height}};
+  const pos=t=>{const r=document.querySelector(`.chip[data-t="${CSS.escape(t)}"]`).getBoundingClientRect();return{x:r.left-R.left+r.width/2,y:r.top-R.top+r.height/2,h:r.height}};
   let out="";
   EDGES.filter(e=>e.f===SEL||e.t===SEL).forEach(e=>{
     const a=pos(e.f),b=pos(e.t);let d;
-    if(Math.abs(a.y-b.y)<8){const up=Math.max(28,Math.abs(a.x-b.x)*0.25);d=`M${a.x} ${a.y-a.h/2}C${a.x} ${a.y-up} ${b.x} ${b.y-up} ${b.x} ${b.y-b.h/2}`}
-    else{const dir=b.y>a.y?1:-1,dy=Math.max(30,Math.abs(b.y-a.y)*0.45);d=`M${a.x} ${a.y+dir*a.h/2}C${a.x} ${a.y+dir*dy} ${b.x} ${b.y-dir*dy} ${b.x} ${b.y-dir*b.h/2}`}
+    if(Math.abs(a.y-b.y)<8){const up=Math.max(28,Math.abs(a.x-b.x)*.25);d=`M${a.x} ${a.y-a.h/2}C${a.x} ${a.y-up} ${b.x} ${b.y-up} ${b.x} ${b.y-b.h/2}`}
+    else{const dir=b.y>a.y?1:-1,dy=Math.max(30,Math.abs(b.y-a.y)*.45);d=`M${a.x} ${a.y+dir*a.h/2}C${a.x} ${a.y+dir*dy} ${b.x} ${b.y-dir*dy} ${b.x} ${b.y-dir*b.h/2}`}
     const cap=e.ty==="capital",w=cap?1.6:e.p!=null?Math.min(5.5,1.2+e.p/10):({H:3.4,M:2,L:1.1})[e.st]||1.5;
     out+=`<path d="${d}" fill="none" stroke="var(${cap?"--fin":"--copper"})" stroke-width="${w}" stroke-linecap="round" ${cap?'stroke-dasharray="5 4"':e.cf==="I"?'stroke-dasharray="1.5 4"':""} opacity=".85"/>`;
   });
@@ -416,128 +424,204 @@ function drawWires(){
 window.addEventListener("resize",()=>requestAnimationFrame(drawWires));
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(drawWires);
 
+/* ---------- price data (lazy) ---------- */
+const PX={};
+async function getPx(t){if(!PX[t])PX[t]=load(`data/px/${encodeURIComponent(t)}.json`).catch(()=>null);return PX[t]}
+let RANGE=store.get("aiscm-range")||"1Y";
+const RN={"3M":63,"6M":126,"1Y":252,"2Y":1e9};
+
+function lineChart({ds,series,ccy,yFmt,W=640,H=230,dots=[]}){
+  // series: [{v:[..], color, width, dash, area}]
+  const n=ds.length,L=6,Rr=58,T=12,B=26,iw=W-L-Rr,ih=H-T-B;
+  const all=series.flatMap(s=>s.v.filter(x=>x!=null)).concat(dots.map(d=>d[1]));
+  let lo=Math.min(...all),hi=Math.max(...all);const pad=(hi-lo)*.07||1;lo-=pad;hi+=pad;
+  const X=i=>L+i/(Math.max(1,n-1))*iw,Y=v=>T+(1-(v-lo)/(hi-lo))*ih;
+  const path=a=>a.map((v,i)=>v==null?"":`${i&&a[i-1]!=null?"L":"M"}${X(i).toFixed(1)} ${Y(v).toFixed(1)}`).join("");
+  let g="";
+  for(let k=0;k<=4;k++){const v=lo+(hi-lo)*k/4,y=Y(v);g+=`<line x1="${L}" x2="${L+iw}" y1="${y}" y2="${y}" stroke="var(--line)" stroke-width="1"/><text x="${W-4}" y="${y+4}" text-anchor="end" font-size="11" font-family="IBM Plex Mono, monospace" fill="var(--muted)">${yFmt(v)}</text>`}
+  const step=n>300?3:n>140?2:1;let lm=-1,cnt=0;
+  ds.forEach((d,i)=>{const m=+d.slice(5,7)-1;if(m!==lm){if(lm!==-1&&cnt++%step===0&&i>2&&i<n-3){const lab=m===0?`${MON[m]} '${d.slice(2,4)}`:MON[m];g+=`<text x="${X(i)}" y="${H-7}" font-size="11" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="var(--muted)">${lab}</text>`}lm=m}});
+  series.forEach(s=>{
+    if(s.area){const p=path(s.v);g+=`<path d="${p}L${X(n-1)} ${T+ih}L${X(0)} ${T+ih}Z" fill="${s.color}" fill-opacity=".09"/>`}
+    g+=`<path d="${path(s.v)}" fill="none" stroke="${s.color}" stroke-width="${s.width||1.6}" ${s.dash?`stroke-dasharray="${s.dash}"`:""}/>`;
+  });
+  dots.forEach(([i,v])=>{g+=`<circle cx="${X(i)}" cy="${Y(v)}" r="3" fill="var(--fin)"/>`});
+  const s0=series[0].v;const li=s0.length-1;
+  if(s0[li]!=null)g+=`<circle cx="${X(li)}" cy="${Y(s0[li])}" r="4" fill="${series[0].color}" stroke="var(--surface)" stroke-width="2"/>`;
+  g+=`<line class="cx" x1="0" x2="0" y1="${T}" y2="${T+ih}" stroke="var(--ink)" stroke-width="1" stroke-dasharray="3 3" visibility="hidden"/><circle class="cd" r="4.5" fill="var(--surface)" stroke="var(--ink)" stroke-width="2" visibility="hidden"/>`;
+  g+=`<rect x="${L}" y="${T}" width="${iw}" height="${ih}" fill="transparent"/>`;
+  return {html:`<svg class="interactive" viewBox="0 0 ${W} ${H}" role="img" aria-label="Chart; drag or hover to read values">${g}</svg><div class="tip" hidden></div>`,geom:{n,X,Y,L,iw,W}};
+}
+function bindCross(box,geom,valueAt,tipAt){
+  const sv=box.querySelector("svg"),tip=box.querySelector(".tip"),cx=sv.querySelector(".cx"),cd=sv.querySelector(".cd");
+  const show=e=>{
+    const r=sv.getBoundingClientRect();const x=(e.clientX-r.left)/r.width*geom.W;
+    const i=Math.max(0,Math.min(geom.n-1,Math.round((x-geom.L)/geom.iw*(geom.n-1))));
+    const v=valueAt(i);if(v==null)return;
+    const X=geom.X(i),Yv=geom.Y(v);
+    cx.setAttribute("x1",X);cx.setAttribute("x2",X);cx.setAttribute("visibility","visible");
+    cd.setAttribute("cx",X);cd.setAttribute("cy",Yv);cd.setAttribute("visibility","visible");
+    tip.innerHTML=tipAt(i);tip.hidden=false;
+    const frac=X/geom.W;tip.style.left=frac<.6?`calc(${(frac*100).toFixed(1)}% + 10px)`:"";tip.style.right=frac>=.6?`calc(${((1-frac)*100).toFixed(1)}% + 10px)`:"";
+  };
+  const hide=()=>{cx.setAttribute("visibility","hidden");cd.setAttribute("visibility","hidden");tip.hidden=true};
+  sv.addEventListener("pointermove",show);sv.addEventListener("pointerdown",show);
+  sv.addEventListener("pointerleave",e=>{if(e.pointerType==="mouse")hide()});
+}
+
 /* ---------- panel ---------- */
 const panel=$("#panel");let TAB="price";
-const TABS=[["price","Price"],["fin","Financials"],["ana","Analysts"],["links","Links"],["thesis","Thesis"]];
-
-function priceSVG(c){
-  const n=252,cl=c.cl.slice(-n),m50=c.d50.slice(-n),m200=c.d200.slice(-n),ds=DATES.slice(-n);
-  const W=640,H=230,L=6,Rr=58,T=12,B=26,iw=W-L-Rr,ih=H-T-B;
-  const all=[...cl,...m50.filter(Boolean),...m200.filter(Boolean)];let lo=Math.min(...all),hi=Math.max(...all);const pad=(hi-lo)*0.06;lo-=pad;hi+=pad;
-  const X=i=>L+i/(n-1)*iw,Y=v=>T+(1-(v-lo)/(hi-lo))*ih;
-  const line=a=>a.map((v,i)=>v==null?"":`${i&&a[i-1]!=null?"L":"M"}${X(i).toFixed(1)} ${Y(v).toFixed(1)}`).join("");
-  let g="";
-  for(let k=0;k<=4;k++){const v=lo+(hi-lo)*k/4,y=Y(v);g+=`<line x1="${L}" x2="${L+iw}" y1="${y}" y2="${y}" stroke="var(--line)" stroke-width="1"/><text x="${W-4}" y="${y+4}" text-anchor="end" font-size="11" font-family="IBM Plex Mono, monospace" fill="var(--muted)">${v>=1000?Math.round(v).toLocaleString("en-US"):v.toFixed(v<20?1:0)}</text>`}
-  let lm=-1;ds.forEach((d,i)=>{const m=d.getUTCMonth();if(m!==lm&&i>3){if(m%2===0)g+=`<text x="${X(i)}" y="${H-7}" font-size="11" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="var(--muted)">${MON[m]}</text>`;lm=m}else if(lm===-1)lm=m});
-  const area=line(cl)+`L${X(n-1)} ${T+ih}L${X(0)} ${T+ih}Z`;
-  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="One-year price chart for ${esc(c.name)}">${g}
-  <path d="${area}" fill="var(--copper)" fill-opacity=".09"/>
-  <path d="${line(m200)}" fill="none" stroke="var(--fin)" stroke-width="1.4" stroke-dasharray="4 3"/>
-  <path d="${line(m50)}" fill="none" stroke="var(--muted)" stroke-width="1.4"/>
-  <path d="${line(cl)}" fill="none" stroke="var(--copper)" stroke-width="2"/>
-  <circle cx="${X(n-1)}" cy="${Y(cl[n-1])}" r="4" fill="var(--copper)" stroke="var(--surface)" stroke-width="2"/></svg>`;
-}
-function revSVG(c){
-  const W=640,H=150,T=22,B=24,n=5,mx=Math.max(...c.hist)*1.1,bw=70,gap=(W-n*bw)/(n+1);const lab=["Y−4","Y−3","Y−2","Y−1","TTM"];
-  let s="";c.hist.forEach((v,i)=>{const h=(v/mx)*(H-T-B),x=gap+i*(bw+gap),y=H-B-h;
-    s+=`<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="3" fill="var(${i===4?"--copper":"--surface-2"})"/><text x="${x+bw/2}" y="${y-6}" text-anchor="middle" font-size="12" font-family="IBM Plex Mono, monospace" fill="var(--ink)">${usd(v)}</text><text x="${x+bw/2}" y="${H-6}" text-anchor="middle" font-size="11" font-family="IBM Plex Mono, monospace" fill="var(--muted)">${lab[i]}</text>`});
-  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Revenue history">${s}</svg>`;
-}
-const stat=(k,v,c="")=>`<div class="stat"><div class="k">${k}</div><div class="v ${c}">${v}</div></div>`;
+const TABS=[["price","Price"],["risk","Vol & risk"],["fin","Financials"],["ana","Analysts"],["news","News"],["links","Links"],["thesis","Thesis"]];
 
 function tabPrice(c){
-  const a50=c.d50[N-1],a200=c.d200[N-1];
-  const tc=c.trend==="Uptrend"?"up":c.trend==="Downtrend"?"down":"mut";
-  const rs=c.rsi>70?"Overbought":c.rsi<30?"Oversold":"Neutral";
-  return `<div class="svgbox">${priceSVG(c)}</div>
-  <div class="legend" style="margin-top:6px"><span><span class="sw" style="border-top-width:2px"></span>Price</span><span><span class="sw" style="border-top:2px solid var(--muted)"></span>50-day</span><span><span class="sw f"></span>200-day</span></div>
-  <div class="stats">${stat("1 month",pct(c.r1m),cls(c.r1m))}${stat("Year to date",pct(c.ytd),cls(c.ytd))}${stat("Trend",c.trend,tc)}${stat("vs 50-day",pct((c.px/a50-1)*100),cls(c.px-a50))}${stat("vs 200-day",pct((c.px/a200-1)*100),cls(c.px-a200))}${stat("RSI (14)",c.rsi.toFixed(0)+" · "+rs)}</div>
-  <p class="note">Live build adds relative strength vs the SOX index and your momentum early-warning signals.</p>`;
+  if(!c.has)return `<p class="mut">No price data for this company yet.</p>`;
+  const r=c.r1m;
+  return `<div class="chartwrap"><div class="ranges" role="group" aria-label="Chart range">${Object.keys(RN).map(k=>`<button type="button" data-range="${k}" aria-pressed="${k===RANGE}">${k}</button>`).join("")}</div>
+  <div class="svgbox" id="pchart"><p class="mut">Loading chart…</p></div></div>
+  <div class="legend" style="margin-top:6px"><span><span class="sw" style="border-top-width:2px"></span>Price</span><span><span class="sw" style="border-top:2px solid var(--muted)"></span>50-day</span><span><span class="sw f"></span>200-day</span><span class="mut">Hover or drag along the chart for date and price.</span></div>
+  <div class="stats">${stat("Last close",fpx(c.px,c.ccy)+` <span class="mut" style="font-weight:400;font-size:11px">${c.date?fdate(c.date):""}</span>`)}${stat("1 day",pct(c.chg1d),cls(c.chg1d))}${stat("1 month",pct(r),cls(r))}${stat("Year to date",pct(c.ytd),cls(c.ytd))}${stat("1 year",pct(c.r1y),cls(c.r1y))}${stat("From 52-wk high",pct(c.from_hi),cls(c.from_hi))}${stat("Trend",c.trend||"—",c.trend==="Uptrend"?"up":c.trend==="Downtrend"?"down":"mut")}${stat("vs 50-day",c.sma50?pct((c.px/c.sma50-1)*100):"—",cls(c.px-c.sma50))}${stat("vs 200-day",c.sma200?pct((c.px/c.sma200-1)*100):"—",cls(c.px-c.sma200))}${stat("RSI (14)",c.rsi==null?"—":c.rsi.toFixed(0)+" · "+(c.rsi>70?"Overbought":c.rsi<30?"Oversold":"Neutral"))}${stat("Volume vs 20-day",c.vol_ratio?c.vol_ratio.toFixed(1)+"×":"—")}${stat("52-wk range",fpx(c.lo52,c.ccy)+" – "+fpx(c.hi52,c.ccy))}</div>`;
 }
+async function drawPrice(c){
+  const box=$("#pchart");if(!box)return;
+  const P=await getPx(c.t);if(!P||!$("#pchart")||SEL!==c.t||TAB!=="price"){if(box&&!P)box.innerHTML=`<p class="mut">Price history unavailable.</p>`;return}
+  const s50=sma(P.c,50),s200=sma(P.c,200),n=Math.min(RN[RANGE],P.c.length),i0=P.c.length-n;
+  const ds=P.d.slice(i0),cl=P.c.slice(i0),m50=s50.slice(i0),m200=s200.slice(i0);
+  const big=Math.max(...cl)>=1000;
+  const ch=lineChart({ds,ccy:c.ccy,yFmt:v=>big?Math.round(v).toLocaleString("en-US"):v.toFixed(v<20?1:0),series:[{v:cl,color:"var(--copper)",width:2,area:true},{v:m200,color:"var(--fin)",width:1.4,dash:"4 3"},{v:m50,color:"var(--muted)",width:1.4}].reverse().reverse()});
+  box.innerHTML=ch.html;
+  bindCross(box,ch.geom,i=>cl[i],i=>{const prev=i>0?cl[i-1]:null,ch1=prev?(cl[i]/prev-1)*100:null;
+    return `<b>${fdate(ds[i])}</b><br>${fpx(cl[i],c.ccy)} <span class="${ch1>0?"":""}">${ch1==null?"":pct(ch1)}</span><br><span class="mutd">50d ${m50[i]==null?"—":fpx(m50[i],c.ccy)} · 200d ${m200[i]==null?"—":fpx(m200[i],c.ccy)}</span>`});
+}
+
+function tabRisk(c){
+  if(!c.has)return `<p class="mut">No market data for this company yet.</p>`;
+  const k=ivClass(c.ivr);
+  const lab={cheap:"Cheap vs realised",fair:"In line with realised",rich:"Rich vs realised"}[k];
+  let h=`<div class="stats">${stat("Implied vol (30d ATM)",c.iv?(c.iv*100).toFixed(1)+"%":"—")}${stat("Realised vol 20d",c.hv20?(c.hv20*100).toFixed(1)+"%":"—")}${stat("Realised vol 60d",c.hv60?(c.hv60*100).toFixed(1)+"%":"—")}${stat("Realised vol 1y",c.hv252?(c.hv252*100).toFixed(1)+"%":"—")}${stat("IV ÷ RV 60d",c.ivr?c.ivr.toFixed(2):"—")}${stat("Max drawdown 1y",c.maxdd1y==null?"—":pct(c.maxdd1y),"down")}${stat("Beta vs SOX (1y)",c.beta_sox??"—")}${stat("Beta vs S&P 500 (1y)",c.beta_spx??"—")}${stat("1-day move",c.z1d==null?"—":`${c.z1d>0?"+":"−"}${Math.abs(c.z1d).toFixed(1)}σ`)}</div>`;
+  if(k)h+=`<p style="margin:12px 0 0">Options are <span class="vchip ${k}">${lab}</span> <span class="mut">IV ${(c.iv*100).toFixed(1)}% vs 60-day realised ${(c.hv60*100).toFixed(1)}%${c.ivDate?`, IV as of ${fdate(c.ivDate)}`:""}</span></p>`;
+  else h+=`<p class="note">${/\.(KS|TW)$/.test(c.yf||"")?"No listed options on Yahoo for this exchange, so only realised vol is shown.":"Implied vol is captured during US trading hours; it will appear after the next intraday run."}</p>`;
+  if(c.hv20_pct1y!=null)h+=`<p class="sec">Where 20-day realised vol sits in its 1-year range</p><div class="pbar"><i style="left:${c.hv20_pct1y}%"></i></div><div class="pscale"><span>Calmest</span><span>${ord(c.hv20_pct1y)} percentile</span><span>Most volatile</span></div>`;
+  if(c.ivPct!=null)h+=`<p class="sec">Where implied vol sits in its own history (${c.ivHist.length} days)</p><div class="pbar"><i style="left:${c.ivPct}%"></i></div><div class="pscale"><span>Cheapest</span><span>${ord(c.ivPct)} percentile</span><span>Richest</span></div>`;
+  else if(c.iv)h+=`<p class="note">IV percentile needs about 20 trading days of history; ${c.ivHist.length} collected so far.</p>`;
+  h+=`<p class="sec">20-day realised vol, last year${c.ivHist.length?" · dots = implied vol":""}</p><div class="svgbox" id="vchart"><p class="mut">Loading…</p></div>`;
+  return h;
+}
+async function drawVol(c){
+  const box=$("#vchart");if(!box)return;
+  const P=await getPx(c.t);if(!P||!$("#vchart")||SEL!==c.t||TAB!=="risk")return;
+  const lr=P.c.map((v,i)=>i?Math.log(v/P.c[i-1]):null);
+  const hv=lr.map((_,i)=>{if(i<20)return null;const w=lr.slice(i-19,i+1);const m=w.reduce((a,b)=>a+b,0)/20;return Math.sqrt(w.reduce((a,b)=>a+(b-m)**2,0)/19*252)*100});
+  const n=Math.min(252,P.c.length),i0=P.c.length-n,ds=P.d.slice(i0),hvs=hv.slice(i0);
+  const idx=new Map(ds.map((d,i)=>[d,i]));const dots=c.ivHist.map(([d,v])=>[idx.get(d),v*100]).filter(x=>x[0]!=null);
+  const ch=lineChart({ds,yFmt:v=>v.toFixed(0)+"%",series:[{v:hvs,color:"var(--copper)",width:1.8,area:true}],dots,H:170});
+  box.innerHTML=ch.html;
+  const ivAt=new Map(dots.map(([i,v])=>[i,v]));
+  bindCross(box,ch.geom,i=>hvs[i],i=>`<b>${fdate(ds[i])}</b><br>RV20 ${hvs[i]==null?"—":hvs[i].toFixed(1)+"%"}${ivAt.has(i)?`<br>IV30 ${ivAt.get(i).toFixed(1)}%`:""}`);
+}
+
 function tabFin(c){
-  const ps=c.mcap/c.rev,fm=c.fcf/c.rev*100;
-  return `<p class="sec">Revenue, last five years</p><div class="svgbox">${revSVG(c)}</div>
-  <table class="fin"><tbody>
-  <tr><td>Market cap</td><td>${usd(c.mcap)}</td></tr>
-  <tr><td>Revenue (TTM)</td><td>${usd(c.rev)}</td></tr>
-  <tr><td>Revenue growth (YoY)</td><td class="${cls(c.g)}">${pct(c.g,0)}</td></tr>
+  if(!c.has&&c.mcap_usd_bn==null)return `<p class="mut">No financial data for this company.</p>`;
+  const rh=(c.rev_hist||[]).filter(x=>x.usd_bn!=null);let bars="";
+  if(rh.length){const W=640,H=150,T=22,B=24,n=rh.length,mx=Math.max(...rh.map(x=>x.usd_bn))*1.1,bw=Math.min(80,(W-40)/n-20),gap=(W-n*bw)/(n+1);
+    bars=`<p class="sec">Annual revenue (USD)</p><div class="svgbox"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Annual revenue">${rh.map((x,i)=>{const h=x.usd_bn/mx*(H-T-B),X=gap+i*(bw+gap),y=H-B-h;return `<rect x="${X}" y="${y}" width="${bw}" height="${h}" rx="3" fill="var(${i===n-1?"--copper":"--surface-2"})"/><text x="${X+bw/2}" y="${y-6}" text-anchor="middle" font-size="12" font-family="IBM Plex Mono, monospace" fill="var(--ink)">${usd(x.usd_bn)}</text><text x="${X+bw/2}" y="${H-6}" text-anchor="middle" font-size="11" font-family="IBM Plex Mono, monospace" fill="var(--muted)">FY${x.fy.slice(2,4)}</text>`}).join("")}</svg></div>`}
+  const ps=c.mcap_usd_bn&&c.rev_usd_bn?c.mcap_usd_bn/c.rev_usd_bn:null,fm=c.fcf_usd_bn!=null&&c.rev_usd_bn?c.fcf_usd_bn/c.rev_usd_bn*100:null;
+  return bars+`<table class="fin"><tbody>
+  <tr><td>Market cap</td><td>${usd(c.mcap_usd_bn)}</td></tr>
+  <tr><td>Revenue (TTM)</td><td>${usd(c.rev_usd_bn)}</td></tr>
+  <tr><td>Revenue growth (latest quarter, YoY)</td><td class="${cls(c.rev_g)}">${pct(c.rev_g,0)}</td></tr>
   <tr><td>Gross margin</td><td>${pctP(c.gm)}</td></tr>
   <tr><td>Operating margin</td><td class="${c.opm<0?"down":""}">${pctP(c.opm)}</td></tr>
-  <tr><td>Free cash flow (TTM)</td><td class="${c.fcf<0?"down":""}">${usd(c.fcf)} · ${pctP(fm)} margin</td></tr>
-  <tr><td>Forward P/E</td><td>${c.pe==null?"n/m (loss-making)":c.pe.toFixed(0)+"×"}</td></tr>
-  <tr><td>Price / sales</td><td>${ps.toFixed(1)}×</td></tr>
-  <tr><td>Growth-adjusted P/E</td><td>${c.pe&&c.g>0?(c.pe/c.g).toFixed(2):"—"}</td></tr>
+  <tr><td>Free cash flow (TTM)</td><td class="${c.fcf_usd_bn<0?"down":""}">${usd(c.fcf_usd_bn)}${fm!=null?" · "+pctP(fm)+" margin":""}</td></tr>
+  <tr><td>Forward P/E</td><td>${c.fwd_pe==null?"n/m":c.fwd_pe.toFixed(1)+"×"}</td></tr>
+  <tr><td>Trailing P/E</td><td>${c.ttm_pe==null?"n/m":c.ttm_pe.toFixed(1)+"×"}</td></tr>
+  <tr><td>Price / sales</td><td>${ps?ps.toFixed(1)+"×":"—"}</td></tr>
+  <tr><td>EV / revenue</td><td>${c.ev_rev?c.ev_rev.toFixed(1)+"×":"—"}</td></tr>
+  <tr><td>Forward P/E ÷ revenue growth</td><td>${c.fwd_pe&&c.rev_g>0?(c.fwd_pe/c.rev_g).toFixed(2):"—"}</td></tr>
   </tbody></table>
-  <p class="note">Non-US listings shown in USD. Live build pulls these from SEC filings and Yahoo Finance.</p>`;
+  <p class="note">Source: Yahoo Finance. Values in USD; non-USD figures converted at the latest exchange rate.${/\.(KS|TW)$/.test(c.yf||"")?" Yahoo's fundamentals for Korean and Taiwanese listings are patchier; check against company filings.":""}</p>`;
 }
+const ACT={up:"Upgrade",down:"Downgrade",init:"Initiated",main:"Maintained",reit:"Reiterated"};
 function tabAna(c){
-  const n=c.b+c.h+c.s,lo=Math.min(c.tl,c.px)*0.92,hi=Math.max(c.th,c.px)*1.04,P=v=>((v-lo)/(hi-lo)*100).toFixed(1);
-  return `<div class="stats" style="grid-template-columns:repeat(3,minmax(0,1fr))">${stat("Consensus",c.cons,c.cons.includes("uy")?"up":c.cons==="Sell"?"down":"")}${stat("Analysts",n)}${stat("Upside to mean",pct(c.upside,0),cls(c.upside))}</div>
-  <p class="sec">Ratings</p>
-  <div class="stack"><i style="width:${c.b/n*100}%;background:var(--up)"></i><i style="width:${c.h/n*100}%;background:var(--muted);opacity:.55"></i><i style="width:${c.s/n*100}%;background:var(--down)"></i></div>
-  <div class="legend"><span class="up">Buy ${c.b}</span><span>Hold ${c.h}</span><span class="down">Sell ${c.s}</span></div>
-  <p class="sec">12-month price targets</p>
-  <div class="tbar"><div class="rng" style="left:${P(c.tl)}%;width:${(P(c.th)-P(c.tl)).toFixed(1)}%"></div>
-  <div class="mk" style="left:${P(c.tl)}%"><span>Low ${px(c.tl)}</span></div><div class="mk" style="left:${P(c.tm)}%"><span>Mean ${px(c.tm)}</span></div><div class="mk" style="left:${P(c.th)}%"><span>High ${px(c.th)}</span></div><div class="mk px" style="left:${P(c.px)}%"><span>Now ${px(c.px)}</span></div></div>
-  <p class="note" style="margin-top:34px">Sample counts and targets. Live build pulls consensus ratings, targets and recent upgrades/downgrades from Yahoo Finance.</p>`;
+  const R=c.ratings;if(!R&&!c.tgt_mean)return `<p class="mut">No analyst coverage data for this company.</p>`;
+  let h="";
+  if(R){const buy=R.strongBuy+R.buy,sell=R.sell+R.strongSell,n=buy+R.hold+sell||1;
+    const ck=(c.rec_key||"").replace("_"," ");
+    h+=`<div class="stats">${stat("Consensus",ck?ck[0].toUpperCase()+ck.slice(1):"—",buy/n>.6?"up":sell/n>.25?"down":"")}${stat("Analysts",c.n_analysts??n)}${stat("Upside to mean target",pct(c.upside,0),cls(c.upside))}</div>
+    <p class="sec">Ratings this month</p>
+    <div class="stack"><i style="width:${R.strongBuy/n*100}%;background:var(--up)"></i><i style="width:${R.buy/n*100}%;background:color-mix(in srgb,var(--up) 55%,var(--surface))"></i><i style="width:${R.hold/n*100}%;background:var(--muted);opacity:.5"></i><i style="width:${R.sell/n*100}%;background:color-mix(in srgb,var(--down) 55%,var(--surface))"></i><i style="width:${R.strongSell/n*100}%;background:var(--down)"></i></div>
+    <div class="legend"><span class="up">Strong buy ${R.strongBuy}</span><span class="up">Buy ${R.buy}</span><span>Hold ${R.hold}</span><span class="down">Sell ${R.sell}</span><span class="down">Strong sell ${R.strongSell}</span></div>`}
+  if(c.tgt_mean&&c.has){
+    if(c.tgt_suspect)h+=`<div class="warnbox">Yahoo's price targets for this listing look inconsistent with the share price (every target is far from it), so they are not shown.</div>`;
+    else{const lo=Math.min(c.tgt_lo,c.px)*.92,hi=Math.max(c.tgt_hi,c.px)*1.04,P=v=>((v-lo)/(hi-lo)*100).toFixed(1);
+      h+=`<p class="sec">12-month price targets</p><div class="tbar"><div class="rng" style="left:${P(c.tgt_lo)}%;width:${(P(c.tgt_hi)-P(c.tgt_lo)).toFixed(1)}%"></div>
+      <div class="mk" style="left:${P(c.tgt_lo)}%"><span>Low ${fpx(c.tgt_lo,c.ccy)}</span></div><div class="mk" style="left:${P(c.tgt_mean)}%"><span>Mean ${fpx(c.tgt_mean,c.ccy)}</span></div><div class="mk" style="left:${P(c.tgt_hi)}%"><span>High ${fpx(c.tgt_hi,c.ccy)}</span></div><div class="mk px" style="left:${P(c.px)}%"><span>Now ${fpx(c.px,c.ccy)}</span></div></div><div style="height:22px"></div>`}}
+  const A=c.actions||[];
+  if(A.length)h+=`<p class="sec">Recent rating changes (last 5 months)</p><ul class="acts">${A.map(a=>{const pt=a.pt?(a.pt_prior&&a.pt_prior!==a.pt?`${fpx(a.pt_prior,c.ccy)} → ${fpx(a.pt,c.ccy)}`:fpx(a.pt,c.ccy)):"";const col=a.action==="up"?"up":a.action==="down"?"down":"";
+    return `<li><span class="dt">${esc(a.date.slice(5))}</span><span><b>${esc(a.firm)}</b> · <span class="${col}">${ACT[a.action]||esc(a.action)}</span>${a.to?` ${a.from&&a.from!==a.to?esc(a.from)+" → ":""}${esc(a.to)}`:""}</span><span class="pt">${pt}</span></li>`}).join("")}</ul>`;
+  h+=`<p class="note">Source: Yahoo Finance, refreshed every weekday.</p>`;
+  return h;
 }
+function tabNews(c){
+  if(!c.news.length)return `<p class="mut">No headlines in the last four days.</p>`;
+  const li=n=>`<li><a href="${esc(n.u)}" target="_blank" rel="noopener">${esc(n.t)}</a><span class="meta">${esc(n.src)} · ${ago(n.at)}</span></li>`;
+  const own=c.news.filter(n=>n.r),oth=c.news.filter(n=>!n.r);
+  return `${own.length?`<p class="sec">About ${esc(c.lab)}</p><ul class="news">${own.map(li).join("")}</ul>`:`<p class="mut">No headlines naming ${esc(c.lab)} in the last four days.</p>`}${oth.length?`<p class="sec">Broader stories in its feed</p><ul class="news">${oth.map(li).join("")}</ul>`:""}<p class="note">Headlines from Yahoo Finance's feed for ${esc(c.yf||c.lab)}, refreshed every three hours.</p>`;
+}
+
 const CONFT={D:"Disclosed",E:"Estimated",I:"Inferred"};
-function facts(e,c,other){const b=[];if(e.p!=null)b.push(`≈${e.p}% of ${esc(BY[e.f].lab)} revenue`);if(e.usd)b.push(`$${e.usd}B`);if(e.gw)b.push(`${e.gw} GW`);return b.join(" · ")}
-function linkRow(o,e,c){
-  const f=facts(e,c,o),src=e.url?`<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.src||"source")}</a>`:"";
+function facts(e){const b=[];if(e.p!=null)b.push(`≈${e.p}% of ${esc(BY[e.f].lab)} revenue`);if(e.usd)b.push(`$${e.usd}B`);if(e.gw)b.push(`${e.gw} GW`);return b.join(" · ")}
+function linkRow(o,e){
+  const f=facts(e),src=e.url?`<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.src||"source")}</a>`:"";
   return `<li><button class="go" type="button" data-go="${esc(o)}">${esc(BY[o].lab)}</button><span>${f?`<b class="num">${f}</b> · `:""}${esc(e.note)}${e.asof?` <span class="mut">(${esc(e.asof)})</span>`:""}${src?`<br><span class="srcl">${src}</span>`:""}</span><span class="conf ${e.cf}" title="${CONFT[e.cf]}">${e.cf}${e.ty==="contract"?"·C":""}</span></li>`}
 function discBlock(c){
-  const d=DISC[c.t];if(!d)return "";
-  let h="";
-  (d.filings||[]).forEach(g=>{
-    const per=g.rows[0]?.months?`${g.rows[0].months}M to ${g.rows[0].end}`:(g.rows[0]?.end||"");
-    h+=`<p class="sec">Disclosed in ${esc(g.form)} · ${esc(per)}</p><table class="fin"><tbody>${g.rows.map(r=>`<tr><td>${esc(r.customer)} <span class="mut">· ${r.basis==="revenue"?"of revenue":"of receivables"}</span></td><td><a href="${esc(g.url)}" target="_blank" rel="noopener">${r.pct}%</a></td></tr>`).join("")}</tbody></table>`;
-  });
+  const d=DISC[c.t];if(!d)return "";let h="";
+  (d.filings||[]).forEach(g=>{const per=g.rows[0]?.months?`${g.rows[0].months}M to ${g.rows[0].end}`:(g.rows[0]?.end||"");
+    h+=`<p class="sec">Disclosed in ${esc(g.form)} · ${esc(per)}</p><table class="fin"><tbody>${g.rows.map(r=>`<tr><td>${esc(r.customer)} <span class="mut">· ${r.basis==="revenue"?"of revenue":"of receivables"}</span></td><td><a href="${esc(g.url)}" target="_blank" rel="noopener">${r.pct}%</a></td></tr>`).join("")}</tbody></table>`});
   if(h)h+=`<p class="note">Filings usually anonymise customers ("Customer A"), and the letters can refer to different customers from one period to the next.</p>`;
   if(d.rpo)h+=`<p class="note">Backlog (remaining performance obligations): <b class="num">$${d.rpo.usd_bn}B</b> at ${esc(d.rpo.end)}, per <a href="${esc(d.rpo.url)}" target="_blank" rel="noopener">${esc(d.rpo.form)}</a>.</p>`;
   return h;
 }
 function tabLinks(c){
-  const sells=EDGES.filter(e=>e.ty!=="capital"&&e.f===c.t).sort((a,b)=>(b.p||0)-(a.p||0)||"HML".indexOf(a.st)-"HML".indexOf(b.st));
-  const buys=EDGES.filter(e=>e.ty!=="capital"&&e.t===c.t).sort((a,b)=>"HML".indexOf(a.st)-"HML".indexOf(b.st));
+  const ord=s=>"HML".indexOf(s);
+  const sells=EDGES.filter(e=>e.ty!=="capital"&&e.f===c.t).sort((a,b)=>(b.p||0)-(a.p||0)||ord(a.st)-ord(b.st));
+  const buys=EDGES.filter(e=>e.ty!=="capital"&&e.t===c.t).sort((a,b)=>ord(a.st)-ord(b.st));
   const fin=EDGES.filter(e=>e.ty==="capital"&&(e.f===c.t||e.t===c.t));
-  let h="";
-  const known=sells.filter(e=>e.p!=null);
+  let h="";const known=sells.filter(e=>e.p!=null);
   if(known.length){const tot=known.reduce((x,e)=>x+e.p,0),hhi=known.reduce((x,e)=>x+(e.p/100)**2,0);
-    h+=`<div class="stats">${stat("Revenue from mapped customers",pctP(tot))}${stat("Largest",BY[known[0].t].lab+" "+pctP(known[0].p))}${stat("Concentration (HHI)",hhi.toFixed(2),hhi>0.15?"down":"")}</div>`}
+    h+=`<div class="stats">${stat("Revenue from mapped customers",pctP(tot))}${stat("Largest",BY[known[0].t].lab+" "+pctP(known[0].p))}${stat("Concentration (HHI)",hhi.toFixed(2),hhi>.15?"down":"")}</div>`}
   h+=discBlock(c);
-  if(sells.length)h+=`<p class="sec">Sells to</p><ul class="links">${sells.map(e=>linkRow(e.t,e,c)).join("")}</ul>`;
-  if(buys.length)h+=`<p class="sec">Buys from</p><ul class="links">${buys.map(e=>linkRow(e.f,e,c)).join("")}</ul>`;
-  if(fin.length)h+=`<p class="sec">Capital ties</p><ul class="links">${fin.map(e=>linkRow(e.f===c.t?e.t:e.f,{...e,note:(e.f===c.t?"Invests in ":"Backed by ")+BY[e.f===c.t?e.t:e.f].lab+": "+e.note},c)).join("")}</ul>`;
+  if(sells.length)h+=`<p class="sec">Sells to</p><ul class="links">${sells.map(e=>linkRow(e.t,e)).join("")}</ul>`;
+  if(buys.length)h+=`<p class="sec">Buys from</p><ul class="links">${buys.map(e=>linkRow(e.f,e)).join("")}</ul>`;
+  if(fin.length)h+=`<p class="sec">Capital ties</p><ul class="links">${fin.map(e=>{const o=e.f===c.t?e.t:e.f;return linkRow(o,{...e,note:(e.f===c.t?"Invests in ":"Backed by ")+BY[o].lab+": "+e.note})}).join("")}</ul>`;
   const circ=fin.filter(f=>EDGES.some(e=>e.ty!=="capital"&&((e.f===f.f&&e.t===f.t)||(e.f===f.t&&e.t===f.f))));
   if(circ.length)h+=`<div class="flag"><b>Circularity flag.</b> ${esc(c.lab)} has capital ties to ${[...new Set(circ.map(f=>BY[f.f===c.t?f.t:f.f].lab))].map(esc).join(", ")} and also trades with them, so part of this demand is financed within the relationship.</div>`;
   h+=`<p class="note">D = disclosed by a party in a filing or official release · E = estimated or reported, not confirmed · I = inferred; size not disclosed · C = announced contract.</p>`;
   return h;
 }
 function tabThesis(c){
-  return `<div class="thesis"><p class="sec">Bull case</p><p>${esc(c.bull)}.</p><p class="sec">Bear case</p><p>${esc(c.bear)}.</p><p class="sec">What to watch</p><p>${esc(c.kpi)}.</p>
-  <p class="sec">Position in the chain</p><p>Layer ${c.layer} of 9: ${LAYERS[c.layer-1].name} · ${esc(c.seg||"")}. ${esc(c.role||"")}. Layer constraint: ${LAYERS[c.layer-1].neck}.</p></div>
-  <p class="note">Draft thesis notes. They will move to a versioned file in the repository so you can see how a view changes over time.</p>`;
+  const T=c.th||{},L=LAYERS[c.layer-1];
+  return `<div class="thesis">${T.status?`<p class="mut" style="margin:0">Status: <b>${esc(T.status)}</b>${T.updated?` · updated ${esc(T.updated)}`:""}</p>`:""}
+  <p class="sec">Bull case</p><p>${esc(T.bull||"—")}.</p><p class="sec">Bear case</p><p>${esc(T.bear||"—")}.</p><p class="sec">What to watch</p><p>${esc(T.watch||"—")}.</p>
+  <p class="sec">Position in the chain</p><p>Layer ${c.layer} of 9: ${esc(L.name)} · ${esc(c.segment||"")}. ${esc(c.role||"")}. Layer constraint: ${esc(L.neck)}.</p></div>
+  <p class="note">Thesis notes live in <span class="mono">data/theses.yaml</span> in the repository; edit them there and the page updates on the next deploy.</p>`;
 }
 
 function renderPanel(){
   const c=BY[SEL];if(!c){panel.innerHTML="";return}
   const L=LAYERS[c.layer-1];
-  let head=`<div class="ph"><div><p class="eyebrow">L${L.n} · ${L.short}</p><h2>${esc(c.lab)}</h2></div>`;
-  head+=c.priv?`<button class="close" type="button" id="closeP">Close</button>`:`<div><div class="px">${px(c.px)}</div><div class="chg ${cls(c.r1m)}">${pct(c.r1m)} 1M</div></div>`;
-  head+=`<div class="nm">${esc(c.name)}${c.priv?"":` · ${usd(c.mcap)} market cap`}</div>${c.priv?"":`<button class="close" type="button" id="closeP">Close</button>`}</div>`;
-  let body;
-  if(c.priv){
-    body=`<div class="flag" style="border-color:var(--line);margin-top:12px">Private company. No share price or analyst coverage. It is tracked as a demand node so you can see who depends on its spending.</div>${tabLinks(c)}${tabThesis(c)}`;
-  }else{
-    const tabs=`<div class="tabs" role="tablist">${TABS.map(([k,l])=>`<button role="tab" type="button" id="tab-${k}" data-tab="${k}" aria-selected="${k===TAB}">${l}</button>`).join("")}</div>`;
-    const fn={price:tabPrice,fin:tabFin,ana:tabAna,links:tabLinks,thesis:tabThesis}[TAB];
-    body=tabs+`<div role="tabpanel">${fn(c)}</div>`;
-  }
-  panel.innerHTML=head+body;
+  const tabs=c.priv?[["links","Links"],["thesis","Thesis"]]:TABS;
+  if(!tabs.some(t=>t[0]===TAB))TAB=tabs[0][0];
+  const head=`<div class="ph"><div><p class="eyebrow">L${L.n} · ${esc(L.short)}</p><h2>${esc(c.lab)}</h2></div>
+  ${c.has?`<div><div class="px">${fpx(c.px,c.ccy)}</div><div class="chg ${cls(c.chg1d)}">${pct(c.chg1d)} 1D · <span class="${cls(c.r1m)}">${pct(c.r1m)} 1M</span></div></div>`:"<div></div>"}
+  <div class="nm">${esc(c.name)}${c.mcap_usd_bn?` · ${usd(c.mcap_usd_bn)} market cap`:""}${c.priv?" · private":""}</div><button class="close" type="button" id="closeP">Close</button></div>`;
+  const fn={price:tabPrice,risk:tabRisk,fin:tabFin,ana:tabAna,news:tabNews,links:tabLinks,thesis:tabThesis}[TAB];
+  panel.innerHTML=head+`<div class="tabs" role="tablist">${tabs.map(([k,l])=>`<button role="tab" type="button" id="tab-${k}" data-tab="${k}" aria-selected="${k===TAB}">${l}${k==="news"&&c.news.some(n=>n.r)?` <span class="mut">${c.news.filter(n=>n.r).length}</span>`:""}</button>`).join("")}</div><div role="tabpanel">${c.priv?`<div class="flag" style="border-color:var(--line);margin-top:4px">Private company with no share price or analyst coverage. It is tracked as a demand node so you can see who depends on its spending.</div>`:""}${fn(c)}</div>`;
   panel.querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()=>{TAB=b.dataset.tab;renderPanel()}));
   panel.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>select(b.dataset.go,true)));
-  const cp=panel.querySelector("#closeP");if(cp)cp.addEventListener("click",closeSheet);
+  panel.querySelectorAll("[data-range]").forEach(b=>b.addEventListener("click",()=>{RANGE=b.dataset.range;store.set("aiscm-range",RANGE);renderPanel()}));
+  $("#closeP").addEventListener("click",closeSheet);
+  if(TAB==="price")drawPrice(c);
+  if(TAB==="risk")drawVol(c);
 }
 
 /* ---------- selection + sheet ---------- */
@@ -547,7 +631,7 @@ function select(t,keepOpen){
   const linked=new Set();EDGES.forEach(e=>{if(e.f===t)linked.add(e.t);if(e.t===t)linked.add(e.f)});
   map.classList.add("has-sel");
   document.querySelectorAll(".chip").forEach(el=>{el.classList.toggle("sel",el.dataset.t===t);el.classList.toggle("linked",linked.has(el.dataset.t))});
-  $("#mini").innerHTML=`<b>${esc(c.lab)}</b>${c.priv?"Private · "+linked.size+" links":`${px(c.px)} <span class="${cls(c.r1m)} num">${pct(c.r1m)}</span> · ${linked.size} links`}`;
+  $("#mini").innerHTML=`<b>${esc(c.lab)}</b>${c.has?`${fpx(c.px,c.ccy)} <span class="${cls(c.chg1d)} num">${pct(c.chg1d)}</span> · `:c.priv?"Private · ":""}${linked.size} links`;
   renderPanel();drawWires();
   try{history.replaceState(null,"","#"+t)}catch(e){}
   if(keepOpen&&narrow())openSheet();
@@ -561,9 +645,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSheet()});
 paintChips();
 let start="NVDA";try{const h=decodeURIComponent(location.hash.slice(1));if(BY[h])start=h}catch(e){}
 select(start);
-
 })();
 </script>
-
 </body>
 </html>

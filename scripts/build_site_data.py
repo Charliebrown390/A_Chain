@@ -164,6 +164,18 @@ def main():
                 e["note"] = f"{e.get('note', '')} · % is for anonymised '{r['customer']}'; mapping to this company is an estimate".strip(" ·")
             merged += 1
 
+    tp = ROOT / "data/theses.yaml"
+    theses = (yaml.safe_load(tp.read_text()) or {}).get("theses", {}) if tp.exists() else {}
+    for c in uni["companies"]:
+        if c["id"] in theses:
+            c["thesis"] = theses[c["id"]]
+    for k in theses:
+        if k not in idset:
+            errs.append(f"theses.yaml: unknown company id {k}")
+    if errs:
+        print("Validation failed:\n  " + "\n  ".join(errs))
+        return 1
+
     OUT.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now(timezone.utc).isoformat(timespec="seconds")
     (OUT / "universe.json").write_text(json.dumps({"built": stamp, **uni}, indent=1))

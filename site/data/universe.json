@@ -1,5 +1,5 @@
 {
- "built": "2026-10-16T08:02:36+00:00",
+ "built": "2026-10-16T10:06:05+00:00",
  "layers": [
   {
    "n": 1,
@@ -65,7 +65,14 @@
    "segment": "Lithography",
    "yf": "ASML",
    "sec": "ASML",
-   "role": "Sole supplier of EUV lithography tools"
+   "role": "Sole supplier of EUV lithography tools",
+   "thesis": {
+    "bull": "Sole EUV supplier; High-NA tools add content per wafer",
+    "bear": "China export curbs and lumpy chipmaker capex",
+    "watch": "EUV bookings, backlog, China share of sales",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "AMAT",
@@ -75,7 +82,14 @@
    "segment": "Deposition & etch",
    "yf": "AMAT",
    "sec": "AMAT",
-   "role": "Broadest wafer-fab equipment portfolio"
+   "role": "Broadest wafer-fab equipment portfolio",
+   "thesis": {
+    "bull": "Broadest tool range; gate-all-around and packaging tailwinds",
+    "bear": "China is a large share of sales and exposed to export rules",
+    "watch": "Foundry vs memory mix, China share",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "LRCX",
@@ -85,7 +99,14 @@
    "segment": "Etch & deposition",
    "yf": "LRCX",
    "sec": "LRCX",
-   "role": "Etch and deposition, heavy memory exposure"
+   "role": "Etch and deposition, heavy memory exposure",
+   "thesis": {
+    "bull": "Etch and deposition leader; gains most from NAND and HBM upgrades",
+    "bear": "Memory capex is the most cyclical spend",
+    "watch": "WFE outlook, NAND upgrade spend",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "KLAC",
@@ -95,7 +116,14 @@
    "segment": "Process control",
    "yf": "KLAC",
    "sec": "KLAC",
-   "role": "Inspection and metrology"
+   "role": "Inspection and metrology",
+   "thesis": {
+    "bull": "Process-control intensity rises at every node",
+    "bear": "Premium multiple for a cyclical business",
+    "watch": "Leading-edge foundry spend, margins",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "SNPS",
@@ -105,7 +133,14 @@
    "segment": "EDA",
    "yf": "SNPS",
    "sec": "SNPS",
-   "role": "Chip design software and IP; owns Ansys"
+   "role": "Chip design software and IP; owns Ansys",
+   "thesis": {
+    "bull": "EDA duopoly; every custom AI chip needs its tools",
+    "bear": "Ansys integration and China exposure",
+    "watch": "Backlog, AI design starts",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "CDNS",
@@ -115,7 +150,14 @@
    "segment": "EDA",
    "yf": "CDNS",
    "sec": "CDNS",
-   "role": "Chip design software and emulation hardware"
+   "role": "Chip design software and emulation hardware",
+   "thesis": {
+    "bull": "EDA duopoly; emulation hardware demand from AI chips",
+    "bear": "Valuation leaves little room for a miss",
+    "watch": "Backlog, hardware system sales",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "NVDA",
@@ -125,7 +167,14 @@
    "segment": "GPUs & systems",
    "yf": "NVDA",
    "sec": "NVDA",
-   "role": "AI accelerators, NVLink, networking, CUDA"
+   "role": "AI accelerators, NVLink, networking, CUDA",
+   "thesis": {
+    "bull": "Full stack: GPUs, NVLink, networking and CUDA software",
+    "bear": "Customer concentration, custom ASICs, vendor-financed demand",
+    "watch": "Data-centre revenue, gross margin, Rubin ramp",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "AMD",
@@ -135,7 +184,14 @@
    "segment": "GPUs & CPUs",
    "yf": "AMD",
    "sec": "AMD",
-   "role": "MI-series GPUs and EPYC CPUs"
+   "role": "MI-series GPUs and EPYC CPUs",
+   "thesis": {
+    "bull": "Credible second GPU source; OpenAI deal validates MI-series",
+    "bear": "Software gap to CUDA; warrant dilution tied to the OpenAI deal",
+    "watch": "Data-centre GPU revenue, MI450 ramp",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "AVGO",
@@ -145,7 +201,14 @@
    "segment": "Custom ASICs & switching",
    "yf": "AVGO",
    "sec": "AVGO",
-   "role": "Custom accelerators (Google TPU) and Ethernet switch chips"
+   "role": "Custom accelerators (Google TPU) and Ethernet switch chips",
+   "thesis": {
+    "bull": "Custom ASIC partner for Google TPU, Meta and OpenAI; Ethernet switches",
+    "bear": "ASIC customers can switch partners or bring design in-house",
+    "watch": "AI semiconductor revenue, number of XPU customers",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "MRVL",
@@ -155,7 +218,14 @@
    "segment": "Custom ASICs & optics DSP",
    "yf": "MRVL",
    "sec": "MRVL",
-   "role": "Custom silicon and optical DSPs"
+   "role": "Custom silicon and optical DSPs",
+   "thesis": {
+    "bull": "Custom silicon and optical DSPs for AWS and Microsoft",
+    "bear": "Lumpy design-win cadence; risk of losing a socket",
+    "watch": "Custom XPU revenue, optics growth",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "ARM",
@@ -165,7 +235,14 @@
    "segment": "CPU IP",
    "yf": "ARM",
    "sec": "ARM",
-   "role": "CPU architecture licensing and royalties"
+   "role": "CPU architecture licensing and royalties",
+   "thesis": {
+    "bull": "Royalties on every Arm CPU in AI servers",
+    "bear": "Very high multiple; licensing disputes",
+    "watch": "Royalty rate, data-centre share",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "INTC",
@@ -175,7 +252,14 @@
    "segment": "CPUs & foundry",
    "yf": "INTC",
    "sec": "INTC",
-   "role": "Server CPUs and Intel Foundry"
+   "role": "Server CPUs and Intel Foundry",
+   "thesis": {
+    "bull": "Foundry optionality and US policy support",
+    "bear": "Losing share; foundry needs outside customers",
+    "watch": "18A yields, foundry customer wins",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "TSM",
@@ -185,7 +269,14 @@
    "segment": "Foundry",
    "yf": "TSM",
    "sec": "TSM",
-   "role": "Leading-edge foundry and CoWoS packaging"
+   "role": "Leading-edge foundry and CoWoS packaging",
+   "thesis": {
+    "bull": "Makes nearly every leading AI chip; strong pricing power",
+    "bear": "Taiwan geopolitics; margin dilution from overseas fabs",
+    "watch": "Monthly sales, CoWoS capacity, N2 ramp",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "005930.KS",
@@ -195,7 +286,14 @@
    "segment": "Foundry & memory",
    "yf": "005930.KS",
    "sec": null,
-   "role": "Memory and foundry; HBM challenger"
+   "role": "Memory and foundry; HBM challenger",
+   "thesis": {
+    "bull": "Memory upcycle; catching up on HBM for NVIDIA",
+    "bear": "Late HBM qualification; foundry losses",
+    "watch": "HBM4 qualification, memory pricing",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "AMKR",
@@ -205,7 +303,14 @@
    "segment": "OSAT",
    "yf": "AMKR",
    "sec": "AMKR",
-   "role": "Outsourced assembly, test and advanced packaging"
+   "role": "Outsourced assembly, test and advanced packaging",
+   "thesis": {
+    "bull": "Outsourced advanced packaging as CoWoS overflows",
+    "bear": "Thin margins; smaller AI share than peers",
+    "watch": "Advanced packaging revenue mix",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "000660.KS",
@@ -215,7 +320,14 @@
    "segment": "DRAM & HBM",
    "yf": "000660.KS",
    "sec": null,
-   "role": "HBM market leader"
+   "role": "HBM market leader",
+   "thesis": {
+    "bull": "HBM leader with the majority of NVIDIA's supply",
+    "bear": "Memory cycles; HBM pricing as rivals catch up",
+    "watch": "HBM share, DRAM contract prices",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "MU",
@@ -225,7 +337,14 @@
    "segment": "DRAM & HBM",
    "yf": "MU",
    "sec": "MU",
-   "role": "DRAM, HBM and NAND"
+   "role": "DRAM, HBM and NAND",
+   "thesis": {
+    "bull": "HBM share gains; the only US memory maker",
+    "bear": "Commodity DRAM and NAND price swings",
+    "watch": "HBM revenue, gross margin",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "SNDK",
@@ -235,7 +354,14 @@
    "segment": "NAND & SSD",
    "yf": "SNDK",
    "sec": "SNDK",
-   "role": "NAND flash and enterprise SSDs"
+   "role": "NAND flash and enterprise SSDs",
+   "thesis": {
+    "bull": "AI data growth lifts enterprise SSD demand",
+    "bear": "NAND oversupply risk",
+    "watch": "Enterprise SSD bit growth, pricing",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "WDC",
@@ -245,7 +371,14 @@
    "segment": "Hard drives",
    "yf": "WDC",
    "sec": "WDC",
-   "role": "Nearline hard drives for data lakes"
+   "role": "Nearline hard drives for data lakes",
+   "thesis": {
+    "bull": "Nearline hard drives for AI data lakes",
+    "bear": "Lumpy hyperscaler order timing",
+    "watch": "Exabytes shipped, pricing",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "ANET",
@@ -255,7 +388,14 @@
    "segment": "Ethernet switches",
    "yf": "ANET",
    "sec": "ANET",
-   "role": "Data-centre Ethernet switching"
+   "role": "Data-centre Ethernet switching",
+   "thesis": {
+    "bull": "Ethernet is winning AI back-end networks",
+    "bear": "Two customers above 10% each; competition from NVIDIA networking",
+    "watch": "AI networking revenue, customer mix",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "COHR",
@@ -265,7 +405,14 @@
    "segment": "Optical transceivers",
    "yf": "COHR",
    "sec": "COHR",
-   "role": "800G/1.6T transceivers and lasers"
+   "role": "800G/1.6T transceivers and lasers",
+   "thesis": {
+    "bull": "800G and 1.6T transceivers; indium-phosphide lasers",
+    "bear": "Patchy execution and margin history",
+    "watch": "Datacom revenue, laser capacity",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "LITE",
@@ -275,7 +422,14 @@
    "segment": "Lasers & optical switches",
    "yf": "LITE",
    "sec": "LITE",
-   "role": "Lasers and optical circuit switches"
+   "role": "Lasers and optical circuit switches",
+   "thesis": {
+    "bull": "Optical circuit switches and lasers for Google and NVIDIA",
+    "bear": "Concentrated customer base",
+    "watch": "Cloud revenue, OCS shipments",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "CRDO",
@@ -285,7 +439,14 @@
    "segment": "Copper interconnect",
    "yf": "CRDO",
    "sec": "CRDO",
-   "role": "Active electrical cables and SerDes"
+   "role": "Active electrical cables and SerDes",
+   "thesis": {
+    "bull": "Active electrical cables for in-rack links",
+    "bear": "Heavy reliance on one hyperscaler",
+    "watch": "Customer diversification",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "ALAB",
@@ -295,7 +456,14 @@
    "segment": "Connectivity chips",
    "yf": "ALAB",
    "sec": "ALAB",
-   "role": "PCIe/CXL retimers and fabric switches"
+   "role": "PCIe/CXL retimers and fabric switches",
+   "thesis": {
+    "bull": "PCIe/CXL retimers and switches inside AI racks",
+    "bear": "Product cycles depend on NVIDIA design choices",
+    "watch": "Scorpio switch ramp",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "DELL",
@@ -305,7 +473,14 @@
    "segment": "AI servers",
    "yf": "DELL",
    "sec": "DELL",
-   "role": "AI servers for neoclouds and enterprises"
+   "role": "AI servers for neoclouds and enterprises",
+   "thesis": {
+    "bull": "AI server backlog from neoclouds and enterprises",
+    "bear": "Thin margins on AI servers",
+    "watch": "AI server orders and backlog",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "SMCI",
@@ -315,7 +490,14 @@
    "segment": "AI servers",
    "yf": "SMCI",
    "sec": "SMCI",
-   "role": "Liquid-cooled GPU servers"
+   "role": "Liquid-cooled GPU servers",
+   "thesis": {
+    "bull": "Fast time-to-market on liquid-cooled racks",
+    "bear": "Governance history; margin compression",
+    "watch": "Gross margin, timely filings",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "HPE",
@@ -325,7 +507,14 @@
    "segment": "AI systems",
    "yf": "HPE",
    "sec": "HPE",
-   "role": "AI systems and networking (Juniper)"
+   "role": "AI systems and networking (Juniper)",
+   "thesis": {
+    "bull": "Sovereign and enterprise AI; networking via Juniper",
+    "bear": "Small AI share; integration risk",
+    "watch": "AI systems backlog",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "2317.TW",
@@ -335,7 +524,14 @@
    "segment": "ODM",
    "yf": "2317.TW",
    "sec": null,
-   "role": "Assembles rack-scale NVIDIA systems"
+   "role": "Assembles rack-scale NVIDIA systems",
+   "thesis": {
+    "bull": "Assembles most NVIDIA rack-scale systems",
+    "bear": "Very thin margins",
+    "watch": "Monthly sales, AI server share",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "VRT",
@@ -345,7 +541,14 @@
    "segment": "Power & cooling",
    "yf": "VRT",
    "sec": "VRT",
-   "role": "Power and liquid cooling for AI racks"
+   "role": "Power and liquid cooling for AI racks",
+   "thesis": {
+    "bull": "Power and liquid cooling for dense AI racks",
+    "bear": "Order cyclicality; competition from Schneider and Eaton",
+    "watch": "Orders, book-to-bill",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "ETN",
@@ -355,7 +558,14 @@
    "segment": "Electrical equipment",
    "yf": "ETN",
    "sec": "ETN",
-   "role": "Switchgear and power distribution"
+   "role": "Switchgear and power distribution",
+   "thesis": {
+    "bull": "Electrical gear for data centres and the grid",
+    "bear": "Rich multiple for an industrial",
+    "watch": "Data-centre orders, backlog",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "GEV",
@@ -365,7 +575,14 @@
    "segment": "Generation & grid",
    "yf": "GEV",
    "sec": "GEV",
-   "role": "Gas turbines and grid equipment"
+   "role": "Gas turbines and grid equipment",
+   "thesis": {
+    "bull": "Gas turbines sold out for years; grid equipment",
+    "bear": "Wind segment execution; capacity limits",
+    "watch": "Turbine slot reservations",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "CEG",
@@ -375,7 +592,14 @@
    "segment": "Power generation",
    "yf": "CEG",
    "sec": "CEG",
-   "role": "Nuclear power supplied under hyperscaler PPAs"
+   "role": "Nuclear power supplied under hyperscaler PPAs",
+   "thesis": {
+    "bull": "Nuclear power deals with hyperscalers",
+    "bear": "Regulatory pushback on co-located data centres",
+    "watch": "New PPAs, power prices",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "EQIX",
@@ -385,7 +609,14 @@
    "segment": "Data-centre REIT",
    "yf": "EQIX",
    "sec": "EQIX",
-   "role": "Colocation and interconnection"
+   "role": "Colocation and interconnection",
+   "thesis": {
+    "bull": "Interconnection hubs for AI inference",
+    "bear": "Capital intensity; rate sensitivity",
+    "watch": "AFFO growth, pricing (P/E shown is P/AFFO)",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "MSFT",
@@ -395,7 +626,14 @@
    "segment": "Hyperscaler",
    "yf": "MSFT",
    "sec": "MSFT",
-   "role": "Azure cloud; OpenAI partner"
+   "role": "Azure cloud; OpenAI partner",
+   "thesis": {
+    "bull": "Azure growth plus its OpenAI stake",
+    "bear": "Capex intensity weighs on free cash flow",
+    "watch": "Azure growth, capex, RPO",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "AMZN",
@@ -405,7 +643,14 @@
    "segment": "Hyperscaler",
    "yf": "AMZN",
    "sec": "AMZN",
-   "role": "AWS cloud; Trainium chips"
+   "role": "AWS cloud; Trainium chips",
+   "thesis": {
+    "bull": "AWS scale plus Trainium cost advantage",
+    "bear": "Capex load and retail margins",
+    "watch": "AWS growth, backlog",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "GOOGL",
@@ -415,7 +660,14 @@
    "segment": "Hyperscaler",
    "yf": "GOOGL",
    "sec": "GOOGL",
-   "role": "Google Cloud; TPUs"
+   "role": "Google Cloud; TPUs",
+   "thesis": {
+    "bull": "TPUs give a cost edge; growing Cloud backlog",
+    "bear": "Chatbots could erode Search",
+    "watch": "Cloud growth, external TPU sales",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "ORCL",
@@ -425,7 +677,14 @@
    "segment": "Hyperscaler",
    "yf": "ORCL",
    "sec": "ORCL",
-   "role": "OCI cloud with large AI contracts"
+   "role": "OCI cloud with large AI contracts",
+   "thesis": {
+    "bull": "Very large RPO from AI compute contracts",
+    "bear": "Debt-funded build-out; reliance on OpenAI",
+    "watch": "RPO conversion, FCF, debt",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "CRWV",
@@ -435,7 +694,14 @@
    "segment": "Neocloud",
    "yf": "CRWV",
    "sec": "CRWV",
-   "role": "GPU cloud"
+   "role": "GPU cloud",
+   "thesis": {
+    "bull": "Fast-growing GPU cloud with long contracts",
+    "bear": "High leverage; few customers; NVIDIA-linked",
+    "watch": "Backlog, cost of debt, utilisation",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "NBIS",
@@ -445,7 +711,14 @@
    "segment": "Neocloud",
    "yf": "NBIS",
    "sec": "NBIS",
-   "role": "GPU cloud"
+   "role": "GPU cloud",
+   "thesis": {
+    "bull": "GPU cloud with a Microsoft anchor contract",
+    "bear": "Early stage and burning cash",
+    "watch": "Contracted capacity, ARR",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "META",
@@ -455,7 +728,14 @@
    "segment": "Consumer AI & ads",
    "yf": "META",
    "sec": "META",
-   "role": "Llama models; AI in ads and apps"
+   "role": "Llama models; AI in ads and apps",
+   "thesis": {
+    "bull": "AI improves ad targeting and engagement",
+    "bear": "Heavy capex with no cloud business to resell it",
+    "watch": "Ad growth, capex guidance",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "PLTR",
@@ -465,7 +745,14 @@
    "segment": "Enterprise AI software",
    "yf": "PLTR",
    "sec": "PLTR",
-   "role": "Enterprise AI platform"
+   "role": "Enterprise AI platform",
+   "thesis": {
+    "bull": "Enterprise AI platform adoption",
+    "bear": "Extreme valuation",
+    "watch": "US commercial growth",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "NOW",
@@ -475,7 +762,14 @@
    "segment": "Enterprise AI software",
    "yf": "NOW",
    "sec": "NOW",
-   "role": "Workflow software with AI agents"
+   "role": "Workflow software with AI agents",
+   "thesis": {
+    "bull": "Workflow AI agents sold per seat",
+    "bear": "Seat-based pricing under pressure from AI",
+    "watch": "Pro Plus adoption, cRPO",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "OpenAI",
@@ -486,7 +780,14 @@
    "yf": null,
    "sec": null,
    "private": true,
-   "role": "Largest single buyer of new compute"
+   "role": "Largest single buyer of new compute",
+   "thesis": {
+    "bull": "Largest single source of new compute commitments",
+    "bear": "Commitments far exceed current revenue",
+    "watch": "Revenue run-rate, funding rounds",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   },
   {
    "id": "Anthropic",
@@ -497,7 +798,14 @@
    "yf": null,
    "sec": null,
    "private": true,
-   "role": "Large buyer of AWS and Google compute"
+   "role": "Large buyer of AWS and Google compute",
+   "thesis": {
+    "bull": "Large buyer of AWS Trainium and Google TPU capacity",
+    "bear": "Ongoing funding needs",
+    "watch": "Revenue run-rate, compute deals",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
   }
  ]
 }
