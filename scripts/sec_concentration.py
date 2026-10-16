@@ -14,6 +14,7 @@ data/edges.yaml and tagged accordingly.
 SEC asks for a descriptive User-Agent with contact details and <=10 requests/second.
 """
 import json
+import os
 import re
 import sys
 import time
@@ -25,7 +26,11 @@ import requests
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-UA = "A_Chain research github.com/Charliebrown390/A_Chain Charliebrown390@users.noreply.github.com"
+# SEC requires "Name contact-email" and rejects some domains (e.g. GitHub noreply).
+# Set it as the repository secret SEC_USER_AGENT, e.g. "Jane Tan jane@example.org".
+UA = os.environ.get("SEC_USER_AGENT", "").strip()
+if not UA:
+    sys.exit("SEC_USER_AGENT is not set. Add it under Settings > Secrets and variables > Actions.")
 S = requests.Session()
 S.headers.update({"User-Agent": UA, "Accept-Encoding": "gzip, deflate"})
 

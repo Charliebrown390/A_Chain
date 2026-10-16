@@ -21,14 +21,9 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
-      - name: Probe SEC access
-        run: |
-          for ua in "Charliebrown390 charliebrown390@users.noreply.github.com" "A_Chain charliebrown390@users.noreply.github.com" "Charliebrown390 A_Chain contact@example.com"; do
-            code=$(curl -s -o /dev/null -w "%{http_code}" -A "$ua" https://www.sec.gov/files/company_tickers.json)
-            code2=$(curl -s -o /dev/null -w "%{http_code}" -A "$ua" https://data.sec.gov/submissions/CIK0001045810.json)
-            echo "$code $code2 :: $ua"
-          done
       - run: python scripts/sec_concentration.py
+        env:
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
       - name: Commit results
         run: |
           git config user.name "a-chain-bot"
