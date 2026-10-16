@@ -1,5 +1,1846 @@
 {
- "built": "2026-10-16T07:54:06+00:00",
- "sec_pulled": null,
- "companies": {}
+ "built": "2026-10-16T07:59:41+00:00",
+ "sec_pulled": "2026-10-16T07:54:36+00:00",
+ "companies": {
+  "ASML": {
+   "cik": 937966,
+   "filings": [
+    {
+     "form": "20-F",
+     "kind": "annual",
+     "filed": "2026-02-25",
+     "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm",
+     "rows": [
+      {
+       "customer": "Four Customers",
+       "member": "asml:FourCustomersMember",
+       "basis": "revenue",
+       "pct": 61.2,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      },
+      {
+       "customer": "Three Largest Customers",
+       "member": "asml:ThreeLargestCustomersMember",
+       "basis": "receivables",
+       "pct": 35.4,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      }
+     ]
+    }
+   ],
+   "rpo": {
+    "usd_bn": 46.5,
+    "end": "2025-12-31",
+    "form": "20-F",
+    "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm"
+   }
+  },
+  "AMAT": {
+   "cik": 6951,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2025-12-12",
+     "url": "https://www.sec.gov/Archives/edgar/data/6951/000162828025056742/amat-20251026.htm",
+     "rows": [
+      {
+       "customer": "Customer One",
+       "member": "amat:CustomerOneMember",
+       "basis": "revenue",
+       "pct": 19.0,
+       "start": "2024-10-28",
+       "end": "2025-10-26",
+       "months": 12
+      },
+      {
+       "customer": "Customer Two",
+       "member": "amat:CustomerTwoMember",
+       "basis": "revenue",
+       "pct": 15.0,
+       "start": "2024-10-28",
+       "end": "2025-10-26",
+       "months": 12
+      }
+     ]
+    },
+    {
+     "form": "10-Q",
+     "kind": "quarterly",
+     "filed": "2026-08-20",
+     "url": "https://www.sec.gov/Archives/edgar/data/6951/000162828026058235/amat-20260726.htm",
+     "rows": [
+      {
+       "customer": "Customer One",
+       "member": "amat:CustomerOneMember",
+       "basis": "revenue",
+       "pct": 20.0,
+       "start": "2025-10-27",
+       "end": "2026-07-26",
+       "months": 9
+      },
+      {
+       "customer": "Customer Two",
+       "member": "amat:CustomerTwoMember",
+       "basis": "revenue",
+       "pct": 14.0,
+       "start": "2025-10-27",
+       "end": "2026-07-26",
+       "months": 9
+      }
+     ]
+    }
+   ],
+   "rpo": null
+  },
+  "LRCX": {
+   "cik": 707549,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-08-07",
+     "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+     "rows": [
+      {
+       "customer": "Customer One",
+       "member": "lrcx:CustomerOneMember",
+       "basis": "revenue",
+       "pct": 16.0,
+       "start": "2025-06-30",
+       "end": "2026-06-28",
+       "months": 12
+      },
+      {
+       "customer": "Customer Two",
+       "member": "lrcx:CustomerTwoMember",
+       "basis": "revenue",
+       "pct": 15.0,
+       "start": "2025-06-30",
+       "end": "2026-06-28",
+       "months": 12
+      },
+      {
+       "customer": "Customer Three",
+       "member": "lrcx:CustomerThreeMember",
+       "basis": "revenue",
+       "pct": 12.0,
+       "start": "2025-06-30",
+       "end": "2026-06-28",
+       "months": 12
+      },
+      {
+       "customer": "Customer Four",
+       "member": "lrcx:CustomerFourMember",
+       "basis": "revenue",
+       "pct": 12.0,
+       "start": "2025-06-30",
+       "end": "2026-06-28",
+       "months": 12
+      },
+      {
+       "customer": "Customer One",
+       "member": "lrcx:CustomerOneMember",
+       "basis": "receivables",
+       "pct": 20.0,
+       "start": "2025-06-30",
+       "end": "2026-06-28",
+       "months": 12
+      },
+      {
+       "customer": "Customer Two",
+       "member": "lrcx:CustomerTwoMember",
+       "basis": "receivables",
+       "pct": 16.0,
+       "start": "2025-06-30",
+       "end": "2026-06-28",
+       "months": 12
+      },
+      {
+       "customer": "Customer Three",
+       "member": "lrcx:CustomerThreeMember",
+       "basis": "receivables",
+       "pct": 15.0,
+       "start": "2025-06-30",
+       "end": "2026-06-28",
+       "months": 12
+      },
+      {
+       "customer": "Customer Four",
+       "member": "lrcx:CustomerFourMember",
+       "basis": "receivables",
+       "pct": 11.0,
+       "start": "2025-06-30",
+       "end": "2026-06-28",
+       "months": 12
+      },
+      {
+       "customer": "Customer5",
+       "member": "lrcx:Customer5Member",
+       "basis": "receivables",
+       "pct": 10.0,
+       "start": "2025-06-30",
+       "end": "2026-06-28",
+       "months": 12
+      }
+     ]
+    }
+   ],
+   "rpo": {
+    "usd_bn": 2.43,
+    "end": "2026-06-28",
+    "form": "10-K",
+    "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm"
+   }
+  },
+  "KLAC": {
+   "cik": 319201,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-08-06",
+     "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm",
+     "rows": [
+      {
+       "customer": "Largest Customer",
+       "member": "klac:LargestCustomerMember",
+       "basis": "revenue",
+       "pct": 19.0,
+       "start": "2025-07-01",
+       "end": "2026-06-30",
+       "months": 12
+      }
+     ]
+    },
+    {
+     "form": "10-Q",
+     "kind": "quarterly",
+     "filed": "2026-04-30",
+     "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000016/klac-20260331.htm",
+     "rows": [
+      {
+       "customer": "Largest Customer",
+       "member": "klac:LargestCustomerMember",
+       "basis": "revenue",
+       "pct": 17.0,
+       "start": "2025-07-01",
+       "end": "2026-03-31",
+       "months": 9
+      },
+      {
+       "customer": "Group Of Three Customers",
+       "member": "klac:GroupOfThreeCustomersMember",
+       "basis": "receivables",
+       "pct": 10.0,
+       "start": "2025-07-01",
+       "end": "2026-03-31",
+       "months": 9
+      }
+     ]
+    }
+   ],
+   "rpo": null
+  },
+  "SNPS": {
+   "cik": 883241,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2025-12-22",
+     "url": "https://www.sec.gov/Archives/edgar/data/883241/000088324125000028/snps-20251031.htm",
+     "rows": [
+      {
+       "customer": "One Customer",
+       "member": "snps:OneCustomerMember",
+       "basis": "revenue",
+       "pct": 12.6,
+       "start": "2023-11-01",
+       "end": "2024-10-31",
+       "months": 12
+      }
+     ]
+    }
+   ],
+   "rpo": {
+    "usd_bn": 10.9,
+    "end": "2026-07-31",
+    "form": "10-Q",
+    "url": "https://www.sec.gov/Archives/edgar/data/883241/000088324126000025/snps-20260731.htm"
+   }
+  },
+  "CDNS": {
+   "cik": 813672,
+   "filings": [],
+   "rpo": {
+    "usd_bn": 8.1,
+    "end": "2026-06-30",
+    "form": "10-Q",
+    "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000092/cdns-20260630.htm"
+   }
+  },
+  "NVDA": {
+   "cik": 1045810,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-02-25",
+     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+     "rows": [
+      {
+       "customer": "Customer One",
+       "member": "nvda:CustomerOneMember",
+       "basis": "revenue",
+       "pct": 22.0,
+       "start": "2025-01-27",
+       "end": "2026-01-25",
+       "months": 12
+      },
+      {
+       "customer": "Customer Two",
+       "member": "nvda:CustomerTwoMember",
+       "basis": "revenue",
+       "pct": 14.0,
+       "start": "2025-01-27",
+       "end": "2026-01-25",
+       "months": 12
+      },
+      {
+       "customer": "Customer One",
+       "member": "nvda:CustomerOneMember",
+       "basis": "receivables",
+       "pct": 25.0,
+       "start": "2025-01-27",
+       "end": "2026-01-25",
+       "months": 12
+      },
+      {
+       "customer": "Customer Two",
+       "member": "nvda:CustomerTwoMember",
+       "basis": "receivables",
+       "pct": 18.0,
+       "start": "2025-01-27",
+       "end": "2026-01-25",
+       "months": 12
+      },
+      {
+       "customer": "Customer Three",
+       "member": "nvda:CustomerThreeMember",
+       "basis": "receivables",
+       "pct": 13.0,
+       "start": "2025-01-27",
+       "end": "2026-01-25",
+       "months": 12
+      }
+     ]
+    },
+    {
+     "form": "10-Q",
+     "kind": "quarterly",
+     "filed": "2026-08-26",
+     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+     "rows": [
+      {
+       "customer": "Revenue Customer2",
+       "member": "nvda:RevenueCustomer2Member",
+       "basis": "revenue",
+       "pct": 16.0,
+       "start": "2026-01-26",
+       "end": "2026-07-26",
+       "months": 6
+      },
+      {
+       "customer": "Revenue Customer3",
+       "member": "nvda:RevenueCustomer3Member",
+       "basis": "revenue",
+       "pct": 15.0,
+       "start": "2026-01-26",
+       "end": "2026-07-26",
+       "months": 6
+      },
+      {
+       "customer": "Revenue Customer4",
+       "member": "nvda:RevenueCustomer4Member",
+       "basis": "revenue",
+       "pct": 13.0,
+       "start": "2026-01-26",
+       "end": "2026-07-26",
+       "months": 6
+      },
+      {
+       "customer": "Accounts Receivable Customer A",
+       "member": "nvda:AccountsReceivableCustomerAMember",
+       "basis": "receivables",
+       "pct": 22.0,
+       "start": "2026-01-26",
+       "end": "2026-07-26",
+       "months": 6
+      },
+      {
+       "customer": "Accounts Receivable Customer B",
+       "member": "nvda:AccountsReceivableCustomerBMember",
+       "basis": "receivables",
+       "pct": 14.0,
+       "start": "2026-01-26",
+       "end": "2026-07-26",
+       "months": 6
+      },
+      {
+       "customer": "Accounts Receivable Customer C",
+       "member": "nvda:AccountsReceivableCustomerCMember",
+       "basis": "receivables",
+       "pct": 13.0,
+       "start": "2026-01-26",
+       "end": "2026-07-26",
+       "months": 6
+      },
+      {
+       "customer": "Accounts Receivable Customer D",
+       "member": "nvda:AccountsReceivableCustomerDMember",
+       "basis": "receivables",
+       "pct": 11.0,
+       "start": "2026-01-26",
+       "end": "2026-07-26",
+       "months": 6
+      },
+      {
+       "customer": "Accounts Receivable Customer E",
+       "member": "nvda:AccountsReceivableCustomerEMember",
+       "basis": "receivables",
+       "pct": 10.0,
+       "start": "2026-01-26",
+       "end": "2026-07-26",
+       "months": 6
+      }
+     ]
+    }
+   ],
+   "rpo": {
+    "usd_bn": 3.2,
+    "end": "2026-07-26",
+    "form": "10-Q",
+    "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm"
+   }
+  },
+  "AMD": {
+   "cik": 2488,
+   "filings": [],
+   "rpo": {
+    "usd_bn": 0.22,
+    "end": "2026-06-27",
+    "form": "10-Q",
+    "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000123/amd-20260627.htm"
+   }
+  },
+  "AVGO": {
+   "cik": 1730168,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2025-12-18",
+     "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+     "rows": [
+      {
+       "customer": "Major Customer One",
+       "member": "avgo:MajorCustomerOneMember",
+       "basis": "revenue",
+       "pct": 32.0,
+       "start": "2024-11-04",
+       "end": "2025-11-02",
+       "months": 12
+      },
+      {
+       "customer": "Major Customer One",
+       "member": "avgo:MajorCustomerOneMember",
+       "basis": "receivables",
+       "pct": 44.0,
+       "start": "2024-11-04",
+       "end": "2025-11-02",
+       "months": 12
+      }
+     ]
+    }
+   ],
+   "rpo": {
+    "usd_bn": 179.2,
+    "end": "2026-08-02",
+    "form": "10-Q",
+    "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm"
+   }
+  },
+  "MRVL": {
+   "cik": 1835632,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-03-11",
+     "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+     "rows": [
+      {
+       "customer": "Distributor A",
+       "member": "mrvl:DistributorAMember",
+       "basis": "revenue",
+       "pct": 37.0,
+       "start": "2025-02-02",
+       "end": "2026-01-31",
+       "months": 12
+      },
+      {
+       "customer": "Customer A",
+       "member": "mrvl:CustomerAMember",
+       "basis": "revenue",
+       "pct": 14.0,
+       "start": "2025-02-02",
+       "end": "2026-01-31",
+       "months": 12
+      },
+      {
+       "customer": "Four Customers",
+       "member": "mrvl:FourCustomersMember",
+       "basis": "receivables",
+       "pct": 73.0,
+       "start": "2025-02-02",
+       "end": "2026-01-31",
+       "months": 12
+      }
+     ]
+    }
+   ],
+   "rpo": null
+  },
+  "ARM": {
+   "cik": 1973239,
+   "filings": [
+    {
+     "form": "20-F",
+     "kind": "annual",
+     "filed": "2026-05-26",
+     "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm",
+     "rows": [
+      {
+       "customer": "Three Largest Customers",
+       "member": "arm:ThreeLargestCustomersMember",
+       "basis": "revenue",
+       "pct": 42.0,
+       "start": "2025-04-01",
+       "end": "2026-03-31",
+       "months": 12
+      },
+      {
+       "customer": "Largest Customer",
+       "member": "arm:LargestCustomerMember",
+       "basis": "revenue",
+       "pct": 16.0,
+       "start": "2025-04-01",
+       "end": "2026-03-31",
+       "months": 12
+      },
+      {
+       "customer": "Second Largest Customer",
+       "member": "arm:SecondLargestCustomerMember",
+       "basis": "revenue",
+       "pct": 14.0,
+       "start": "2025-04-01",
+       "end": "2026-03-31",
+       "months": 12
+      },
+      {
+       "customer": "Third Largest Customer",
+       "member": "arm:ThirdLargestCustomerMember",
+       "basis": "revenue",
+       "pct": 12.0,
+       "start": "2025-04-01",
+       "end": "2026-03-31",
+       "months": 12
+      },
+      {
+       "customer": "Largest Customer",
+       "member": "arm:LargestCustomerMember",
+       "basis": "receivables",
+       "pct": 22.0,
+       "start": "2025-04-01",
+       "end": "2026-03-31",
+       "months": 12
+      },
+      {
+       "customer": "Second Largest Customer",
+       "member": "arm:SecondLargestCustomerMember",
+       "basis": "receivables",
+       "pct": 12.0,
+       "start": "2025-04-01",
+       "end": "2026-03-31",
+       "months": 12
+      },
+      {
+       "customer": "Third Largest Customer",
+       "member": "arm:ThirdLargestCustomerMember",
+       "basis": "receivables",
+       "pct": 11.0,
+       "start": "2025-04-01",
+       "end": "2026-03-31",
+       "months": 12
+      },
+      {
+       "customer": "Fourth Largest Customer",
+       "member": "arm:FourthLargestCustomerMember",
+       "basis": "receivables",
+       "pct": 10.0,
+       "start": "2025-04-01",
+       "end": "2026-03-31",
+       "months": 12
+      }
+     ]
+    }
+   ],
+   "rpo": {
+    "usd_bn": 2.07,
+    "end": "2026-03-31",
+    "form": "20-F",
+    "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm"
+   }
+  },
+  "INTC": {
+   "cik": 50863,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-01-23",
+     "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+     "rows": [
+      {
+       "customer": "Three Largest Customers",
+       "member": "intc:ThreeLargestCustomersMember",
+       "basis": "revenue",
+       "pct": 43.0,
+       "start": "2024-12-29",
+       "end": "2025-12-27",
+       "months": 12
+      },
+      {
+       "customer": "Dell Inc",
+       "member": "intc:DellIncMember",
+       "basis": "revenue",
+       "pct": 19.0,
+       "start": "2024-12-29",
+       "end": "2025-12-27",
+       "months": 12
+      },
+      {
+       "customer": "Lenovo Group Limited",
+       "member": "intc:LenovoGroupLimitedMember",
+       "basis": "revenue",
+       "pct": 12.0,
+       "start": "2024-12-29",
+       "end": "2025-12-27",
+       "months": 12
+      },
+      {
+       "customer": "HP Inc.",
+       "member": "intc:HPInc.Member",
+       "basis": "revenue",
+       "pct": 12.0,
+       "start": "2024-12-29",
+       "end": "2025-12-27",
+       "months": 12
+      },
+      {
+       "customer": "Three Largest Customers",
+       "member": "intc:ThreeLargestCustomersMember",
+       "basis": "receivables",
+       "pct": 47.0,
+       "start": "2024-12-29",
+       "end": "2025-12-27",
+       "months": 12
+      }
+     ]
+    }
+   ],
+   "rpo": null
+  },
+  "TSM": {
+   "cik": 1046179,
+   "filings": [],
+   "rpo": null
+  },
+  "AMKR": {
+   "cik": 1047127,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-02-20",
+     "url": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm",
+     "rows": [
+      {
+       "customer": "First Largest Customer",
+       "member": "amkr:FirstLargestCustomerMember",
+       "basis": "revenue",
+       "pct": 29.8,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      },
+      {
+       "customer": "Second Largest Customer",
+       "member": "amkr:SecondLargestCustomerMember",
+       "basis": "revenue",
+       "pct": 11.1,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      }
+     ]
+    }
+   ],
+   "rpo": null
+  },
+  "MU": {
+   "cik": 723125,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-10-09",
+     "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm",
+     "rows": [
+      {
+       "customer": "Undisclosed Customer",
+       "member": "mu:UndisclosedCustomerMember",
+       "basis": "revenue",
+       "pct": 17.0,
+       "start": "2024-08-30",
+       "end": "2025-08-28",
+       "months": 12
+      }
+     ]
+    },
+    {
+     "form": "10-Q",
+     "kind": "quarterly",
+     "filed": "2026-06-25",
+     "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000015/mu-20260528.htm",
+     "rows": [
+      {
+       "customer": "Undisclosed Customer",
+       "member": "mu:UndisclosedCustomerMember",
+       "basis": "revenue",
+       "pct": 10.0,
+       "start": "2025-08-29",
+       "end": "2026-05-28",
+       "months": 9
+      }
+     ]
+    }
+   ],
+   "rpo": {
+    "usd_bn": 134.0,
+    "end": "2026-09-03",
+    "form": "10-K",
+    "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm"
+   }
+  },
+  "SNDK": {
+   "cik": 2023554,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-08-17",
+     "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm",
+     "rows": [
+      {
+       "customer": "Top Ten Customers",
+       "member": "sndk:TopTenCustomersMember",
+       "basis": "revenue",
+       "pct": 44.0,
+       "start": "2025-06-28",
+       "end": "2026-07-03",
+       "months": 12
+      },
+      {
+       "customer": "Three Customer",
+       "member": "sndk:ThreeCustomerMember",
+       "basis": "revenue",
+       "pct": 10.0,
+       "start": "2025-06-28",
+       "end": "2026-07-03",
+       "months": 12
+      },
+      {
+       "customer": "One Customer",
+       "member": "sndk:OneCustomerMember",
+       "basis": "receivables",
+       "pct": 19.0,
+       "start": "2025-06-28",
+       "end": "2026-07-03",
+       "months": 12
+      },
+      {
+       "customer": "Two Customer",
+       "member": "sndk:TwoCustomerMember",
+       "basis": "receivables",
+       "pct": 12.0,
+       "start": "2025-06-28",
+       "end": "2026-07-03",
+       "months": 12
+      },
+      {
+       "customer": "Unis Venture",
+       "member": "sndk:UnisVentureMember",
+       "basis": "receivables",
+       "pct": 1.0,
+       "start": "2025-06-28",
+       "end": "2026-07-03",
+       "months": 12
+      }
+     ]
+    },
+    {
+     "form": "10-Q",
+     "kind": "quarterly",
+     "filed": "2026-05-01",
+     "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026029401/sndk-20260403.htm",
+     "rows": [
+      {
+       "customer": "Top Ten Customers",
+       "member": "sndk:TopTenCustomersMember",
+       "basis": "revenue",
+       "pct": 41.0,
+       "start": "2025-06-28",
+       "end": "2026-04-03",
+       "months": 9
+      },
+      {
+       "customer": "Unis Venture",
+       "member": "sndk:UnisVentureMember",
+       "basis": "receivables",
+       "pct": 5.0,
+       "start": "2025-06-28",
+       "end": "2026-04-03",
+       "months": 9
+      }
+     ]
+    }
+   ],
+   "rpo": {
+    "usd_bn": 59.8,
+    "end": "2026-07-03",
+    "form": "10-K",
+    "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm"
+   }
+  },
+  "WDC": {
+   "cik": 106040,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-08-14",
+     "url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026057139/wdc-20260703.htm",
+     "rows": [
+      {
+       "customer": "Top Ten Customers",
+       "member": "wdc:TopTenCustomersMember",
+       "basis": "revenue",
+       "pct": 73.0,
+       "start": "2025-06-28",
+       "end": "2026-07-03",
+       "months": 12
+      },
+      {
+       "customer": "Customer One",
+       "member": "wdc:CustomerOneMember",
+       "basis": "revenue",
+       "pct": 16.0,
+       "start": "2025-06-28",
+       "end": "2026-07-03",
+       "months": 12
+      },
+      {
+       "customer": "Customer Two",
+       "member": "wdc:CustomerTwoMember",
+       "basis": "revenue",
+       "pct": 15.0,
+       "start": "2025-06-28",
+       "end": "2026-07-03",
+       "months": 12
+      },
+      {
+       "customer": "Customer Three",
+       "member": "wdc:CustomerThreeMember",
+       "basis": "revenue",
+       "pct": 13.0,
+       "start": "2025-06-28",
+       "end": "2026-07-03",
+       "months": 12
+      },
+      {
+       "customer": "Customer One",
+       "member": "wdc:CustomerOneMember",
+       "basis": "receivables",
+       "pct": 25.0,
+       "start": "2025-06-28",
+       "end": "2026-07-03",
+       "months": 12
+      },
+      {
+       "customer": "Customer Two",
+       "member": "wdc:CustomerTwoMember",
+       "basis": "receivables",
+       "pct": 17.0,
+       "start": "2025-06-28",
+       "end": "2026-07-03",
+       "months": 12
+      }
+     ]
+    },
+    {
+     "form": "10-Q",
+     "kind": "quarterly",
+     "filed": "2026-05-01",
+     "url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026029054/wdc-20260403.htm",
+     "rows": [
+      {
+       "customer": "Top Ten Customers",
+       "member": "wdc:TopTenCustomersMember",
+       "basis": "revenue",
+       "pct": 74.0,
+       "start": "2025-06-28",
+       "end": "2026-04-03",
+       "months": 9
+      },
+      {
+       "customer": "Customer One",
+       "member": "wdc:CustomerOneMember",
+       "basis": "revenue",
+       "pct": 16.0,
+       "start": "2025-06-28",
+       "end": "2026-04-03",
+       "months": 9
+      },
+      {
+       "customer": "Customer Two",
+       "member": "wdc:CustomerTwoMember",
+       "basis": "revenue",
+       "pct": 15.0,
+       "start": "2025-06-28",
+       "end": "2026-04-03",
+       "months": 9
+      },
+      {
+       "customer": "Customer Three",
+       "member": "wdc:CustomerThreeMember",
+       "basis": "revenue",
+       "pct": 13.0,
+       "start": "2025-06-28",
+       "end": "2026-04-03",
+       "months": 9
+      },
+      {
+       "customer": "Customer One",
+       "member": "wdc:CustomerOneMember",
+       "basis": "receivables",
+       "pct": 28.0,
+       "start": "2025-06-28",
+       "end": "2026-04-03",
+       "months": 9
+      },
+      {
+       "customer": "Customer Two",
+       "member": "wdc:CustomerTwoMember",
+       "basis": "receivables",
+       "pct": 12.0,
+       "start": "2025-06-28",
+       "end": "2026-04-03",
+       "months": 9
+      }
+     ]
+    }
+   ],
+   "rpo": null
+  },
+  "ANET": {
+   "cik": 1596532,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-02-17",
+     "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+     "rows": [
+      {
+       "customer": "Reseller B",
+       "member": "anet:ResellerBMember",
+       "basis": "revenue",
+       "pct": 26.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      },
+      {
+       "customer": "Reseller A",
+       "member": "anet:ResellerAMember",
+       "basis": "revenue",
+       "pct": 16.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      },
+      {
+       "customer": "Reseller A",
+       "member": "anet:ResellerAMember",
+       "basis": "receivables",
+       "pct": 52.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      }
+     ]
+    }
+   ],
+   "rpo": null
+  },
+  "COHR": {
+   "cik": 820318,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-08-14",
+     "url": "https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/iivi-20260630.htm",
+     "rows": [
+      {
+       "customer": "Major Customer One",
+       "member": "iivi:MajorCustomerOneMember",
+       "basis": "revenue",
+       "pct": 20.0,
+       "start": "2025-07-01",
+       "end": "2026-06-30",
+       "months": 12
+      },
+      {
+       "customer": "Major Customer Two",
+       "member": "iivi:MajorCustomerTwoMember",
+       "basis": "revenue",
+       "pct": 12.0,
+       "start": "2025-07-01",
+       "end": "2026-06-30",
+       "months": 12
+      }
+     ]
+    }
+   ],
+   "rpo": null
+  },
+  "LITE": {
+   "cik": 1633978,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-08-17",
+     "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026057358/lite-20260627.htm",
+     "rows": [
+      {
+       "customer": "Customer A",
+       "member": "lite:CustomerAMember",
+       "basis": "revenue",
+       "pct": 26.6,
+       "start": "2025-06-29",
+       "end": "2026-06-27",
+       "months": 12
+      },
+      {
+       "customer": "Customer B",
+       "member": "lite:CustomerBMember",
+       "basis": "revenue",
+       "pct": 15.0,
+       "start": "2025-06-29",
+       "end": "2026-06-27",
+       "months": 12
+      },
+      {
+       "customer": "Customer One",
+       "member": "lite:CustomerOneMember",
+       "basis": "receivables",
+       "pct": 30.4,
+       "start": "2025-06-29",
+       "end": "2026-06-27",
+       "months": 12
+      },
+      {
+       "customer": "Customer Two",
+       "member": "lite:CustomerTwoMember",
+       "basis": "receivables",
+       "pct": 11.0,
+       "start": "2025-06-29",
+       "end": "2026-06-27",
+       "months": 12
+      }
+     ]
+    },
+    {
+     "form": "10-Q",
+     "kind": "quarterly",
+     "filed": "2026-05-06",
+     "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026030777/lite-20260328.htm",
+     "rows": [
+      {
+       "customer": "Customer One",
+       "member": "lite:CustomerOneMember",
+       "basis": "revenue",
+       "pct": 24.0,
+       "start": "2025-06-29",
+       "end": "2026-03-28",
+       "months": 9
+      },
+      {
+       "customer": "Customer Two",
+       "member": "lite:CustomerTwoMember",
+       "basis": "revenue",
+       "pct": 16.0,
+       "start": "2025-06-29",
+       "end": "2026-03-28",
+       "months": 9
+      },
+      {
+       "customer": "Customer One",
+       "member": "lite:CustomerOneMember",
+       "basis": "receivables",
+       "pct": 25.0,
+       "start": "2025-06-29",
+       "end": "2026-03-28",
+       "months": 9
+      },
+      {
+       "customer": "Customer Three",
+       "member": "lite:CustomerThreeMember",
+       "basis": "receivables",
+       "pct": 10.0,
+       "start": "2025-06-29",
+       "end": "2026-03-28",
+       "months": 9
+      }
+     ]
+    }
+   ],
+   "rpo": null
+  },
+  "CRDO": {
+   "cik": 1807794,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-06-15",
+     "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+     "rows": [
+      {
+       "customer": "Customer A",
+       "member": "crdo:CustomerAMember",
+       "basis": "revenue",
+       "pct": 49.0,
+       "start": "2025-05-04",
+       "end": "2026-05-02",
+       "months": 12
+      },
+      {
+       "customer": "Customer B",
+       "member": "crdo:CustomerBMember",
+       "basis": "revenue",
+       "pct": 32.0,
+       "start": "2025-05-04",
+       "end": "2026-05-02",
+       "months": 12
+      },
+      {
+       "customer": "Customer A",
+       "member": "crdo:CustomerAMember",
+       "basis": "receivables",
+       "pct": 53.0,
+       "start": "2025-05-04",
+       "end": "2026-05-02",
+       "months": 12
+      },
+      {
+       "customer": "Customer B",
+       "member": "crdo:CustomerBMember",
+       "basis": "receivables",
+       "pct": 20.0,
+       "start": "2025-05-04",
+       "end": "2026-05-02",
+       "months": 12
+      },
+      {
+       "customer": "Customer C",
+       "member": "crdo:CustomerCMember",
+       "basis": "receivables",
+       "pct": 19.0,
+       "start": "2025-05-04",
+       "end": "2026-05-02",
+       "months": 12
+      }
+     ]
+    },
+    {
+     "form": "10-Q",
+     "kind": "quarterly",
+     "filed": "2026-09-02",
+     "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026060111/crdo-20260801.htm",
+     "rows": [
+      {
+       "customer": "Customer A",
+       "member": "crdo:CustomerAMember",
+       "basis": "revenue",
+       "pct": 43.0,
+       "start": "2026-05-03",
+       "end": "2026-08-01",
+       "months": 3
+      },
+      {
+       "customer": "Customer B",
+       "member": "crdo:CustomerBMember",
+       "basis": "revenue",
+       "pct": 28.0,
+       "start": "2026-05-03",
+       "end": "2026-08-01",
+       "months": 3
+      },
+      {
+       "customer": "Customer A",
+       "member": "crdo:CustomerAMember",
+       "basis": "receivables",
+       "pct": 57.0,
+       "start": "2026-05-03",
+       "end": "2026-08-01",
+       "months": 3
+      },
+      {
+       "customer": "Customer B",
+       "member": "crdo:CustomerBMember",
+       "basis": "receivables",
+       "pct": 28.0,
+       "start": "2026-05-03",
+       "end": "2026-08-01",
+       "months": 3
+      }
+     ]
+    }
+   ],
+   "rpo": null
+  },
+  "ALAB": {
+   "cik": 1736297,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-02-20",
+     "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000010/alab-20251231.htm",
+     "rows": [
+      {
+       "customer": "Customer A",
+       "member": "alab:CustomerAMember",
+       "basis": "revenue",
+       "pct": 20.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      },
+      {
+       "customer": "Customer B",
+       "member": "alab:CustomerBMember",
+       "basis": "revenue",
+       "pct": 20.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      },
+      {
+       "customer": "Customer C",
+       "member": "alab:CustomerCMember",
+       "basis": "revenue",
+       "pct": 17.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      },
+      {
+       "customer": "Customer D",
+       "member": "alab:CustomerDMember",
+       "basis": "revenue",
+       "pct": 16.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      },
+      {
+       "customer": "Customer E",
+       "member": "alab:CustomerEMember",
+       "basis": "revenue",
+       "pct": 11.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      },
+      {
+       "customer": "Customer E",
+       "member": "alab:CustomerEMember",
+       "basis": "receivables",
+       "pct": 28.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      },
+      {
+       "customer": "Customer D",
+       "member": "alab:CustomerDMember",
+       "basis": "receivables",
+       "pct": 27.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      },
+      {
+       "customer": "Customer C",
+       "member": "alab:CustomerCMember",
+       "basis": "receivables",
+       "pct": 14.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      }
+     ]
+    },
+    {
+     "form": "10-Q",
+     "kind": "quarterly",
+     "filed": "2026-08-05",
+     "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000035/alab-20260630.htm",
+     "rows": [
+      {
+       "customer": "Customer A",
+       "member": "alab:CustomerAMember",
+       "basis": "revenue",
+       "pct": 29.0,
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "months": 6
+      },
+      {
+       "customer": "Customer B",
+       "member": "alab:CustomerBMember",
+       "basis": "revenue",
+       "pct": 21.0,
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "months": 6
+      },
+      {
+       "customer": "Customer C",
+       "member": "alab:CustomerCMember",
+       "basis": "revenue",
+       "pct": 17.0,
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "months": 6
+      },
+      {
+       "customer": "Customer D",
+       "member": "alab:CustomerDMember",
+       "basis": "revenue",
+       "pct": 13.0,
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "months": 6
+      },
+      {
+       "customer": "Customer A",
+       "member": "alab:CustomerAMember",
+       "basis": "receivables",
+       "pct": 30.0,
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "months": 6
+      },
+      {
+       "customer": "Customer B",
+       "member": "alab:CustomerBMember",
+       "basis": "receivables",
+       "pct": 17.0,
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "months": 6
+      },
+      {
+       "customer": "Customer D",
+       "member": "alab:CustomerDMember",
+       "basis": "receivables",
+       "pct": 12.0,
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "months": 6
+      },
+      {
+       "customer": "Customer E",
+       "member": "alab:CustomerEMember",
+       "basis": "receivables",
+       "pct": 10.0,
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "months": 6
+      }
+     ]
+    }
+   ],
+   "rpo": null
+  },
+  "DELL": {
+   "cik": 1571996,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-03-16",
+     "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000008/dell-20260130.htm",
+     "rows": [
+      {
+       "customer": "One Customer",
+       "member": "dell:OneCustomerMember",
+       "basis": "revenue",
+       "pct": 12.0,
+       "start": "2025-02-01",
+       "end": "2026-01-30",
+       "months": 12
+      }
+     ]
+    }
+   ],
+   "rpo": {
+    "usd_bn": 132.0,
+    "end": "2026-07-31",
+    "form": "10-Q",
+    "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000046/dell-20260731.htm"
+   }
+  },
+  "SMCI": {
+   "cik": 1375365,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-08-31",
+     "url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536526000022/smci-20260630.htm",
+     "rows": [
+      {
+       "customer": "Customer One",
+       "member": "smci:CustomerOneMember",
+       "basis": "revenue",
+       "pct": 28.1,
+       "start": "2025-07-01",
+       "end": "2026-06-30",
+       "months": 12
+      },
+      {
+       "customer": "Customer One",
+       "member": "smci:CustomerOneMember",
+       "basis": "receivables",
+       "pct": 23.0,
+       "start": "2025-07-01",
+       "end": "2026-06-30",
+       "months": 12
+      },
+      {
+       "customer": "Customer Two",
+       "member": "smci:CustomerTwoMember",
+       "basis": "receivables",
+       "pct": 17.1,
+       "start": "2025-07-01",
+       "end": "2026-06-30",
+       "months": 12
+      }
+     ]
+    },
+    {
+     "form": "10-Q",
+     "kind": "quarterly",
+     "filed": "2026-05-11",
+     "url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536526000014/smci-20260331.htm",
+     "rows": [
+      {
+       "customer": "Customer A",
+       "member": "smci:CustomerAMember",
+       "basis": "revenue",
+       "pct": 38.5,
+       "start": "2025-07-01",
+       "end": "2026-03-31",
+       "months": 9
+      },
+      {
+       "customer": "Customer A",
+       "member": "smci:CustomerAMember",
+       "basis": "receivables",
+       "pct": 32.2,
+       "start": "2025-07-01",
+       "end": "2026-03-31",
+       "months": 9
+      },
+      {
+       "customer": "Customer B",
+       "member": "smci:CustomerBMember",
+       "basis": "receivables",
+       "pct": 16.8,
+       "start": "2025-07-01",
+       "end": "2026-03-31",
+       "months": 9
+      },
+      {
+       "customer": "Customer C",
+       "member": "smci:CustomerCMember",
+       "basis": "receivables",
+       "pct": 13.2,
+       "start": "2025-07-01",
+       "end": "2026-03-31",
+       "months": 9
+      },
+      {
+       "customer": "Customer D",
+       "member": "smci:CustomerDMember",
+       "basis": "receivables",
+       "pct": 12.9,
+       "start": "2025-07-01",
+       "end": "2026-03-31",
+       "months": 9
+      }
+     ]
+    }
+   ],
+   "rpo": {
+    "usd_bn": 2.61,
+    "end": "2026-06-30",
+    "form": "10-K",
+    "url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536526000022/smci-20260630.htm"
+   }
+  },
+  "HPE": {
+   "cik": 1645590,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2025-12-18",
+     "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+     "rows": [
+      {
+       "customer": "Customer One",
+       "member": "hpe:CustomerOneMember",
+       "basis": "revenue",
+       "pct": 10.0,
+       "start": "2024-11-01",
+       "end": "2025-10-31",
+       "months": 12
+      }
+     ]
+    }
+   ],
+   "rpo": {
+    "usd_bn": 10.9,
+    "end": "2026-07-31",
+    "form": "10-Q",
+    "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559026000080/hpe-20260731.htm"
+   }
+  },
+  "VRT": {
+   "cik": 1674101,
+   "filings": [],
+   "rpo": null
+  },
+  "ETN": {
+   "cik": 1551182,
+   "filings": [],
+   "rpo": null
+  },
+  "GEV": {
+   "cik": 1996810,
+   "filings": [],
+   "rpo": {
+    "usd_bn": 176.28,
+    "end": "2026-06-30",
+    "form": "10-Q",
+    "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000148/gev-20260630.htm"
+   }
+  },
+  "CEG": {
+   "cik": 1868275,
+   "filings": [],
+   "rpo": {
+    "usd_bn": 11.86,
+    "end": "2026-06-30",
+    "form": "10-Q",
+    "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000104/ceg-20260630.htm"
+   }
+  },
+  "EQIX": {
+   "cik": 1101239,
+   "filings": [],
+   "rpo": {
+    "usd_bn": 15.0,
+    "end": "2026-06-30",
+    "form": "10-Q",
+    "url": "https://www.sec.gov/Archives/edgar/data/1101239/000110123926000147/eqix-20260630.htm"
+   }
+  },
+  "MSFT": {
+   "cik": 789019,
+   "filings": [],
+   "rpo": {
+    "usd_bn": 684.0,
+    "end": "2026-06-30",
+    "form": "10-K",
+    "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+   }
+  },
+  "AMZN": {
+   "cik": 1018724,
+   "filings": [],
+   "rpo": null
+  },
+  "GOOGL": {
+   "cik": 1652044,
+   "filings": [],
+   "rpo": {
+    "usd_bn": 519.5,
+    "end": "2026-06-30",
+    "form": "10-Q",
+    "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm"
+   }
+  },
+  "ORCL": {
+   "cik": 1341439,
+   "filings": [],
+   "rpo": {
+    "usd_bn": 664.0,
+    "end": "2026-08-31",
+    "form": "10-Q",
+    "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526389274/orcl-20260831.htm"
+   }
+  },
+  "CRWV": {
+   "cik": 1769628,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-03-02",
+     "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+     "rows": [
+      {
+       "customer": "Customer A",
+       "member": "crwv:CustomerAMember",
+       "basis": "revenue",
+       "pct": 67.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      },
+      {
+       "customer": "Customer A",
+       "member": "crwv:CustomerAMember",
+       "basis": "receivables",
+       "pct": 68.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      },
+      {
+       "customer": "Customer D",
+       "member": "crwv:CustomerDMember",
+       "basis": "receivables",
+       "pct": 11.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      }
+     ]
+    },
+    {
+     "form": "10-Q",
+     "kind": "quarterly",
+     "filed": "2026-08-12",
+     "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
+     "rows": [
+      {
+       "customer": "Customer A",
+       "member": "crwv:CustomerAMember",
+       "basis": "revenue",
+       "pct": 40.0,
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "months": 6
+      },
+      {
+       "customer": "Customer B",
+       "member": "crwv:CustomerBMember",
+       "basis": "revenue",
+       "pct": 23.0,
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "months": 6
+      },
+      {
+       "customer": "Customer A",
+       "member": "crwv:CustomerAMember",
+       "basis": "receivables",
+       "pct": 32.0,
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "months": 6
+      },
+      {
+       "customer": "Customer B",
+       "member": "crwv:CustomerBMember",
+       "basis": "receivables",
+       "pct": 32.0,
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "months": 6
+      }
+     ]
+    }
+   ],
+   "rpo": {
+    "usd_bn": 103.7,
+    "end": "2026-06-30",
+    "form": "10-Q",
+    "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm"
+   }
+  },
+  "NBIS": {
+   "cik": 1513845,
+   "filings": [],
+   "rpo": null
+  },
+  "META": {
+   "cik": 1326801,
+   "filings": [],
+   "rpo": null
+  },
+  "PLTR": {
+   "cik": 1321655,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-02-17",
+     "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000011/pltr-20251231.htm",
+     "rows": [
+      {
+       "customer": "Customer I",
+       "member": "pltr:CustomerIMember",
+       "basis": "receivables",
+       "pct": 25.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      }
+     ]
+    },
+    {
+     "form": "10-Q",
+     "kind": "quarterly",
+     "filed": "2026-08-04",
+     "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm",
+     "rows": [
+      {
+       "customer": "Customer I",
+       "member": "pltr:CustomerIMember",
+       "basis": "receivables",
+       "pct": 27.0,
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "months": 6
+      }
+     ]
+    }
+   ],
+   "rpo": {
+    "usd_bn": 4.9,
+    "end": "2026-06-30",
+    "form": "10-Q",
+    "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm"
+   }
+  },
+  "NOW": {
+   "cik": 1373715,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-01-29",
+     "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000007/now-20251231.htm",
+     "rows": [
+      {
+       "customer": "One Customer",
+       "member": "now:OneCustomerMember",
+       "basis": "revenue",
+       "pct": 11.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      },
+      {
+       "customer": "One Customer",
+       "member": "now:OneCustomerMember",
+       "basis": "receivables",
+       "pct": 11.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      }
+     ]
+    },
+    {
+     "form": "10-Q",
+     "kind": "quarterly",
+     "filed": "2026-07-23",
+     "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000076/now-20260630.htm",
+     "rows": [
+      {
+       "customer": "One Customer",
+       "member": "now:OneCustomerMember",
+       "basis": "revenue",
+       "pct": 13.0,
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "months": 6
+      },
+      {
+       "customer": "One Customer",
+       "member": "now:OneCustomerMember",
+       "basis": "receivables",
+       "pct": 12.0,
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "months": 6
+      }
+     ]
+    }
+   ],
+   "rpo": {
+    "usd_bn": 29.0,
+    "end": "2026-06-30",
+    "form": "10-Q",
+    "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000076/now-20260630.htm"
+   }
+  }
+ }
 }

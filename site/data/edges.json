@@ -1,5 +1,5 @@
 {
- "built": "2026-10-16T07:54:06+00:00",
+ "built": "2026-10-16T07:59:41+00:00",
  "edges": [
   {
    "from": "ASML",
@@ -255,6 +255,22 @@
   },
   {
    "from": "INTC",
+   "to": "DELL",
+   "type": "supply",
+   "strength": "H",
+   "conf": "D",
+   "note": "Named >10% customer in the 10-K (server and PC CPUs)",
+   "xbrl": {
+    "company": "INTC",
+    "member": "Dell"
+   },
+   "pct": 19.0,
+   "as_of": "2025-12-27",
+   "src": "INTC 10-K (XBRL)",
+   "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+  },
+  {
+   "from": "INTC",
    "to": "NVDA",
    "type": "supply",
    "strength": "M",
@@ -273,8 +289,12 @@
    "note": "Direct customer: assembles GB-series racks",
    "xbrl": {
     "company": "NVDA",
-    "member": "CustomerA"
-   }
+    "member": "CustomerOne"
+   },
+   "pct": 22.0,
+   "as_of": "2026-01-25",
+   "src": "NVDA 10-K (XBRL)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
   },
   {
    "from": "NVDA",
@@ -504,24 +524,32 @@
    "to": "MSFT",
    "type": "supply",
    "strength": "H",
-   "conf": "D",
-   "note": "Disclosed >10% customer",
+   "conf": "E",
+   "note": "One of two >10% end customers. Earlier 10-Ks named Microsoft and Meta; the FY2025 10-K does not, so the name mapping is an estimate",
    "xbrl": {
     "company": "ANET",
-    "member": "Microsoft"
-   }
+    "member": "ResellerA"
+   },
+   "pct": 16.0,
+   "as_of": "2025-12-31",
+   "src": "ANET 10-K (XBRL)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm"
   },
   {
    "from": "ANET",
    "to": "META",
    "type": "supply",
    "strength": "H",
-   "conf": "D",
-   "note": "Disclosed >10% customer",
+   "conf": "E",
+   "note": "One of two >10% end customers. Earlier 10-Ks named Microsoft and Meta; the FY2025 10-K does not, so the name mapping is an estimate",
    "xbrl": {
     "company": "ANET",
-    "member": "Meta"
-   }
+    "member": "ResellerB"
+   },
+   "pct": 26.0,
+   "as_of": "2025-12-31",
+   "src": "ANET 10-K (XBRL)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm"
   },
   {
    "from": "COHR",
@@ -536,8 +564,16 @@
    "to": "GOOGL",
    "type": "supply",
    "strength": "H",
-   "conf": "I",
-   "note": "Optical circuit switches and lasers"
+   "conf": "E",
+   "note": "Optical circuit switches and lasers; Google widely reported as the largest customer \u00b7 % is for anonymised 'Customer A'; mapping to this company is an estimate",
+   "xbrl": {
+    "company": "LITE",
+    "member": "CustomerA"
+   },
+   "pct": 26.6,
+   "as_of": "2026-06-27",
+   "src": "LITE 10-K (XBRL)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026057358/lite-20260627.htm"
   },
   {
    "from": "LITE",
@@ -552,8 +588,16 @@
    "to": "AMZN",
    "type": "supply",
    "strength": "H",
-   "conf": "I",
-   "note": "Active electrical cables; largest customer"
+   "conf": "E",
+   "note": "Active electrical cables; Amazon widely reported as the largest customer \u00b7 % is for anonymised 'Customer A'; mapping to this company is an estimate",
+   "xbrl": {
+    "company": "CRDO",
+    "member": "CustomerA"
+   },
+   "pct": 49.0,
+   "as_of": "2026-05-02",
+   "src": "CRDO 10-K (XBRL)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm"
   },
   {
    "from": "ALAB",
@@ -751,11 +795,15 @@
    "type": "supply",
    "strength": "H",
    "conf": "D",
-   "as_of": "FY2025",
-   "pct": 67,
-   "note": "Largest customer, named in the 10-K; AR 68% from one customer at Dec 2025",
-   "src": "CoreWeave 10-K via sec-api.io",
-   "url": "https://sec-api.io/insights/coreweave-crwv-2026-revenue-analysis-top-customer-concentration-exposure"
+   "as_of": "2025-12-31",
+   "pct": 67.0,
+   "note": "Largest customer, named as Microsoft in the 10-K; 68% of receivables at Dec 2025",
+   "src": "CoreWeave 10-K",
+   "xbrl": {
+    "company": "CRWV",
+    "member": "CustomerA"
+   },
+   "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm"
   },
   {
    "from": "CRWV",

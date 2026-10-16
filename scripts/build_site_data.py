@@ -46,40 +46,63 @@ def clean_member(m):
     return name.strip()
 
 
+NOT_CUSTOMER = re.compile(r"(SalesChannel|Geograph|Country|NonUs|UnitedStates|Region|Segment|Product)", re.I)
+
+
+def months(start, end):
+    if not start or not end:
+        return None
+    y1, m1, d1 = map(int, start.split("-")); y2, m2, d2 = map(int, end.split("-"))
+    return max(1, round(((y2 - y1) * 12 + (m2 - m1) + (d2 - d1) / 30)))
+
+
 def load_disclosures():
+    """Per company: for each filing, the customer-concentration rows for that filing's own
+    latest period (longest span at the latest end date), so comparatives are dropped."""
     p = ROOT / "data/raw/sec_concentration.json"
     if not p.exists():
         return {}, None
     raw = json.loads(p.read_text())
     out = {}
     for cid, rec in raw.get("companies", {}).items():
-        rows, rpo = [], None
+        groups, rpo = [], None
         for f in rec.get("filings", []):
+            rows = []
             for fact in f.get("facts", []):
                 c = fact["concept"]
                 if "Concentration" in c:
                     m = customer_member(fact["dims"])
-                    if not m:
+                    if not m or NOT_CUSTOMER.search(m):
                         continue
                     v = fact["value"]
                     rows.append({
                         "customer": clean_member(m), "member": m, "basis": benchmark(fact["dims"]),
                         "pct": round(v * 100 if v <= 1.5 else v, 1),
                         "start": fact.get("start"), "end": fact.get("end"),
-                        "form": f["form"], "filed": f["filed"], "url": f["url"],
                     })
-                elif "RemainingPerformance" in c and not fact["dims"] and fact.get("unit", "").lower().startswith("usd"):
+                elif c.endswith(":RevenueRemainingPerformanceObligation") and not fact["dims"]:
                     if rpo is None or (fact["end"] or "") > (rpo["end"] or ""):
                         rpo = {"usd_bn": round(fact["value"] / 1e9, 2), "end": fact["end"], "form": f["form"], "url": f["url"]}
-        # keep the latest period per (customer, basis); prefer full-year over quarter when same end date
-        best = {}
-        for r in rows:
-            key = (r["customer"], r["basis"])
-            cur = best.get(key)
-            span = lambda x: (x["end"] or "", -(len(x["start"] or "")))
-            if cur is None or span(r) > span(cur):
-                best[key] = r
-        out[cid] = {"cik": rec.get("cik"), "concentration": sorted(best.values(), key=lambda r: (r["basis"], -r["pct"])), "rpo": rpo}
+            keep = []
+            for basis in ("revenue", "receivables"):
+                rs = [r for r in rows if r["basis"] == basis]
+                if not rs:
+                    continue
+                end = max(r["end"] or "" for r in rs)
+                rs = [r for r in rs if (r["end"] or "") == end]
+                span = max(months(r["start"], r["end"]) or 0 for r in rs)
+                rs = [r for r in rs if (months(r["start"], r["end"]) or 0) == span]
+                seen = set()
+                for r in sorted(rs, key=lambda r: -r["pct"]):
+                    if r["customer"] in seen:
+                        continue
+                    seen.add(r["customer"])
+                    r["months"] = span or None
+                    keep.append(r)
+            if keep:
+                groups.append({"form": f["form"], "kind": f["kind"], "filed": f["filed"], "url": f["url"], "rows": keep})
+        groups.sort(key=lambda g: g["kind"] != "annual")
+        out[cid] = {"cik": rec.get("cik"), "filings": groups, "rpo": rpo}
     return out, raw.get("generated")
 
 
@@ -129,13 +152,13 @@ def main():
         x = e.get("xbrl")
         if not x:
             continue
-        rows = disc.get(x["company"], {}).get("concentration", [])
-        hit = [r for r in rows if r["basis"] == "revenue" and x["member"].lower().replace(" ", "") in r["member"].lower()]
+        hit = [(g, r) for g in disc.get(x["company"], {}).get("filings", []) for r in g["rows"]
+               if r["basis"] == "revenue" and x["member"].lower().replace(" ", "") in r["member"].lower()]
         if hit:
-            r = hit[0]
+            g, r = hit[0]
             e["pct"], e["as_of"] = r["pct"], r["end"]
-            e.setdefault("src", f"{x['company']} {r['form']} (XBRL)")
-            e["url"] = r["url"]
+            e.setdefault("src", f"{x['company']} {g['form']} (XBRL)")
+            e["url"] = g["url"]
             if e["conf"] != "D" and "Customer" in r["customer"] and len(r["customer"]) <= 11:
                 e["note"] = f"{e.get('note', '')} · % is for anonymised '{r['customer']}'; mapping to this company is an estimate".strip(" ·")
             merged += 1
@@ -147,7 +170,7 @@ def main():
     (OUT / "disclosures.json").write_text(json.dumps({"built": stamp, "sec_pulled": generated, "companies": disc}, indent=1))
     n_conf = {k: sum(1 for e in edges if e["conf"] == k) for k in "DEI"}
     print(f"OK: {len(ids)} companies, {len(edges)} edges {n_conf}, {merged} XBRL merges, "
-          f"{sum(len(v['concentration']) for v in disc.values())} disclosed concentration rows")
+          f"{sum(len(g['rows']) for v in disc.values() for g in v['filings'])} disclosed concentration rows")
     return 0
 
 

@@ -34,7 +34,7 @@ if not UA:
 S = requests.Session()
 S.headers.update({"User-Agent": UA, "Accept-Encoding": "gzip, deflate"})
 
-ANNUAL = {"10-K", "20-F", "40-F", "10-K/A", "20-F/A"}
+ANNUAL = {"10-K", "20-F", "40-F"}  # amendments often omit the financial statements
 QUARTERLY = {"10-Q"}
 KEEP_NAMES = re.compile(r"(ConcentrationRisk|RemainingPerformanceObligation|RevenueRemainingPerformance|Backlog)", re.I)
 CUSTOMER_AXES = re.compile(r"(MajorCustomer|Customer|ConcentrationRisk|Counterpart)", re.I)

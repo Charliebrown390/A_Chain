@@ -3,8 +3,9 @@ name: Deploy site
 on:
   push:
     branches: [main]
-    paths: ["site/**", ".github/workflows/pages.yml"]
+    paths: ["site/**", "data/**", "scripts/**", ".github/workflows/pages.yml"]
   workflow_dispatch:
+  workflow_call:
 
 permissions:
   contents: read
@@ -23,6 +24,14 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Validate map and build site data
+        run: python scripts/build_site_data.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

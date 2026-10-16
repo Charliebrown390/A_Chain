@@ -4,7 +4,8 @@ Purpose: analyse the AI supply chain (tools → chip design → foundry → memo
 
 Conventions
 - Static site in `site/`, deployed to GitHub Pages by `.github/workflows/pages.yml`. No server-side code.
-- Data will live as JSON under `site/data/`, written by Python scripts run nightly in GitHub Actions.
+- Curated inputs: `data/universe.yaml`, `data/edges.yaml`. Pulled data: `data/raw/`. Compiled JSON for the page: `site/data/` (built by `scripts/build_site_data.py`, which also validates).
+- SEC requests need the `SEC_USER_AGENT` secret ("Name email"); SEC rejects GitHub noreply addresses. The sandbox shell cannot reach SEC or Yahoo, so run pulls via GitHub Actions.
 - Free data sources only unless a paid API is critically required: SEC EDGAR XBRL, yfinance, company IR pages, Taiwan monthly sales.
 - Every relationship edge carries a confidence tag: D (disclosed in filings), E (estimated), I (inferred), plus a source note.
 - Keep sample/illustrative data clearly labelled on the page until replaced by live data.

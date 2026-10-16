@@ -9,16 +9,35 @@ A network model of the AI build-out, from chip tools to applications. It maps wh
 | Phase | Scope | Status |
 |---|---|---|
 | 0 | Prototype dashboard (sample data) | Done |
-| 1 | Company universe, layer taxonomy, sourced relationship map | Next |
-| 2 | Data pipeline: SEC EDGAR, yfinance, Taiwan monthly sales | Planned |
+| 1 | Company universe, layer taxonomy, sourced relationship map, SEC customer-concentration pull | Done |
+| 2 | Market data pipeline: prices, financials, analyst ratings (yfinance), Taiwan monthly sales | Next |
 | 3 | Analytics: fundamentals, technicals, network metrics | Planned |
 | 4 | Dashboard wired to live data | Planned |
 | 5 | Thesis notes and nightly refresh via GitHub Actions | Planned |
 
 ## Layout
 
+- `data/universe.yaml` — the company list and the nine layers (edit by hand)
+- `data/edges.yaml` — every relationship, with type, strength, confidence tag and source (edit by hand)
+- `data/raw/sec_concentration.json` — customer-concentration and backlog facts pulled from SEC XBRL filings (written by the weekly job)
+- `scripts/sec_concentration.py` — the SEC pull; needs the `SEC_USER_AGENT` repository secret
+- `scripts/build_site_data.py` — validates the map, merges filing figures into links, writes `site/data/*.json`
 - `site/` — the static web page served by GitHub Pages
-- `.github/workflows/` — deployment and (later) the nightly data refresh
+- `.github/workflows/` — `pages.yml` (build and deploy on every push), `sec-extract.yml` (weekly SEC pull, then deploy)
+
+## How links are tagged
+
+| Tag | Meaning |
+|---|---|
+| D | Disclosed by a party in a filing or official release |
+| E | Estimated, or reported by the press but not confirmed by the parties. Also used when a filing gives the % for an anonymised customer and we map it to a name |
+| I | Inferred from known product relationships; size not disclosed |
+
+Link types: `supply` (ongoing sales), `contract` (announced multi-year commitment), `capital` (equity, warrants, financing backstops).
+
+## Editing the map
+
+Edit `data/edges.yaml` on GitHub and commit. The deploy job validates it (unknown company ids, missing sources for D/E links and duplicates all fail the build) and republishes the site.
 
 ## Disclaimer
 

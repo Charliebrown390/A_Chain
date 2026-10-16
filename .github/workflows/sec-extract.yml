@@ -7,6 +7,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: data-write
@@ -24,10 +26,14 @@ jobs:
       - run: python scripts/sec_concentration.py
         env:
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+      - run: python scripts/build_site_data.py
       - name: Commit results
         run: |
           git config user.name "a-chain-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/raw/sec_concentration.json
+          git add data/raw/sec_concentration.json site/data
           git diff --cached --quiet || git commit -m "data: refresh SEC concentration facts"
-          git push
+          git pull --rebase -q && git push
+  deploy:
+    needs: extract
+    uses: ./.github/workflows/pages.yml

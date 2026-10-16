@@ -51,10 +51,11 @@ edges:
   - {from: MU, to: NVDA, type: supply, strength: H, conf: E, as_of: "Q2 2026", note: "HBM supplier; Micron ~18% of HBM market", src: "Counterpoint Research", url: "https://counterpointresearch.com/cn/insights/global-dram-and-hbm-market-share"}
   - {from: "005930.KS", to: NVDA, type: supply, strength: M, conf: E, as_of: "Q2 2026", note: "HBM supplier; Samsung ~33% of HBM market", src: "Counterpoint Research", url: "https://counterpointresearch.com/cn/insights/global-dram-and-hbm-market-share"}
   - {from: MU, to: AMD, type: supply, strength: M, conf: I, note: "HBM for MI-series"}
+  - {from: INTC, to: DELL, type: supply, strength: H, conf: D, note: "Named >10% customer in the 10-K (server and PC CPUs)", xbrl: {company: INTC, member: Dell}}
   - {from: INTC, to: NVDA, type: supply, strength: M, conf: D, as_of: "Sep 2025", note: "Custom x86 CPUs for NVIDIA platforms under 2025 collaboration", src: "TechRepublic", url: "https://www.techrepublic.com/article/news-nvidia-intel-deal/"}
 
   # ---------- L2 chip designers -> systems & clouds ----------
-  - {from: NVDA, to: "2317.TW", type: supply, strength: H, conf: E, note: "Direct customer: assembles GB-series racks", xbrl: {company: NVDA, member: CustomerA}}
+  - {from: NVDA, to: "2317.TW", type: supply, strength: H, conf: E, note: "Direct customer: assembles GB-series racks", xbrl: {company: NVDA, member: CustomerOne}}
   - {from: NVDA, to: DELL, type: supply, strength: M, conf: I, note: "GPU systems"}
   - {from: NVDA, to: SMCI, type: supply, strength: M, conf: I, note: "GPU systems"}
   - {from: NVDA, to: HPE, type: supply, strength: L, conf: I, note: "GPU systems"}
@@ -82,12 +83,12 @@ edges:
   - {from: ARM, to: MSFT, type: supply, strength: L, conf: I, note: "Cobalt royalties"}
 
   # ---------- L5 networking & optics ----------
-  - {from: ANET, to: MSFT, type: supply, strength: H, conf: D, note: "Disclosed >10% customer", xbrl: {company: ANET, member: Microsoft}}
-  - {from: ANET, to: META, type: supply, strength: H, conf: D, note: "Disclosed >10% customer", xbrl: {company: ANET, member: Meta}}
+  - {from: ANET, to: MSFT, type: supply, strength: H, conf: E, note: "One of two >10% end customers. Earlier 10-Ks named Microsoft and Meta; the FY2025 10-K does not, so the name mapping is an estimate", xbrl: {company: ANET, member: ResellerA}}
+  - {from: ANET, to: META, type: supply, strength: H, conf: E, note: "One of two >10% end customers. Earlier 10-Ks named Microsoft and Meta; the FY2025 10-K does not, so the name mapping is an estimate", xbrl: {company: ANET, member: ResellerB}}
   - {from: COHR, to: NVDA, type: supply, strength: M, conf: I, note: "800G/1.6T transceivers"}
-  - {from: LITE, to: GOOGL, type: supply, strength: H, conf: I, note: "Optical circuit switches and lasers"}
+  - {from: LITE, to: GOOGL, type: supply, strength: H, conf: E, note: "Optical circuit switches and lasers; Google widely reported as the largest customer", xbrl: {company: LITE, member: CustomerA}}
   - {from: LITE, to: NVDA, type: supply, strength: M, conf: I, note: "Lasers for optical modules"}
-  - {from: CRDO, to: AMZN, type: supply, strength: H, conf: I, note: "Active electrical cables; largest customer"}
+  - {from: CRDO, to: AMZN, type: supply, strength: H, conf: E, note: "Active electrical cables; Amazon widely reported as the largest customer", xbrl: {company: CRDO, member: CustomerA}}
   - {from: ALAB, to: AMZN, type: supply, strength: H, conf: I, note: "Retimers and switches"}
   - {from: ALAB, to: NVDA, type: supply, strength: M, conf: I, note: "Platform attach on NVIDIA systems"}
 
@@ -117,7 +118,7 @@ edges:
   - {from: SNDK, to: AMZN, type: supply, strength: L, conf: I, note: "Enterprise SSDs"}
 
   # ---------- L8 compute providers -> users ----------
-  - {from: CRWV, to: MSFT, type: supply, strength: H, conf: D, as_of: "FY2025", pct: 67, note: "Largest customer, named in the 10-K; AR 68% from one customer at Dec 2025", src: "CoreWeave 10-K via sec-api.io", url: "https://sec-api.io/insights/coreweave-crwv-2026-revenue-analysis-top-customer-concentration-exposure"}
+  - {from: CRWV, to: MSFT, type: supply, strength: H, conf: D, as_of: "FY2025", pct: 67, note: "Largest customer, named as Microsoft in the 10-K; 68% of receivables at Dec 2025", src: "CoreWeave 10-K", xbrl: {company: CRWV, member: CustomerA}}
   - {from: CRWV, to: OpenAI, type: contract, strength: H, conf: D, as_of: "Sep 2025", usd_bn: 22.4, note: "Three contracts: $11.9B, $4B, $6.5B", src: "Fierce Network deal list", url: "https://www.fierce-network.com/cloud/fierce-networks-encyclopedia-ai-deals"}
   - {from: CRWV, to: META, type: contract, strength: H, conf: D, as_of: "Sep 2025", usd_bn: 14.2, note: "Multi-year capacity agreement", src: "PYMNTS", url: "https://www.pymnts.com/news/artificial-intelligence/2025/ai-hyperscaler-coreweave-signs-14-billion-dollar-deal-with-meta/"}
   - {from: NBIS, to: MSFT, type: contract, strength: H, conf: D, as_of: "Sep 2025", usd_bn: 19.4, note: "$17.4B over 5 years, up to $19.4B with add-ons", src: "Motley Fool via AOL", url: "https://www.aol.com/articles/nebius-just-signed-46-billion-133600114.html"}

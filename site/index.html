@@ -128,6 +128,7 @@ table.fin td:last-child{text-align:right;font-family:var(--f-mono);font-variant-
 .flag{margin-top:10px;padding:9px 11px;border-radius:7px;border:1px dashed var(--fin);color:var(--ink);font-size:12.5px;background:color-mix(in srgb,var(--fin) 8%,var(--surface))}
 .thesis p{margin:4px 0 0;max-width:62ch}
 .note{font-size:11.5px;color:var(--muted);margin-top:12px}
+.srcl{font-size:11.5px}.srcl a,table.fin a,.note a{color:var(--copper)}
 .minibar,.scrim{display:none}
 footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
 footer h3{font-size:15px;color:var(--ink);font-weight:650;margin-bottom:4px}
@@ -171,11 +172,12 @@ footer p{margin:0}
     <div>
       <p class="eyebrow">Silicon → systems → services</p>
       <h1>AI Supply Chain Monitor</h1>
-      <p class="sub">42 companies across nine layers of the AI build-out. Tap any company to trace who it sells to and who it depends on. Then open its price, financials, analyst view and thesis.</p>
+      <p class="sub">44 companies across nine layers of the AI build-out, linked by sourced supply, contract and capital relationships. Tap any company to trace who it sells to and who it depends on, then open its price, financials, analyst view and thesis.</p>
     </div>
     <div class="stamp">
-      <span class="badge">Sample data · prototype</span>
-      <span>Prices, financials, ratings and link weights here are illustrative. The live build refreshes them nightly from free sources.</span>
+      <span class="badge">Map: sourced · Market data: sample</span>
+      <span>Relationships come from filings and announcements, each tagged by confidence. Prices, financials and analyst ratings are still illustrative until phase 2.</span>
+      <span class="mono" id="built"></span>
     </div>
   </header>
 
@@ -201,7 +203,7 @@ footer p{margin:0}
       </div>
     </div>
     <div class="legend">
-      <span><span class="sw"></span>Sells to (thicker = larger share of seller revenue)</span>
+      <span><span class="sw"></span>Sells to (thicker = more important to the seller)</span><span><span class="sw" style="border-top:3px dotted var(--copper)"></span>Inferred, size unknown</span>
       <span><span class="sw f"></span>Capital tie</span>
       <span class="scale" id="scale"><span id="sc-lo">−20%</span><b></b><span id="sc-hi">+20%</span></span>
     </div>
@@ -214,7 +216,7 @@ footer p{margin:0}
 
   <footer>
     <div><h3>Where live data will come from</h3><p>Prices, technicals and analyst ratings and targets from Yahoo Finance via yfinance. Financials from SEC EDGAR's XBRL API. TSMC, Hon Hai and other Taiwan suppliers publish monthly sales, which give an early read on demand.</p></div>
-    <div><h3>How the link weights are sourced</h3><p>D = disclosed in a filing (for example, customers above 10% of revenue). E = estimated from filings, earnings calls or sell-side work. I = inferred from known relationships. Each link records its source.</p></div>
+    <div><h3>How links are sourced</h3><p>D = disclosed by a party in a filing or official release. E = estimated, or reported by the press but not confirmed by the parties. I = inferred from known product relationships, with size not disclosed. Each link names its source. Customer percentages are pulled automatically from SEC XBRL filings each week.</p></div>
     <div><h3>How it refreshes</h3><p>A GitHub Actions job runs nightly, writes JSON data files to the repository, and GitHub Pages serves this page from them. This is an analytical tool, not investment advice.</p></div>
   </footer>
 </div>
@@ -223,18 +225,7 @@ footer p{margin:0}
 <div class="scrim" id="scrim"></div>
 
 <script>
-const LAYERS=[
- {n:1,name:"Tools & design software",short:"Tools & EDA",neck:"Bottleneck: EUV lithography (one supplier)"},
- {n:2,name:"Chip designers",short:"Chip designers",neck:"Bottleneck: TSMC wafer and packaging allocation"},
- {n:3,name:"Foundry & packaging",short:"Foundry & packaging",neck:"Bottleneck: CoWoS advanced-packaging capacity"},
- {n:4,name:"Memory & storage",short:"Memory & storage",neck:"Bottleneck: HBM supply and HBM4 qualification"},
- {n:5,name:"Networking & optics",short:"Networking & optics",neck:"Bottleneck: 1.6T optics and laser capacity"},
- {n:6,name:"Servers & assembly",short:"Servers & assembly",neck:"Bottleneck: rack-scale integration, liquid cooling"},
- {n:7,name:"Power & data centres",short:"Power & DCs",neck:"Bottleneck: grid hook-ups, gas turbines, transformers"},
- {n:8,name:"Compute providers",short:"Compute providers",neck:"Driver: capex budgets · Risk: neocloud debt"},
- {n:9,name:"Models & applications",short:"Models & apps",neck:"Driver: paid AI usage that justifies the capex"}
-];
-// t, label, name, layer, px, mcap$B, revTTM$B, revG%, GM%, OpM%, FCF$B, fwdPE, buy, hold, sell, bull, bear, kpis
+let LAYERS=[];// SAMPLE market data until phase 2: id, label, name, layer, px, mcap$B, revTTM$B, revG%, GM%, OpM%, FCF$B, fwdPE, buy, hold, sell, bull, bear, kpis
 const CO=[
 ["ASML","ASML","ASML Holding",1,1050,410,36,12,52,34,10,32,24,6,1,"Sole EUV supplier; High-NA tools add content per wafer","China export curbs and lumpy chipmaker capex","EUV bookings, backlog, China share of sales"],
 ["AMAT","AMAT","Applied Materials",1,230,185,29,8,48,30,7,22,22,9,1,"Broadest tool range; gate-all-around and packaging tailwinds","China is a large share of sales and exposed to export rules","Foundry vs memory mix, China share"],
@@ -281,38 +272,6 @@ const CO=[
 ["OpenAI","OpenAI","OpenAI (private)",9,null,null,null,null,null,null,null,null,0,0,0,"Largest single source of new compute commitments","Commitments far exceed current revenue","Revenue run-rate, funding rounds"],
 ["Anthropic","Anthropic","Anthropic (private)",9,null,null,null,null,null,null,null,null,0,0,0,"Large buyer of AWS Trainium and Google TPU capacity","Ongoing funding needs","Revenue run-rate, compute deals"]
 ];
-// from(seller/investor), to(buyer/investee), type s=sells to f=capital tie, % of seller revenue, confidence, note
-const ED=[
-["ASML","TSM","s",30,"E","EUV and DUV lithography"],["ASML","005930.KS","s",15,"E","EUV for memory and foundry"],["ASML","INTC","s",10,"E","EUV incl. High-NA"],["ASML","000660.KS","s",10,"E","EUV for DRAM"],["ASML","MU","s",6,"E","EUV for DRAM"],
-["AMAT","TSM","s",20,"E","Deposition, etch, CMP"],["AMAT","005930.KS","s",12,"E","Memory and foundry tools"],["AMAT","INTC","s",10,"E","Logic tools"],
-["LRCX","005930.KS","s",15,"E","Etch and deposition"],["LRCX","TSM","s",15,"E","Etch and deposition"],["LRCX","000660.KS","s",10,"E","HBM/DRAM etch"],["LRCX","MU","s",8,"E","Memory tools"],
-["KLAC","TSM","s",25,"E","Inspection and metrology"],["KLAC","005930.KS","s",10,"E","Inspection"],
-["SNPS","NVDA","s",8,"I","EDA licences"],["SNPS","AMD","s",5,"I","EDA licences"],["SNPS","TSM","s",4,"I","IP and design enablement"],
-["CDNS","NVDA","s",8,"I","EDA and emulation"],["CDNS","AVGO","s",5,"I","EDA licences"],
-["TSM","NVDA","s",22,"E","N4/N3 wafers plus CoWoS"],["TSM","AMD","s",7,"E","N3/N2 wafers"],["TSM","AVGO","s",7,"E","Custom ASIC wafers"],["TSM","MRVL","s",2,"E","Custom ASIC wafers"],
-["AMKR","TSM","s",5,"I","Overflow advanced packaging"],
-["000660.KS","NVDA","s",35,"E","HBM3E stacks"],["MU","NVDA","s",15,"E","HBM3E stacks"],["005930.KS","NVDA","s",4,"E","HBM and DRAM"],["MU","AMD","s",3,"I","HBM for MI-series"],
-["AVGO","GOOGL","s",20,"E","TPU co-design and supply"],["AVGO","META","s",8,"E","MTIA custom accelerator"],["AVGO","OpenAI","s",2,"I","Custom accelerator, ramping"],
-["MRVL","AMZN","s",25,"E","Trainium and optical DSPs"],["MRVL","MSFT","s",8,"E","Maia custom silicon"],
-["ARM","NVDA","s",4,"I","Grace CPU licence"],["ARM","AMZN","s",3,"I","Graviton royalties"],
-["NVDA","2317.TW","s",12,"E","Direct customer for rack assembly"],["NVDA","DELL","s",8,"E","GPU systems"],["NVDA","SMCI","s",6,"E","GPU systems"],["NVDA","HPE","s",2,"E","GPU systems"],
-["NVDA","MSFT","s",15,"E","End demand (via ODMs)"],["NVDA","META","s",10,"E","End demand"],["NVDA","AMZN","s",8,"E","End demand"],["NVDA","GOOGL","s",7,"E","End demand"],["NVDA","ORCL","s",6,"E","End demand"],["NVDA","CRWV","s",5,"E","End demand"],["NVDA","NBIS","s",1,"E","End demand"],["NVDA","OpenAI","s",2,"I","Systems for OpenAI-run sites, ramping"],
-["AMD","MSFT","s",10,"E","MI-series GPUs"],["AMD","META","s",8,"E","MI-series GPUs"],["AMD","ORCL","s",5,"E","MI-series clusters"],["AMD","OpenAI","s",3,"I","Multi-GW GPU deal, ramping"],
-["ANET","MSFT","s",20,"D","Disclosed >10% customer"],["ANET","META","s",15,"D","Disclosed >10% customer"],
-["COHR","NVDA","s",8,"E","800G/1.6T transceivers"],["LITE","GOOGL","s",15,"E","Optical circuit switches"],["LITE","NVDA","s",10,"E","Lasers for optics"],
-["CRDO","AMZN","s",40,"E","Active electrical cables"],["ALAB","AMZN","s",25,"E","Retimers and switches"],["ALAB","NVDA","s",15,"I","Platform attach"],
-["DELL","CRWV","s",8,"E","AI servers"],
-["2317.TW","MSFT","s",10,"E","GB-series racks"],["2317.TW","AMZN","s",6,"E","Servers"],["2317.TW","ORCL","s",5,"E","GB-series racks"],
-["VRT","MSFT","s",10,"I","Power and cooling"],["VRT","CRWV","s",3,"I","Liquid cooling"],["VRT","EQIX","s",4,"I","Power systems"],["ETN","MSFT","s",3,"I","Switchgear"],
-["CEG","MSFT","s",3,"E","Nuclear PPA"],["CEG","META","s",2,"E","Nuclear PPA"],
-["EQIX","AMZN","s",5,"I","Colocation and interconnect"],["EQIX","MSFT","s",5,"I","Colocation and interconnect"],
-["WDC","AMZN","s",12,"I","Nearline HDDs"],["WDC","MSFT","s",10,"I","Nearline HDDs"],["SNDK","AMZN","s",6,"I","Enterprise SSDs"],
-["CRWV","MSFT","s",60,"D","Largest customer in 10-K"],["CRWV","OpenAI","s",20,"E","Multi-year contracts"],["CRWV","META","s",10,"E","Capacity contract"],
-["NBIS","MSFT","s",40,"E","Multi-year capacity contract"],["ORCL","OpenAI","s",25,"E","OCI contracts in RPO"],["MSFT","OpenAI","s",5,"E","Azure compute"],
-["AMZN","Anthropic","s",3,"E","AWS and Trainium capacity"],["GOOGL","Anthropic","s",2,"E","TPU capacity"],["GOOGL","META","s",1,"E","Cloud contract"],
-["NVDA","OpenAI","f",null,"E","Staged equity investment"],["NVDA","CRWV","f",null,"D","Equity stake and capacity backstop"],["NVDA","NBIS","f",null,"D","Equity stake"],
-["AMD","OpenAI","f",null,"D","Warrants for AMD shares"],["MSFT","OpenAI","f",null,"D","Equity stake"],["AMZN","Anthropic","f",null,"D","Equity investment"],["GOOGL","Anthropic","f",null,"D","Equity investment"]
-];
 
 /* ---------- helpers ---------- */
 const $=s=>document.querySelector(s);
@@ -334,10 +293,20 @@ const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","De
 const sma=(a,n)=>a.map((_,i)=>i<n-1?null:a.slice(i-n+1,i+1).reduce((x,y)=>x+y,0)/n);
 function rsi(a,n=14){let g=0,l=0;for(let i=1;i<=n;i++){const d=a[i]-a[i-1];d>0?g+=d:l-=d}g/=n;l/=n;for(let i=n+1;i<a.length;i++){const d=a[i]-a[i-1];g=(g*(n-1)+Math.max(d,0))/n;l=(l*(n-1)+Math.max(-d,0))/n}return l===0?100:100-100/(1+g/l)}
 
+(async()=>{
+const load=u=>fetch(u,{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error(u+" "+r.status);return r.json()});
+let U,E,D;
+try{[U,E,D]=await Promise.all([load("data/universe.json"),load("data/edges.json"),load("data/disclosures.json").catch(()=>({companies:{}}))])}
+catch(err){document.getElementById("map").insertAdjacentHTML("beforeend",`<p class="flag">The data files could not be loaded (${esc(err.message)}). Refresh the page; if it persists, the last data build may have failed.</p>`);return}
+LAYERS=U.layers;
+$("#built").textContent="Map built "+(E.built||"").slice(0,10)+(D.sec_pulled?" · SEC filings pulled "+D.sec_pulled.slice(0,10):"");
 const BY={};
-const COS=CO.map(r=>{
-  const [t,lab,name,layer,p,mcap,rev,g,gm,opm,fcf,pe,b,h,s,bull,bear,kpi]=r;
-  const c={t,lab,name,layer,px:p,mcap,rev,g,gm,opm,fcf,pe,b,h,s,bull,bear,kpi,priv:p==null};
+const SAMPLE={};CO.forEach(r=>SAMPLE[r[0]]=r);
+const COS=U.companies.map(u=>{
+  const r=SAMPLE[u.id]||[u.id,u.label,u.name,u.layer,null,null,null,null,null,null,null,null,0,0,0,"","",""];
+  const [,,,,p,mcap,rev,g,gm,opm,fcf,pe,b,h,s,bull,bear,kpi]=r;
+  const t=u.id,lab=u.label,name=u.name,layer=u.layer;
+  const c={t,lab,name,layer,seg:u.segment,role:u.role,px:p,mcap,rev,g,gm,opm,fcf,pe,b,h,s,bull,bear,kpi,priv:!!u.private||p==null};
   if(!c.priv){
     const R=rng(hash(t));
     const hot=(t==="CRWV"||t==="NBIS"||t==="SMCI");
@@ -358,7 +327,8 @@ const COS=CO.map(r=>{
   }
   BY[t]=c;return c;
 });
-const EDGES=ED.map(([f,t,ty,p,cf,note])=>({f,t,ty,p,cf,note}));
+const EDGES=E.edges.map(e=>({f:e.from,t:e.to,ty:e.type,st:e.strength,p:e.pct??null,usd:e.usd_bn??null,gw:e.gw??null,cf:e.conf,note:e.note||"",src:e.src||"",url:e.url||"",asof:e.as_of||""}));
+const DISC=D.companies||{};
 const median=a=>{const s=[...a].sort((x,y)=>x-y),m=s.length>>1;return s.length%2?s[m]:(s[m-1]+s[m])/2};
 
 /* ---------- colour modes ---------- */
@@ -393,7 +363,7 @@ LAYERS.forEach(L=>{
     box.appendChild(b);
   });
   map.appendChild(sec);
-  L.med=median(pub.map(c=>c.r1m));
+  L.med=pub.length?median(pub.map(c=>c.r1m)):0;
   $("#ls-"+L.n).textContent=`${cs.length} names · 1M median ${pct(L.med)}`;
 });
 function paintChips(){
@@ -414,14 +384,15 @@ document.querySelectorAll("#seg button").forEach(b=>b.addEventListener("click",(
     r.addEventListener("click",()=>document.getElementById("layer-"+L.n).scrollIntoView({behavior:"smooth",block:"start"}));
     H.appendChild(r);
   });
-  const U=$("#circ");
-  EDGES.filter(e=>e.ty==="f").forEach(f=>{
-    const s=EDGES.find(e=>e.ty==="s"&&((e.f===f.f&&e.t===f.t)||(e.f===f.t&&e.t===f.f)));if(!s)return;
+  const U2=$("#circ");
+  EDGES.filter(e=>e.ty==="capital").forEach(f=>{
+    const s=EDGES.find(e=>e.ty!=="capital"&&((e.f===f.f&&e.t===f.t)||(e.f===f.t&&e.t===f.f)));if(!s)return;
     const li=document.createElement("li");
-    li.innerHTML=`<button class="pair" type="button">${esc(BY[f.f].lab)} ↔ ${esc(BY[f.t].lab)}</button><span>${esc(BY[f.f].lab)}: ${esc(f.note.toLowerCase())} in ${esc(BY[f.t].lab)}. ${esc(BY[s.t].lab)} also buys from ${esc(BY[s.f].lab)}.</span>`;
-    li.querySelector("button").addEventListener("click",()=>select(f.t==="OpenAI"||f.t==="Anthropic"?f.f:f.t));
-    U.appendChild(li);
+    li.innerHTML=`<button class="pair" type="button">${esc(BY[f.f].lab)} ↔ ${esc(BY[f.t].lab)}</button><span>${esc(BY[f.f].lab)} → ${esc(BY[f.t].lab)}: ${esc(f.note)}. ${esc(BY[s.f].lab)} also sells to ${esc(BY[s.t].lab)}${s.usd?` ($${s.usd}B)`:s.gw?` (${s.gw} GW)`:""}.</span>`;
+    li.querySelector("button").addEventListener("click",()=>select(BY[f.t].priv?f.f:f.t));
+    U2.appendChild(li);
   });
+
 }
 
 /* ---------- wires ---------- */
@@ -437,8 +408,8 @@ function drawWires(){
     const a=pos(e.f),b=pos(e.t);let d;
     if(Math.abs(a.y-b.y)<8){const up=Math.max(28,Math.abs(a.x-b.x)*0.25);d=`M${a.x} ${a.y-a.h/2}C${a.x} ${a.y-up} ${b.x} ${b.y-up} ${b.x} ${b.y-b.h/2}`}
     else{const dir=b.y>a.y?1:-1,dy=Math.max(30,Math.abs(b.y-a.y)*0.45);d=`M${a.x} ${a.y+dir*a.h/2}C${a.x} ${a.y+dir*dy} ${b.x} ${b.y-dir*dy} ${b.x} ${b.y-dir*b.h/2}`}
-    const w=e.ty==="f"?1.6:Math.min(5,1+(e.p||1)/8);
-    out+=`<path d="${d}" fill="none" stroke="var(${e.ty==="f"?"--fin":"--copper"})" stroke-width="${w}" stroke-linecap="round" ${e.ty==="f"?'stroke-dasharray="5 4"':""} opacity=".85"/>`;
+    const cap=e.ty==="capital",w=cap?1.6:e.p!=null?Math.min(5.5,1.2+e.p/10):({H:3.4,M:2,L:1.1})[e.st]||1.5;
+    out+=`<path d="${d}" fill="none" stroke="var(${cap?"--fin":"--copper"})" stroke-width="${w}" stroke-linecap="round" ${cap?'stroke-dasharray="5 4"':e.cf==="I"?'stroke-dasharray="1.5 4"':""} opacity=".85"/>`;
   });
   svg.innerHTML=out;
 }
@@ -510,28 +481,43 @@ function tabAna(c){
   <div class="mk" style="left:${P(c.tl)}%"><span>Low ${px(c.tl)}</span></div><div class="mk" style="left:${P(c.tm)}%"><span>Mean ${px(c.tm)}</span></div><div class="mk" style="left:${P(c.th)}%"><span>High ${px(c.th)}</span></div><div class="mk px" style="left:${P(c.px)}%"><span>Now ${px(c.px)}</span></div></div>
   <p class="note" style="margin-top:34px">Sample counts and targets. Live build pulls consensus ratings, targets and recent upgrades/downgrades from Yahoo Finance.</p>`;
 }
-function linkRow(o,text,e){return `<li><button class="go" type="button" data-go="${esc(o)}">${esc(BY[o].lab)}</button><span>${text}</span><span class="conf ${e.cf}" title="${e.cf==="D"?"Disclosed":e.cf==="E"?"Estimated":"Inferred"}">${e.cf}</span></li>`}
-function tabLinks(c){
-  const sells=EDGES.filter(e=>e.ty==="s"&&e.f===c.t).sort((a,b)=>b.p-a.p);
-  const buys=EDGES.filter(e=>e.ty==="s"&&e.t===c.t).sort((a,b)=>b.p-a.p);
-  const fin=EDGES.filter(e=>e.ty==="f"&&(e.f===c.t||e.t===c.t));
+const CONFT={D:"Disclosed",E:"Estimated",I:"Inferred"};
+function facts(e,c,other){const b=[];if(e.p!=null)b.push(`≈${e.p}% of ${esc(BY[e.f].lab)} revenue`);if(e.usd)b.push(`$${e.usd}B`);if(e.gw)b.push(`${e.gw} GW`);return b.join(" · ")}
+function linkRow(o,e,c){
+  const f=facts(e,c,o),src=e.url?`<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.src||"source")}</a>`:"";
+  return `<li><button class="go" type="button" data-go="${esc(o)}">${esc(BY[o].lab)}</button><span>${f?`<b class="num">${f}</b> · `:""}${esc(e.note)}${e.asof?` <span class="mut">(${esc(e.asof)})</span>`:""}${src?`<br><span class="srcl">${src}</span>`:""}</span><span class="conf ${e.cf}" title="${CONFT[e.cf]}">${e.cf}${e.ty==="contract"?"·C":""}</span></li>`}
+function discBlock(c){
+  const d=DISC[c.t];if(!d)return "";
   let h="";
-  if(sells.length){
-    const tot=sells.reduce((x,e)=>x+e.p,0),top=sells[0],hhi=sells.reduce((x,e)=>x+(e.p/100)**2,0);
-    h+=`<div class="stats">${stat("Mapped customer share",pctP(tot))}${stat("Largest customer",BY[top.t].lab+" "+pctP(top.p))}${stat("Concentration (HHI)",hhi.toFixed(2),hhi>0.15?"down":"")}</div>`;
-    h+=`<p class="sec">Sells to · share of ${esc(c.lab)} revenue</p><ul class="links">${sells.map(e=>linkRow(e.t,`≈${e.p}% · ${esc(e.note)}`,e)).join("")}</ul>`;
-  }
-  if(buys.length)h+=`<p class="sec">Buys from · share of supplier's revenue</p><ul class="links">${buys.map(e=>linkRow(e.f,`≈${e.p}% of ${esc(BY[e.f].lab)} revenue · ${esc(e.note)}`,e)).join("")}</ul>`;
-  if(fin.length)h+=`<p class="sec">Capital ties</p><ul class="links">${fin.map(e=>{const o=e.f===c.t?e.t:e.f;return linkRow(o,`${e.f===c.t?"Invests in":"Backed by"} ${esc(BY[o].lab)} · ${esc(e.note)}`,e)}).join("")}</ul>`;
-  const circ=fin.filter(f=>EDGES.some(e=>e.ty==="s"&&((e.f===f.f&&e.t===f.t)||(e.f===f.t&&e.t===f.f))));
-  if(circ.length)h+=`<div class="flag"><b>Circularity flag.</b> ${esc(c.lab)} has capital ties to ${circ.map(f=>esc(BY[f.f===c.t?f.t:f.f].lab)).join(", ")} and also trades with them. Part of this demand is financed by the supplier.</div>`;
-  h+=`<p class="note">D = disclosed in filings · E = estimated · I = inferred. Weights are illustrative in this sample.</p>`;
+  (d.filings||[]).forEach(g=>{
+    const per=g.rows[0]?.months?`${g.rows[0].months}M to ${g.rows[0].end}`:(g.rows[0]?.end||"");
+    h+=`<p class="sec">Disclosed in ${esc(g.form)} · ${esc(per)}</p><table class="fin"><tbody>${g.rows.map(r=>`<tr><td>${esc(r.customer)} <span class="mut">· ${r.basis==="revenue"?"of revenue":"of receivables"}</span></td><td><a href="${esc(g.url)}" target="_blank" rel="noopener">${r.pct}%</a></td></tr>`).join("")}</tbody></table>`;
+  });
+  if(h)h+=`<p class="note">Filings usually anonymise customers ("Customer A"), and the letters can refer to different customers from one period to the next.</p>`;
+  if(d.rpo)h+=`<p class="note">Backlog (remaining performance obligations): <b class="num">$${d.rpo.usd_bn}B</b> at ${esc(d.rpo.end)}, per <a href="${esc(d.rpo.url)}" target="_blank" rel="noopener">${esc(d.rpo.form)}</a>.</p>`;
+  return h;
+}
+function tabLinks(c){
+  const sells=EDGES.filter(e=>e.ty!=="capital"&&e.f===c.t).sort((a,b)=>(b.p||0)-(a.p||0)||"HML".indexOf(a.st)-"HML".indexOf(b.st));
+  const buys=EDGES.filter(e=>e.ty!=="capital"&&e.t===c.t).sort((a,b)=>"HML".indexOf(a.st)-"HML".indexOf(b.st));
+  const fin=EDGES.filter(e=>e.ty==="capital"&&(e.f===c.t||e.t===c.t));
+  let h="";
+  const known=sells.filter(e=>e.p!=null);
+  if(known.length){const tot=known.reduce((x,e)=>x+e.p,0),hhi=known.reduce((x,e)=>x+(e.p/100)**2,0);
+    h+=`<div class="stats">${stat("Revenue from mapped customers",pctP(tot))}${stat("Largest",BY[known[0].t].lab+" "+pctP(known[0].p))}${stat("Concentration (HHI)",hhi.toFixed(2),hhi>0.15?"down":"")}</div>`}
+  h+=discBlock(c);
+  if(sells.length)h+=`<p class="sec">Sells to</p><ul class="links">${sells.map(e=>linkRow(e.t,e,c)).join("")}</ul>`;
+  if(buys.length)h+=`<p class="sec">Buys from</p><ul class="links">${buys.map(e=>linkRow(e.f,e,c)).join("")}</ul>`;
+  if(fin.length)h+=`<p class="sec">Capital ties</p><ul class="links">${fin.map(e=>linkRow(e.f===c.t?e.t:e.f,{...e,note:(e.f===c.t?"Invests in ":"Backed by ")+BY[e.f===c.t?e.t:e.f].lab+": "+e.note},c)).join("")}</ul>`;
+  const circ=fin.filter(f=>EDGES.some(e=>e.ty!=="capital"&&((e.f===f.f&&e.t===f.t)||(e.f===f.t&&e.t===f.f))));
+  if(circ.length)h+=`<div class="flag"><b>Circularity flag.</b> ${esc(c.lab)} has capital ties to ${[...new Set(circ.map(f=>BY[f.f===c.t?f.t:f.f].lab))].map(esc).join(", ")} and also trades with them, so part of this demand is financed within the relationship.</div>`;
+  h+=`<p class="note">D = disclosed by a party in a filing or official release · E = estimated or reported, not confirmed · I = inferred; size not disclosed · C = announced contract.</p>`;
   return h;
 }
 function tabThesis(c){
   return `<div class="thesis"><p class="sec">Bull case</p><p>${esc(c.bull)}.</p><p class="sec">Bear case</p><p>${esc(c.bear)}.</p><p class="sec">What to watch</p><p>${esc(c.kpi)}.</p>
-  <p class="sec">Position in the chain</p><p>Layer ${c.layer} of 9: ${LAYERS[c.layer-1].name}. ${LAYERS[c.layer-1].neck}.</p></div>
-  <p class="note">Thesis notes are maintained by hand in the repository and versioned, so you can see how a view changed over time.</p>`;
+  <p class="sec">Position in the chain</p><p>Layer ${c.layer} of 9: ${LAYERS[c.layer-1].name} · ${esc(c.seg||"")}. ${esc(c.role||"")}. Layer constraint: ${LAYERS[c.layer-1].neck}.</p></div>
+  <p class="note">Draft thesis notes. They will move to a versioned file in the repository so you can see how a view changes over time.</p>`;
 }
 
 function renderPanel(){
@@ -575,6 +561,8 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSheet()});
 paintChips();
 let start="NVDA";try{const h=decodeURIComponent(location.hash.slice(1));if(BY[h])start=h}catch(e){}
 select(start);
+
+})();
 </script>
 
 </body>
