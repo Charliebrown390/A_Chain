@@ -23,6 +23,7 @@ import sys
 import time
 import xml.etree.ElementTree as ET
 from datetime import date, datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 
@@ -37,6 +38,13 @@ OUT = ROOT / "site/data"
 HIST = ROOT / "data/history"
 BENCH = {"sox": "^SOX", "spx": "^GSPC"}
 NOW = datetime.now(timezone.utc)
+NY = ZoneInfo("America/New_York")
+
+
+def us_market_open(now=None):
+    """True during regular US trading hours (Mon-Fri 09:30-16:00 New York; exchange holidays not checked)."""
+    t = (now or NOW).astimezone(NY)
+    return t.weekday() < 5 and (9, 30) <= (t.hour, t.minute) < (16, 0)
 
 
 def universe():
@@ -396,7 +404,11 @@ def iv30(tk, spot, rate):
     return math.sqrt(w / t)
 
 
-def run_options(cos):
+def run_options(cos, force=False):
+    if not force and not us_market_open():
+        print("US market is closed: option quotes are stale, so the implied-vol snapshot is skipped.")
+        build_iv_json()
+        return
     try:
         rate = float(yf.Ticker("^IRX").history(period="5d")["Close"].dropna().iloc[-1]) / 100
     except Exception:
@@ -404,7 +416,7 @@ def run_options(cos):
     HIST.mkdir(parents=True, exist_ok=True)
     path = HIST / "iv.csv"
     new = not path.exists()
-    today = NOW.date().isoformat()
+    today = NOW.astimezone(NY).date().isoformat()
     rows = []
     for co in cos:
         try:
@@ -419,12 +431,13 @@ def run_options(cos):
         except Exception as e:
             print(f"{co['id']:>10} options error: {e}")
         time.sleep(0.3)
-    # keep one row per (date, id): drop any earlier rows for today before appending
+    # one row per (date, id): a new value replaces today's earlier one; earlier values are kept otherwise
     old = []
     if not new:
         with path.open() as fh:
             old = [x for x in csv.reader(fh)][1:]
-        old = [x for x in old if x[0] != today]
+        fresh = {x[1] for x in rows}
+        old = [x for x in old if not (x[0] == today and x[1] in fresh)]
     with path.open("w", newline="") as fh:
         w = csv.writer(fh)
         w.writerow(["date", "id", "iv30", "spot"])
@@ -489,6 +502,8 @@ def run_news(cos):
                               "r": 1 if kw.search(title) else 0})
         except Exception as e:
             print(f"{co['id']:>10} news error: {e}")
+        if not items:
+            items = load(OUT / "news.json", {}).get("companies", {}).get(co["id"], [])
         items.sort(key=lambda i: i["at"], reverse=True)
         out[co["id"]] = ([i for i in items if i["r"]] + [i for i in items if not i["r"]])[:10]
         time.sleep(0.2)
@@ -503,13 +518,22 @@ def run_full(cos):
     except Exception:
         rate = 0.04
     ivs = load(OUT / "iv.json", {}).get("companies", {})
+    prev = load(OUT / "market.json", {}).get("companies", {})
     syms = [c["yf"] for c in cos] + list(BENCH.values())
     px = download_prices(syms)
+    got = sum(1 for c in cos if c["yf"] in px and len(px[c["yf"]]) > 30)
+    if got < 0.5 * len(cos):
+        print(f"Only {got} of {len(cos)} price series came back; keeping the previous data unchanged.")
+        return
     bench = {k: px[v] for k, v in BENCH.items() if v in px}
     summary = {}
     for co in cos:
         sub = px.get(co["yf"])
         rec = {"yf": co["yf"]}
+        old = prev.get(co["id"], {})
+        if (sub is None or len(sub) <= 30) and old:
+            rec.update({k: v for k, v in old.items() if k not in ("credit",)})   # keep last good prices
+            rec["stale"] = True
         if sub is not None and len(sub) > 30:
             rec.update(tech(sub, bench))
             write(OUT / "px" / f"{co['id']}.json", {
@@ -521,10 +545,13 @@ def run_full(cos):
             rec.update(fundamentals(tk))
         except Exception as e:
             rec["error"] = f"fundamentals: {e}"
+        for k in ("mcap_usd_bn", "rev_usd_bn", "ratings", "tgt_mean", "fwd_pe", "rev_hist", "actions"):
+            if rec.get(k) in (None, [], {}) and old.get(k) not in (None, [], {}):
+                rec[k] = old[k]            # Yahoo sometimes returns blanks; fall back to the last good value
         try:
             iv = ivs.get(co["id"], {}).get("iv30")
             sig = iv or rec.get("hv252") or rec.get("hv60")
-            rec["credit"] = credit(tk, rec.get("fin_ccy") or rec.get("ccy"), rec.get("mcap_usd_bn"), sig, rate)
+            rec["credit"] = credit(tk, rec.get("fin_ccy") or rec.get("ccy"), rec.get("mcap_usd_bn"), sig, rate) or old.get("credit") or {}
             if rec["credit"]:
                 rec["credit"]["dd_vol_source"] = "implied" if iv else "realised 1y"
         except Exception as e:
@@ -544,12 +571,16 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--mode", choices=["full", "options", "news"], default="full")
     ap.add_argument("--only", help="comma-separated ids, for testing")
+    ap.add_argument("--force", action="store_true", help="options mode: run even when the US market is closed")
     a = ap.parse_args()
     cos = universe()
     if a.only:
         keep = set(a.only.split(","))
         cos = [c for c in cos if c["id"] in keep]
-    {"full": run_full, "options": run_options, "news": run_news}[a.mode](cos)
+    if a.mode == "options":
+        run_options(cos, force=a.force)
+    else:
+        {"full": run_full, "news": run_news}[a.mode](cos)
 
 
 if __name__ == "__main__":

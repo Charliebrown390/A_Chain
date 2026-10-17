@@ -265,7 +265,7 @@ footer p{margin:0}
   <section class="pulse four">
     <div class="card">
       <h2>Biggest moves</h2>
-      <p class="hint">Latest daily move measured in standard deviations of each stock's own 20-day volatility, with the newest headline.</p>
+      <p class="hint">Last session's move measured in standard deviations of each stock's own 20-day volatility, with the newest headline.</p>
       <ul class="movers" id="movers"></ul>
     </div>
     <div class="card">
@@ -391,7 +391,11 @@ const EDGES=E.edges.map(e=>({f:e.from,t:e.to,ty:e.type,st:e.strength,p:e.pct??nu
 
 const live=COS.some(c=>c.has);
 const pxDate=median(COS.filter(c=>c.has&&c.ccy==="USD").map(c=>Date.parse(c.date)));
-$("#badge").textContent=live?"Live data":"Market data unavailable";
+const nyNow=(()=>{const f=new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",weekday:"short",hour:"numeric",minute:"numeric",hour12:false}).formatToParts(new Date());const g=t=>f.find(x=>x.type===t)?.value;return{wd:g("weekday"),hm:(+g("hour")%24)*60+ +g("minute")}})();
+const weekend=nyNow.wd==="Sat"||nyNow.wd==="Sun",mktOpen=!weekend&&nyNow.hm>=570&&nyNow.hm<960;
+const lastClose=pxDate?new Date(pxDate):null,lcTxt=lastClose?lastClose.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"}):"";
+$("#badge").textContent=!live?"Market data unavailable":mktOpen?`Prices to close of ${lcTxt}`:`Markets closed · close of ${lcTxt}`;
+if(live&&!mktOpen)$("#stampText").textContent=weekend?`US markets are closed for the weekend. Prices, moves and volatility are as of the last session (${lcTxt}); they update after Monday's close.`:`US markets are closed. Prices, moves and volatility are as of the last session (${lcTxt}).`;
 if(!live)$("#badge").style.borderColor="var(--down)";
 $("#built").textContent=[live&&pxDate?"Prices to "+fdate(new Date(pxDate).toISOString().slice(0,10)):"",M.built?"market data "+M.built.slice(0,16).replace("T"," ")+" UTC":"",NW.built?"news "+NW.built.slice(0,16).replace("T"," ")+" UTC":""].filter(Boolean).join(" · ");
 

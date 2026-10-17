@@ -2,8 +2,9 @@ name: Refresh market data
 
 on:
   schedule:
-    - cron: "15 22 * * 1-5"   # full refresh after the US close (06:15 Singapore, Tue-Sat)
-    - cron: "45 18 * * 1-5"   # implied-vol snapshot during US trading hours
+    - cron: "15 22 * * 1-5"   # full refresh after each US close, Mon-Fri sessions (06:15 Singapore, Tue-Sat); nothing on weekends
+    - cron: "40 14 * * 1-5"   # implied-vol snapshot early in the US session
+    - cron: "30 17 * * 1-5"   # second snapshot, in case GitHub delays the first past the close; the script skips if the market is shut
     - cron: "0 */3 * * *"     # headlines every three hours
   workflow_dispatch:
     inputs:
@@ -37,7 +38,7 @@ jobs:
         run: |
           case "${{ github.event.schedule }}" in
             "15 22 * * 1-5") m=full ;;
-            "45 18 * * 1-5") m=options ;;
+            "40 14 * * 1-5"|"30 17 * * 1-5") m=options ;;
             "0 */3 * * *") m=news ;;
             *) m="${{ inputs.mode || 'full' }}" ;;
           esac
