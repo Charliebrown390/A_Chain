@@ -65,11 +65,16 @@ funding:
       - {kind: bond, usd_bn: 15.0, note: "Nov 2025 bond sale", src: "Reuters via Yahoo Finance", url: "https://finance.yahoo.com/news/ai-hyperscalers-drive-higher-us-225314460.html"}
       - {kind: lease, usd_bn: 137.2, note: "Leases signed but not yet commenced (includes warehouses, aircraft and vehicles)", src: "Reuters via The Spokesman-Review", url: "https://www.spokesman.com/stories/2026/aug/04/ai-data-center-race-builds-1-trillion-lease-burden/"}
   NVDA:
-    as_of: "2026-07-29"
+    as_of: "2026-07-26"
     items:
+      - {kind: guarantee_given, usd_bn: 3.53, note: "Land, power and shell guarantees of AI cloud partners' data-centre lease obligations if they default; terms 5–7 years; partners hold $712M in escrow", src: "NVIDIA 10-Q, quarter to 26 Jul 2026", url: "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm"}
+      - {kind: backstop_given, usd_bn: 4.7, note: "Maximum loss exposure to infrastructure-financing vehicles (VIEs), including $3.3B of equity-method investments and future committed amounts", src: "NVIDIA 10-Q, quarter to 26 Jul 2026", url: "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm"}
       - {kind: backstop_given, usd_bn: 6.3, note: "Capacity buyback for CoreWeave through 2032", src: "Fierce Network deal list", url: "https://www.fierce-network.com/cloud/fierce-networks-encyclopedia-ai-deals"}
       - {kind: backstop_given, usd_bn: 4.88, note: "Six-year minimum-revenue backstop for SharonAI (up to 40,000 GB300s); similar backstop for Firmus in Indonesia. Programme launched mid-2026", src: "SemiAnalysis", url: "https://newsletter.semianalysis.com/p/nvidia-gpu-debt-backstop-unleashes"}
       - {kind: guarantee_given, usd_bn: 250, note: "Reported talks to guarantee lease and debt obligations for an OpenAI campus in Ohio; not confirmed", src: "WSJ via Yahoo Finance", url: "https://finance.yahoo.com/technology/ai/articles/coreweave-nebius-gain-report-links-132711335.html"}
+    signals:
+      - {date: "2026-07-26", text: "Offers some investment-grade customers building large data centres payment terms of 90 days up to one year", src: "NVIDIA 10-Q", url: "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm"}
+      - {date: "2026-07-26", text: "Five direct customers hold 22%, 14%, 13%, 11% and 10% of receivables; $47.9B of non-marketable equity stakes, mostly private companies", src: "NVIDIA 10-Q", url: "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm"}
   OpenAI:
     as_of: "2026-07-27"
     items:

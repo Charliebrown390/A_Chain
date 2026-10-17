@@ -11,7 +11,8 @@ A network model of the AI build-out, from chip tools to applications. It maps wh
 | 0 | Prototype dashboard (sample data) | Done |
 | 1 | Company universe, layer taxonomy, sourced relationship map, SEC customer-concentration pull | Done |
 | 2 | Market data: prices, fundamentals, analyst ratings and rating changes, implied vs realised vol, beta, news (Yahoo Finance) | Done |
-| 3 | Analytics: screening and scoring across the chain, Taiwan monthly sales | Next |
+| 3 | Credit layer: financing links, funding sources, leverage and coverage, debt maturities, off-balance-sheet leases, Merton distance-to-default, stress-test tool | Done |
+| 4 | Screening and scoring across the chain, Taiwan monthly sales | Next |
 | 3 | Analytics: fundamentals, technicals, network metrics | Planned |
 | 4 | Dashboard wired to live data | Planned |
 | 5 | Thesis notes and nightly refresh via GitHub Actions | Planned |
@@ -25,6 +26,7 @@ A network model of the AI build-out, from chip tools to applications. It maps wh
 - `scripts/build_site_data.py` — validates the map, merges filing figures into links, writes `site/data/*.json`
 - `site/` — the static web page served by GitHub Pages
 - `data/theses.yaml` — bull/bear/what-to-watch notes per company (edit by hand)
+- `data/funding.yaml` — funding sources, guarantees, backstops, off-balance-sheet vehicles and credit signals per company (edit by hand; every item needs a source)
 - `data/history/iv.csv` — daily 30-day implied vol log, so IV percentiles build up over time
 - `scripts/market_data.py` — Yahoo Finance pull: `--mode full` (prices, fundamentals, analysts, news), `options` (implied vol), `news`
 - `.github/workflows/` — `pages.yml` (build and deploy on every push), `sec-extract.yml` (weekly SEC pull), `market-data.yml` (full refresh after each US close, IV snapshot during US hours, news every 3 hours)
@@ -37,7 +39,14 @@ A network model of the AI build-out, from chip tools to applications. It maps wh
 | E | Estimated, or reported by the press but not confirmed by the parties. Also used when a filing gives the % for an anonymised customer and we map it to a name |
 | I | Inferred from known product relationships; size not disclosed |
 
-Link types: `supply` (ongoing sales), `contract` (announced multi-year commitment), `capital` (equity, warrants, financing backstops).
+Link types: `supply` (ongoing sales), `contract` (announced multi-year commitment), `capital` (equity, warrants), `financing` (credit support: backstop, guarantee, contract used as loan collateral, rent-back offer, vendor finance).
+
+## Credit measures
+
+- Leverage, coverage, cash flow and days-sales-outstanding: Yahoo Finance quarterly statements (TTM), converted to USD.
+- Debt maturities, leases not yet commenced, purchase commitments, customer prepayments: SEC XBRL (company-wide facts only). XBRL guarantee tags are ignored because they proved unreliable; guarantees are curated in `funding.yaml`.
+- Distance-to-default: Merton model with equity value, equity vol (30-day implied where available, else 1-year realised), default point = short-term debt + half of long-term debt, 1-year horizon. The implied default probability is risk-neutral.
+- Stress test (in the page): shocks one company and passes losses through supply/contract links for three rounds (80% pass-through), capped at each buyer's annual spending; on default it also writes off stakes, triggers backstops and guarantees and leaves receivables unpaid. Unknown revenue shares are assumed from link strength and marked *.
 
 ## Editing the map
 

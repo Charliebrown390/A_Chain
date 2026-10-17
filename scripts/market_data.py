@@ -210,6 +210,120 @@ def fundamentals(tk):
     return f
 
 
+# ---------------------------------------------------------------- credit
+def _row(df, *names):
+    for n in names:
+        if df is not None and n in df.index:
+            return df.loc[n]
+    return None
+
+
+def _ttm(df, *names):
+    """Sum of the latest four quarters; None if fewer than four are reported."""
+    row = _row(df, *names)
+    if row is None:
+        return None
+    vals = [float(v) for v in row.values[:4] if v == v]
+    return sum(vals) if len(vals) == 4 else None
+
+
+def _last(df, *names):
+    row = _row(df, *names)
+    if row is None:
+        return None
+    for v in row.values:
+        if v == v:
+            return float(v)
+    return None
+
+
+def _N(x):
+    return 0.5 * (1 + math.erf(x / math.sqrt(2)))
+
+
+def merton(E, D, sigma_e, rate, T=1.0):
+    """Merton distance-to-default. E, D in the same units; returns (DD, risk-neutral 1y PD, asset vol)."""
+    if not (E and D and sigma_e) or E <= 0 or D <= 0 or sigma_e <= 0:
+        return None, None, None
+    V, sv = E + D, sigma_e * E / (E + D)
+    for _ in range(200):
+        d1 = (math.log(V / D) + (rate + sv * sv / 2) * T) / (sv * math.sqrt(T))
+        d2 = d1 - sv * math.sqrt(T)
+        Vn = (E + D * math.exp(-rate * T) * _N(d2)) / max(_N(d1), 1e-9)
+        svn = sigma_e * E / (Vn * max(_N(d1), 1e-9))
+        if abs(Vn - V) < 1e-7 * V and abs(svn - sv) < 1e-7:
+            V, sv = Vn, svn
+            break
+        V, sv = Vn, max(svn, 1e-4)
+    dd = (math.log(V / D) + (rate - sv * sv / 2) * T) / (sv * math.sqrt(T))
+    return dd, _N(-dd), sv
+
+
+def credit(tk, fin_ccy, mcap_usd, sigma_e, rate):
+    bs, inc, cf = tk.quarterly_balance_sheet, tk.quarterly_income_stmt, tk.quarterly_cashflow
+    f = fx_per_usd(fin_ccy)
+    if not f or bs is None or bs.empty:
+        return {}
+    u = lambda x: None if x is None else x / f / 1e9
+    cur_debt = _last(bs, "Current Debt")
+    lt_debt = _last(bs, "Long Term Debt")
+    if cur_debt is None and lt_debt is None:
+        tot, lease = _last(bs, "Total Debt"), _last(bs, "Capital Lease Obligations") or 0
+        debt = None if tot is None else tot - lease
+    else:
+        debt = (cur_debt or 0) + (lt_debt or 0)
+    cash = _last(bs, "Cash Cash Equivalents And Short Term Investments", "Cash And Cash Equivalents")
+    leases = _last(bs, "Capital Lease Obligations")
+    ebitda = _ttm(inc, "EBITDA", "Normalized EBITDA")
+    ebit = _ttm(inc, "EBIT", "Operating Income")
+    interest = _ttm(inc, "Interest Expense", "Interest Expense Non Operating")
+    ocf = _ttm(cf, "Operating Cash Flow")
+    capex = _ttm(cf, "Capital Expenditure")
+    fcf = _ttm(cf, "Free Cash Flow")
+    rev_q, ar_q = _row(inc, "Total Revenue"), _row(bs, "Accounts Receivable", "Receivables")
+    dso = []
+    if rev_q is not None and ar_q is not None:
+        for d in list(ar_q.index)[:6]:
+            if d in rev_q.index and rev_q[d] == rev_q[d] and ar_q[d] == ar_q[d] and rev_q[d] > 0:
+                dso.append([str(d.date()), round(float(ar_q[d]) / float(rev_q[d]) * 91.25, 1)])
+    dso.reverse()
+    out = {
+        "as_of": str(bs.columns[0].date()),
+        "debt_usd_bn": r(u(debt), 2), "cash_usd_bn": r(u(cash), 2),
+        "net_debt_usd_bn": r(u(debt - cash), 2) if debt is not None and cash is not None else None,
+        "lease_liab_usd_bn": r(u(leases), 2),
+        "ebitda_ttm_usd_bn": r(u(ebitda), 2), "interest_ttm_usd_bn": r(u(interest), 3),
+        "ocf_ttm_usd_bn": r(u(ocf), 2), "capex_ttm_usd_bn": r(u(abs(capex)) if capex is not None else None, 2),
+        "fcf_ttm_usd_bn": r(u(fcf), 2), "ar_usd_bn": r(u(_last(bs, "Accounts Receivable", "Receivables")), 2),
+        "dso": dso,
+    }
+    if debt is not None and cash is not None and ebitda and ebitda > 0:
+        out["nd_ebitda"] = r((debt - cash) / ebitda, 2)
+    if interest and interest > 0:
+        if ebitda is not None and ebitda > 0:
+            out["ebitda_cover"] = r(ebitda / interest, 1)
+        if ebit is not None and ebit > 0:
+            out["ebit_cover"] = r(ebit / interest, 1)
+    if capex and ocf:
+        out["capex_ocf"] = r(abs(capex) / ocf, 2) if ocf > 0 else None
+    # Merton distance to default: default point = short-term debt + half of long-term debt (KMV convention)
+    dp = None
+    if cur_debt is not None or lt_debt is not None:
+        dp = (cur_debt or 0) + 0.5 * (lt_debt or 0)
+    elif debt:
+        dp = 0.75 * debt
+    if dp is not None and mcap_usd and sigma_e:
+        dpu = u(dp)
+        if dpu < 0.005 * mcap_usd:
+            out["dd_note"] = "negligible debt"
+        else:
+            dd, pd_, sv = merton(mcap_usd, dpu, sigma_e, rate)
+            if dd is not None:
+                out.update({"dd": r(min(dd, 25), 2), "pd_1y": r(pd_, 6), "asset_vol": r(sv, 3), "dd_sigma": r(sigma_e, 3),
+                            "dd_default_point_usd_bn": r(dpu, 2)})
+    return out
+
+
 # ---------------------------------------------------------------- implied vol
 def bs_price(s, k, t, rate, vol, call):
     if vol <= 0 or t <= 0:
@@ -384,6 +498,11 @@ def run_news(cos):
 
 # ---------------------------------------------------------------- full
 def run_full(cos):
+    try:
+        rate = float(yf.Ticker("^IRX").history(period="5d")["Close"].dropna().iloc[-1]) / 100
+    except Exception:
+        rate = 0.04
+    ivs = load(OUT / "iv.json", {}).get("companies", {})
     syms = [c["yf"] for c in cos] + list(BENCH.values())
     px = download_prices(syms)
     bench = {k: px[v] for k, v in BENCH.items() if v in px}
@@ -397,15 +516,26 @@ def run_full(cos):
                 "id": co["id"], "d": [str(d.date()) for d in sub.index],
                 "c": [r(x, 4) for x in sub["Close"]], "v": [int(x) if not math.isnan(x) else 0 for x in sub["Volume"]],
             })
+        tk = yf.Ticker(co["yf"])
         try:
-            rec.update(fundamentals(yf.Ticker(co["yf"])))
+            rec.update(fundamentals(tk))
         except Exception as e:
             rec["error"] = f"fundamentals: {e}"
+        try:
+            iv = ivs.get(co["id"], {}).get("iv30")
+            sig = iv or rec.get("hv252") or rec.get("hv60")
+            rec["credit"] = credit(tk, rec.get("fin_ccy") or rec.get("ccy"), rec.get("mcap_usd_bn"), sig, rate)
+            if rec["credit"]:
+                rec["credit"]["dd_vol_source"] = "implied" if iv else "realised 1y"
+        except Exception as e:
+            rec["credit_error"] = str(e)
         summary[co["id"]] = rec
-        print(f"{co['id']:>10} last={rec.get('last')} {rec.get('ccy')} mcap=${rec.get('mcap_usd_bn')}B pe={rec.get('fwd_pe')}")
+        cr = rec.get("credit") or {}
+        print(f"{co['id']:>10} last={rec.get('last')} {rec.get('ccy')} mcap=${rec.get('mcap_usd_bn')}B pe={rec.get('fwd_pe')} "
+              f"nd/ebitda={cr.get('nd_ebitda')} cover={cr.get('ebitda_cover')} dd={cr.get('dd')} {cr.get('dd_note', '')}")
         time.sleep(0.4)
     bm = {k: tech(v, {}) for k, v in bench.items()}
-    write(OUT / "market.json", {"built": NOW.isoformat(timespec="seconds"), "benchmarks": bm, "companies": summary})
+    write(OUT / "market.json", {"built": NOW.isoformat(timespec="seconds"), "rate": r(rate, 4), "benchmarks": bm, "companies": summary})
     run_news(cos)
     build_iv_json()
 

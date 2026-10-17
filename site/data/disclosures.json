@@ -1,5 +1,5 @@
 {
- "built": "2026-10-17T07:29:00+00:00",
+ "built": "2026-10-17T07:40:08+00:00",
  "sec_pulled": "2026-10-17T07:28:19+00:00",
  "companies": {
   "ASML": {
@@ -104,13 +104,6 @@
      "form": "10-Q",
      "url": "https://www.sec.gov/Archives/edgar/data/6951/000162828026058235/amat-20260726.htm",
      "concept": "ContractWithCustomerLiability"
-    },
-    "guarantees": {
-     "usd_bn": 0.28,
-     "end": "2026-07-26",
-     "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/6951/000162828026058235/amat-20260726.htm",
-     "concept": "GuaranteeObligationsMaximumExposure"
     }
    }
   },
@@ -220,27 +213,27 @@
      "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
      "ladder": [
       [
-       "Next 12m",
+       "FY2027",
        0.0
       ],
       [
-       "Year 2",
+       "FY2028",
        0.0
       ],
       [
-       "Year 3",
+       "FY2029",
        1.0
       ],
       [
-       "Year 4",
+       "FY2030",
        0.75
       ],
       [
-       "Year 5",
+       "FY2031",
        0.0
       ],
       [
-       "After year 5",
+       "FY2032+",
        2.0
       ]
      ]
@@ -367,23 +360,23 @@
      "url": "https://www.sec.gov/Archives/edgar/data/883241/000088324126000025/snps-20260731.htm",
      "ladder": [
       [
-       "Rest of year",
+       "Rest of FY2026",
        0.01
       ],
       [
-       "Next 12m",
+       "FY2027",
        1.02
       ],
       [
-       "Year 2",
+       "FY2028",
        1.02
       ],
       [
-       "Year 3",
+       "FY2029",
        0.02
       ],
       [
-       "Year 4",
+       "FY2030",
        2.02
       ]
      ]
@@ -595,13 +588,6 @@
      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
      "concept": "ContractWithCustomerLiability"
     },
-    "guarantees": {
-     "usd_bn": 108.5,
-     "end": "2026-07-26",
-     "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
-     "concept": "GuaranteeObligationsMaximumExposure"
-    },
     "op_lease_payments": {
      "usd_bn": 7.21,
      "end": "2026-07-26",
@@ -654,23 +640,23 @@
      "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
      "ladder": [
       [
-       "Next 12m",
+       "2026",
        0.88
       ],
       [
-       "Year 3",
+       "2028",
        0.62
       ],
       [
-       "Year 4",
+       "2029",
        0.0
       ],
       [
-       "Year 5",
+       "2030",
        0.75
       ],
       [
-       "After year 5",
+       "2031+",
        1.0
       ]
      ]
@@ -688,13 +674,6 @@
      "form": "10-Q",
      "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000123/amd-20260627.htm",
      "concept": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount"
-    },
-    "guarantees": {
-     "usd_bn": 4.1,
-     "end": "2026-06-27",
-     "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000123/amd-20260627.htm",
-     "concept": "GuaranteeObligationsMaximumExposure"
     },
     "op_lease_payments": {
      "usd_bn": 0.94,
@@ -748,23 +727,23 @@
      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
      "ladder": [
       [
-       "Rest of year",
+       "Rest of FY2026",
        2.25
       ],
       [
-       "Next 12m",
+       "FY2027",
        0.0
       ],
       [
-       "Year 2",
+       "FY2028",
        5.13
       ],
       [
-       "Year 3",
+       "FY2029",
        2.4
       ],
       [
-       "Year 4",
+       "FY2030",
        6.41
       ]
      ]
@@ -782,13 +761,6 @@
      "form": "10-Q",
      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
      "concept": "ContractWithCustomerLiability"
-    },
-    "guarantees": {
-     "usd_bn": 29.0,
-     "end": "2026-08-02",
-     "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
-     "concept": "GuaranteeObligationsMaximumExposure"
     },
     "op_lease_payments": {
      "usd_bn": 1.73,
@@ -846,23 +818,23 @@
      "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000025/mrvl-20260801.htm",
      "ladder": [
       [
-       "Rest of year",
+       "Rest of FY2027",
        0.0
       ],
       [
-       "Next 12m",
+       "FY2028",
        0.0
       ],
       [
-       "Year 2",
+       "FY2029",
        1.25
       ],
       [
-       "Year 3",
+       "FY2030",
        0.5
       ],
       [
-       "Year 4",
+       "FY2031",
        0.5
       ]
      ]
@@ -1062,27 +1034,27 @@
      "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
      "ladder": [
       [
-       "Next 12m",
+       "2026",
        2.5
       ],
       [
-       "Year 2",
+       "2027",
        3.83
       ],
       [
-       "Year 3",
+       "2028",
        3.17
       ],
       [
-       "Year 4",
+       "2029",
        3.29
       ],
       [
-       "Year 5",
+       "2030",
        2.75
       ],
       [
-       "After year 5",
+       "2031+",
        31.7
       ]
      ]
@@ -1154,27 +1126,27 @@
      "url": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm",
      "ladder": [
       [
-       "Next 12m",
+       "2026",
        0.16
       ],
       [
-       "Year 2",
+       "2027",
        0.15
       ],
       [
-       "Year 3",
+       "2028",
        0.14
       ],
       [
-       "Year 4",
+       "2029",
        0.07
       ],
       [
-       "Year 5",
+       "2030",
        0.44
       ],
       [
-       "After year 5",
+       "2031+",
        0.5
       ]
      ]
@@ -1260,27 +1232,27 @@
      "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm",
      "ladder": [
       [
-       "Next 12m",
+       "FY2027",
        0.0
       ],
       [
-       "Year 2",
+       "FY2028",
        0.0
       ],
       [
-       "Year 3",
+       "FY2029",
        0.0
       ],
       [
-       "Year 4",
+       "FY2030",
        0.0
       ],
       [
-       "Year 5",
+       "FY2031",
        0.0
       ],
       [
-       "After year 5",
+       "FY2032+",
        2.81
       ]
      ]
@@ -1655,27 +1627,27 @@
      "url": "https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/iivi-20260630.htm",
      "ladder": [
       [
-       "Next 12m",
+       "FY2027",
        0.01
       ],
       [
-       "Year 2",
+       "FY2028",
        0.03
       ],
       [
-       "Year 3",
+       "FY2029",
        0.09
       ],
       [
-       "Year 4",
+       "FY2030",
        2.14
       ],
       [
-       "Year 5",
+       "FY2031",
        0.99
       ],
       [
-       "After year 5",
+       "FY2032+",
        0.0
       ]
      ]
@@ -2148,23 +2120,23 @@
      "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000046/dell-20260731.htm",
      "ladder": [
       [
-       "Rest of year",
+       "Rest of FY2027",
        5.35
       ],
       [
-       "Next 12m",
+       "FY2028",
        4.49
       ],
       [
-       "Year 2",
+       "FY2029",
        3.65
       ],
       [
-       "Year 3",
+       "FY2030",
        3.94
       ],
       [
-       "Year 4",
+       "FY2031",
        1.77
       ]
      ]
@@ -2175,13 +2147,6 @@
      "form": "10-Q",
      "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000046/dell-20260731.htm",
      "concept": "ContractWithCustomerLiability"
-    },
-    "guarantees": {
-     "usd_bn": 8.6,
-     "end": "2026-07-31",
-     "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000046/dell-20260731.htm",
-     "concept": "GuaranteeObligationsMaximumExposure"
     },
     "op_lease_payments": {
      "usd_bn": 0.9,
@@ -2297,23 +2262,23 @@
      "url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536526000022/smci-20260630.htm",
      "ladder": [
       [
-       "Next 12m",
+       "FY2027",
        2.04
       ],
       [
-       "Year 2",
+       "FY2028",
        0.01
       ],
       [
-       "Year 3",
+       "FY2029",
        0.01
       ],
       [
-       "Year 4",
+       "FY2030",
        0.0
       ],
       [
-       "Year 5",
+       "FY2031",
        2.0
       ]
      ]
@@ -2375,27 +2340,27 @@
      "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
      "ladder": [
       [
-       "Next 12m",
+       "FY2026",
        3.8
       ],
       [
-       "Year 2",
+       "FY2027",
        3.14
       ],
       [
-       "Year 3",
+       "FY2028",
        3.78
       ],
       [
-       "Year 4",
+       "FY2029",
        2.38
       ],
       [
-       "Year 5",
+       "FY2030",
        0.4
       ],
       [
-       "After year 5",
+       "FY2031+",
        8.25
       ]
      ]
@@ -2406,13 +2371,6 @@
      "form": "10-K",
      "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
      "concept": "ContractWithCustomerLiability"
-    },
-    "guarantees": {
-     "usd_bn": 0.36,
-     "end": "2026-07-31",
-     "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559026000080/hpe-20260731.htm",
-     "concept": "GuaranteeObligationsMaximumExposure"
     },
     "op_lease_payments": {
      "usd_bn": 1.99,
@@ -2441,23 +2399,23 @@
      "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm",
      "ladder": [
       [
-       "Next 12m",
+       "2026",
        0.02
       ],
       [
-       "Year 2",
+       "2027",
        0.02
       ],
       [
-       "Year 3",
+       "2028",
        0.87
       ],
       [
-       "Year 4",
+       "2029",
        0.02
       ],
       [
-       "Year 5",
+       "2030",
        0.02
       ]
      ]
@@ -2489,23 +2447,23 @@
      "url": "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000007/etn-20251231.htm",
      "ladder": [
       [
-       "Next 12m",
+       "2026",
        1.14
       ],
       [
-       "Year 2",
+       "2027",
        0.71
       ],
       [
-       "Year 3",
+       "2028",
        0.5
       ],
       [
-       "Year 4",
+       "2029",
        0.2
       ],
       [
-       "Year 5",
+       "2030",
        1.21
       ]
      ]
@@ -2575,27 +2533,27 @@
      "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000032/ceg-20251231.htm",
      "ladder": [
       [
-       "Next 12m",
+       "2026",
        0.09
       ],
       [
-       "Year 2",
+       "2027",
        0.67
       ],
       [
-       "Year 3",
+       "2028",
        0.83
       ],
       [
-       "Year 4",
+       "2029",
        0.16
       ],
       [
-       "Year 5",
+       "2030",
        0.1
       ],
       [
-       "After year 5",
+       "2031+",
        5.56
       ]
      ]
@@ -2625,23 +2583,23 @@
      "url": "https://www.sec.gov/Archives/edgar/data/1101239/000110123926000147/eqix-20260630.htm",
      "ladder": [
       [
-       "Rest of year",
+       "Rest of 2026",
        0.61
       ],
       [
-       "Next 12m",
+       "2027",
        1.08
       ],
       [
-       "Year 2",
+       "2028",
        1.43
       ],
       [
-       "Year 3",
+       "2029",
        2.19
       ],
       [
-       "Year 4",
+       "2030",
        3.19
       ]
      ]
@@ -2692,29 +2650,6 @@
    "filings": [],
    "rpo": null,
    "credit": {
-    "maturities": {
-     "end": "2026-06-30",
-     "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm",
-     "ladder": [
-      [
-       "Rest of year",
-       2.36
-      ],
-      [
-       "Year 2",
-       17.09
-      ],
-      [
-       "Year 3",
-       13.53
-      ],
-      [
-       "Year 4",
-       11.11
-      ]
-     ]
-    },
     "customer_prepayments": {
      "usd_bn": 25.0,
      "end": "2025-12-31",
@@ -2754,27 +2689,27 @@
      "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/goog-20251231.htm",
      "ladder": [
       [
-       "Next 12m",
+       "2026",
        2.0
       ],
       [
-       "Year 2",
+       "2027",
        1.0
       ],
       [
-       "Year 3",
+       "2028",
        2.68
       ],
       [
-       "Year 4",
+       "2029",
        1.76
       ],
       [
-       "Year 5",
+       "2030",
        5.5
       ],
       [
-       "After year 5",
+       "2031+",
        36.15
       ]
      ]
@@ -2799,13 +2734,6 @@
      "form": "10-Q",
      "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm",
      "concept": "ContractWithCustomerLiability"
-    },
-    "guarantees": {
-     "usd_bn": 7.6,
-     "end": "2026-06-30",
-     "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm",
-     "concept": "GuaranteeObligationsMaximumExposure"
     },
     "op_lease_payments": {
      "usd_bn": 21.33,
@@ -2930,23 +2858,23 @@
      "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
      "ladder": [
       [
-       "Rest of year",
+       "Rest of 2026",
        4.41
       ],
       [
-       "Next 12m",
+       "2027",
        6.18
       ],
       [
-       "Year 2",
+       "2028",
        4.42
       ],
       [
-       "Year 3",
+       "2029",
        2.42
       ],
       [
-       "Year 4",
+       "2030",
        3.22
       ]
      ]
@@ -3032,23 +2960,23 @@
      "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm",
      "ladder": [
       [
-       "Rest of year",
+       "Rest of 2026",
        0.0
       ],
       [
-       "Next 12m",
+       "2027",
        2.75
       ],
       [
-       "Year 2",
+       "2028",
        1.5
       ],
       [
-       "Year 3",
+       "2029",
        1.0
       ],
       [
-       "Year 4",
+       "2030",
        5.0
       ]
      ]

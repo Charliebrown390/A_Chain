@@ -203,6 +203,46 @@ footer p{margin:0}
 .warnbox{margin-top:10px;padding:8px 10px;border-radius:7px;border:1px solid var(--warn);color:var(--ink);font-size:12.5px;background:color-mix(in srgb,var(--warn) 8%,var(--surface))}
 .seg{flex-wrap:wrap}
 @media (max-width:700px){.acts li{grid-template-columns:64px 1fr}.acts .pt{grid-column:2;text-align:left}}
+/* Phase 3: credit, financing links, stress test */
+.pulse.four{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+.legend .sw.fin2{border-top:2px dashed var(--warn)}
+.cw{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.cw li{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;font-size:12.5px}
+.cw .m{font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
+.ddchip{display:inline-block;font-family:var(--f-mono);font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.ddchip.s0{background:color-mix(in srgb,var(--down) 18%,var(--surface));color:var(--down)}
+.ddchip.s1{background:color-mix(in srgb,var(--warn) 18%,var(--surface));color:var(--warn)}
+.ddchip.s2{background:var(--surface-2);color:var(--ink)}
+.ddchip.s3{background:color-mix(in srgb,var(--up) 16%,var(--surface));color:var(--up)}
+.subhead{font-size:12px;color:var(--muted);margin:12px 0 6px}
+.lease{list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.lease li{display:grid;grid-template-columns:72px 1fr 64px;gap:8px;align-items:center;font-size:12.5px}
+.lease .bar{height:8px;border-radius:3px;background:var(--warn);opacity:.75}
+.fund{list-style:none;margin:0;padding:0;display:grid}
+.fund li{display:grid;grid-template-columns:96px 1fr auto;gap:8px;padding:7px 0;border-bottom:1px solid var(--line);font-size:12.5px;align-items:baseline}
+.fund .kind{font-family:var(--f-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.fund .amt{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+.fund .rate{color:var(--muted)}
+.ddexp{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--bg);border-radius:7px;padding:7px 12px;font-weight:600;cursor:pointer;font-size:12.5px}
+.btn.ghost{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.stress{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.stress h2{font-size:18px;font-weight:650}
+.stctl{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin-top:10px}
+.stctl label{display:flex;gap:8px;align-items:center;font-size:12.5px;color:var(--muted)}
+.stctl select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:6px 8px;max-width:220px}
+.stctl input[type=range]{width:130px;accent-color:var(--copper)}
+.stctl output{font-family:var(--f-mono);color:var(--ink);min-width:3.5ch}
+.stsum{margin:12px 0 8px;font-size:13px}
+.sttab{overflow-x:auto}
+.sttab table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:640px}
+.sttab th{text-align:right;font-weight:500;color:var(--muted);font-size:11.5px;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+.sttab th:first-child,.sttab td:first-child{text-align:left}
+.sttab td{text-align:right;padding:6px 8px;border-bottom:1px solid var(--line);font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.sttab td:first-child{font-family:var(--f-body)}
+.sttab .rd{display:inline-block;min-width:18px;text-align:center;font-size:10.5px;border-radius:4px;background:var(--surface-2);color:var(--muted);margin-right:6px}
+.map.stressed .chip{opacity:1!important}
+.chip.target{outline:2px solid var(--down);outline-offset:1px}
 </style>
 
 </head>
@@ -222,7 +262,7 @@ footer p{margin:0}
     </div>
   </header>
 
-  <section class="pulse three">
+  <section class="pulse four">
     <div class="card">
       <h2>Biggest moves</h2>
       <p class="hint">Latest daily move measured in standard deviations of each stock's own 20-day volatility, with the newest headline.</p>
@@ -240,9 +280,32 @@ footer p{margin:0}
     </div>
     <div class="card">
       <h2>Circularity watch</h2>
-      <p class="hint">Pairs where one company has a capital tie to the other and they also trade, so part of the demand is financed within the relationship.</p>
+      <p class="hint">Pairs where one company invests in, backstops or guarantees the other and they also trade, so part of the demand is financed within the relationship.</p>
       <ul class="circ" id="circ"></ul>
     </div>
+    <div class="card">
+      <h2>Credit watch</h2>
+      <p class="hint">Lowest distance-to-default first: how many standard deviations of asset value sit between each company and its debt. Below about 2 is stressed.</p>
+      <ul class="cw" id="cw"></ul>
+      <p class="subhead">Largest leases signed but not yet on the balance sheet</p>
+      <ul class="lease" id="leases"></ul>
+    </div>
+  </section>
+
+  <section class="stress" id="stress" aria-labelledby="stTitle">
+    <h2 id="stTitle">Stress test</h2>
+    <p class="hint" style="color:var(--muted);font-size:12px;margin:2px 0 0">Pick a company and a shock. The model passes the loss to its suppliers, investors and backers, then on to their suppliers, and colours the map by impact.</p>
+    <div class="stctl">
+      <label for="stCo">Company <select id="stCo"></select></label>
+      <div class="seg" id="stType" role="group" aria-label="Shock type">
+        <button type="button" id="st-rev" data-s="rev" aria-pressed="true">Cuts spending</button>
+        <button type="button" id="st-def" data-s="def" aria-pressed="false">Defaults</button>
+      </div>
+      <label for="stSev" id="stSevL">Spending cut <input type="range" id="stSev" min="10" max="90" step="10" value="30"><output id="stSevO" for="stSev">30%</output></label>
+      <button type="button" class="btn" id="stRun">Run</button>
+      <button type="button" class="btn ghost" id="stClear" hidden>Clear</button>
+    </div>
+    <div id="stOut"></div>
   </section>
 
   <div class="controls">
@@ -253,12 +316,14 @@ footer p{margin:0}
         <button type="button" id="cb-up" data-m="up" aria-pressed="false">Upside</button>
         <button type="button" id="cb-pe" data-m="pe" aria-pressed="false">Fwd P/E</button>
         <button type="button" id="cb-iv" data-m="iv" aria-pressed="false">Vol cheap/rich</button>
+        <button type="button" id="cb-cr" data-m="cr" aria-pressed="false">Credit</button>
       </div>
     </div>
     <div class="legend">
       <span><span class="sw"></span>Sells to (thicker = more important)</span>
       <span><span class="sw" style="border-top:3px dotted var(--copper)"></span>Inferred, size unknown</span>
       <span><span class="sw f"></span>Capital tie</span>
+      <span><span class="sw fin2"></span>Credit support (backstop, guarantee)</span>
       <span class="scale"><span id="sc-lo">−20%</span><b></b><span id="sc-hi">+20%</span></span>
     </div>
   </div>
@@ -271,6 +336,7 @@ footer p{margin:0}
   <footer>
     <div><h3>Data sources</h3><p>Prices, fundamentals, analyst ratings, price targets and recent rating changes come from Yahoo Finance and refresh every weekday after the US close. Headlines come from Yahoo Finance's public feeds and refresh every three hours. Customer concentration and backlog come from SEC XBRL filings and refresh weekly.</p></div>
     <div><h3>Volatility</h3><p>Implied vol is a 30-day at-the-money figure that we compute from option mid-quotes during US trading hours. Realised vol is from daily closes. Implied vol usually sits above realised vol, so a ratio under 1.0 reads as cheap and over 1.3 as rich. An implied-vol percentile appears once a few weeks of history have built up.</p></div>
+    <div><h3>Credit measures</h3><p>Debt, cash, EBITDA, interest, cash flow and receivables come from Yahoo Finance's quarterly statements. Debt maturities, leases not yet commenced and customer prepayments come from SEC XBRL filings, with funding details curated from filings and the press. Distance-to-default uses the Merton model: equity value, equity volatility (implied where available) and a default point of short-term debt plus half of long-term debt. The default probability it implies is risk-neutral, so it overstates real-world odds; use it to rank and to spot change.</p></div>
     <div><h3>How links are sourced</h3><p>D = disclosed by a party in a filing or official release. E = estimated, or reported but not confirmed. I = inferred from known product relationships, with size not disclosed. This is an analytical tool, not investment advice.</p></div>
   </footer>
 </div>
@@ -289,6 +355,7 @@ const CUR={USD:"$",KRW:"₩",TWD:"NT$",EUR:"€",JPY:"¥",GBP:"£"};
 const fpx=(v,ccy)=>{if(v==null)return "—";const s=CUR[ccy]??"";const n=Math.abs(v)>=1000?Math.round(v).toLocaleString("en-US"):Number(v).toFixed(2);return s?s+n:n+" "+(ccy||"")};
 const cls=v=>v>0?"up":v<0?"down":"mut";
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const KIND={backstop:"backstop",guarantee:"guarantee",collateral:"contract backs a loan",rent_back:"rent-back offer",vendor_finance:"vendor finance"};
 const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 const fdate=s=>{const [y,m,d]=s.split("-");return `${+d} ${MON[+m-1]} ${y}`};
 const ago=iso=>{const h=(Date.now()-new Date(iso).getTime())/36e5;return h<1?Math.max(1,Math.round(h*60))+"m ago":h<48?Math.round(h)+"h ago":Math.round(h/24)+"d ago"};
@@ -317,9 +384,10 @@ const COS=U.companies.map(u=>{
   if(c.ivHist.length>=20){const h=c.ivHist.map(x=>x[1]);c.ivPct=h.filter(x=>x<c.iv).length/h.length*100}
   c.upside=c.has&&c.tgt_mean&&!c.tgt_suspect?(c.tgt_mean/c.px-1)*100:null;
   c.news=NEWS[u.id]||[];
+  c.cr=m.credit||null;c.funding=u.funding||null;
   BY[c.t]=c;return c;
 });
-const EDGES=E.edges.map(e=>({f:e.from,t:e.to,ty:e.type,st:e.strength,p:e.pct??null,usd:e.usd_bn??null,gw:e.gw??null,cf:e.conf,note:e.note||"",src:e.src||"",url:e.url||"",asof:e.as_of||""}));
+const EDGES=E.edges.map(e=>({f:e.from,t:e.to,ty:e.type,st:e.strength,p:e.pct??null,usd:e.usd_bn??null,gw:e.gw??null,cf:e.conf,kind:e.kind||null,note:e.note||"",src:e.src||"",url:e.url||"",asof:e.as_of||""}));
 
 const live=COS.some(c=>c.has);
 const pxDate=median(COS.filter(c=>c.has&&c.ccy==="USD").map(c=>Date.parse(c.date)));
@@ -335,7 +403,8 @@ const MODES={
   ret:{get:c=>c.r1m,lo:-20,hi:20,mid:0,fmt:c=>pct(c.r1m),lab:["−20%","+20%"]},
   up:{get:c=>c.upside,lo:-10,hi:40,mid:10,fmt:c=>c.upside==null?"n/a":pct(c.upside,0)+" upside",lab:["−10%","+40%"]},
   pe:{get:c=>c.fwd_pe,lo:10,hi:60,mid:28,inv:true,fmt:c=>c.fwd_pe==null?"n/m":c.fwd_pe.toFixed(0)+"× P/E",lab:["60×","10×"]},
-  iv:{get:c=>c.ivr,lo:0.8,hi:1.6,mid:1.15,inv:true,fmt:c=>c.ivr==null?(c.has?"no IV":"—"):"IV/RV "+c.ivr.toFixed(2),lab:["rich","cheap"]}
+  iv:{get:c=>c.ivr,lo:0.8,hi:1.6,mid:1.15,inv:true,fmt:c=>c.ivr==null?(c.has?"no IV":"—"):"IV/RV "+c.ivr.toFixed(2),lab:["rich","cheap"]},
+  cr:{get:c=>c.cr?.dd_note?12:c.cr?.dd??null,lo:1,hi:8,mid:3,fmt:c=>c.cr?.dd_note?"net cash":c.cr?.dd!=null?"DD "+c.cr.dd.toFixed(1)+"σ":"—",lab:["stressed","strong"]}
 };
 if(!MODES[MODE])MODE="ret";
 function chipBg(c){
@@ -362,6 +431,11 @@ LAYERS.forEach(L=>{
 });
 function paintChips(){
   const M=MODES[MODE];
+  if(STRESS){const R=STRESS.res;
+    document.querySelectorAll(".chip").forEach(el=>{const id=el.dataset.t,r=R[id];el.classList.toggle("target",id===STRESS.T);
+      const sc=r?r.score:0;el.style.setProperty("--chipbg",id===STRESS.T?"color-mix(in srgb, var(--down) 30%, var(--surface))":sc>0?`color-mix(in srgb, var(--down) ${Math.round(Math.min(1,sc/10)*55)+6}%, var(--surface))`:"var(--surface)");
+      el.querySelector(".mv").textContent=id===STRESS.T?(STRESS.type==="def"?"defaults":`spend −${Math.round(STRESS.sev*100)}%`):r?(r.revPct>=0.05?`−${r.revPct.toFixed(1)}% rev`:r.cap?usd(r.cap)+" at risk":r.supplyLost||r.notes.length?"exposed":"—"):"—"});
+    $("#sc-lo").textContent="none";$("#sc-hi").textContent="−10% rev";return}
   document.querySelectorAll(".chip").forEach(el=>{const c=BY[el.dataset.t];el.style.setProperty("--chipbg",chipBg(c));el.querySelector(".mv").textContent=c.priv?"private":M.fmt(c)});
   $("#sc-lo").textContent=M.lab[0];$("#sc-hi").textContent=M.lab[1];
   document.querySelectorAll("#seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.m===MODE));
@@ -396,10 +470,14 @@ paintHeat();
     UL.appendChild(li);
   });
   const C=$("#circ");
-  EDGES.filter(e=>e.ty==="capital").forEach(f=>{
-    const s=EDGES.find(e=>e.ty!=="capital"&&((e.f===f.f&&e.t===f.t)||(e.f===f.t&&e.t===f.f)));if(!s)return;
+  const pairs=new Map();
+  EDGES.filter(e=>e.ty==="capital"||e.ty==="financing").forEach(f=>{
+    const t=EDGES.find(e=>(e.ty==="supply"||e.ty==="contract")&&((e.f===f.f&&e.t===f.t)||(e.f===f.t&&e.t===f.f)));if(!t)return;
+    const pk=[f.f,f.t].sort().join("|");if(!pairs.has(pk))pairs.set(pk,{f,t,ties:[]});pairs.get(pk).ties.push(f);
+  });
+  pairs.forEach(({f,t,ties})=>{
     const li=document.createElement("li");
-    li.innerHTML=`<button class="pair" type="button">${esc(BY[f.f].lab)} ↔ ${esc(BY[f.t].lab)}</button><span>${esc(BY[f.f].lab)} → ${esc(BY[f.t].lab)}: ${esc(f.note)}. ${esc(BY[s.f].lab)} also sells to ${esc(BY[s.t].lab)}${s.usd?` ($${s.usd}B)`:s.gw?` (${s.gw} GW)`:""}.</span>`;
+    li.innerHTML=`<button class="pair" type="button">${esc(BY[f.f].lab)} ↔ ${esc(BY[f.t].lab)}</button><span>${ties.map(x=>`${esc(BY[x.f].lab)} → ${esc(BY[x.t].lab)}${x.ty==="financing"?` (${KIND[x.kind]||x.kind})`:""}: ${esc(x.note)}`).join(". ")}. ${esc(BY[t.f].lab)} also sells to ${esc(BY[t.t].lab)}${t.usd?` ($${t.usd}B)`:t.gw?` (${t.gw} GW)`:""}.</span>`;
     li.querySelector("button").addEventListener("click",()=>select(BY[f.t].priv?f.f:f.t,true));
     C.appendChild(li);
   });
@@ -416,8 +494,8 @@ function drawWires(){
     const a=pos(e.f),b=pos(e.t);let d;
     if(Math.abs(a.y-b.y)<8){const up=Math.max(28,Math.abs(a.x-b.x)*.25);d=`M${a.x} ${a.y-a.h/2}C${a.x} ${a.y-up} ${b.x} ${b.y-up} ${b.x} ${b.y-b.h/2}`}
     else{const dir=b.y>a.y?1:-1,dy=Math.max(30,Math.abs(b.y-a.y)*.45);d=`M${a.x} ${a.y+dir*a.h/2}C${a.x} ${a.y+dir*dy} ${b.x} ${b.y-dir*dy} ${b.x} ${b.y-dir*b.h/2}`}
-    const cap=e.ty==="capital",w=cap?1.6:e.p!=null?Math.min(5.5,1.2+e.p/10):({H:3.4,M:2,L:1.1})[e.st]||1.5;
-    out+=`<path d="${d}" fill="none" stroke="var(${cap?"--fin":"--copper"})" stroke-width="${w}" stroke-linecap="round" ${cap?'stroke-dasharray="5 4"':e.cf==="I"?'stroke-dasharray="1.5 4"':""} opacity=".85"/>`;
+    const cap=e.ty==="capital",fin=e.ty==="financing",w=cap||fin?1.8:e.p!=null?Math.min(5.5,1.2+e.p/10):({H:3.4,M:2,L:1.1})[e.st]||1.5;
+    out+=`<path d="${d}" fill="none" stroke="var(${cap?"--fin":fin?"--warn":"--copper"})" stroke-width="${w}" stroke-linecap="round" ${cap?'stroke-dasharray="5 4"':fin?'stroke-dasharray="7 3"':e.cf==="I"?'stroke-dasharray="1.5 4"':""} opacity=".9"/>`;
   });
   svg.innerHTML=out;
 }
@@ -471,7 +549,7 @@ function bindCross(box,geom,valueAt,tipAt){
 
 /* ---------- panel ---------- */
 const panel=$("#panel");let TAB="price";
-const TABS=[["price","Price"],["risk","Vol & risk"],["fin","Financials"],["ana","Analysts"],["news","News"],["links","Links"],["thesis","Thesis"]];
+const TABS=[["price","Price"],["risk","Vol & risk"],["credit","Credit"],["fin","Financials"],["ana","Analysts"],["news","News"],["links","Links"],["thesis","Thesis"]];
 
 function tabPrice(c){
   if(!c.has)return `<p class="mut">No price data for this company yet.</p>`;
@@ -585,7 +663,7 @@ function tabLinks(c){
   const ord=s=>"HML".indexOf(s);
   const sells=EDGES.filter(e=>e.ty!=="capital"&&e.f===c.t).sort((a,b)=>(b.p||0)-(a.p||0)||ord(a.st)-ord(b.st));
   const buys=EDGES.filter(e=>e.ty!=="capital"&&e.t===c.t).sort((a,b)=>ord(a.st)-ord(b.st));
-  const fin=EDGES.filter(e=>e.ty==="capital"&&(e.f===c.t||e.t===c.t));
+  const fin=EDGES.filter(e=>e.ty==="capital"&&(e.f===c.t||e.t===c.t)),fcs=EDGES.filter(e=>e.ty==="financing"&&(e.f===c.t||e.t===c.t));
   let h="";const known=sells.filter(e=>e.p!=null);
   if(known.length){const tot=known.reduce((x,e)=>x+e.p,0),hhi=known.reduce((x,e)=>x+(e.p/100)**2,0);
     h+=`<div class="stats">${stat("Revenue from mapped customers",pctP(tot))}${stat("Largest",BY[known[0].t].lab+" "+pctP(known[0].p))}${stat("Concentration (HHI)",hhi.toFixed(2),hhi>.15?"down":"")}</div>`}
@@ -593,7 +671,8 @@ function tabLinks(c){
   if(sells.length)h+=`<p class="sec">Sells to</p><ul class="links">${sells.map(e=>linkRow(e.t,e)).join("")}</ul>`;
   if(buys.length)h+=`<p class="sec">Buys from</p><ul class="links">${buys.map(e=>linkRow(e.f,e)).join("")}</ul>`;
   if(fin.length)h+=`<p class="sec">Capital ties</p><ul class="links">${fin.map(e=>{const o=e.f===c.t?e.t:e.f;return linkRow(o,{...e,note:(e.f===c.t?"Invests in ":"Backed by ")+BY[o].lab+": "+e.note})}).join("")}</ul>`;
-  const circ=fin.filter(f=>EDGES.some(e=>e.ty!=="capital"&&((e.f===f.f&&e.t===f.t)||(e.f===f.t&&e.t===f.f))));
+  if(fcs.length)h+=`<p class="sec">Credit support</p><ul class="links">${fcs.map(e=>{const o=e.f===c.t?e.t:e.f;return linkRow(o,{...e,note:(e.f===c.t?`Supports ${BY[o].lab} (${KIND[e.kind]||e.kind}): `:`Supported by ${BY[o].lab} (${KIND[e.kind]||e.kind}): `)+e.note})}).join("")}</ul>`;
+  const circ=fin.concat(fcs).filter(f=>EDGES.some(e=>(e.ty==="supply"||e.ty==="contract")&&((e.f===f.f&&e.t===f.t)||(e.f===f.t&&e.t===f.f))));
   if(circ.length)h+=`<div class="flag"><b>Circularity flag.</b> ${esc(c.lab)} has capital ties to ${[...new Set(circ.map(f=>BY[f.f===c.t?f.t:f.f].lab))].map(esc).join(", ")} and also trades with them, so part of this demand is financed within the relationship.</div>`;
   h+=`<p class="note">D = disclosed by a party in a filing or official release · E = estimated or reported, not confirmed · I = inferred; size not disclosed · C = announced contract.</p>`;
   return h;
@@ -609,12 +688,12 @@ function tabThesis(c){
 function renderPanel(){
   const c=BY[SEL];if(!c){panel.innerHTML="";return}
   const L=LAYERS[c.layer-1];
-  const tabs=c.priv?[["links","Links"],["thesis","Thesis"]]:TABS;
+  const tabs=c.priv?(c.funding?[["links","Links"],["credit","Credit"],["thesis","Thesis"]]:[["links","Links"],["thesis","Thesis"]]):TABS;
   if(!tabs.some(t=>t[0]===TAB))TAB=tabs[0][0];
   const head=`<div class="ph"><div><p class="eyebrow">L${L.n} · ${esc(L.short)}</p><h2>${esc(c.lab)}</h2></div>
   ${c.has?`<div><div class="px">${fpx(c.px,c.ccy)}</div><div class="chg ${cls(c.chg1d)}">${pct(c.chg1d)} 1D · <span class="${cls(c.r1m)}">${pct(c.r1m)} 1M</span></div></div>`:"<div></div>"}
   <div class="nm">${esc(c.name)}${c.mcap_usd_bn?` · ${usd(c.mcap_usd_bn)} market cap`:""}${c.priv?" · private":""}</div><button class="close" type="button" id="closeP">Close</button></div>`;
-  const fn={price:tabPrice,risk:tabRisk,fin:tabFin,ana:tabAna,news:tabNews,links:tabLinks,thesis:tabThesis}[TAB];
+  const fn={price:tabPrice,risk:tabRisk,credit:tabCredit,fin:tabFin,ana:tabAna,news:tabNews,links:tabLinks,thesis:tabThesis}[TAB];
   panel.innerHTML=head+`<div class="tabs" role="tablist">${tabs.map(([k,l])=>`<button role="tab" type="button" id="tab-${k}" data-tab="${k}" aria-selected="${k===TAB}">${l}${k==="news"&&c.news.some(n=>n.r)?` <span class="mut">${c.news.filter(n=>n.r).length}</span>`:""}</button>`).join("")}</div><div role="tabpanel">${c.priv?`<div class="flag" style="border-color:var(--line);margin-top:4px">Private company with no share price or analyst coverage. It is tracked as a demand node so you can see who depends on its spending.</div>`:""}${fn(c)}</div>`;
   panel.querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()=>{TAB=b.dataset.tab;renderPanel()}));
   panel.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>select(b.dataset.go,true)));
@@ -622,12 +701,144 @@ function renderPanel(){
   $("#closeP").addEventListener("click",closeSheet);
   if(TAB==="price")drawPrice(c);
   if(TAB==="risk")drawVol(c);
+  panel.querySelectorAll("[data-stress]").forEach(b=>b.addEventListener("click",()=>{closeSheet();startStress(b.dataset.stress);$("#stress").scrollIntoView({behavior:"smooth",block:"start"})}));
+}
+
+/* ---------- credit ---------- */
+const FKIND={bond:"Bond",loan:"Loan",secured_loan:"Secured loan",convertible:"Convertible",spv:"Off-balance-sheet vehicle",lease:"Leases not yet started",equity_raise:"Equity raised",guarantee_given:"Guarantee given",backstop_given:"Backstop given",backstop_received:"Backstop received",supplier_finance:"Supplier finance"};
+const Ncdf=x=>{const t=1/(1+0.2316419*Math.abs(x)),d=0.3989423*Math.exp(-x*x/2),p=d*t*(0.3193815+t*(-0.3565638+t*(1.781478+t*(-1.821256+t*1.330274))));return x>0?1-p:p};
+function mertonDD(E,D,se,r){if(!(E>0&&D>0&&se>0))return null;let V=E+D,sv=se*E/(E+D);for(let i=0;i<200;i++){const d1=(Math.log(V/D)+(r+sv*sv/2))/sv,d2=d1-sv;const Vn=(E+D*Math.exp(-r)*Ncdf(d2))/Math.max(Ncdf(d1),1e-9),svn=se*E/(Vn*Math.max(Ncdf(d1),1e-9));if(Math.abs(Vn-V)<1e-7*V&&Math.abs(svn-sv)<1e-7){V=Vn;sv=svn;break}V=Vn;sv=Math.max(svn,1e-4)}return (Math.log(V/D)+(r-sv*sv/2))/sv}
+const fmtPd=p=>p==null?"—":p<0.0001?"below 0.01%":(p*100).toFixed(p<0.01?2:1)+"%";
+function ddClass(c){const k=c.cr||{};if(k.dd_note)return ["s3","Net cash"];if(k.dd==null)return null;return k.dd<1.5?["s0","Stressed"]:k.dd<3?["s1","Watch"]:k.dd<6?["s2","Moderate"]:["s3","Strong"]}
+function barChart(rows,{fmt=usd,W=640,H=150,color="var(--warn)"}={}){
+  const T=22,B=24,n=rows.length,mx=Math.max(...rows.map(r=>r[1]),0.001)*1.12,bw=Math.min(78,(W-30)/n-14),gap=(W-n*bw)/(n+1);
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Bar chart">${rows.map(([l,v],i)=>{const h=Math.max(1,v/mx*(H-T-B)),X=gap+i*(bw+gap),y=H-B-h;return `<rect x="${X}" y="${y}" width="${bw}" height="${h}" rx="3" fill="${color}" fill-opacity=".8"/><text x="${X+bw/2}" y="${y-6}" text-anchor="middle" font-size="12" font-family="IBM Plex Mono, monospace" fill="var(--ink)">${fmt(v)}</text><text x="${X+bw/2}" y="${H-6}" text-anchor="middle" font-size="11" font-family="IBM Plex Mono, monospace" fill="var(--muted)">${esc(l)}</text>`}).join("")}</svg>`;
+}
+function tabCredit(c){
+  const k=c.cr||{},sec=(DISC[c.t]||{}).credit||{},F=c.funding||{};
+  const has=Object.keys(k).length;
+  if(!has&&!F.items)return `<p class="mut">No credit data for this company.</p>`;
+  const b=v=>v==null?"—":usd(v);let h="";
+  if(has){
+    const dc=ddClass(c);
+    h+=`<div class="stats">${stat("Debt (excl. leases)",b(k.debt_usd_bn))}${stat("Cash & short-term investments",b(k.cash_usd_bn))}${stat("Net debt",k.net_debt_usd_bn!=null&&k.net_debt_usd_bn<0?"Net cash "+usd(-k.net_debt_usd_bn):b(k.net_debt_usd_bn),k.net_debt_usd_bn<0?"up":"")}${stat("Net debt / EBITDA",k.nd_ebitda==null?"—":k.nd_ebitda.toFixed(1)+"×",k.nd_ebitda>4?"down":"")}${stat("EBITDA / interest",k.ebitda_cover==null?"—":k.ebitda_cover>99?"99×+":k.ebitda_cover.toFixed(1)+"×",k.ebitda_cover!=null&&k.ebitda_cover<3?"down":"")}${stat("Lease liabilities",b(k.lease_liab_usd_bn))}${stat("Capex / operating cash flow",k.capex_ocf==null?"—":k.capex_ocf.toFixed(2)+"×",k.capex_ocf>1?"down":"")}${stat("Free cash flow (TTM)",b(k.fcf_ttm_usd_bn),k.fcf_ttm_usd_bn<0?"down":"")}${stat("Distance to default",k.dd!=null?k.dd.toFixed(1)+"σ":k.dd_note?"Net cash":"—")}</div>`;
+    if(dc)h+=`<p class="ddexp"><span class="ddchip ${dc[0]}">${dc[1]}</span> ${k.dd!=null?`Equity value ${usd(c.mcap_usd_bn)} against a default point of ${usd(k.dd_default_point_usd_bn)} (short-term debt plus half of long-term debt), with ${(k.dd_sigma*100).toFixed(0)}% ${k.dd_vol_source==="implied"?"implied":"realised"} equity volatility. Implied 1-year default probability (risk-neutral, so an upper bound): ${fmtPd(k.pd_1y)}.`:"Debt is negligible next to the company's equity value, so default risk from borrowing is minimal."}</p>`;
+    const lnc=(F.items||[]).find(i=>i.kind==="lease")?.usd_bn??sec.leases_not_commenced?.usd_bn;
+    if(k.dd!=null&&lnc&&lnc>0.05*(c.mcap_usd_bn||1e9)){const dd2=mertonDD(c.mcap_usd_bn,k.dd_default_point_usd_bn+0.5*lnc,k.dd_sigma,M.rate||0.04);
+      if(dd2!=null)h+=`<p class="ddexp">Leases signed but not yet started (${usd(lnc)}) are excluded above. Counting half of them as long-term debt moves the distance to default from ${k.dd.toFixed(1)}σ to <b class="${dd2<3?"down":""}">${dd2.toFixed(1)}σ</b>.</p>`}
+    h+=`<p class="note">Statements to ${esc(k.as_of||"")}, converted to USD. Source: Yahoo Finance.</p>`;
+  }
+  const mat=F.maturities?{ladder:Array.isArray(F.maturities)?F.maturities:Object.entries(F.maturities),src:F.maturities_src?.src,url:F.maturities_src?.url,end:F.as_of}:sec.maturities?{ladder:sec.maturities.ladder,src:sec.maturities.form+" (XBRL)",url:sec.maturities.url,end:sec.maturities.end}:null;
+  if(mat&&mat.ladder.some(r=>r[1]>0)){h+=`<p class="sec">Debt principal due, as of ${esc(mat.end)}</p><div class="svgbox">${barChart(mat.ladder)}</div><p class="note">Source: ${mat.url?`<a href="${esc(mat.url)}" target="_blank" rel="noopener">${esc(mat.src)}</a>`:esc(mat.src)}. Years shown as the company reports them; later maturities may be grouped.</p>`}
+  if(k.dso&&k.dso.length>=2){const d=k.dso,first=d[0][1],last=d[d.length-1][1];
+    h+=`<p class="sec">Days for customers to pay (DSO)</p><div class="svgbox">${barChart(d.map(([dt,v])=>[MON[+dt.slice(5,7)-1]+" '"+dt.slice(2,4),v]),{fmt:v=>v.toFixed(0)+"d",H:130,color:"var(--fin)"})}</div><p class="note">${last>first*1.15?`Rising: customers take ${(last-first).toFixed(0)} days longer to pay than ${d.length-1} quarters ago, which can mean the company is extending credit to keep sales moving.`:last<first*0.87?`Falling: customers pay ${(first-last).toFixed(0)} days faster than ${d.length-1} quarters ago.`:"Broadly stable."} Receivables divided by quarterly revenue × 91 days.</p>`}
+  const com=[];
+  const leaseItem=(F.items||[]).find(i=>i.kind==="lease");
+  if(leaseItem)com.push(["Leases signed, not yet started",leaseItem.usd_bn,leaseItem.src,leaseItem.url]);
+  else if(sec.leases_not_commenced)com.push(["Leases signed, not yet started",sec.leases_not_commenced.usd_bn,sec.leases_not_commenced.form,sec.leases_not_commenced.url]);
+  if(sec.op_lease_payments)com.push(["Operating lease payments due (on balance sheet)",sec.op_lease_payments.usd_bn,sec.op_lease_payments.form,sec.op_lease_payments.url]);
+  if(sec.purchase_obligations)com.push(["Purchase and other commitments (as tagged)",sec.purchase_obligations.usd_bn,sec.purchase_obligations.form,sec.purchase_obligations.url]);
+  if(sec.customer_prepayments)com.push(["Customer prepayments received",sec.customer_prepayments.usd_bn,sec.customer_prepayments.form,sec.customer_prepayments.url]);
+  if(com.length)h+=`<p class="sec">Commitments and prepayments</p><table class="fin"><tbody>${com.map(([l,v,s,u])=>`<tr><td>${esc(l)}</td><td>${u?`<a href="${esc(u)}" target="_blank" rel="noopener">${usd(v)}</a>`:usd(v)}</td></tr>`).join("")}</tbody></table><p class="note">${sec.customer_prepayments?"Customer prepayments are cash received before delivery, a sign of bargaining power for a supplier. ":""}${com.some(x=>x[0].startsWith("Leases signed"))?"Leases not yet started are future payments not yet counted as debt.":""}</p>`;
+  if(F.items&&F.items.length)h+=`<p class="sec">Funding sources and credit support${F.as_of?` · ${esc(F.as_of)}`:""}</p><ul class="fund">${F.items.map(i=>`<li><span class="kind">${esc(FKIND[i.kind]||i.kind)}</span><span>${esc(i.note)}${i.rate?` <span class="rate">· ${esc(i.rate)}</span>`:""}<br><span class="srcl"><a href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.src)}</a></span></span><span class="amt">${i.usd_bn!=null?usd(i.usd_bn):""}</span></li>`).join("")}</ul>`;
+  const fe=EDGES.filter(e=>e.ty==="financing"&&(e.f===c.t||e.t===c.t));
+  if(fe.length)h+=`<p class="sec">Credit support links on the map</p><ul class="links">${fe.map(e=>{const o=e.f===c.t?e.t:e.f;return linkRow(o,{...e,note:(e.f===c.t?`Supports ${BY[o].lab} (${KIND[e.kind]||e.kind}): `:`Supported by ${BY[o].lab} (${KIND[e.kind]||e.kind}): `)+e.note})}).join("")}</ul>`;
+  if(F.signals&&F.signals.length)h+=`<p class="sec">Market and rating signals</p><ul class="news">${F.signals.map(s=>`<li>${esc(s.text)}<span class="meta">${esc(s.date)} · <a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.src)}</a></span></li>`).join("")}</ul>`;
+  h+=`<p style="margin-top:14px"><button type="button" class="btn ghost" data-stress="${esc(c.t)}">Stress-test ${esc(c.lab)}</button></p>`;
+  return h;
+}
+
+/* ---------- credit watch card ---------- */
+{
+  const UL=$("#cw");
+  const rows=COS.filter(c=>c.cr&&c.cr.dd!=null).sort((a,b)=>a.cr.dd-b.cr.dd).slice(0,6);
+  if(!rows.length)UL.innerHTML=`<li><span></span><span class="mut">Credit data not loaded yet.</span><span></span></li>`;
+  rows.forEach(c=>{const k=c.cr,dc=ddClass(c);const li=document.createElement("li");
+    li.innerHTML=`<button class="go" type="button">${esc(c.lab)}</button><span class="m">DD ${k.dd.toFixed(1)}σ${k.nd_ebitda!=null?` · ND/EBITDA ${Math.abs(k.nd_ebitda)<0.05?"0.0":k.nd_ebitda.toFixed(1)}×`:""}${k.ebitda_cover!=null?` · cover ${k.ebitda_cover>99?"99+":k.ebitda_cover.toFixed(1)}×`:""}</span><span class="ddchip ${dc[0]}">${dc[1]}</span>`;
+    li.querySelector("button").addEventListener("click",()=>{TAB="credit";select(c.t,true)});UL.appendChild(li)});
+  const L=[];COS.forEach(c=>{const it=(c.funding?.items||[]).find(i=>i.kind==="lease");const sv=(DISC[c.t]||{}).credit?.leases_not_commenced;const v=it?it.usd_bn:sv?sv.usd_bn:null;if(v)L.push([c,v])});
+  L.sort((a,b)=>b[1]-a[1]);const mx=L[0]?.[1]||1;
+  $("#leases").innerHTML=L.slice(0,5).map(([c,v])=>`<li><button class="go" type="button" data-cw="${esc(c.t)}">${esc(c.lab)}</button><span class="bar" style="width:${(v/mx*100).toFixed(0)}%"></span><span class="num" style="text-align:right">${usd(v)}</span></li>`).join("");
+  document.querySelectorAll("[data-cw]").forEach(b=>b.addEventListener("click",()=>{TAB="credit";select(b.dataset.cw,true)}));
+}
+
+/* ---------- stress test ---------- */
+let STRESS=null,ST_TYPE="rev";
+const SHARE={supply:{H:.10,M:.04,L:.01},contract:{H:.05,M:.02,L:.005}};
+function spendOf(id){const c=BY[id],k=c.cr;if(!k)return null;const cap=k.capex_ttm_usd_bn||0,op=c.rev_usd_bn&&k.ebitda_ttm_usd_bn!=null?Math.max(0,c.rev_usd_bn-k.ebitda_ttm_usd_bn):0;return cap+op>0?cap+op:null}
+function runStress(T,type,sev){
+  const PT=0.8,res={},cut0=type==="def"?1:sev;
+  const get=id=>res[id]||(res[id]={rev:0,rev1:0,backlog:0,ar:0,cap:0,capUnknown:false,supplyLost:0,round:9,via:new Set(),assumed:false,notes:[]});
+  let frontier={[T]:cut0};
+  for(let round=1;round<=3;round++){
+    const inc={};
+    for(const [X,fx] of Object.entries(frontier)){
+      const es=EDGES.filter(e=>e.t===X&&(e.ty==="supply"||e.ty==="contract")&&e.f!==T);
+      const raw=es.map(e=>{const S=BY[e.f],sh=e.p!=null?e.p/100:(SHARE[e.ty][e.st]||0.01);return S.rev_usd_bn?fx*sh*S.rev_usd_bn:0});
+      // never pass on more than the buyer actually spends in a year (capex + operating costs); trim assumed shares first
+      const spend=spendOf(X),tot=raw.reduce((a,b)=>a+b,0);let kA=1,kD=1;
+      if(spend&&tot>fx*spend){const dis=raw.reduce((a,v,i)=>a+(es[i].p!=null?v:0),0),as=tot-dis,room=fx*spend-dis;if(room>0)kA=as>0?room/as:1;else{kA=0;kD=fx*spend/dis}}
+      es.forEach((e,i)=>{
+        const S=BY[e.f],rev=S.rev_usd_bn,sh=e.p!=null?e.p/100:(SHARE[e.ty][e.st]||0.01);
+        const r=get(e.f);r.round=Math.min(r.round,round);r.via.add(X);if(e.p==null)r.assumed=true;
+        if(rev){const loss=raw[i]*(e.p!=null?kD:kA);r.rev+=loss;if(round===1)r.rev1+=loss;inc[e.f]=(inc[e.f]||0)+loss}
+        if(round===1){if(e.ty==="contract"&&e.usd)r.backlog+=cut0*e.usd;if(type==="def"&&S.cr&&S.cr.ar_usd_bn)r.ar+=sh*S.cr.ar_usd_bn}
+      });
+    }
+    frontier={};
+    for(const [S,loss] of Object.entries(inc)){const rev=BY[S].rev_usd_bn;if(!rev)continue;const f=loss/rev*PT;if(f>0.002)frontier[S]=f}
+    if(!Object.keys(frontier).length)break;
+  }
+  if(type==="def"){
+    EDGES.filter(e=>e.t===T&&(e.ty==="capital"||e.ty==="financing")).forEach(e=>{
+      const r=get(e.f);r.round=Math.min(r.round,1);r.via.add(T);
+      if(e.ty==="financing"&&e.kind==="collateral"){r.notes.push(`${BY[T].lab}'s lenders rely on its ${BY[e.f].lab} contract`);return}
+      if(e.usd)r.cap+=e.usd;else r.capUnknown=true;
+      r.notes.push((e.ty==="capital"?`Stake in ${BY[T].lab}`:`${KIND[e.kind]||e.kind} for ${BY[T].lab} triggered`)+(e.cf==="E"?" (reported, not confirmed)":""));
+    });
+    EDGES.filter(e=>e.f===T&&(e.ty==="supply"||e.ty==="contract")).forEach(e=>{const r=get(e.t);r.round=Math.min(r.round,1);r.supplyLost+=e.usd||0;r.notes.push(`Loses ${e.ty==="contract"?"contracted ":""}supply from ${BY[T].lab}`)});
+  }
+  // backstops written on companies that lose revenue are partly triggered
+  Object.entries(res).forEach(([S,r])=>{const rev=BY[S].rev_usd_bn;if(!rev||!r.rev)return;const g=Math.min(1,r.rev/rev);
+    EDGES.filter(e=>e.t===S&&e.ty==="financing"&&e.kind!=="collateral"&&e.f!==T).forEach(e=>{if(!e.usd)return;const b=get(e.f);b.round=Math.min(b.round,r.round+1);b.cap+=g*e.usd;b.notes.push(`${KIND[e.kind]} for ${BY[S].lab} partly triggered`)});
+  });
+  delete res[T];
+  Object.entries(res).forEach(([id,r])=>{const c=BY[id];r.revPct=c.rev_usd_bn?r.rev/c.rev_usd_bn*100:0;r.capPct=c.mcap_usd_bn?r.cap/c.mcap_usd_bn*100:0;r.score=Math.max(r.revPct,r.capPct,(r.backlog+r.ar)/(c.rev_usd_bn||1e9)*100*0.5)});
+  return res;
+}
+function renderStress(){
+  const O=$("#stOut");if(!STRESS){O.innerHTML="";return}
+  const {T,type,sev,res}=STRESS,rows=Object.entries(res).filter(([,r])=>r.score>0.05||r.cap||r.backlog||r.ar||r.supplyLost||r.capUnknown||r.notes.length).sort((a,b)=>b[1].score-a[1].score);
+  const d1=rows.reduce((x,[,r])=>x+r.rev1,0),dAll=rows.reduce((x,[,r])=>x+r.rev,0),cap=rows.reduce((x,[,r])=>x+r.cap,0),bl=rows.reduce((x,[,r])=>x+r.backlog,0),ar=rows.reduce((x,[,r])=>x+r.ar,0);
+  const top=rows.filter(([,r])=>r.revPct>0).sort((a,b)=>b[1].revPct-a[1].revPct).slice(0,3).map(([id,r])=>`${esc(BY[id].lab)} (−${r.revPct.toFixed(1)}%)`).join(", ");
+  const f1=v=>v>=0.05?usd(v):v>0?"<$0.1B":"—";
+  const blTop=rows.filter(([id,r])=>r.backlog&&BY[id].rev_usd_bn).sort((a,b)=>b[1].backlog/BY[b[0]].rev_usd_bn-a[1].backlog/BY[a[0]].rev_usd_bn)[0];
+  O.innerHTML=`<p class="stsum"><b>${esc(BY[T].lab)} ${type==="def"?"defaults":`cuts spending by ${Math.round(sev*100)}%`}.</b> Annual revenue at risk for its direct suppliers: <b class="num">${usd(d1)}</b>; including knock-on effects: <b class="num">${usd(dAll)}</b>.${bl?` Contract backlog at risk: <b class="num">${usd(bl)}</b>.`:""}${ar?` Unpaid receivables: <b class="num">${usd(ar)}</b>.`:""}${cap?` Stakes and credit support at risk: <b class="num">${usd(cap)}</b>.`:""}${top?` Hardest hit by revenue: ${top}.`:""}${blTop?` Largest backlog exposure: ${esc(BY[blTop[0]].lab)}, ${usd(blTop[1].backlog)} or ${(blTop[1].backlog/BY[blTop[0]].rev_usd_bn).toFixed(1)}× its annual revenue.`:""}</p>
+  <div class="sttab"><table><thead><tr><th>Company</th><th>Revenue at risk</th><th>% of revenue</th><th>Backlog</th><th>Receivables</th><th>Stakes & credit support</th><th style="text-align:left">How it is exposed</th></tr></thead><tbody>${rows.slice(0,18).map(([id,r])=>`<tr><td><span class="rd" title="Round ${r.round}">${r.round}</span><button class="go" type="button" data-st-go="${esc(id)}">${esc(BY[id].lab)}</button></td><td>${f1(r.rev)}${r.assumed&&r.rev?"*":""}</td><td class="${r.revPct>=5?"down":""}">${r.revPct>=0.05?"−"+r.revPct.toFixed(1)+"%":"—"}</td><td>${r.backlog?usd(r.backlog):"—"}</td><td>${r.ar?f1(r.ar):"—"}</td><td>${r.cap?usd(r.cap)+(r.capPct>=0.1?` <span class="mut">(${r.capPct.toFixed(1)}% of mkt cap)</span>`:""):r.capUnknown?"size n/d":"—"}</td><td style="text-align:left;font-family:var(--f-body);white-space:normal;min-width:180px">${esc([...new Set(r.notes)].concat(r.round>1?[`via ${[...r.via].map(v=>BY[v].lab).join(", ")}`]:[]).join("; ")||(r.round===1?`Sells to ${BY[T].lab}`:""))}</td></tr>`).join("")}</tbody></table></div>
+  <p class="note">Round 1 = direct links to ${esc(BY[T].lab)}; rounds 2–3 = suppliers of those hit, assuming each passes on 80% of its revenue loss as lower spending. Revenue shares use filing data where disclosed; otherwise (*) they are assumed from link strength: ongoing supply high 10%, medium 4%, low 1%; announced contracts 5%, 2%, 0.5% of current revenue. ${type==="def"?"On default, stakes are written off, backstops and guarantees are triggered in full, and receivables go unpaid in proportion to revenue share.":"Backstops written on companies that lose revenue are triggered in proportion to that loss."} Losses passed to suppliers are capped at each buyer's annual spending (capex plus operating costs), trimming assumed shares first. A screening tool, not a forecast.</p>`;
+  O.querySelectorAll("[data-st-go]").forEach(b=>b.addEventListener("click",()=>{TAB="links";select(b.dataset.stGo,true)}));
+}
+function startStress(T){
+  const sev=+$("#stSev").value/100;
+  STRESS={T,type:ST_TYPE,sev,res:runStress(T,ST_TYPE,sev)};
+  $("#stCo").value=T;$("#stClear").hidden=false;map.classList.add("stressed");
+  select(T);paintChips();renderStress();
+}
+function clearStress(){STRESS=null;$("#stClear").hidden=true;map.classList.remove("stressed");document.querySelectorAll(".chip.target").forEach(x=>x.classList.remove("target"));paintChips();renderStress()}
+{
+  const sel=$("#stCo");
+  [...COS].sort((a,b)=>a.layer-b.layer||a.lab.localeCompare(b.lab)).forEach(c=>{const o=document.createElement("option");o.value=c.t;o.textContent=`L${c.layer} · ${c.lab}`;sel.appendChild(o)});
+  document.querySelectorAll("#stType button").forEach(b=>b.addEventListener("click",()=>{ST_TYPE=b.dataset.s;document.querySelectorAll("#stType button").forEach(x=>x.setAttribute("aria-pressed",x===b));$("#stSevL").hidden=ST_TYPE==="def";if(STRESS)startStress(STRESS.T)}));
+  $("#stSev").addEventListener("input",()=>{$("#stSevO").textContent=$("#stSev").value+"%"});
+  $("#stSev").addEventListener("change",()=>{if(STRESS)startStress(STRESS.T)});
+  $("#stRun").addEventListener("click",()=>startStress(sel.value));
+  $("#stClear").addEventListener("click",clearStress);
 }
 
 /* ---------- selection + sheet ---------- */
 const narrow=()=>window.matchMedia("(max-width:1039px)").matches;
 function select(t,keepOpen){
-  SEL=t;const c=BY[t];
+  SEL=t;const c=BY[t];if(!STRESS&&$("#stCo"))$("#stCo").value=t;
   const linked=new Set();EDGES.forEach(e=>{if(e.f===t)linked.add(e.t);if(e.t===t)linked.add(e.f)});
   map.classList.add("has-sel");
   document.querySelectorAll(".chip").forEach(el=>{el.classList.toggle("sel",el.dataset.t===t);el.classList.toggle("linked",linked.has(el.dataset.t))});
@@ -645,6 +856,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSheet()});
 paintChips();
 let start="NVDA";try{const h=decodeURIComponent(location.hash.slice(1));if(BY[h])start=h}catch(e){}
 select(start);
+window.addEventListener("hashchange",()=>{let h="";try{h=decodeURIComponent(location.hash.slice(1))}catch(e){}if(BY[h]&&h!==SEL)select(h)});
 })();
 </script>
 </body>

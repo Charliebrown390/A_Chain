@@ -58,9 +58,34 @@ def months(start, end):
     return max(1, round(((y2 - y1) * 12 + (m2 - m1) + (d2 - d1) / 30)))
 
 
-MAT_KEYS = [("RemainderOfFiscalYear", "Rest of year"), ("NextTwelveMonths", "Next 12m"), ("NextRollingTwelveMonths", "Next 12m"),
-            ("YearTwo", "Year 2"), ("YearThree", "Year 3"), ("YearFour", "Year 4"), ("YearFive", "Year 5"),
-            ("AfterYearFive", "After year 5"), ("Thereafter", "After year 5")]
+WORDN = {"One": 1, "Two": 2, "Three": 3, "Four": 4, "Five": 5, "Six": 6, "Seven": 7, "Eight": 8, "Nine": 9, "Ten": 10}
+
+
+def mat_bucket(name):
+    """Map a LongTermDebtMaturities* concept to (sort key, offset in fiscal years or 'after N')."""
+    n = name.replace("LongTermDebtMaturitiesRepaymentsOfPrincipal", "").replace("Rolling", "")
+    if n == "RemainderOfFiscalYear":
+        return (0, 0)
+    if n in ("InNextTwelveMonths", "InNextTwelveMonth"):
+        return (1, 1)
+    m = re.fullmatch(r"InYear(\w+)", n)
+    if m and m.group(1) in WORDN:
+        return (WORDN[m.group(1)], WORDN[m.group(1)])
+    m = re.fullmatch(r"AfterYear(\w+)", n)
+    if m and m.group(1) in WORDN:
+        return (WORDN[m.group(1)] + 0.5, f"after{WORDN[m.group(1)]}")
+    if n == "Thereafter":
+        return (99, "after")
+    return None
+
+
+def fy_end_month(rec):
+    for f in rec.get("filings", []):
+        if f.get("kind") == "annual":
+            m = re.search(r"-(\d{4})(\d{2})(\d{2})\.htm", f.get("url", ""))
+            if m:
+                return int(m.group(2))
+    return 12
 
 
 def credit_facts(rec):
@@ -78,16 +103,33 @@ def credit_facts(rec):
             if cur is None or (x["end"] or "") > (cur["end"] or ""):
                 latest[key] = {"v": x["value"], "end": x["end"], "form": f["form"], "url": f["url"]}
     out = {}
-    # maturity ladder: all LongTermDebtMaturities* facts sharing the most recent end date
+    # maturity ladder: all LongTermDebtMaturities* facts sharing the most recent end date, labelled by fiscal year
     mats = {k: v for k, v in latest.items() if k.startswith("LongTermDebtMaturitiesRepaymentsOfPrincipal")}
     if mats:
         end = max(v["end"] for v in mats.values())
+        y, mth = int(end[:4]), int(end[5:7])
+        fym = fy_end_month(rec)
+        fy = y if mth <= fym else y + 1          # fiscal year containing the period end
+        cal = fym == 12
+        rows = []
+        for k, v in mats.items():
+            b = mat_bucket(k)
+            if b and v["end"] == end:
+                rows.append((b, v["v"]))
+        rows.sort(key=lambda t: t[0][0])
+        has_rem = any(b[1] == 0 for b, _ in rows)
         ladder = []
-        for suffix, label in MAT_KEYS:
-            hit = [v for k, v in mats.items() if k.endswith("In" + suffix) or k.endswith(suffix) and v["end"] == end]
-            hit = [v for v in hit if v["end"] == end]
-            if hit and label not in [l for l, _ in ladder]:
-                ladder.append((label, round(hit[0]["v"] / 1e9, 2)))
+        for (key, off), val in rows:
+            if off == 0:
+                lab = f"Rest of {fy}" if cal else f"Rest of FY{fy}"
+            elif isinstance(off, int):
+                yr = fy + off if has_rem or mth == fym else fy + off - 1
+                lab = str(yr) if cal else f"FY{yr}"
+            else:
+                last = max([o for (_, o), _ in rows if isinstance(o, int)] or [0])
+                yr = (fy + last if has_rem or mth == fym else fy + last - 1) + 1
+                lab = f"{yr}+" if cal else f"FY{yr}+"
+            ladder.append((lab, round(val / 1e9, 2)))
         if ladder:
             any_v = next(v for v in mats.values() if v["end"] == end)
             out["maturities"] = {"end": end, "form": any_v["form"], "url": any_v["url"], "ladder": ladder}
@@ -107,7 +149,8 @@ def credit_facts(rec):
         c1, c2 = pick("ContractWithCustomerLiabilityCurrent"), pick("ContractWithCustomerLiabilityNoncurrent")
         if c1:
             out["customer_prepayments"] = {**c1, "usd_bn": round(c1["usd_bn"] + (c2["usd_bn"] if c2 and c2["end"] == c1["end"] else 0), 2)}
-    out["guarantees"] = pick("GuaranteeObligationsMaximumExposure")
+    # Guarantee maximum-exposure tags proved unreliable (e.g. a mis-tagged NVIDIA value), so guarantees are curated
+    # by hand in data/funding.yaml instead of shown from XBRL.
     out["op_lease_payments"] = pick("LesseeOperatingLeaseLiabilityPaymentsDue")
     out["fin_lease_payments"] = pick("FinanceLeaseLiabilityPaymentsDue")
     return {k: v for k, v in out.items() if v}
@@ -233,7 +276,10 @@ def main():
                 errs.append(f"funding.yaml {cid}: item without url: {it.get('note') or it.get('text')}")
     for c in uni["companies"]:
         if c["id"] in funding:
-            c["funding"] = funding[c["id"]]
+            f = dict(funding[c["id"]])
+            if isinstance(f.get("maturities"), dict):   # keep YAML order (JS would re-sort numeric keys)
+                f["maturities"] = [[str(k), v] for k, v in f["maturities"].items()]
+            c["funding"] = f
     tp = ROOT / "data/theses.yaml"
     theses = (yaml.safe_load(tp.read_text()) or {}).get("theses", {}) if tp.exists() else {}
     for c in uni["companies"]:

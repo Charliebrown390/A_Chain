@@ -9,5 +9,5 @@ Conventions
 - Free data sources only unless a paid API is critically required: SEC EDGAR XBRL, yfinance, company IR pages, Taiwan monthly sales.
 - Every relationship edge carries a confidence tag: D (disclosed in filings), E (estimated), I (inferred), plus a source note.
 - Market data comes from Yahoo Finance via yfinance (works from the sandbox too). Implied vol is computed from option mid-quotes in `--mode options`, which must run during US trading hours; Yahoo's own IV field is unreliable outside them.
-- Thesis notes: `data/theses.yaml`. The page is a single file, `site/index.html`.
+- Thesis notes: `data/theses.yaml`. Funding/credit support: `data/funding.yaml` (sources required). Do not display XBRL GuaranteeObligationsMaximumExposure (mis-tagged values seen, e.g. NVIDIA). The page is a single file, `site/index.html`.
 - Universe: core ~40 names across 9 layers.
