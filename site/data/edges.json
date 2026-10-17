@@ -1,5 +1,5 @@
 {
- "built": "2026-10-17T04:01:05+00:00",
+ "built": "2026-10-17T07:27:43+00:00",
  "edges": [
   {
    "from": "ASML",
@@ -1020,8 +1020,7 @@
    "strength": "H",
    "conf": "D",
    "as_of": "Sep 2025",
-   "usd_bn": 6.3,
-   "note": "Equity stake plus $6.3B agreement to buy unused capacity through 2032",
+   "note": "Equity stake in CoreWeave",
    "src": "Fierce Network deal list",
    "url": "https://www.fierce-network.com/cloud/fierce-networks-encyclopedia-ai-deals"
   },
@@ -1093,6 +1092,69 @@
    "note": "Long-standing investor; further $5B in Apr 2026",
    "src": "TechCrunch",
    "url": "https://techcrunch.com/2026/04/24/google-to-invest-up-to-40b-in-anthropic-in-cash-and-compute/"
+  },
+  {
+   "from": "NVDA",
+   "to": "CRWV",
+   "type": "financing",
+   "kind": "backstop",
+   "strength": "H",
+   "conf": "D",
+   "as_of": "Sep 2025",
+   "usd_bn": 6.3,
+   "note": "NVIDIA agreed to buy CoreWeave's unused capacity through 2032, a floor under CoreWeave's revenue",
+   "src": "Fierce Network deal list",
+   "url": "https://www.fierce-network.com/cloud/fierce-networks-encyclopedia-ai-deals"
+  },
+  {
+   "from": "META",
+   "to": "CRWV",
+   "type": "financing",
+   "kind": "collateral",
+   "strength": "H",
+   "conf": "E",
+   "as_of": "Mar 2026",
+   "usd_bn": 8.5,
+   "note": "CoreWeave's $8.5B DDTL 4.0 is non-recourse and repaid from its Meta contract (~$19B backlog); investment-grade rated, SOFR+2.25%",
+   "src": "Global Data Center Hub",
+   "url": "https://www.globaldatacenterhub.com/p/is-coreweaves-85-billion-deal-the"
+  },
+  {
+   "from": "NVDA",
+   "to": "OpenAI",
+   "type": "financing",
+   "kind": "guarantee",
+   "strength": "H",
+   "conf": "E",
+   "as_of": "Jul 2026",
+   "usd_bn": 250,
+   "note": "In talks to guarantee ~$250B of lease and debt obligations for a 10 GW OpenAI campus in Ohio; separate talks on up to $350B of chip financing. Not confirmed by the companies",
+   "src": "WSJ via Yahoo Finance",
+   "url": "https://finance.yahoo.com/technology/ai/articles/coreweave-nebius-gain-report-links-132711335.html"
+  },
+  {
+   "from": "AMD",
+   "to": "ORCL",
+   "type": "financing",
+   "kind": "rent_back",
+   "strength": "M",
+   "conf": "E",
+   "as_of": "Jul 2026",
+   "note": "AMD has offered rent-back backstops on its GPUs to Oracle (OCI) and others; size not disclosed",
+   "src": "SemiAnalysis",
+   "url": "https://newsletter.semianalysis.com/p/nvidia-gpu-debt-backstop-unleashes"
+  },
+  {
+   "from": "AMD",
+   "to": "AMZN",
+   "type": "financing",
+   "kind": "rent_back",
+   "strength": "L",
+   "conf": "E",
+   "as_of": "Jul 2026",
+   "note": "AMD has offered rent-back backstops on its GPUs to AWS and others; size not disclosed",
+   "src": "SemiAnalysis",
+   "url": "https://newsletter.semianalysis.com/p/nvidia-gpu-debt-backstop-unleashes"
   }
  ]
 }

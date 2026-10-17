@@ -2,9 +2,11 @@
 #
 # from / to   company ids from universe.yaml. For "supply" and "contract" edges, `from` sells to `to`.
 #             For "capital" edges, `from` invests in (or grants equity to) `to`.
-# type        supply   = ongoing product or service sales
-#             contract = a specific announced multi-year purchase commitment
-#             capital  = equity stake, investment, warrants or financing backstop
+# type        supply    = ongoing product or service sales
+#             contract  = a specific announced multi-year purchase commitment
+#             capital   = equity stake, investment or warrants
+#             financing = credit support: `from` backstops, guarantees or underwrites `to`'s obligations
+#                         (needs `kind`: backstop | guarantee | collateral | rent_back | vendor_finance)
 # strength    H / M / L: importance of the link to the seller (supply/contract) or the investee (capital)
 # pct         share of the SELLER's revenue from this buyer, when disclosed or estimated (number, %)
 # usd_bn, gw  headline contract value / capacity, when announced
@@ -139,10 +141,17 @@ edges:
   - {from: AMZN, to: OpenAI, type: capital, strength: H, conf: D, as_of: "Feb 2026", usd_bn: 50, note: "$15B upfront, $35B on conditions", src: "Yahoo Finance / Reuters", url: "https://finance.yahoo.com/news/openais-110-billion-funding-round-145925079.html"}
   - {from: MSFT, to: OpenAI, type: capital, strength: H, conf: D, as_of: "Oct 2025", note: "~27% stake in OpenAI Group PBC after restructuring", src: "SCMP", url: "https://www.scmp.com/tech/big-tech/article/3330714/microsoft-holds-27-openai-revamped-partnership"}
   - {from: AMD, to: OpenAI, type: capital, strength: M, conf: D, as_of: "Oct 2025", note: "Warrant for up to 160M AMD shares, vesting with GPU deployments", src: "Fierce Network deal list", url: "https://www.fierce-network.com/cloud/fierce-networks-encyclopedia-ai-deals"}
-  - {from: NVDA, to: CRWV, type: capital, strength: H, conf: D, as_of: "Sep 2025", usd_bn: 6.3, note: "Equity stake plus $6.3B agreement to buy unused capacity through 2032", src: "Fierce Network deal list", url: "https://www.fierce-network.com/cloud/fierce-networks-encyclopedia-ai-deals"}
+  - {from: NVDA, to: CRWV, type: capital, strength: H, conf: D, as_of: "Sep 2025", note: "Equity stake in CoreWeave", src: "Fierce Network deal list", url: "https://www.fierce-network.com/cloud/fierce-networks-encyclopedia-ai-deals"}
   - {from: NVDA, to: NBIS, type: capital, strength: M, conf: D, note: "Equity investment", src: "Motley Fool via AOL", url: "https://www.aol.com/articles/nebius-just-signed-46-billion-133600114.html"}
   - {from: NVDA, to: INTC, type: capital, strength: M, conf: D, as_of: "Sep 2025", usd_bn: 5, note: "$5B equity investment alongside product collaboration", src: "TechRepublic", url: "https://www.techrepublic.com/article/news-nvidia-intel-deal/"}
   - {from: NVDA, to: Anthropic, type: capital, strength: M, conf: D, as_of: "Nov 2025", usd_bn: 10, note: "Up to $10B", src: "SCMP", url: "https://www.scmp.com/tech/big-tech/article/3333330/microsoft-nvidia-invest-anthropic-claude-maker-commits-us30-billion-azure"}
   - {from: MSFT, to: Anthropic, type: capital, strength: M, conf: D, as_of: "Nov 2025", usd_bn: 5, note: "Up to $5B", src: "SCMP", url: "https://www.scmp.com/tech/big-tech/article/3333330/microsoft-nvidia-invest-anthropic-claude-maker-commits-us30-billion-azure"}
   - {from: GOOGL, to: Anthropic, type: capital, strength: H, conf: D, as_of: "Apr 2026", usd_bn: 40, note: "$10B now, up to $30B more on milestones", src: "TechCrunch", url: "https://techcrunch.com/2026/04/24/google-to-invest-up-to-40b-in-anthropic-in-cash-and-compute/"}
   - {from: AMZN, to: Anthropic, type: capital, strength: H, conf: D, as_of: "Apr 2026", note: "Long-standing investor; further $5B in Apr 2026", src: "TechCrunch", url: "https://techcrunch.com/2026/04/24/google-to-invest-up-to-40b-in-anthropic-in-cash-and-compute/"}
+
+  # ---------- financing ties (credit support) ----------
+  - {from: NVDA, to: CRWV, type: financing, kind: backstop, strength: H, conf: D, as_of: "Sep 2025", usd_bn: 6.3, note: "NVIDIA agreed to buy CoreWeave's unused capacity through 2032, a floor under CoreWeave's revenue", src: "Fierce Network deal list", url: "https://www.fierce-network.com/cloud/fierce-networks-encyclopedia-ai-deals"}
+  - {from: META, to: CRWV, type: financing, kind: collateral, strength: H, conf: E, as_of: "Mar 2026", usd_bn: 8.5, note: "CoreWeave's $8.5B DDTL 4.0 is non-recourse and repaid from its Meta contract (~$19B backlog); investment-grade rated, SOFR+2.25%", src: "Global Data Center Hub", url: "https://www.globaldatacenterhub.com/p/is-coreweaves-85-billion-deal-the"}
+  - {from: NVDA, to: OpenAI, type: financing, kind: guarantee, strength: H, conf: E, as_of: "Jul 2026", usd_bn: 250, note: "In talks to guarantee ~$250B of lease and debt obligations for a 10 GW OpenAI campus in Ohio; separate talks on up to $350B of chip financing. Not confirmed by the companies", src: "WSJ via Yahoo Finance", url: "https://finance.yahoo.com/technology/ai/articles/coreweave-nebius-gain-report-links-132711335.html"}
+  - {from: AMD, to: ORCL, type: financing, kind: rent_back, strength: M, conf: E, as_of: "Jul 2026", note: "AMD has offered rent-back backstops on its GPUs to Oracle (OCI) and others; size not disclosed", src: "SemiAnalysis", url: "https://newsletter.semianalysis.com/p/nvidia-gpu-debt-backstop-unleashes"}
+  - {from: AMD, to: AMZN, type: financing, kind: rent_back, strength: L, conf: E, as_of: "Jul 2026", note: "AMD has offered rent-back backstops on its GPUs to AWS and others; size not disclosed", src: "SemiAnalysis", url: "https://newsletter.semianalysis.com/p/nvidia-gpu-debt-backstop-unleashes"}

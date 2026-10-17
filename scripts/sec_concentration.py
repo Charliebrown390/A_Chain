@@ -37,6 +37,10 @@ S.headers.update({"User-Agent": UA, "Accept-Encoding": "gzip, deflate"})
 ANNUAL = {"10-K", "20-F", "40-F"}  # amendments often omit the financial statements
 QUARTERLY = {"10-Q"}
 KEEP_NAMES = re.compile(r"(ConcentrationRisk|RemainingPerformanceObligation|RevenueRemainingPerformance|Backlog)", re.I)
+# Credit facts: kept only when reported without dimensions (company-wide totals)
+CREDIT_NAMES = re.compile(r"(LongTermDebtMaturitiesRepaymentsOfPrincipal|NotYetCommenced|UnrecordedUnconditionalPurchaseObligation"
+                          r"|^PurchaseObligation$|^ContractWithCustomerLiability(Current|Noncurrent)?$|GuaranteeObligationsMaximumExposure"
+                          r"|^LesseeOperatingLeaseLiabilityPaymentsDue$|^FinanceLeaseLiabilityPaymentsDue$|^InterestPaidNet$)", re.I)
 CUSTOMER_AXES = re.compile(r"(MajorCustomer|Customer|ConcentrationRisk|Counterpart)", re.I)
 
 
@@ -102,10 +106,13 @@ def parse_instance(xml_bytes):
     facts = []
     for el in root:
         ln = local(el.tag)
-        if not KEEP_NAMES.search(ln):
+        credit = bool(CREDIT_NAMES.search(ln))
+        if not (KEEP_NAMES.search(ln) or credit):
             continue
         c = ctx.get(el.get("contextRef"), {})
         dims = c.get("dims", {})
+        if credit and dims:
+            continue
         is_conc = "Concentration" in ln
         if is_conc and not any(CUSTOMER_AXES.search(a) for a in dims):
             continue

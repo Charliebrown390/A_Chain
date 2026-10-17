@@ -15,7 +15,8 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "site/data"
-TYPES = {"supply", "contract", "capital"}
+TYPES = {"supply", "contract", "capital", "financing"}
+KINDS = {"backstop", "guarantee", "collateral", "rent_back", "vendor_finance"}
 STRENGTH = {"H", "M", "L"}
 CONF = {"D", "E", "I"}
 
@@ -55,6 +56,61 @@ def months(start, end):
         return None
     y1, m1, d1 = map(int, start.split("-")); y2, m2, d2 = map(int, end.split("-"))
     return max(1, round(((y2 - y1) * 12 + (m2 - m1) + (d2 - d1) / 30)))
+
+
+MAT_KEYS = [("RemainderOfFiscalYear", "Rest of year"), ("NextTwelveMonths", "Next 12m"), ("NextRollingTwelveMonths", "Next 12m"),
+            ("YearTwo", "Year 2"), ("YearThree", "Year 3"), ("YearFour", "Year 4"), ("YearFive", "Year 5"),
+            ("AfterYearFive", "After year 5"), ("Thereafter", "After year 5")]
+
+
+def credit_facts(rec):
+    """Latest company-wide credit facts across the filings pulled for one company."""
+    latest = {}
+    for f in rec.get("filings", []):
+        for x in f.get("facts", []):
+            name = x["concept"].split(":", 1)[-1]
+            if x["dims"] or not (x.get("unit") or "").lower().startswith("usd"):
+                continue
+            if "Concentration" in name or "RemainingPerformance" in name:
+                continue
+            key = name
+            cur = latest.get(key)
+            if cur is None or (x["end"] or "") > (cur["end"] or ""):
+                latest[key] = {"v": x["value"], "end": x["end"], "form": f["form"], "url": f["url"]}
+    out = {}
+    # maturity ladder: all LongTermDebtMaturities* facts sharing the most recent end date
+    mats = {k: v for k, v in latest.items() if k.startswith("LongTermDebtMaturitiesRepaymentsOfPrincipal")}
+    if mats:
+        end = max(v["end"] for v in mats.values())
+        ladder = []
+        for suffix, label in MAT_KEYS:
+            hit = [v for k, v in mats.items() if k.endswith("In" + suffix) or k.endswith(suffix) and v["end"] == end]
+            hit = [v for v in hit if v["end"] == end]
+            if hit and label not in [l for l, _ in ladder]:
+                ladder.append((label, round(hit[0]["v"] / 1e9, 2)))
+        if ladder:
+            any_v = next(v for v in mats.values() if v["end"] == end)
+            out["maturities"] = {"end": end, "form": any_v["form"], "url": any_v["url"], "ladder": ladder}
+    def pick(*names):
+        for n in names:
+            for k, v in latest.items():
+                if k == n:
+                    return {"usd_bn": round(v["v"] / 1e9, 2), "end": v["end"], "form": v["form"], "url": v["url"], "concept": k}
+        return None
+    nyc = [(k, v) for k, v in latest.items() if "NotYetCommenced" in k and v["v"] > 1e8]
+    if nyc:
+        k, v = max(nyc, key=lambda kv: kv[1]["v"])
+        out["leases_not_commenced"] = {"usd_bn": round(v["v"] / 1e9, 2), "end": v["end"], "form": v["form"], "url": v["url"], "concept": k}
+    out["purchase_obligations"] = pick("UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount", "PurchaseObligation")
+    out["customer_prepayments"] = pick("ContractWithCustomerLiability")
+    if not out["customer_prepayments"]:
+        c1, c2 = pick("ContractWithCustomerLiabilityCurrent"), pick("ContractWithCustomerLiabilityNoncurrent")
+        if c1:
+            out["customer_prepayments"] = {**c1, "usd_bn": round(c1["usd_bn"] + (c2["usd_bn"] if c2 and c2["end"] == c1["end"] else 0), 2)}
+    out["guarantees"] = pick("GuaranteeObligationsMaximumExposure")
+    out["op_lease_payments"] = pick("LesseeOperatingLeaseLiabilityPaymentsDue")
+    out["fin_lease_payments"] = pick("FinanceLeaseLiabilityPaymentsDue")
+    return {k: v for k, v in out.items() if v}
 
 
 def load_disclosures():
@@ -103,7 +159,7 @@ def load_disclosures():
             if keep:
                 groups.append({"form": f["form"], "kind": f["kind"], "filed": f["filed"], "url": f["url"], "rows": keep})
         groups.sort(key=lambda g: g["kind"] != "annual")
-        out[cid] = {"cik": rec.get("cik"), "filings": groups, "rpo": rpo}
+        out[cid] = {"cik": rec.get("cik"), "filings": groups, "rpo": rpo, "credit": credit_facts(rec)}
     return out, raw.get("generated")
 
 
@@ -135,6 +191,8 @@ def main():
             errs.append(f"{tag}: bad conf")
         if e.get("conf") in ("D", "E") and not (e.get("url") or e.get("xbrl")):
             errs.append(f"{tag}: conf {e['conf']} needs a url or an xbrl reference")
+        if e.get("type") == "financing" and e.get("kind") not in KINDS:
+            errs.append(f"{tag}: financing edge needs kind in {sorted(KINDS)}")
         key = (e.get("from"), e.get("to"), e.get("type"))
         if key in seen:
             errs.append(f"{tag}: duplicate edge")
@@ -164,6 +222,18 @@ def main():
                 e["note"] = f"{e.get('note', '')} · % is for anonymised '{r['customer']}'; mapping to this company is an estimate".strip(" ·")
             merged += 1
 
+    fp = ROOT / "data/funding.yaml"
+    funding = (yaml.safe_load(fp.read_text()) or {}).get("funding", {}) if fp.exists() else {}
+    for cid, f in funding.items():
+        if cid not in idset:
+            errs.append(f"funding.yaml: unknown company id {cid}")
+            continue
+        for it in f.get("items", []) + f.get("signals", []):
+            if not it.get("url"):
+                errs.append(f"funding.yaml {cid}: item without url: {it.get('note') or it.get('text')}")
+    for c in uni["companies"]:
+        if c["id"] in funding:
+            c["funding"] = funding[c["id"]]
     tp = ROOT / "data/theses.yaml"
     theses = (yaml.safe_load(tp.read_text()) or {}).get("theses", {}) if tp.exists() else {}
     for c in uni["companies"]:

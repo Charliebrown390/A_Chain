@@ -1,5 +1,5 @@
 {
- "built": "2026-10-17T04:01:05+00:00",
+ "built": "2026-10-17T07:27:43+00:00",
  "sec_pulled": "2026-10-16T08:01:00+00:00",
  "companies": {
   "ASML": {
@@ -37,7 +37,8 @@
     "end": "2025-12-31",
     "form": "20-F",
     "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm"
-   }
+   },
+   "credit": {}
   },
   "AMAT": {
    "cik": 6951,
@@ -95,7 +96,8 @@
      ]
     }
    ],
-   "rpo": null
+   "rpo": null,
+   "credit": {}
   },
   "LRCX": {
    "cik": 707549,
@@ -195,7 +197,8 @@
     "end": "2026-06-28",
     "form": "10-K",
     "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm"
-   }
+   },
+   "credit": {}
   },
   "KLAC": {
    "cik": 319201,
@@ -244,7 +247,8 @@
      ]
     }
    ],
-   "rpo": null
+   "rpo": null,
+   "credit": {}
   },
   "SNPS": {
    "cik": 883241,
@@ -272,7 +276,8 @@
     "end": "2026-07-31",
     "form": "10-Q",
     "url": "https://www.sec.gov/Archives/edgar/data/883241/000088324126000025/snps-20260731.htm"
-   }
+   },
+   "credit": {}
   },
   "CDNS": {
    "cik": 813672,
@@ -282,7 +287,8 @@
     "end": "2026-06-30",
     "form": "10-Q",
     "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000092/cdns-20260630.htm"
-   }
+   },
+   "credit": {}
   },
   "NVDA": {
    "cik": 1045810,
@@ -426,7 +432,8 @@
     "end": "2026-07-26",
     "form": "10-Q",
     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm"
-   }
+   },
+   "credit": {}
   },
   "AMD": {
    "cik": 2488,
@@ -463,7 +470,8 @@
     "end": "2026-06-27",
     "form": "10-Q",
     "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000123/amd-20260627.htm"
-   }
+   },
+   "credit": {}
   },
   "AVGO": {
    "cik": 1730168,
@@ -500,7 +508,8 @@
     "end": "2026-08-02",
     "form": "10-Q",
     "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm"
-   }
+   },
+   "credit": {}
   },
   "MRVL": {
    "cik": 1835632,
@@ -541,7 +550,8 @@
      ]
     }
    ],
-   "rpo": null
+   "rpo": null,
+   "credit": {}
   },
   "ARM": {
    "cik": 1973239,
@@ -632,7 +642,8 @@
     "end": "2026-03-31",
     "form": "20-F",
     "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm"
-   }
+   },
+   "credit": {}
   },
   "INTC": {
    "cik": 50863,
@@ -691,12 +702,14 @@
      ]
     }
    ],
-   "rpo": null
+   "rpo": null,
+   "credit": {}
   },
   "TSM": {
    "cik": 1046179,
    "filings": [],
-   "rpo": null
+   "rpo": null,
+   "credit": {}
   },
   "AMKR": {
    "cik": 1047127,
@@ -728,7 +741,8 @@
      ]
     }
    ],
-   "rpo": null
+   "rpo": null,
+   "credit": {}
   },
   "MU": {
    "cik": 723125,
@@ -773,7 +787,8 @@
     "end": "2026-09-03",
     "form": "10-K",
     "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm"
-   }
+   },
+   "credit": {}
   },
   "SNDK": {
    "cik": 2023554,
@@ -863,7 +878,8 @@
     "end": "2026-07-03",
     "form": "10-K",
     "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm"
-   }
+   },
+   "credit": {}
   },
   "WDC": {
    "cik": 106040,
@@ -993,7 +1009,8 @@
      ]
     }
    ],
-   "rpo": null
+   "rpo": null,
+   "credit": {}
   },
   "ANET": {
    "cik": 1596532,
@@ -1034,7 +1051,8 @@
      ]
     }
    ],
-   "rpo": null
+   "rpo": null,
+   "credit": {}
   },
   "COHR": {
    "cik": 820318,
@@ -1066,7 +1084,8 @@
      ]
     }
    ],
-   "rpo": null
+   "rpo": null,
+   "credit": {}
   },
   "LITE": {
    "cik": 1633978,
@@ -1160,7 +1179,8 @@
      ]
     }
    ],
-   "rpo": null
+   "rpo": null,
+   "credit": {}
   },
   "CRDO": {
    "cik": 1807794,
@@ -1263,7 +1283,8 @@
      ]
     }
    ],
-   "rpo": null
+   "rpo": null,
+   "credit": {}
   },
   "ALAB": {
    "cik": 1736297,
@@ -1429,7 +1450,8 @@
      ]
     }
    ],
-   "rpo": null
+   "rpo": null,
+   "credit": {}
   },
   "DELL": {
    "cik": 1571996,
@@ -1457,7 +1479,8 @@
     "end": "2026-07-31",
     "form": "10-Q",
     "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000046/dell-20260731.htm"
-   }
+   },
+   "credit": {}
   },
   "SMCI": {
    "cik": 1375365,
@@ -1556,7 +1579,8 @@
     "end": "2026-06-30",
     "form": "10-K",
     "url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536526000022/smci-20260630.htm"
-   }
+   },
+   "credit": {}
   },
   "HPE": {
    "cik": 1645590,
@@ -1584,17 +1608,20 @@
     "end": "2026-07-31",
     "form": "10-Q",
     "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559026000080/hpe-20260731.htm"
-   }
+   },
+   "credit": {}
   },
   "VRT": {
    "cik": 1674101,
    "filings": [],
-   "rpo": null
+   "rpo": null,
+   "credit": {}
   },
   "ETN": {
    "cik": 1551182,
    "filings": [],
-   "rpo": null
+   "rpo": null,
+   "credit": {}
   },
   "GEV": {
    "cik": 1996810,
@@ -1604,7 +1631,8 @@
     "end": "2026-06-30",
     "form": "10-Q",
     "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000148/gev-20260630.htm"
-   }
+   },
+   "credit": {}
   },
   "CEG": {
    "cik": 1868275,
@@ -1614,7 +1642,8 @@
     "end": "2026-06-30",
     "form": "10-Q",
     "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000104/ceg-20260630.htm"
-   }
+   },
+   "credit": {}
   },
   "EQIX": {
    "cik": 1101239,
@@ -1624,7 +1653,8 @@
     "end": "2026-06-30",
     "form": "10-Q",
     "url": "https://www.sec.gov/Archives/edgar/data/1101239/000110123926000147/eqix-20260630.htm"
-   }
+   },
+   "credit": {}
   },
   "MSFT": {
    "cik": 789019,
@@ -1634,12 +1664,14 @@
     "end": "2026-06-30",
     "form": "10-K",
     "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
-   }
+   },
+   "credit": {}
   },
   "AMZN": {
    "cik": 1018724,
    "filings": [],
-   "rpo": null
+   "rpo": null,
+   "credit": {}
   },
   "GOOGL": {
    "cik": 1652044,
@@ -1649,7 +1681,8 @@
     "end": "2026-06-30",
     "form": "10-Q",
     "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm"
-   }
+   },
+   "credit": {}
   },
   "ORCL": {
    "cik": 1341439,
@@ -1659,7 +1692,8 @@
     "end": "2026-08-31",
     "form": "10-Q",
     "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526389274/orcl-20260831.htm"
-   }
+   },
+   "credit": {}
   },
   "CRWV": {
    "cik": 1769628,
@@ -1749,7 +1783,8 @@
     "end": "2026-06-30",
     "form": "10-Q",
     "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm"
-   }
+   },
+   "credit": {}
   },
   "NBIS": {
    "cik": 1513845,
@@ -1795,12 +1830,14 @@
     "end": "2025-12-31",
     "form": "20-F",
     "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm"
-   }
+   },
+   "credit": {}
   },
   "META": {
    "cik": 1326801,
    "filings": [],
-   "rpo": null
+   "rpo": null,
+   "credit": {}
   },
   "PLTR": {
    "cik": 1321655,
@@ -1845,7 +1882,8 @@
     "end": "2026-06-30",
     "form": "10-Q",
     "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm"
-   }
+   },
+   "credit": {}
   },
   "NOW": {
    "cik": 1373715,
@@ -1908,7 +1946,8 @@
     "end": "2026-06-30",
     "form": "10-Q",
     "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000076/now-20260630.htm"
-   }
+   },
+   "credit": {}
   }
  }
 }

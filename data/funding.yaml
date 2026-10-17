@@ -1,0 +1,77 @@
+# Funding sources and off-balance-sheet obligations per company, curated by hand.
+# These complement the figures pulled automatically from Yahoo Finance and SEC XBRL.
+#
+# items:   kind     bond | loan | secured_loan | convertible | spv | lease | equity_raise | guarantee_given | backstop_given | backstop_received | supplier_finance
+#          usd_bn   amount in USD billions (optional)
+#          rate     coupon or spread as text (optional)
+#          note     one line; src/url required
+# signals: market-based credit signals (bond yields, ratings, CDS-like evidence)
+# maturities: principal due by year when not available from XBRL, as {label: usd_bn}
+
+funding:
+  CRWV:
+    as_of: "2026-06-30"
+    items:
+      - {kind: secured_loan, usd_bn: 13.6, rate: "SOFR + 4.50–5.50%", note: "GPU-backed project loans (DDTLs), the largest category; lenders size them at ~60–70% loan-to-value", src: "StockTitan summary of Q2 2026 10-Q", url: "https://www.stocktitan.net/articles/coreweave-nebius-ai-cloud-debt-when-it-comes-due"}
+      - {kind: bond, usd_bn: 10.0, rate: "8.50–9.75% fixed", note: "Unsecured senior notes due 2030–2032", src: "StockTitan summary of Q2 2026 10-Q", url: "https://www.stocktitan.net/articles/coreweave-nebius-ai-cloud-debt-when-it-comes-due"}
+      - {kind: convertible, usd_bn: 10.8, rate: "1.75–2.875%", note: "$6.6B outstanding at June plus $4.2B issued Sep 2026, due to 2033", src: "StockTitan summary of Q2 2026 10-Q and Sep 2026 8-K", url: "https://www.stocktitan.net/articles/coreweave-nebius-ai-cloud-debt-when-it-comes-due"}
+      - {kind: supplier_finance, usd_bn: 5.1, rate: "9–11% effective", note: "Vendor and supplier financing", src: "StockTitan summary of Q2 2026 10-Q", url: "https://www.stocktitan.net/articles/coreweave-nebius-ai-cloud-debt-when-it-comes-due"}
+      - {kind: secured_loan, usd_bn: 8.5, rate: "SOFR + 2.25% (~5.9% fixed)", note: "DDTL 4.0, non-recourse, repaid from the Meta contract; anchor lender Blackstone Credit & Insurance", src: "Global Data Center Hub", url: "https://www.globaldatacenterhub.com/p/is-coreweaves-85-billion-deal-the"}
+      - {kind: backstop_received, usd_bn: 6.3, note: "NVIDIA commitment to buy unused capacity through 2032", src: "Fierce Network deal list", url: "https://www.fierce-network.com/cloud/fierce-networks-encyclopedia-ai-deals"}
+    maturities: {"Rest of 2026": 4.4, "2027": 6.2, "2028": 4.4, "2029": 2.4, "2030": 3.2, "After 2030": 14.9}
+    maturities_src: {src: "StockTitan summary of Q2 2026 10-Q", url: "https://www.stocktitan.net/articles/coreweave-nebius-ai-cloud-debt-when-it-comes-due"}
+    signals:
+      - {date: "2026-10-14", text: "9.625% unsecured notes due 2032 trade near 79.5c, a yield of about 15%", src: "Forbes", url: "https://www.forbes.com/sites/jimosman/2026/10/14/coreweave-bonds-are-warning-of-a-bigger-problem-for-ai-stocks/"}
+      - {date: "2026-06-30", text: "Q2 net interest expense $640M against revenue of $2.58B; recourse debt $31.4B of $35.1B", src: "Forbes / StockTitan", url: "https://www.forbes.com/sites/jimosman/2026/10/14/coreweave-bonds-are-warning-of-a-bigger-problem-for-ai-stocks/"}
+  NBIS:
+    as_of: "2026-06-30"
+    items:
+      - {kind: convertible, usd_bn: 10.0, note: "Six series of convertible notes (principal at maturity), maturing June 2029 to March 2033; some repay 110–125% of principal", src: "StockTitan summary of H1 2026 6-K", url: "https://www.stocktitan.net/articles/coreweave-nebius-ai-cloud-debt-when-it-comes-due"}
+      - {kind: convertible, usd_bn: 5.75, rate: "0.50% / 4.50%", note: "Issued Aug 2026, due 2030 and 2034", src: "StockTitan summary of Aug 2026 6-K", url: "https://www.stocktitan.net/articles/coreweave-nebius-ai-cloud-debt-when-it-comes-due"}
+      - {kind: secured_loan, usd_bn: 0.775, rate: "SOFR + 2.50%", note: "Secured loan due Oct 2030 (Jul 2026)", src: "StockTitan summary of Jul 2026 6-K", url: "https://www.stocktitan.net/articles/coreweave-nebius-ai-cloud-debt-when-it-comes-due"}
+    signals:
+      - {date: "2026-06-30", text: "No principal due before 2029; $8.0B cash against $8.5B of debt on the balance sheet", src: "StockTitan", url: "https://www.stocktitan.net/articles/coreweave-nebius-ai-cloud-debt-when-it-comes-due"}
+  ORCL:
+    as_of: "2026-08-31"
+    items:
+      - {kind: bond, usd_bn: 25.0, rate: "4.55–6.85%", note: "Eight-tranche senior notes, Feb 2026, maturing 2029–2066; part of a $45–50B 2026 funding plan", src: "BTW Media", url: "https://btw.media/en/oracle-financing-stack-effective-conditional-break-points"}
+      - {kind: equity_raise, usd_bn: 20.0, note: "At-the-market equity programme, completed in Q1 FY2027, plus a mandatory convertible preferred", src: "BTW Media", url: "https://btw.media/en/oracle-financing-stack-effective-conditional-break-points"}
+      - {kind: spv, usd_bn: 18.0, note: "Project Jupiter (New Mexico): ~$18B of bank loans in a Blue Owl vehicle; Oracle reportedly pays the debt costs", src: "BTW Media", url: "https://btw.media/en/oracle-financing-stack-effective-conditional-break-points"}
+      - {kind: lease, usd_bn: 288.0, note: "Data-centre leases signed but not yet commenced (off balance sheet), starting FY2027–29 for 15–19 years", src: "BTW Media, citing 10-Q", url: "https://btw.media/en/oracle-financing-stack-effective-conditional-break-points"}
+      - {kind: guarantee_given, usd_bn: 2.2, note: "Guarantee of a lessor's borrowing", src: "BTW Media", url: "https://btw.media/en/oracle-financing-stack-effective-conditional-break-points"}
+    signals:
+      - {date: "2026-07-09", text: "S&P cut to BBB- (lowest investment grade); Moody's Baa2 negative; Fitch BBB stable. CreditSights says spreads trade like high BB", src: "BTW Media", url: "https://btw.media/en/oracle-financing-stack-effective-conditional-break-points"}
+      - {date: "2026-08-31", text: "S&P attributes about half of Oracle's contracted-but-undelivered volume to OpenAI and calls it a central credit risk", src: "BTW Media", url: "https://btw.media/en/oracle-financing-stack-effective-conditional-break-points"}
+  META:
+    as_of: "2026-08-04"
+    items:
+      - {kind: spv, usd_bn: 27.0, note: "Hyperion JV (80% Blue Owl funds, 20% Meta), funded with $27B of bonds; Meta leases it back and guarantees residual value for 16 years", src: "Bisnow", url: "https://www.bisnow.com/news/national/data-center-capital-markets/meta-pushes-its-largest-data-center-project-off-its-books-with-27b-joint-venture-131490"}
+      - {kind: bond, usd_bn: 30.0, note: "Oct 2025, the largest non-M&A high-grade bond sale on record", src: "Reuters via Yahoo Finance", url: "https://finance.yahoo.com/news/ai-hyperscalers-drive-higher-us-225314460.html"}
+      - {kind: lease, usd_bn: 279.0, note: "Leases signed but not yet commenced, mostly data centres; a further $68B signed in July 2026", src: "Reuters via The Spokesman-Review", url: "https://www.spokesman.com/stories/2026/aug/04/ai-data-center-race-builds-1-trillion-lease-burden/"}
+  MSFT:
+    as_of: "2026-06-30"
+    items:
+      - {kind: lease, usd_bn: 329.1, note: "Leases not yet commenced, mainly data centres, starting FY2027–33 (up from $92.7B a year earlier)", src: "BTW Media, citing FY2026 10-K", url: "https://btw.media/en/microsoft-329-1bn-uncommenced-datacentre-leases"}
+  GOOGL:
+    as_of: "2026-08-04"
+    items:
+      - {kind: bond, usd_bn: 17.5, note: "Nov 2025 bond sale", src: "Reuters via Yahoo Finance", url: "https://finance.yahoo.com/news/ai-hyperscalers-drive-higher-us-225314460.html"}
+      - {kind: lease, usd_bn: 85.2, note: "Leases signed but not yet commenced", src: "Reuters via The Spokesman-Review", url: "https://www.spokesman.com/stories/2026/aug/04/ai-data-center-race-builds-1-trillion-lease-burden/"}
+      - {kind: backstop_given, usd_bn: 1.4, note: "Backstops $1.4B of Fluidstack's lease obligations at Cipher Mining's Barber Lake site, for warrants worth ~5.4% of Cipher", src: "Cipher Mining press release (8-K)", url: "https://www.sec.gov/Archives/edgar/data/1819989/000095010325012168/dp234624_ex9901.htm"}
+      - {kind: backstop_given, usd_bn: 3.2, note: "Backstops a total of $3.2B of project debt for Fluidstack at TeraWulf, with warrants for 32.5M TeraWulf shares", src: "Decrypt", url: "https://decrypt.co/341339/google-dives-deeper-bitcoin-mining-backstopping-ai-hosting"}
+  AMZN:
+    as_of: "2026-08-04"
+    items:
+      - {kind: bond, usd_bn: 15.0, note: "Nov 2025 bond sale", src: "Reuters via Yahoo Finance", url: "https://finance.yahoo.com/news/ai-hyperscalers-drive-higher-us-225314460.html"}
+      - {kind: lease, usd_bn: 137.2, note: "Leases signed but not yet commenced (includes warehouses, aircraft and vehicles)", src: "Reuters via The Spokesman-Review", url: "https://www.spokesman.com/stories/2026/aug/04/ai-data-center-race-builds-1-trillion-lease-burden/"}
+  NVDA:
+    as_of: "2026-07-29"
+    items:
+      - {kind: backstop_given, usd_bn: 6.3, note: "Capacity buyback for CoreWeave through 2032", src: "Fierce Network deal list", url: "https://www.fierce-network.com/cloud/fierce-networks-encyclopedia-ai-deals"}
+      - {kind: backstop_given, usd_bn: 4.88, note: "Six-year minimum-revenue backstop for SharonAI (up to 40,000 GB300s); similar backstop for Firmus in Indonesia. Programme launched mid-2026", src: "SemiAnalysis", url: "https://newsletter.semianalysis.com/p/nvidia-gpu-debt-backstop-unleashes"}
+      - {kind: guarantee_given, usd_bn: 250, note: "Reported talks to guarantee lease and debt obligations for an OpenAI campus in Ohio; not confirmed", src: "WSJ via Yahoo Finance", url: "https://finance.yahoo.com/technology/ai/articles/coreweave-nebius-gain-report-links-132711335.html"}
+  OpenAI:
+    as_of: "2026-07-27"
+    items:
+      - {kind: equity_raise, usd_bn: 110, note: "Feb 2026 round: Amazon $50B, NVIDIA $30B, SoftBank $30B", src: "Yahoo Finance / Reuters", url: "https://finance.yahoo.com/news/openais-110-billion-funding-round-145925079.html"}
+      - {kind: guarantee_given, usd_bn: 250, note: "Reported: NVIDIA may guarantee ~$250B of lease and debt obligations for a 10 GW Ohio campus developed by SoftBank's energy unit", src: "WSJ via Yahoo Finance", url: "https://finance.yahoo.com/technology/ai/articles/coreweave-nebius-gain-report-links-132711335.html"}
