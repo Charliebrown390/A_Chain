@@ -32,6 +32,8 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Validate map and build site data
         run: python scripts/build_site_data.py
+      - name: Coverage and sourcing tests
+        run: python -m pytest -q tests
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

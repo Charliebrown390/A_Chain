@@ -18,7 +18,8 @@ OUT = ROOT / "site/data"
 TYPES = {"supply", "contract", "capital", "financing"}
 KINDS = {"backstop", "guarantee", "collateral", "rent_back", "vendor_finance"}
 STRENGTH = {"H", "M", "L"}
-CONF = {"D", "E", "I"}
+CONF = {"D", "E", "I", "R"}
+FAMILIES = {"GPU", "TPU", "Trainium", "MTIA", "Maia", "OpenAI-XPU"}
 
 
 def benchmark(dims):
@@ -232,8 +233,13 @@ def main():
             errs.append(f"{tag}: bad strength")
         if e.get("conf") not in CONF:
             errs.append(f"{tag}: bad conf")
-        if e.get("conf") in ("D", "E") and not (e.get("url") or e.get("xbrl")):
+        if e.get("conf") in ("D", "E", "R") and not (e.get("url") or e.get("xbrl")):
             errs.append(f"{tag}: conf {e['conf']} needs a url or an xbrl reference")
+        if e.get("conf") in ("D", "E", "R") and not (e.get("as_of") or e.get("xbrl")):
+            errs.append(f"{tag}: conf {e['conf']} needs as_of")
+        bad = set(e.get("fam") or []) - FAMILIES
+        if bad:
+            errs.append(f"{tag}: unknown fam {sorted(bad)}")
         if e.get("type") == "financing" and e.get("kind") not in KINDS:
             errs.append(f"{tag}: financing edge needs kind in {sorted(KINDS)}")
         key = (e.get("from"), e.get("to"), e.get("type"))
@@ -280,6 +286,22 @@ def main():
             if isinstance(f.get("maturities"), dict):   # keep YAML order (JS would re-sort numeric keys)
                 f["maturities"] = [[str(k), v] for k, v in f["maturities"].items()]
             c["funding"] = f
+    pp = ROOT / "data/programmes.yaml"
+    progs = yaml.safe_load(pp.read_text()) if pp.exists() else {}
+    for k, pr in (progs.get("programmes") or {}).items():
+        if k not in FAMILIES:
+            errs.append(f"programmes.yaml: unknown programme {k}")
+        if pr.get("owner") not in idset:
+            errs.append(f"programmes.yaml {k}: unknown owner {pr.get('owner')}")
+        for g in (pr.get("generations") or []) + (pr.get("users") or []) + (pr.get("volume") or []):
+            if not g.get("url"):
+                errs.append(f"programmes.yaml {k}: item without url: {g.get('name') or g.get('who') or g.get('note')}")
+    for x in progs.get("exposure") or []:
+        if x.get("id") not in idset or x.get("prog") not in FAMILIES or not x.get("url"):
+            errs.append(f"programmes.yaml exposure: bad entry {x}")
+    for w in uni.get("watchlist") or []:
+        if w["id"] in idset:
+            errs.append(f"watchlist id {w['id']} is also in the universe")
     tp = ROOT / "data/theses.yaml"
     theses = (yaml.safe_load(tp.read_text()) or {}).get("theses", {}) if tp.exists() else {}
     for c in uni["companies"]:
@@ -296,8 +318,9 @@ def main():
     stamp = datetime.now(timezone.utc).isoformat(timespec="seconds")
     (OUT / "universe.json").write_text(json.dumps({"built": stamp, **uni}, indent=1))
     (OUT / "edges.json").write_text(json.dumps({"built": stamp, "edges": edges}, indent=1))
+    (OUT / "programmes.json").write_text(json.dumps({"built": stamp, **(progs or {})}, indent=1))
     (OUT / "disclosures.json").write_text(json.dumps({"built": stamp, "sec_pulled": generated, "companies": disc}, indent=1))
-    n_conf = {k: sum(1 for e in edges if e["conf"] == k) for k in "DEI"}
+    n_conf = {k: sum(1 for e in edges if e["conf"] == k) for k in "DEIR"}
     print(f"OK: {len(ids)} companies, {len(edges)} edges {n_conf}, {merged} XBRL merges, "
           f"{sum(len(g['rows']) for v in disc.values() for g in v['filings'])} disclosed concentration rows")
     return 0

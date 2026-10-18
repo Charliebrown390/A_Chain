@@ -1,5 +1,5 @@
 {
- "built": "2026-10-18T04:07:58+00:00",
+ "built": "2026-10-18T04:33:54+00:00",
  "edges": [
   {
    "from": "ASML",
@@ -173,6 +173,9 @@
    "from": "TSM",
    "to": "NVDA",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "H",
    "conf": "E",
    "as_of": "2025",
@@ -184,6 +187,9 @@
    "from": "TSM",
    "to": "AMD",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "H",
    "conf": "I",
    "note": "N3/N2 wafers and packaging"
@@ -192,6 +198,11 @@
    "from": "TSM",
    "to": "AVGO",
    "type": "supply",
+   "fam": [
+    "TPU",
+    "MTIA",
+    "OpenAI-XPU"
+   ],
    "strength": "H",
    "conf": "I",
    "note": "Custom ASIC wafers incl. Google TPU"
@@ -200,6 +211,10 @@
    "from": "TSM",
    "to": "MRVL",
    "type": "supply",
+   "fam": [
+    "Trainium",
+    "Maia"
+   ],
    "strength": "M",
    "conf": "I",
    "note": "Custom ASIC wafers"
@@ -216,6 +231,9 @@
    "from": "000660.KS",
    "to": "NVDA",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "H",
    "conf": "E",
    "as_of": "Q2 2026",
@@ -227,6 +245,9 @@
    "from": "MU",
    "to": "NVDA",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "H",
    "conf": "E",
    "as_of": "Q2 2026",
@@ -238,6 +259,9 @@
    "from": "005930.KS",
    "to": "NVDA",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "M",
    "conf": "E",
    "as_of": "Q2 2026",
@@ -249,6 +273,9 @@
    "from": "MU",
    "to": "AMD",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "M",
    "conf": "I",
    "note": "HBM for MI-series"
@@ -284,6 +311,9 @@
    "from": "NVDA",
    "to": "2317.TW",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "H",
    "conf": "E",
    "note": "Direct customer: assembles GB-series racks",
@@ -300,6 +330,9 @@
    "from": "NVDA",
    "to": "DELL",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "M",
    "conf": "I",
    "note": "GPU systems"
@@ -308,6 +341,9 @@
    "from": "NVDA",
    "to": "SMCI",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "M",
    "conf": "I",
    "note": "GPU systems"
@@ -316,6 +352,9 @@
    "from": "NVDA",
    "to": "HPE",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "L",
    "conf": "I",
    "note": "GPU systems"
@@ -324,6 +363,9 @@
    "from": "NVDA",
    "to": "MSFT",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "H",
    "conf": "I",
    "note": "End demand via ODMs"
@@ -332,6 +374,9 @@
    "from": "NVDA",
    "to": "META",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "H",
    "conf": "I",
    "note": "End demand via ODMs"
@@ -340,6 +385,9 @@
    "from": "NVDA",
    "to": "ORCL",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "H",
    "conf": "E",
    "as_of": "May 2025",
@@ -352,6 +400,9 @@
    "from": "NVDA",
    "to": "AMZN",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "M",
    "conf": "I",
    "note": "End demand via ODMs"
@@ -360,6 +411,9 @@
    "from": "NVDA",
    "to": "GOOGL",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "M",
    "conf": "I",
    "note": "End demand via ODMs"
@@ -368,6 +422,9 @@
    "from": "NVDA",
    "to": "CRWV",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "H",
    "conf": "I",
    "note": "CoreWeave fleet is almost entirely NVIDIA"
@@ -376,6 +433,9 @@
    "from": "NVDA",
    "to": "NBIS",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "M",
    "conf": "I",
    "note": "Nebius fleet is NVIDIA"
@@ -384,6 +444,9 @@
    "from": "NVDA",
    "to": "OpenAI",
    "type": "contract",
+   "fam": [
+    "GPU"
+   ],
    "strength": "H",
    "conf": "D",
    "as_of": "Sep 2025",
@@ -396,6 +459,9 @@
    "from": "AMD",
    "to": "OpenAI",
    "type": "contract",
+   "fam": [
+    "GPU"
+   ],
    "strength": "H",
    "conf": "D",
    "as_of": "Oct 2025",
@@ -408,6 +474,9 @@
    "from": "AMD",
    "to": "ORCL",
    "type": "contract",
+   "fam": [
+    "GPU"
+   ],
    "strength": "M",
    "conf": "D",
    "as_of": "Oct 2025",
@@ -419,6 +488,9 @@
    "from": "AMD",
    "to": "MSFT",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "M",
    "conf": "I",
    "note": "MI-series GPUs, EPYC CPUs"
@@ -427,6 +499,9 @@
    "from": "AMD",
    "to": "META",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "M",
    "conf": "I",
    "note": "MI-series GPUs, EPYC CPUs"
@@ -435,14 +510,24 @@
    "from": "AVGO",
    "to": "GOOGL",
    "type": "supply",
+   "fam": [
+    "TPU"
+   ],
+   "role": "co_designs",
    "strength": "H",
-   "conf": "I",
-   "note": "TPU co-design and supply"
+   "conf": "D",
+   "as_of": "Apr 2026",
+   "note": "Designs and supplies Google TPUs (reported: the TPU 8t training chip); long-term agreement to design and supply future TPU generations plus networking and rack components through 2031",
+   "src": "Broadcom 8-K (6 Apr 2026)",
+   "url": "https://www.boardroomalpha.com/sec/avgo-8-k-2026-04-06-0001193125-26-144028"
   },
   {
    "from": "AVGO",
    "to": "META",
    "type": "supply",
+   "fam": [
+    "MTIA"
+   ],
    "strength": "M",
    "conf": "I",
    "note": "MTIA custom accelerator, Ethernet"
@@ -451,6 +536,9 @@
    "from": "AVGO",
    "to": "OpenAI",
    "type": "contract",
+   "fam": [
+    "OpenAI-XPU"
+   ],
    "strength": "H",
    "conf": "D",
    "as_of": "Oct 2025",
@@ -463,18 +551,24 @@
    "from": "AVGO",
    "to": "Anthropic",
    "type": "contract",
-   "strength": "M",
+   "fam": [
+    "TPU"
+   ],
+   "strength": "H",
    "conf": "D",
-   "as_of": "Apr 2026",
+   "as_of": "Sep 2026",
    "gw": 3.5,
-   "note": "TPU-based capacity from 2027, with Google; 3.5 GW per Broadcom filing",
-   "src": "TechCrunch",
-   "url": "https://techcrunch.com/2026/04/24/google-to-invest-up-to-40b-in-anthropic-in-cash-and-compute/"
+   "note": "TPU-based capacity from 2027 (3.5 GW per Apr 2026 filing); on the Sep 2026 call Broadcom guided a further 5 GW of TPU 8i in 2027 and an incremental 10 GW in 2028",
+   "src": "Broadcom Q3 FY26 call (Nasdaq)",
+   "url": "https://www.nasdaq.com/articles/broadcom-q3-earnings-call-highlights"
   },
   {
    "from": "MRVL",
    "to": "AMZN",
    "type": "supply",
+   "fam": [
+    "Trainium"
+   ],
    "strength": "H",
    "conf": "I",
    "note": "Trainium custom silicon and optical DSPs"
@@ -483,6 +577,9 @@
    "from": "MRVL",
    "to": "MSFT",
    "type": "supply",
+   "fam": [
+    "Maia"
+   ],
    "strength": "M",
    "conf": "I",
    "note": "Maia custom silicon"
@@ -555,6 +652,9 @@
    "from": "COHR",
    "to": "NVDA",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "M",
    "conf": "I",
    "note": "800G/1.6T transceivers"
@@ -563,6 +663,9 @@
    "from": "LITE",
    "to": "GOOGL",
    "type": "supply",
+   "fam": [
+    "TPU"
+   ],
    "strength": "H",
    "conf": "E",
    "note": "Optical circuit switches and lasers; Google widely reported as the largest customer \u00b7 % is for anonymised 'Customer A'; mapping to this company is an estimate",
@@ -579,6 +682,9 @@
    "from": "LITE",
    "to": "NVDA",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "M",
    "conf": "I",
    "note": "Lasers for optical modules"
@@ -587,6 +693,9 @@
    "from": "CRDO",
    "to": "AMZN",
    "type": "supply",
+   "fam": [
+    "Trainium"
+   ],
    "strength": "H",
    "conf": "E",
    "note": "Active electrical cables; Amazon widely reported as the largest customer \u00b7 % is for anonymised 'Customer A'; mapping to this company is an estimate",
@@ -603,6 +712,9 @@
    "from": "ALAB",
    "to": "AMZN",
    "type": "supply",
+   "fam": [
+    "Trainium"
+   ],
    "strength": "H",
    "conf": "I",
    "note": "Retimers and switches"
@@ -611,6 +723,9 @@
    "from": "ALAB",
    "to": "NVDA",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "M",
    "conf": "I",
    "note": "Platform attach on NVIDIA systems"
@@ -619,6 +734,9 @@
    "from": "2317.TW",
    "to": "MSFT",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "M",
    "conf": "I",
    "note": "GB-series racks"
@@ -635,6 +753,9 @@
    "from": "2317.TW",
    "to": "ORCL",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "M",
    "conf": "I",
    "note": "GB-series racks"
@@ -651,6 +772,9 @@
    "from": "DELL",
    "to": "CRWV",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "H",
    "conf": "I",
    "note": "AI servers; CoreWeave is a major Dell AI customer"
@@ -659,6 +783,9 @@
    "from": "SMCI",
    "to": "CRWV",
    "type": "supply",
+   "fam": [
+    "GPU"
+   ],
    "strength": "L",
    "conf": "I",
    "note": "GPU servers"
@@ -894,6 +1021,9 @@
    "from": "AMZN",
    "to": "OpenAI",
    "type": "contract",
+   "fam": [
+    "Trainium"
+   ],
    "strength": "M",
    "conf": "D",
    "as_of": "Nov 2025",
@@ -907,6 +1037,9 @@
    "from": "GOOGL",
    "to": "Anthropic",
    "type": "contract",
+   "fam": [
+    "TPU"
+   ],
    "strength": "H",
    "conf": "D",
    "as_of": "Apr 2026",
@@ -919,6 +1052,9 @@
    "from": "AMZN",
    "to": "Anthropic",
    "type": "contract",
+   "fam": [
+    "Trainium"
+   ],
    "strength": "H",
    "conf": "D",
    "as_of": "Apr 2026",
@@ -943,13 +1079,16 @@
    "from": "GOOGL",
    "to": "META",
    "type": "contract",
-   "strength": "L",
+   "fam": [
+    "TPU"
+   ],
+   "strength": "M",
    "conf": "E",
-   "as_of": "Aug 2025",
+   "as_of": "Feb 2026",
    "usd_bn": 10,
-   "note": "Reported >$10B, six-year Google Cloud deal",
-   "src": "Data Centre Review",
-   "url": "https://datacentrereview.com/2025/08/meta-signs-six-year-10-billion-cloud-deal-with-google/"
+   "note": "Six-year Google Cloud deal (>$10B, Aug 2025) and a multi-billion-dollar multiyear deal to rent Google TPUs (Feb 2026)",
+   "src": "The Decoder",
+   "url": "https://the-decoder.com/meta-signs-multi-billion-dollar-deal-to-rent-googles-tpus-in-a-direct-challenge-to-nvidias-ai-chip-dominance/"
   },
   {
    "from": "AMZN",
@@ -1030,6 +1169,7 @@
    "type": "capital",
    "strength": "M",
    "conf": "D",
+   "as_of": "2026",
    "note": "Equity investment",
    "src": "Motley Fool via AOL",
    "url": "https://www.aol.com/articles/nebius-just-signed-46-billion-133600114.html"
@@ -1155,6 +1295,329 @@
    "note": "AMD has offered rent-back backstops on its GPUs to AWS and others; size not disclosed",
    "src": "SemiAnalysis",
    "url": "https://newsletter.semianalysis.com/p/nvidia-gpu-debt-backstop-unleashes"
+  },
+  {
+   "from": "2454.TW",
+   "to": "GOOGL",
+   "type": "supply",
+   "fam": [
+    "TPU"
+   ],
+   "role": "co_designs",
+   "strength": "M",
+   "conf": "E",
+   "as_of": "Jun 2026",
+   "note": "Reported to co-design a TPU v8 variant (reports differ on whether it is the 8i inference chip) and the TPU v9 'Triggerfish' for Q4 2027; Counterpoint projects ~26% of AI ASIC shipments by 2028",
+   "src": "Wccftech / Counterpoint",
+   "url": "https://wccftech.com/google-mediatek-build-tpuv9-triggerfish-cpu-compute-die-one-package-agentic-ai/amp/"
+  },
+  {
+   "from": "MRVL",
+   "to": "GOOGL",
+   "type": "supply",
+   "fam": [
+    "TPU"
+   ],
+   "role": "designs_for",
+   "strength": "L",
+   "conf": "E",
+   "as_of": "Jun 2026",
+   "note": "Reported win for a custom networking chip for TPU v8e, on Intel 18A",
+   "src": "Let's Data Science",
+   "url": "https://letsdatascience.com/news/marvell-wins-google-tpuv8e-networking-chip-d74138f8"
+  },
+  {
+   "from": "AMD",
+   "to": "GOOGL",
+   "type": "supply",
+   "fam": [
+    "TPU"
+   ],
+   "role": "co_designs",
+   "strength": "L",
+   "conf": "R",
+   "as_of": "Aug 2026",
+   "note": "Market chatter cited by SemiAnalysis that Google is working with AMD on TPU v10 (packaging and CPU IP)",
+   "src": "DatacenterDynamics",
+   "url": "https://www.datacenterdynamics.com/en/news/google-rumored-to-have-partnered-with-amd-on-tpu-v10-as-shipments-of-current-generations-revised-down-report/"
+  },
+  {
+   "from": "3661.TW",
+   "to": "AMZN",
+   "type": "supply",
+   "fam": [
+    "Trainium"
+   ],
+   "role": "co_designs",
+   "strength": "H",
+   "conf": "E",
+   "as_of": "2026",
+   "note": "Reported co-developer of Trainium3 (with Marvell) and Trainium4 designs",
+   "src": "TrendForce",
+   "url": "https://www.trendforce.com/news/?p=47625"
+  },
+  {
+   "from": "3443.TW",
+   "to": "META",
+   "type": "supply",
+   "fam": [
+    "MTIA"
+   ],
+   "role": "designs_for",
+   "strength": "M",
+   "conf": "E",
+   "as_of": "2026",
+   "note": "Reported back-end and packaging partner for Meta's MTIA-3 (H2 2026)",
+   "src": "TrendForce",
+   "url": "https://www.trendforce.com/news/?p=52633"
+  },
+  {
+   "from": "TSM",
+   "to": "2454.TW",
+   "type": "supply",
+   "fam": [
+    "TPU"
+   ],
+   "role": "manufactures",
+   "strength": "M",
+   "conf": "I",
+   "note": "Wafers and CoWoS packaging for MediaTek's TPU work"
+  },
+  {
+   "from": "TSM",
+   "to": "3661.TW",
+   "type": "supply",
+   "fam": [
+    "Trainium"
+   ],
+   "role": "manufactures",
+   "strength": "M",
+   "conf": "I",
+   "note": "Wafers and packaging for Alchip-designed ASICs"
+  },
+  {
+   "from": "TSM",
+   "to": "3443.TW",
+   "type": "capital",
+   "strength": "M",
+   "conf": "I",
+   "note": "TSMC is GUC's largest shareholder"
+  },
+  {
+   "from": "TSM",
+   "to": "3443.TW",
+   "type": "supply",
+   "fam": [
+    "MTIA"
+   ],
+   "role": "manufactures",
+   "strength": "M",
+   "conf": "I",
+   "note": "Wafers and CoWoS for GUC-designed ASICs"
+  },
+  {
+   "from": "000660.KS",
+   "to": "AVGO",
+   "type": "supply",
+   "fam": [
+    "TPU",
+    "MTIA"
+   ],
+   "role": "supplies_component",
+   "strength": "M",
+   "conf": "I",
+   "note": "HBM for Broadcom-built XPUs"
+  },
+  {
+   "from": "005930.KS",
+   "to": "AVGO",
+   "type": "supply",
+   "fam": [
+    "TPU"
+   ],
+   "role": "supplies_component",
+   "strength": "M",
+   "conf": "I",
+   "note": "HBM for Broadcom-built XPUs"
+  },
+  {
+   "from": "ASX",
+   "to": "TSM",
+   "type": "supply",
+   "role": "packages",
+   "strength": "M",
+   "conf": "E",
+   "as_of": "Jul 2026",
+   "note": "Takes overflow advanced packaging as foundries outsource; leading-edge packaging revenue above the $3.5B 2026 target, aiming for at least $7.5B in 2027",
+   "src": "TrendForce",
+   "url": "https://www.trendforce.com/news/2026/07/31/news-ase-again-raises-2026-capex-to-record-us10-5b-eyes-2x-leading-edge-advanced-packaging-revenue-by-2027/"
+  },
+  {
+   "from": "ASX",
+   "to": "NVDA",
+   "type": "supply",
+   "fam": [
+    "GPU"
+   ],
+   "role": "packages",
+   "strength": "L",
+   "conf": "I",
+   "note": "Assembly and test for AI accelerators"
+  },
+  {
+   "from": "4062.T",
+   "to": "NVDA",
+   "type": "supply",
+   "fam": [
+    "GPU"
+   ],
+   "role": "supplies_component",
+   "strength": "H",
+   "conf": "I",
+   "note": "High-layer ABF substrates; Ibiden holds ~35% of the high-end market"
+  },
+  {
+   "from": "4062.T",
+   "to": "AVGO",
+   "type": "supply",
+   "fam": [
+    "TPU"
+   ],
+   "role": "supplies_component",
+   "strength": "M",
+   "conf": "I",
+   "note": "ABF substrates for custom XPUs"
+  },
+  {
+   "from": "3037.TW",
+   "to": "NVDA",
+   "type": "supply",
+   "fam": [
+    "GPU"
+   ],
+   "role": "supplies_component",
+   "strength": "L",
+   "conf": "I",
+   "note": "ABF substrates and PCBs (~14% of high-end substrates)"
+  },
+  {
+   "from": "CSCO",
+   "to": "MSFT",
+   "type": "supply",
+   "strength": "L",
+   "conf": "I",
+   "note": "AI networking and optics; Cisco targets ~$9B of FY2026 AI orders from hyperscalers (customers not named)"
+  },
+  {
+   "from": "CSCO",
+   "to": "META",
+   "type": "supply",
+   "strength": "L",
+   "conf": "I",
+   "note": "AI networking and optics for hyperscalers"
+  },
+  {
+   "from": "CLS",
+   "to": "GOOGL",
+   "type": "supply",
+   "fam": [
+    "TPU"
+   ],
+   "role": "manufactures",
+   "strength": "H",
+   "conf": "D",
+   "as_of": "Jan 2026",
+   "note": "Management calls Celestica the preferred and primary manufacturing partner for Google's TPU systems (not sole-sourced); largest customer was 36% of Q4 2025 revenue (unnamed)",
+   "src": "Celestica Q4 2025 call (Motley Fool)",
+   "url": "https://www.fool.com/earnings/call-transcripts/2026/01/29/celestica-cls-q4-2025-earnings-call-transcript/"
+  },
+  {
+   "from": "CLS",
+   "to": "META",
+   "type": "supply",
+   "strength": "M",
+   "conf": "I",
+   "note": "800G/1.6T switches and rack integration for hyperscalers"
+  },
+  {
+   "from": "NVDA",
+   "to": "2382.TW",
+   "type": "supply",
+   "fam": [
+    "GPU"
+   ],
+   "strength": "H",
+   "conf": "I",
+   "note": "GPU boards for GB200/GB300 racks built by Quanta"
+  },
+  {
+   "from": "2382.TW",
+   "to": "MSFT",
+   "type": "supply",
+   "fam": [
+    "GPU"
+   ],
+   "strength": "M",
+   "conf": "I",
+   "note": "AI racks; AI servers were 75% of Quanta's server revenue in Q1 2026"
+  },
+  {
+   "from": "2382.TW",
+   "to": "META",
+   "type": "supply",
+   "strength": "M",
+   "conf": "I",
+   "note": "AI and general servers"
+  },
+  {
+   "from": "2382.TW",
+   "to": "GOOGL",
+   "type": "supply",
+   "fam": [
+    "TPU"
+   ],
+   "strength": "M",
+   "conf": "I",
+   "note": "Servers, including ASIC-based systems"
+  },
+  {
+   "from": "6669.TW",
+   "to": "MSFT",
+   "type": "supply",
+   "strength": "H",
+   "conf": "I",
+   "note": "Hyperscale servers and racks"
+  },
+  {
+   "from": "6669.TW",
+   "to": "META",
+   "type": "supply",
+   "strength": "M",
+   "conf": "I",
+   "note": "Hyperscale servers and racks"
+  },
+  {
+   "from": "2308.TW",
+   "to": "NVDA",
+   "type": "supply",
+   "fam": [
+    "GPU"
+   ],
+   "role": "supplies_component",
+   "strength": "M",
+   "conf": "E",
+   "as_of": "Aug 2026",
+   "note": "Power supplies and a partner for NVIDIA's 800V DC rack power architecture",
+   "src": "SammyFans",
+   "url": "https://www.sammyfans.com/2026/08/17/nvidias-new-800vdc-plan-could-boost-delta-and-lite-on/amp/"
+  },
+  {
+   "from": "2308.TW",
+   "to": "MSFT",
+   "type": "supply",
+   "strength": "L",
+   "conf": "I",
+   "note": "Power and cooling for data centres"
   }
  ]
 }

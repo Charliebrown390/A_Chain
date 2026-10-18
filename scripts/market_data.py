@@ -526,7 +526,7 @@ def run_full(cos):
         print(f"Only {got} of {len(cos)} price series came back; keeping the previous data unchanged.")
         return
     bench = {k: px[v] for k, v in BENCH.items() if v in px}
-    summary = {}
+    summary, failures = {}, []
     for co in cos:
         sub = px.get(co["yf"])
         rec = {"yf": co["yf"]}
@@ -534,6 +534,7 @@ def run_full(cos):
         if (sub is None or len(sub) <= 30) and old:
             rec.update({k: v for k, v in old.items() if k not in ("credit",)})   # keep last good prices
             rec["stale"] = True
+            failures.append({"id": co["id"], "yf": co["yf"], "what": "prices"})
         if sub is not None and len(sub) > 30:
             rec.update(tech(sub, bench))
             write(OUT / "px" / f"{co['id']}.json", {
@@ -545,6 +546,7 @@ def run_full(cos):
             rec.update(fundamentals(tk))
         except Exception as e:
             rec["error"] = f"fundamentals: {e}"
+            failures.append({"id": co["id"], "yf": co["yf"], "what": "fundamentals"})
         for k in ("mcap_usd_bn", "rev_usd_bn", "ratings", "tgt_mean", "fwd_pe", "rev_hist", "actions"):
             if rec.get(k) in (None, [], {}) and old.get(k) not in (None, [], {}):
                 rec[k] = old[k]            # Yahoo sometimes returns blanks; fall back to the last good value
@@ -562,7 +564,12 @@ def run_full(cos):
               f"nd/ebitda={cr.get('nd_ebitda')} cover={cr.get('ebitda_cover')} dd={cr.get('dd')} {cr.get('dd_note', '')}")
         time.sleep(0.4)
     bm = {k: tech(v, {}) for k, v in bench.items()}
-    write(OUT / "market.json", {"built": NOW.isoformat(timespec="seconds"), "rate": r(rate, 4), "benchmarks": bm, "companies": summary})
+    write(OUT / "market.json", {"built": NOW.isoformat(timespec="seconds"), "rate": r(rate, 4), "benchmarks": bm,
+                                "failures": failures, "companies": summary})
+    if failures:
+        print("FETCH FAILURES (kept last good values where available):")
+        for f in failures:
+            print(f"  {f['id']:>10} ({f['yf']}): {f['what']}")
     run_news(cos)
     build_iv_json()
 

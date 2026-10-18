@@ -1,0 +1,108 @@
+# Chip programmes: each is an ecosystem the map can be filtered to (links tagged with `fam` in edges.yaml).
+# generations: product timeline. status: shipping | ramping | announced | reported | rumoured
+# exposure: how much of a company's revenue or growth is tied to the programme.
+#   level H/M/L, est = our estimate in words, conf D/E/R as for links, basis = why, with a source.
+# Every dated claim needs src/url.
+
+programmes:
+  TPU:
+    name: Google TPU
+    owner: GOOGL
+    summary: "Google's in-house accelerator. Broadcom designs and supplies most of it; MediaTek is reported to co-design part of the v8 and v9 families. Sold through Google Cloud to Anthropic, Meta and others, and from 2027 through a Blackstone-backed TPU cloud."
+    generations:
+      - {name: "TPU v7 Ironwood", status: shipping, date: "2025–26", note: "Current volume part. SemiAnalysis cut its 2026 Ironwood estimate from 3.2M to 2.7M units, mainly because CoWoS-S packaging capacity is ramping slowly", src: "DatacenterDynamics, citing SemiAnalysis", url: "https://www.datacenterdynamics.com/en/news/google-rumored-to-have-partnered-with-amd-on-tpu-v10-as-shipments-of-current-generations-revised-down-report/"}
+      - {name: "TPU 8t (training)", status: announced, date: "Late 2027", note: "9,600-chip superpods, 216 GB HBM per chip; 2.7× Ironwood's training price-performance. Broadcom reported as designer ('Sunfish')", src: "NAND Research (Cloud Next 2026)", url: "https://nand-research.com/google-cloud-8th-generation-tpu-family-splits-training-and-inference/"}
+      - {name: "TPU 8i (inference)", status: announced, date: "Late 2027", note: "Pods of up to 1,152 chips, 288 GB HBM per chip. Broadcom guides 5 GW of 8i for Anthropic in 2027", src: "NAND Research (Cloud Next 2026)", url: "https://nand-research.com/google-cloud-8th-generation-tpu-family-splits-training-and-inference/"}
+      - {name: "TPU v8e", status: reported, date: "Late 2027", note: "Reported MediaTek design ('Humufish') with a Marvell custom networking chip on Intel 18A", src: "Counterpoint / Let's Data Science", url: "https://letsdatascience.com/news/marvell-wins-google-tpuv8e-networking-chip-d74138f8"}
+      - {name: "TPU v9 'Triggerfish'", status: reported, date: "Q4 2027", note: "Reported MediaTek design with an on-package CPU tile; volume ramp 2028", src: "Wccftech, citing FundaAI", url: "https://wccftech.com/google-mediatek-build-tpuv9-triggerfish-cpu-compute-die-one-package-agentic-ai/amp/"}
+      - {name: "TPU v10", status: rumoured, date: "—", note: "Market chatter that AMD is involved (packaging and CPU IP)", src: "DatacenterDynamics, citing SemiAnalysis", url: "https://www.datacenterdynamics.com/en/news/google-rumored-to-have-partnered-with-amd-on-tpu-v10-as-shipments-of-current-generations-revised-down-report/"}
+    users:
+      - {who: "Google (Gemini, Search, Cloud)", note: "Internal workloads; Broadcom expects Google to buy 'multi-tens of billions' of TPUs a year", src: "Broadcom Q3 FY26 call (Nasdaq)", url: "https://www.nasdaq.com/articles/broadcom-q3-earnings-call-highlights"}
+      - {who: "Anthropic", note: "Up to 1M TPUs (Oct 2025); 5 GW of new Google Cloud capacity over five years; Broadcom guides +5 GW of 8i in 2027 and +10 GW in 2028", src: "TechCrunch / Broadcom call", url: "https://techcrunch.com/2026/04/24/google-to-invest-up-to-40b-in-anthropic-in-cash-and-compute/"}
+      - {who: "Meta", note: "Multi-billion-dollar multiyear TPU rental (Feb 2026)", src: "The Decoder", url: "https://the-decoder.com/meta-signs-multi-billion-dollar-deal-to-rent-googles-tpus-in-a-direct-challenge-to-nvidias-ai-chip-dominance/"}
+      - {who: "Blackstone–Google TPU cloud", note: "Blackstone-majority venture, ~$25B including debt; first 500 MW in 2027; no anchor customer named", src: "The Next Web", url: "https://thenextweb.com/news/google-blackstone-tpu-cloud-joint-venture-5bn"}
+    volume:
+      - {note: "DIGITIMES Research forecasts 3.325M Google TPUs shipped in 2026", src: "DIGITIMES", url: "https://www.digitimes.com/news/a20251210PD211.html"}
+      - {note: "Broadcom's 2026 CoWoS wafer allocation estimate cut from 250k to 215k (SemiAnalysis)", src: "DatacenterDynamics", url: "https://www.datacenterdynamics.com/en/news/google-rumored-to-have-partnered-with-amd-on-tpu-v10-as-shipments-of-current-generations-revised-down-report/"}
+  Trainium:
+    name: AWS Trainium
+    owner: AMZN
+    summary: "Amazon's training and inference accelerator from its Annapurna Labs unit. Marvell helped design earlier generations; Alchip is reported to co-develop Trainium3 and 4. Anthropic and OpenAI are anchor users."
+    generations:
+      - {name: "Trainium2", status: shipping, date: "2025", note: "Fastest demand ramp of any Amazon chip; Amazon's custom chip business runs above $10B a year", src: "Nasdaq (Motley Fool)", url: "https://www.nasdaq.com/articles/amazon-just-shared-great-news-ai-chipmaker-hint-not-nvidia"}
+      - {name: "Trainium3", status: ramping, date: "2026", note: "Mass production early 2026; Amazon expects supply fully committed by mid-2026", src: "TrendForce / Nasdaq", url: "https://www.trendforce.com/news/?p=47625"}
+      - {name: "Trainium4", status: announced, date: "—", note: "Strong customer interest per Amazon; Alchip reported as design partner", src: "Nasdaq (Motley Fool)", url: "https://www.nasdaq.com/articles/amazon-just-shared-great-news-ai-chipmaker-hint-not-nvidia"}
+    users:
+      - {who: "Anthropic", note: "Primary training partner (Project Rainier); up to ~5 GW over time", src: "TechCrunch", url: "https://techcrunch.com/2026/04/24/google-to-invest-up-to-40b-in-anthropic-in-cash-and-compute/"}
+      - {who: "OpenAI", note: "2 GW of Trainium capacity added with Amazon's Feb 2026 investment", src: "Yahoo Finance / Reuters", url: "https://finance.yahoo.com/news/openais-110-billion-funding-round-145925079.html"}
+  MTIA:
+    name: Meta MTIA
+    owner: META
+    summary: "Meta's in-house accelerator for ranking and recommendation, moving into generative AI. Broadcom designs MTIA; GUC is reported to handle back-end work on MTIA-3."
+    generations:
+      - {name: "MTIA (Broadcom)", status: ramping, date: "Q4 FY26", note: "Broadcom expects production shipments of Meta's custom accelerator to begin in its fiscal Q4", src: "Broadcom Q3 FY26 call (Nasdaq)", url: "https://www.nasdaq.com/articles/broadcom-q3-earnings-call-highlights"}
+      - {name: "MTIA-3", status: reported, date: "H2 2026", note: "GUC reported to handle back-end design and packaging", src: "TrendForce", url: "https://www.trendforce.com/news/?p=52633"}
+    users:
+      - {who: "Meta", note: "Internal use; Meta also rents Google TPUs and buys NVIDIA and AMD GPUs", src: "The Decoder", url: "https://the-decoder.com/meta-signs-multi-billion-dollar-deal-to-rent-googles-tpus-in-a-direct-challenge-to-nvidias-ai-chip-dominance/"}
+  Maia:
+    name: Microsoft Maia
+    owner: MSFT
+    summary: "Microsoft's in-house accelerator for Azure. Marvell is reported as a design partner."
+    generations: []
+    users:
+      - {who: "Microsoft Azure", note: "Internal use alongside NVIDIA and AMD GPUs", src: "Nasdaq", url: "https://www.nasdaq.com/articles/mrvl-amzn-and-msft-breaking-down-wall-street-controversy"}
+  OpenAI-XPU:
+    name: OpenAI custom accelerator
+    owner: OpenAI
+    summary: "OpenAI's own accelerator, designed with Broadcom: 10 GW from the second half of 2026."
+    generations:
+      - {name: "First OpenAI XPU", status: ramping, date: "2H 2026", note: "10 GW collaboration with Broadcom", src: "Fierce Network deal list", url: "https://www.fierce-network.com/cloud/fierce-networks-encyclopedia-ai-deals"}
+    users:
+      - {who: "OpenAI", note: "Alongside NVIDIA (10 GW LOI) and AMD (6 GW) GPUs", src: "Fierce Network deal list", url: "https://www.fierce-network.com/cloud/fierce-networks-encyclopedia-ai-deals"}
+  GPU:
+    name: Merchant GPUs (NVIDIA, AMD)
+    owner: NVDA
+    summary: "The general-purpose path: NVIDIA's GPUs and systems, with AMD as the second source. Sold to every cloud, neocloud and model lab."
+    generations: []
+    users: []
+
+exposure:
+  - {id: AVGO, prog: TPU, level: H, conf: E, est: "Likely half or more of AI revenue", basis: "Custom XPUs were 73% of Broadcom's Q3 FY26 AI revenue; Google is its largest XPU customer and Anthropic's capacity is TPUs. The TPU share is our estimate", src: "Broadcom Q3 FY26 call (Nasdaq)", url: "https://www.nasdaq.com/articles/broadcom-q3-earnings-call-highlights"}
+  - {id: AVGO, prog: MTIA, level: M, conf: E, est: "Growing", basis: "Production shipments of Meta's accelerator from fiscal Q4 2026", src: "Broadcom Q3 FY26 call (Nasdaq)", url: "https://www.nasdaq.com/articles/broadcom-q3-earnings-call-highlights"}
+  - {id: AVGO, prog: OpenAI-XPU, level: M, conf: E, est: "Growing", basis: "10 GW collaboration starting 2H 2026", src: "Fierce Network deal list", url: "https://www.fierce-network.com/cloud/fierce-networks-encyclopedia-ai-deals"}
+  - {id: "2454.TW", prog: TPU, level: M, conf: E, est: "Small today, rising fast", basis: "Counterpoint: ~400k AI ASIC units in 2026 rising to ~5M (26% share) by 2028, all for Google so far", src: "Counterpoint", url: "https://counterpointresearch.com/en/insights/MediaTek-to-Contribute-1-in-4-AI-ASIC-Server-Compute-Shipments-in-2028"}
+  - {id: MRVL, prog: Trainium, level: H, conf: E, est: "Largest custom customer", basis: "Designed earlier Trainium generations and has a five-year supply agreement with AWS; share of new Trainium designs may fall as Alchip takes on Trainium3/4", src: "Nasdaq (Motley Fool)", url: "https://www.nasdaq.com/articles/amazon-just-shared-great-news-ai-chipmaker-hint-not-nvidia"}
+  - {id: MRVL, prog: TPU, level: L, conf: E, est: "New", basis: "Reported TPU v8e networking chip win", src: "Let's Data Science", url: "https://letsdatascience.com/news/marvell-wins-google-tpuv8e-networking-chip-d74138f8"}
+  - {id: "3661.TW", prog: Trainium, level: H, conf: E, est: "Main growth driver", basis: "Reported co-developer of Trainium3 and Trainium4", src: "TrendForce", url: "https://www.trendforce.com/news/?p=47625"}
+  - {id: "3443.TW", prog: MTIA, level: M, conf: E, est: "Material", basis: "Reported back-end partner for MTIA-3", src: "TrendForce", url: "https://www.trendforce.com/news/?p=52633"}
+  - {id: CLS, prog: TPU, level: H, conf: E, est: "Likely its largest customer", basis: "Primary manufacturing partner for Google TPU systems; largest customer 36% of Q4 2025 revenue (unnamed, likely Google)", src: "Celestica Q4 2025 call (Motley Fool)", url: "https://www.fool.com/earnings/call-transcripts/2026/01/29/celestica-cls-q4-2025-earnings-call-transcript/"}
+  - {id: LITE, prog: TPU, level: H, conf: E, est: "~25% of revenue", basis: "Optical circuit switches for TPU pods; its largest customer was 26.6% of FY2026 revenue (anonymised, widely reported as Google)", src: "Lumentum 10-K (XBRL)", url: "https://www.sec.gov/Archives/edgar/data/1633978/000162828026057358/lite-20260627.htm"}
+  - {id: GOOGL, prog: TPU, level: H, conf: D, est: "Owner", basis: "Designs the TPU and sells capacity through Google Cloud", src: "NAND Research", url: "https://nand-research.com/google-cloud-8th-generation-tpu-family-splits-training-and-inference/"}
+  - {id: AMZN, prog: Trainium, level: H, conf: D, est: "Owner", basis: "Custom chip business above $10B run rate", src: "Nasdaq (Motley Fool)", url: "https://www.nasdaq.com/articles/amazon-just-shared-great-news-ai-chipmaker-hint-not-nvidia"}
+  - {id: NVDA, prog: GPU, level: H, conf: D, est: "~90% of revenue", basis: "Data Center was $89.0B of $96.2B revenue in the quarter to July 2026", src: "NVIDIA Q2 FY27 release", url: "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-Second-Quarter-Fiscal-2027/"}
+  - {id: AMD, prog: GPU, level: M, conf: D, est: "Part of Data Center ($6.7B a quarter, with EPYC CPUs)", basis: "Instinct GPU revenue is not broken out", src: "AMD Q2 2026 release", url: "https://ir.amd.com/news-events/press-releases/detail/1295/"}
+
+# Accelerator revenue by calendar quarter (fiscal quarters mapped to the calendar quarter they mostly cover).
+# Units: USD billions. These are company-reported segment figures, not pure accelerator revenue:
+#   NVDA Data Center includes networking; AMD Data Center includes EPYC CPUs;
+#   AVGO AI semiconductors includes AI networking (~30–40%); MRVL Data Center includes optics and networking.
+accel_revenue:
+  side: {NVDA: gpu, AMD: gpu, AVGO: custom, MRVL: custom}
+  label: {NVDA: "NVIDIA Data Center", AMD: "AMD Data Center", AVGO: "Broadcom AI semis", MRVL: "Marvell Data Center"}
+  quarters:
+    - {q: "CQ3 2025", NVDA: 51.2, AMD: 4.3, AVGO: 6.5, MRVL: 1.52, notes: "NVDA FQ3'26; AMD Q3 derived from Q4's +24% q/q; AVGO FQ4'25; MRVL FQ3'26"}
+    - {q: "CQ4 2025", NVDA: 62.3, AMD: 5.4, AVGO: 8.4, MRVL: 1.65, notes: "NVDA FQ4'26; AVGO FQ1'26; MRVL FQ4'26"}
+    - {q: "CQ1 2026", NVDA: 75.2, AMD: 5.775, AVGO: 10.8, MRVL: 1.83, notes: "NVDA FQ1'27; AVGO FQ2'26; MRVL FQ1'27"}
+    - {q: "CQ2 2026", NVDA: 89.0, AMD: 6.718, AVGO: 16.7, MRVL: 2.17, notes: "NVDA FQ2'27; AVGO FQ3'26; MRVL FQ2'27"}
+    - {q: "CQ3 2026 (guide)", AVGO: 21.7, notes: "Broadcom FQ4'26 AI guidance; NVIDIA guides total revenue only ($108B)"}
+  sources:
+    - {for: "NVDA CQ2 2026", src: "NVIDIA Q2 FY27 release", url: "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-Second-Quarter-Fiscal-2027/"}
+    - {for: "NVDA CQ1 2026", src: "KuCoin summary of Q1 FY27", url: "https://www.kucoin.com/blog/in-vidia-q1-fy-2027-earnings-record-revenue-and-$91-billion-guidance-crush-wall-street-estimates"}
+    - {for: "NVDA CQ4 2025", src: "The Energy Mag", url: "https://www.theenergymag.com/news/2026-02-25/nvidia-blackwell-data-center-ai"}
+    - {for: "NVDA CQ3 2025", src: "NVIDIA Q3 FY26 release", url: "https://investor.nvidia.com/news/press-release-details/2025/NVIDIA-Announces-Financial-Results-for-Third-Quarter-Fiscal-2026/"}
+    - {for: "AVGO CQ2 2026 and guide", src: "Broadcom Q3 FY26 call (Nasdaq)", url: "https://www.nasdaq.com/articles/broadcom-q3-earnings-call-highlights"}
+    - {for: "AVGO CQ1 2026", src: "Vectorshift (Q2 FY26)", url: "https://vectorshift.ai/research/companies/broadcom/earnings/2026-q2"}
+    - {for: "AVGO CQ4 2025", src: "Constellation Research (Q1 FY26)", url: "https://www.constellationr.com/insights/news/broadcom-ai-revenue-surges-fiscal-first-quarter"}
+    - {for: "AVGO CQ3 2025", src: "Yahoo Finance (Q4 FY25 call)", url: "https://finance.yahoo.com/news/broadcom-avgo-q4-2025-earnings-135844579.html"}
+    - {for: "AMD", src: "AMD Q2 2026 release; Q4 2025 call", url: "https://ir.amd.com/news-events/press-releases/detail/1295/"}
+    - {for: "MRVL", src: "sec-api.io analysis of Marvell filings", url: "https://sec-api.io/insights/financial-analysis-of-marvell-technology-q2-fy2027-filings-and-scenarios-to-fy2030"}

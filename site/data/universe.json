@@ -1,5 +1,5 @@
 {
- "built": "2026-10-18T04:07:58+00:00",
+ "built": "2026-10-18T04:33:54+00:00",
  "layers": [
   {
    "n": 1,
@@ -9,48 +9,54 @@
   },
   {
    "n": 2,
-   "name": "Chip designers",
-   "short": "Chip designers",
+   "name": "Merchant chips (GPU, CPU, IP)",
+   "short": "Merchant chips",
    "neck": "Wafer and packaging allocation at TSMC"
   },
   {
    "n": 3,
-   "name": "Foundry & packaging",
-   "short": "Foundry & packaging",
-   "neck": "CoWoS advanced-packaging capacity"
+   "name": "Custom chip (ASIC) partners",
+   "short": "Custom ASICs",
+   "neck": "Design wins are lumpy; CoWoS allocation caps volumes"
   },
   {
    "n": 4,
+   "name": "Foundry, packaging & substrates",
+   "short": "Foundry & packaging",
+   "neck": "CoWoS capacity and high-layer substrates"
+  },
+  {
+   "n": 5,
    "name": "Memory & storage",
    "short": "Memory & storage",
    "neck": "HBM supply and HBM4 qualification"
   },
   {
-   "n": 5,
+   "n": 6,
    "name": "Networking & optics",
    "short": "Networking & optics",
    "neck": "1.6T optics and laser capacity"
   },
   {
-   "n": 6,
+   "n": 7,
    "name": "Servers & assembly",
    "short": "Servers & assembly",
    "neck": "Rack-scale integration and liquid cooling"
   },
   {
-   "n": 7,
+   "n": 8,
    "name": "Power & data centres",
    "short": "Power & DCs",
    "neck": "Grid hook-ups, gas turbines, transformers"
   },
   {
-   "n": 8,
+   "n": 9,
    "name": "Compute providers",
    "short": "Compute providers",
    "neck": "Capex budgets; neocloud financing"
   },
   {
-   "n": 9,
+   "n": 10,
    "name": "Models & applications",
    "short": "Models & apps",
    "neck": "Paid AI usage that justifies the capex"
@@ -248,40 +254,6 @@
    }
   },
   {
-   "id": "AVGO",
-   "label": "AVGO",
-   "name": "Broadcom",
-   "layer": 2,
-   "segment": "Custom ASICs & switching",
-   "yf": "AVGO",
-   "sec": "AVGO",
-   "role": "Custom accelerators (Google TPU) and Ethernet switch chips",
-   "thesis": {
-    "bull": "Custom ASIC partner for Google TPU, Meta and OpenAI; Ethernet switches",
-    "bear": "ASIC customers can switch partners or bring design in-house",
-    "watch": "AI semiconductor revenue, number of XPU customers",
-    "updated": "2026-10-16",
-    "status": "draft"
-   }
-  },
-  {
-   "id": "MRVL",
-   "label": "MRVL",
-   "name": "Marvell Technology",
-   "layer": 2,
-   "segment": "Custom ASICs & optics DSP",
-   "yf": "MRVL",
-   "sec": "MRVL",
-   "role": "Custom silicon and optical DSPs",
-   "thesis": {
-    "bull": "Custom silicon and optical DSPs for AWS and Microsoft",
-    "bear": "Lumpy design-win cadence; risk of losing a socket",
-    "watch": "Custom XPU revenue, optics growth",
-    "updated": "2026-10-16",
-    "status": "draft"
-   }
-  },
-  {
    "id": "ARM",
    "label": "ARM",
    "name": "Arm Holdings",
@@ -316,10 +288,95 @@
    }
   },
   {
+   "id": "AVGO",
+   "label": "AVGO",
+   "name": "Broadcom",
+   "layer": 3,
+   "segment": "Custom ASICs & networking",
+   "yf": "AVGO",
+   "sec": "AVGO",
+   "role": "Designs and supplies Google TPUs and other hyperscaler XPUs; Ethernet switch chips",
+   "thesis": {
+    "bull": "Custom ASIC partner for Google TPU, Meta and OpenAI; Ethernet switches",
+    "bear": "ASIC customers can switch partners or bring design in-house",
+    "watch": "AI semiconductor revenue, number of XPU customers",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
+  },
+  {
+   "id": "MRVL",
+   "label": "MRVL",
+   "name": "Marvell Technology",
+   "layer": 3,
+   "segment": "Custom ASICs & optics DSP",
+   "yf": "MRVL",
+   "sec": "MRVL",
+   "role": "Custom silicon and optical DSPs",
+   "thesis": {
+    "bull": "Custom silicon and optical DSPs for AWS and Microsoft",
+    "bear": "Lumpy design-win cadence; risk of losing a socket",
+    "watch": "Custom XPU revenue, optics growth",
+    "updated": "2026-10-16",
+    "status": "draft"
+   }
+  },
+  {
+   "id": "2454.TW",
+   "label": "MediaTek",
+   "name": "MediaTek",
+   "layer": 3,
+   "segment": "Custom ASICs",
+   "yf": "2454.TW",
+   "sec": null,
+   "role": "Co-designs a Google TPU v8 variant (reported); smartphone and edge chips",
+   "thesis": {
+    "bull": "Second-largest custom AI chip vendor by 2028 on Counterpoint's numbers, through Google's TPU programme",
+    "bear": "TPU work is reported, not confirmed; ASIC margins are below its core chip business and volumes depend on CoWoS allocation",
+    "watch": "TPU v8/v9 production timing, AI ASIC revenue disclosure, new hyperscaler wins",
+    "updated": "2026-10-18",
+    "status": "draft"
+   }
+  },
+  {
+   "id": "3661.TW",
+   "label": "Alchip",
+   "name": "Alchip Technologies",
+   "layer": 3,
+   "segment": "ASIC design services",
+   "yf": "3661.TW",
+   "sec": null,
+   "role": "ASIC design partner; reported co-developer of AWS Trainium3",
+   "thesis": {
+    "bull": "Design partner for AWS Trainium3 and 4 as Amazon scales its own chips",
+    "bear": "Heavy reliance on one customer; design-service margins are thin",
+    "watch": "Trainium3 volume, Trainium4 tape-out, customer diversification",
+    "updated": "2026-10-18",
+    "status": "draft"
+   }
+  },
+  {
+   "id": "3443.TW",
+   "label": "GUC",
+   "name": "Global Unichip (GUC)",
+   "layer": 3,
+   "segment": "ASIC design services",
+   "yf": "3443.TW",
+   "sec": null,
+   "role": "TSMC-affiliated ASIC design house; reported back-end partner on Meta MTIA",
+   "thesis": {
+    "bull": "TSMC-affiliated design house with privileged access to advanced nodes and CoWoS; MTIA-3 back-end work",
+    "bear": "Project-based revenue is lumpy; roles on hyperscaler chips are reported rather than confirmed",
+    "watch": "MTIA-3 ramp, new AI ASIC projects, TSMC capacity allocation",
+    "updated": "2026-10-18",
+    "status": "draft"
+   }
+  },
+  {
    "id": "TSM",
    "label": "TSM",
    "name": "TSMC",
-   "layer": 3,
+   "layer": 4,
    "segment": "Foundry",
    "yf": "TSM",
    "sec": "TSM",
@@ -336,7 +393,7 @@
    "id": "005930.KS",
    "label": "Samsung",
    "name": "Samsung Electronics",
-   "layer": 3,
+   "layer": 4,
    "segment": "Foundry & memory",
    "yf": "005930.KS",
    "sec": null,
@@ -353,7 +410,7 @@
    "id": "AMKR",
    "label": "AMKR",
    "name": "Amkor Technology",
-   "layer": 3,
+   "layer": 4,
    "segment": "OSAT",
    "yf": "AMKR",
    "sec": "AMKR",
@@ -367,10 +424,61 @@
    }
   },
   {
+   "id": "ASX",
+   "label": "ASE",
+   "name": "ASE Technology",
+   "layer": 4,
+   "segment": "OSAT",
+   "yf": "ASX",
+   "sec": "ASX",
+   "role": "Largest outsourced packaging and test house; leading-edge advanced packaging",
+   "thesis": {
+    "bull": "Foundries are outsourcing more advanced packaging; leading-edge packaging revenue targeted to double to at least $7.5B in 2027",
+    "bear": "Record capex of $10.5B in 2026 raises risk if AI demand slows",
+    "watch": "Leading-edge packaging revenue, CoWoS-like outsourcing from TSMC, capex",
+    "updated": "2026-10-18",
+    "status": "draft"
+   }
+  },
+  {
+   "id": "4062.T",
+   "label": "Ibiden",
+   "name": "Ibiden",
+   "layer": 4,
+   "segment": "Substrates",
+   "yf": "4062.T",
+   "sec": null,
+   "role": "Leader in high-layer ABF substrates for AI accelerators (~35% share)",
+   "thesis": {
+    "bull": "Leader in high-layer ABF substrates (~35% share), a bottleneck for large AI packages",
+    "bear": "Capacity additions by Unimicron, Shinko and AT&S; customer concentration in NVIDIA",
+    "watch": "AI substrate capacity, layer-count yields, Broadcom's in-house substrate plans",
+    "updated": "2026-10-18",
+    "status": "draft"
+   }
+  },
+  {
+   "id": "3037.TW",
+   "label": "Unimicron",
+   "name": "Unimicron Technology",
+   "layer": 4,
+   "segment": "Substrates & PCB",
+   "yf": "3037.TW",
+   "sec": null,
+   "role": "ABF substrates (~14% share) and PCBs",
+   "thesis": {
+    "bull": "Second-tier ABF supplier gaining as substrate demand outruns Ibiden's capacity",
+    "bear": "No proven volume yield at the highest layer counts for GPU-class packages",
+    "watch": "High-layer substrate qualification, utilisation, pricing",
+    "updated": "2026-10-18",
+    "status": "draft"
+   }
+  },
+  {
    "id": "000660.KS",
    "label": "SK Hynix",
    "name": "SK Hynix",
-   "layer": 4,
+   "layer": 5,
    "segment": "DRAM & HBM",
    "yf": "000660.KS",
    "sec": null,
@@ -387,7 +495,7 @@
    "id": "MU",
    "label": "MU",
    "name": "Micron Technology",
-   "layer": 4,
+   "layer": 5,
    "segment": "DRAM & HBM",
    "yf": "MU",
    "sec": "MU",
@@ -404,7 +512,7 @@
    "id": "SNDK",
    "label": "SNDK",
    "name": "SanDisk",
-   "layer": 4,
+   "layer": 5,
    "segment": "NAND & SSD",
    "yf": "SNDK",
    "sec": "SNDK",
@@ -421,7 +529,7 @@
    "id": "WDC",
    "label": "WDC",
    "name": "Western Digital",
-   "layer": 4,
+   "layer": 5,
    "segment": "Hard drives",
    "yf": "WDC",
    "sec": "WDC",
@@ -438,7 +546,7 @@
    "id": "ANET",
    "label": "ANET",
    "name": "Arista Networks",
-   "layer": 5,
+   "layer": 6,
    "segment": "Ethernet switches",
    "yf": "ANET",
    "sec": "ANET",
@@ -455,7 +563,7 @@
    "id": "COHR",
    "label": "COHR",
    "name": "Coherent",
-   "layer": 5,
+   "layer": 6,
    "segment": "Optical transceivers",
    "yf": "COHR",
    "sec": "COHR",
@@ -472,7 +580,7 @@
    "id": "LITE",
    "label": "LITE",
    "name": "Lumentum",
-   "layer": 5,
+   "layer": 6,
    "segment": "Lasers & optical switches",
    "yf": "LITE",
    "sec": "LITE",
@@ -489,7 +597,7 @@
    "id": "CRDO",
    "label": "CRDO",
    "name": "Credo Technology",
-   "layer": 5,
+   "layer": 6,
    "segment": "Copper interconnect",
    "yf": "CRDO",
    "sec": "CRDO",
@@ -506,7 +614,7 @@
    "id": "ALAB",
    "label": "ALAB",
    "name": "Astera Labs",
-   "layer": 5,
+   "layer": 6,
    "segment": "Connectivity chips",
    "yf": "ALAB",
    "sec": "ALAB",
@@ -520,10 +628,27 @@
    }
   },
   {
+   "id": "CSCO",
+   "label": "CSCO",
+   "name": "Cisco Systems",
+   "layer": 6,
+   "segment": "Ethernet switches & optics",
+   "yf": "CSCO",
+   "sec": "CSCO",
+   "role": "AI networking and Acacia optics for hyperscalers",
+   "thesis": {
+    "bull": "AI orders from hyperscalers ramping from ~$2B in FY2025 to a ~$9B FY2026 target; Acacia optics growing fast",
+    "bear": "AI is still a small share of a $63B revenue base; Arista and NVIDIA lead in AI back-end networks",
+    "watch": "Hyperscaler AI orders and revenue conversion, optics growth",
+    "updated": "2026-10-18",
+    "status": "draft"
+   }
+  },
+  {
    "id": "DELL",
    "label": "DELL",
    "name": "Dell Technologies",
-   "layer": 6,
+   "layer": 7,
    "segment": "AI servers",
    "yf": "DELL",
    "sec": "DELL",
@@ -540,7 +665,7 @@
    "id": "SMCI",
    "label": "SMCI",
    "name": "Super Micro Computer",
-   "layer": 6,
+   "layer": 7,
    "segment": "AI servers",
    "yf": "SMCI",
    "sec": "SMCI",
@@ -557,7 +682,7 @@
    "id": "HPE",
    "label": "HPE",
    "name": "Hewlett Packard Enterprise",
-   "layer": 6,
+   "layer": 7,
    "segment": "AI systems",
    "yf": "HPE",
    "sec": "HPE",
@@ -574,7 +699,7 @@
    "id": "2317.TW",
    "label": "Hon Hai",
    "name": "Hon Hai Precision (Foxconn)",
-   "layer": 6,
+   "layer": 7,
    "segment": "ODM",
    "yf": "2317.TW",
    "sec": null,
@@ -588,10 +713,61 @@
    }
   },
   {
+   "id": "CLS",
+   "label": "CLS",
+   "name": "Celestica",
+   "layer": 7,
+   "segment": "Rack integration & switches",
+   "yf": "CLS",
+   "sec": "CLS",
+   "role": "Primary manufacturing partner for Google TPU systems; 800G/1.6T switches",
+   "thesis": {
+    "bull": "Primary manufacturing partner for Google TPU systems plus 1.6T switches; 2026 revenue guided to $17B",
+    "bear": "Three customers make up over 60% of revenue; not sole-sourced on TPU programmes",
+    "watch": "TPU system volumes, 1.6T switch ramp, customer concentration",
+    "updated": "2026-10-18",
+    "status": "draft"
+   }
+  },
+  {
+   "id": "2382.TW",
+   "label": "Quanta",
+   "name": "Quanta Computer",
+   "layer": 7,
+   "segment": "ODM",
+   "yf": "2382.TW",
+   "sec": null,
+   "role": "AI server and rack ODM for hyperscalers (GPU and ASIC)",
+   "thesis": {
+    "bull": "Major AI rack ODM with order visibility to 2028; ASIC server shipments growing",
+    "bear": "Gross margin under 5% and squeezed by GB300 component costs",
+    "watch": "AI server revenue growth, margin recovery, US capacity build-out",
+    "updated": "2026-10-18",
+    "status": "draft"
+   }
+  },
+  {
+   "id": "6669.TW",
+   "label": "Wiwynn",
+   "name": "Wiwynn",
+   "layer": 7,
+   "segment": "ODM",
+   "yf": "6669.TW",
+   "sec": null,
+   "role": "Hyperscale server and rack ODM (Wistron group)",
+   "thesis": {
+    "bull": "Hyperscale rack ODM closely tied to Microsoft and Meta build-outs",
+    "bear": "High customer concentration; thin margins",
+    "watch": "Monthly sales, customer mix, ASIC rack programmes",
+    "updated": "2026-10-18",
+    "status": "draft"
+   }
+  },
+  {
    "id": "VRT",
    "label": "VRT",
    "name": "Vertiv",
-   "layer": 7,
+   "layer": 8,
    "segment": "Power & cooling",
    "yf": "VRT",
    "sec": "VRT",
@@ -608,7 +784,7 @@
    "id": "ETN",
    "label": "ETN",
    "name": "Eaton",
-   "layer": 7,
+   "layer": 8,
    "segment": "Electrical equipment",
    "yf": "ETN",
    "sec": "ETN",
@@ -625,7 +801,7 @@
    "id": "GEV",
    "label": "GEV",
    "name": "GE Vernova",
-   "layer": 7,
+   "layer": 8,
    "segment": "Generation & grid",
    "yf": "GEV",
    "sec": "GEV",
@@ -642,7 +818,7 @@
    "id": "CEG",
    "label": "CEG",
    "name": "Constellation Energy",
-   "layer": 7,
+   "layer": 8,
    "segment": "Power generation",
    "yf": "CEG",
    "sec": "CEG",
@@ -659,7 +835,7 @@
    "id": "EQIX",
    "label": "EQIX",
    "name": "Equinix",
-   "layer": 7,
+   "layer": 8,
    "segment": "Data-centre REIT",
    "yf": "EQIX",
    "sec": "EQIX",
@@ -673,10 +849,27 @@
    }
   },
   {
+   "id": "2308.TW",
+   "label": "Delta",
+   "name": "Delta Electronics",
+   "layer": 8,
+   "segment": "Power & cooling",
+   "yf": "2308.TW",
+   "sec": null,
+   "role": "Power supplies, 800V DC power and liquid cooling for AI racks",
+   "thesis": {
+    "bull": "Power supplies and cooling for AI racks; partner for NVIDIA's 800V DC architecture",
+    "bear": "Competition from Lite-On and others in high-voltage DC power",
+    "watch": "800V DC adoption timing, data-centre power revenue share",
+    "updated": "2026-10-18",
+    "status": "draft"
+   }
+  },
+  {
    "id": "MSFT",
    "label": "MSFT",
    "name": "Microsoft",
-   "layer": 8,
+   "layer": 9,
    "segment": "Hyperscaler",
    "yf": "MSFT",
    "sec": "MSFT",
@@ -705,7 +898,7 @@
    "id": "AMZN",
    "label": "AMZN",
    "name": "Amazon",
-   "layer": 8,
+   "layer": 9,
    "segment": "Hyperscaler",
    "yf": "AMZN",
    "sec": "AMZN",
@@ -741,7 +934,7 @@
    "id": "GOOGL",
    "label": "GOOGL",
    "name": "Alphabet",
-   "layer": 8,
+   "layer": 9,
    "segment": "Hyperscaler",
    "yf": "GOOGL",
    "sec": "GOOGL",
@@ -791,7 +984,7 @@
    "id": "ORCL",
    "label": "ORCL",
    "name": "Oracle",
-   "layer": 8,
+   "layer": 9,
    "segment": "Hyperscaler",
    "yf": "ORCL",
    "sec": "ORCL",
@@ -863,7 +1056,7 @@
    "id": "CRWV",
    "label": "CRWV",
    "name": "CoreWeave",
-   "layer": 8,
+   "layer": 9,
    "segment": "Neocloud",
    "yf": "CRWV",
    "sec": "CRWV",
@@ -976,7 +1169,7 @@
    "id": "NBIS",
    "label": "NBIS",
    "name": "Nebius Group",
-   "layer": 8,
+   "layer": 9,
    "segment": "Neocloud",
    "yf": "NBIS",
    "sec": "NBIS",
@@ -1029,7 +1222,7 @@
    "id": "META",
    "label": "META",
    "name": "Meta Platforms",
-   "layer": 9,
+   "layer": 10,
    "segment": "Consumer AI & ads",
    "yf": "META",
    "sec": "META",
@@ -1072,7 +1265,7 @@
    "id": "PLTR",
    "label": "PLTR",
    "name": "Palantir",
-   "layer": 9,
+   "layer": 10,
    "segment": "Enterprise AI software",
    "yf": "PLTR",
    "sec": "PLTR",
@@ -1089,7 +1282,7 @@
    "id": "NOW",
    "label": "NOW",
    "name": "ServiceNow",
-   "layer": 9,
+   "layer": 10,
    "segment": "Enterprise AI software",
    "yf": "NOW",
    "sec": "NOW",
@@ -1106,7 +1299,7 @@
    "id": "OpenAI",
    "label": "OpenAI",
    "name": "OpenAI",
-   "layer": 9,
+   "layer": 10,
    "segment": "Model lab (private)",
    "yf": null,
    "sec": null,
@@ -1143,7 +1336,7 @@
    "id": "Anthropic",
    "label": "Anthropic",
    "name": "Anthropic",
-   "layer": 9,
+   "layer": 10,
    "segment": "Model lab (private)",
    "yf": null,
    "sec": null,
@@ -1156,6 +1349,22 @@
     "updated": "2026-10-16",
     "status": "draft"
    }
+  }
+ ],
+ "watchlist": [
+  {
+   "id": "300308.SZ",
+   "label": "Innolight",
+   "name": "Zhongji Innolight",
+   "segment": "Optical transceivers",
+   "reason": "A leading 800G/1.6T transceiver maker for NVIDIA and Google. Held for review: China A-share (Stock Connect access from Singapore), patchy free fundamentals, no listed options."
+  },
+  {
+   "id": "300502.SZ",
+   "label": "Eoptolink",
+   "name": "Eoptolink Technology",
+   "segment": "Optical transceivers",
+   "reason": "High-speed optical modules for hyperscalers. Held for review for the same reasons as Innolight."
   }
  ]
 }

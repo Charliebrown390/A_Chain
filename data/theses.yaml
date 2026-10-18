@@ -265,3 +265,69 @@ theses:
     watch: Revenue run-rate, compute deals
     updated: '2026-10-16'
     status: draft
+  2454.TW:
+    bull: Second-largest custom AI chip vendor by 2028 on Counterpoint's numbers, through Google's TPU programme
+    bear: TPU work is reported, not confirmed; ASIC margins are below its core chip business and volumes depend on CoWoS allocation
+    watch: TPU v8/v9 production timing, AI ASIC revenue disclosure, new hyperscaler wins
+    updated: '2026-10-18'
+    status: draft
+  3661.TW:
+    bull: Design partner for AWS Trainium3 and 4 as Amazon scales its own chips
+    bear: Heavy reliance on one customer; design-service margins are thin
+    watch: Trainium3 volume, Trainium4 tape-out, customer diversification
+    updated: '2026-10-18'
+    status: draft
+  3443.TW:
+    bull: TSMC-affiliated design house with privileged access to advanced nodes and CoWoS; MTIA-3 back-end work
+    bear: Project-based revenue is lumpy; roles on hyperscaler chips are reported rather than confirmed
+    watch: MTIA-3 ramp, new AI ASIC projects, TSMC capacity allocation
+    updated: '2026-10-18'
+    status: draft
+  ASX:
+    bull: Foundries are outsourcing more advanced packaging; leading-edge packaging revenue targeted to double to at least $7.5B in 2027
+    bear: Record capex of $10.5B in 2026 raises risk if AI demand slows
+    watch: Leading-edge packaging revenue, CoWoS-like outsourcing from TSMC, capex
+    updated: '2026-10-18'
+    status: draft
+  4062.T:
+    bull: Leader in high-layer ABF substrates (~35% share), a bottleneck for large AI packages
+    bear: Capacity additions by Unimicron, Shinko and AT&S; customer concentration in NVIDIA
+    watch: AI substrate capacity, layer-count yields, Broadcom's in-house substrate plans
+    updated: '2026-10-18'
+    status: draft
+  3037.TW:
+    bull: Second-tier ABF supplier gaining as substrate demand outruns Ibiden's capacity
+    bear: No proven volume yield at the highest layer counts for GPU-class packages
+    watch: High-layer substrate qualification, utilisation, pricing
+    updated: '2026-10-18'
+    status: draft
+  CSCO:
+    bull: AI orders from hyperscalers ramping from ~$2B in FY2025 to a ~$9B FY2026 target; Acacia optics growing fast
+    bear: AI is still a small share of a $63B revenue base; Arista and NVIDIA lead in AI back-end networks
+    watch: Hyperscaler AI orders and revenue conversion, optics growth
+    updated: '2026-10-18'
+    status: draft
+  CLS:
+    bull: Primary manufacturing partner for Google TPU systems plus 1.6T switches; 2026 revenue guided to $17B
+    bear: Three customers make up over 60% of revenue; not sole-sourced on TPU programmes
+    watch: TPU system volumes, 1.6T switch ramp, customer concentration
+    updated: '2026-10-18'
+    status: draft
+  2382.TW:
+    bull: Major AI rack ODM with order visibility to 2028; ASIC server shipments growing
+    bear: Gross margin under 5% and squeezed by GB300 component costs
+    watch: AI server revenue growth, margin recovery, US capacity build-out
+    updated: '2026-10-18'
+    status: draft
+  6669.TW:
+    bull: Hyperscale rack ODM closely tied to Microsoft and Meta build-outs
+    bear: High customer concentration; thin margins
+    watch: Monthly sales, customer mix, ASIC rack programmes
+    updated: '2026-10-18'
+    status: draft
+  2308.TW:
+    bull: Power supplies and cooling for AI racks; partner for NVIDIA's 800V DC architecture
+    bear: Competition from Lite-On and others in high-voltage DC power
+    watch: 800V DC adoption timing, data-centre power revenue share
+    updated: '2026-10-18'
+    status: draft

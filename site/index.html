@@ -203,6 +203,26 @@ footer p{margin:0}
 .warnbox{margin-top:10px;padding:8px 10px;border-radius:7px;border:1px solid var(--warn);color:var(--ink);font-size:12.5px;background:color-mix(in srgb,var(--warn) 8%,var(--surface))}
 .seg{flex-wrap:wrap}
 @media (max-width:700px){.acts li{grid-template-columns:64px 1fr}.acts .pt{grid-column:2;text-align:left}}
+/* Phase 4: programmes, rumoured links, GPU vs custom */
+.legend .sw.rum{border-top:2px dashed var(--muted);opacity:.8}
+.map.prog .chip:not(.inprog){opacity:.18!important}
+.map.prog .chip.inprog{opacity:1!important}
+.progbar{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin:10px 0 0}
+.panelcard{margin-top:12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.panelcard h2{font-size:20px;font-weight:700}
+.phead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.psum{margin:8px 0 0;max-width:80ch;font-size:13px}
+.tl{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.tl li{display:grid;grid-template-columns:92px minmax(120px,190px) 90px 1fr;gap:8px;align-items:baseline;font-size:12.5px;padding:6px 0;border-bottom:1px solid var(--line)}
+.tl .tln{color:var(--muted)}.tl a{color:var(--copper)}
+.pgrid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr))}
+.accgrid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));align-items:start;margin-top:8px}
+.accel{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.accel h2{font-size:18px;font-weight:650}.accel .hint{color:var(--muted);font-size:12px;margin:2px 0 0}
+.watch{margin-top:16px;padding:12px 16px;border:1px dashed var(--line);border-radius:10px;background:var(--bg)}
+.watch h3{font-size:15px;margin-bottom:4px}
+.fambadge{display:inline-block;font-family:var(--f-mono);font-size:10.5px;padding:1px 6px;border-radius:4px;background:var(--surface-2);color:var(--ink);margin:2px 4px 2px 0}
+@media (max-width:700px){.tl li{grid-template-columns:84px 1fr}.tl .tln{grid-column:1/-1}}
 /* Phase 3: credit, financing links, stress test */
 .pulse.four{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
 .legend .sw.fin2{border-top:2px dashed var(--warn)}
@@ -253,7 +273,7 @@ footer p{margin:0}
     <div>
       <p class="eyebrow">Silicon → systems → services</p>
       <h1>AI Supply Chain Monitor</h1>
-      <p class="sub">44 companies across nine layers of the AI build-out, linked by sourced supply, contract and capital relationships. Tap any company to trace who it sells to and who it depends on, then open its price, volatility, financials, analyst calls and news.</p>
+      <p class="sub"><span id="ncos">55</span> companies across ten layers of the AI build-out, from merchant GPUs and custom chips like Google's TPU to the clouds that run them, linked by sourced supply, contract, capital and credit relationships. Tap any company to trace who it sells to and who it depends on, then open its price, volatility, financials, analyst calls and news.</p>
     </div>
     <div class="stamp">
       <span class="badge" id="badge">Loading data…</span>
@@ -308,6 +328,9 @@ footer p{margin:0}
     <div id="stOut"></div>
   </section>
 
+  <section class="accel" id="accel" hidden></section>
+  <section class="watch" id="watch" hidden></section>
+
   <div class="controls">
     <div><span class="ctl-label">Colour by</span>
       <div class="seg" id="seg" role="group" aria-label="Colour companies by">
@@ -324,9 +347,13 @@ footer p{margin:0}
       <span><span class="sw" style="border-top:3px dotted var(--copper)"></span>Inferred, size unknown</span>
       <span><span class="sw f"></span>Capital tie</span>
       <span><span class="sw fin2"></span>Credit support (backstop, guarantee)</span>
+      <span><span class="sw rum"></span>Rumoured</span>
       <span class="scale"><span id="sc-lo">−20%</span><b></b><span id="sc-hi">+20%</span></span>
     </div>
   </div>
+
+  <div class="progbar"><span class="ctl-label">Chip programme</span><div class="seg" id="progSeg" role="group" aria-label="Filter the map by chip programme"></div></div>
+  <section class="panelcard" id="progPanel" hidden></section>
 
   <div class="main">
     <div class="map" id="map"><svg id="wires" aria-hidden="true"></svg></div>
@@ -367,10 +394,10 @@ const load=u=>fetch(u,{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error(u+" 
 const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
 
 (async()=>{
-let U,E,D,M,NW,IV;
+let U,E,D,M,NW,IV,PR;
 try{
   [U,E]=await Promise.all([load("data/universe.json"),load("data/edges.json")]);
-  [D,M,NW,IV]=await Promise.all(["data/disclosures.json","data/market.json","data/news.json","data/iv.json"].map(u=>load(u).catch(()=>({companies:{}}))));
+  [D,M,NW,IV,PR]=await Promise.all(["data/disclosures.json","data/market.json","data/news.json","data/iv.json","data/programmes.json"].map(u=>load(u).catch(()=>({companies:{}}))));
 }catch(err){$("#map").insertAdjacentHTML("beforeend",`<p class="flag">The data files could not be loaded (${esc(err.message)}). Refresh the page; if it persists, the last data build may have failed.</p>`);return}
 
 const LAYERS=U.layers, MK=M.companies||{}, NEWS=NW.companies||{}, IVS=IV.companies||{}, DISC=D.companies||{};
@@ -387,7 +414,7 @@ const COS=U.companies.map(u=>{
   c.cr=m.credit||null;c.funding=u.funding||null;
   BY[c.t]=c;return c;
 });
-const EDGES=E.edges.map(e=>({f:e.from,t:e.to,ty:e.type,st:e.strength,p:e.pct??null,usd:e.usd_bn??null,gw:e.gw??null,cf:e.conf,kind:e.kind||null,note:e.note||"",src:e.src||"",url:e.url||"",asof:e.as_of||""}));
+const EDGES=E.edges.map(e=>({f:e.from,t:e.to,ty:e.type,st:e.strength,p:e.pct??null,usd:e.usd_bn??null,gw:e.gw??null,cf:e.conf,kind:e.kind||null,fam:e.fam||[],role:e.role||null,note:e.note||"",src:e.src||"",url:e.url||"",asof:e.as_of||""}));
 
 const live=COS.some(c=>c.has);
 const pxDate=median(COS.filter(c=>c.has&&c.ccy==="USD").map(c=>Date.parse(c.date)));
@@ -395,6 +422,9 @@ const nyNow=(()=>{const f=new Intl.DateTimeFormat("en-US",{timeZone:"America/New
 const weekend=nyNow.wd==="Sat"||nyNow.wd==="Sun",mktOpen=!weekend&&nyNow.hm>=570&&nyNow.hm<960;
 const lastClose=pxDate?new Date(pxDate):null,lcTxt=lastClose?lastClose.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"}):"";
 $("#badge").textContent=!live?"Market data unavailable":mktOpen?`Prices to close of ${lcTxt}`:`Markets closed · close of ${lcTxt}`;
+$("#ncos").textContent=U.companies.length;
+const FAILS=M.failures||[];
+if(FAILS.length)$("#built").insertAdjacentHTML("afterend",`<span class="mono" style="color:var(--down)">${FAILS.length} fetch failure${FAILS.length>1?"s":""} at last refresh (last good data kept): ${FAILS.map(f=>esc(f.id)+" "+esc(f.what)).join(", ")}</span>`);
 if(live&&!mktOpen)$("#stampText").textContent=weekend?`US markets are closed for the weekend. Prices, moves and volatility are as of the last session (${lcTxt}); they update after Monday's close.`:`US markets are closed. Prices, moves and volatility are as of the last session (${lcTxt}).`;
 if(!live)$("#badge").style.borderColor="var(--down)";
 $("#built").textContent=[live&&pxDate?"Prices to "+fdate(new Date(pxDate).toISOString().slice(0,10)):"",M.built?"market data "+M.built.slice(0,16).replace("T"," ")+" UTC":"",NW.built?"news "+NW.built.slice(0,16).replace("T"," ")+" UTC":""].filter(Boolean).join(" · ");
@@ -491,15 +521,17 @@ paintHeat();
 let SEL=null;const svg=$("#wires");
 function drawWires(){
   const R=map.getBoundingClientRect();svg.setAttribute("viewBox",`0 0 ${R.width} ${R.height}`);
-  if(!SEL){svg.innerHTML="";return}
+  if(!SEL&&!PROG){svg.innerHTML="";return}
   const pos=t=>{const r=document.querySelector(`.chip[data-t="${CSS.escape(t)}"]`).getBoundingClientRect();return{x:r.left-R.left+r.width/2,y:r.top-R.top+r.height/2,h:r.height}};
   let out="";
-  EDGES.filter(e=>e.f===SEL||e.t===SEL).forEach(e=>{
+  const list=PROG?EDGES.filter(e=>e.fam.includes(PROG)):EDGES.filter(e=>e.f===SEL||e.t===SEL);
+  list.forEach(e=>{
     const a=pos(e.f),b=pos(e.t);let d;
     if(Math.abs(a.y-b.y)<8){const up=Math.max(28,Math.abs(a.x-b.x)*.25);d=`M${a.x} ${a.y-a.h/2}C${a.x} ${a.y-up} ${b.x} ${b.y-up} ${b.x} ${b.y-b.h/2}`}
     else{const dir=b.y>a.y?1:-1,dy=Math.max(30,Math.abs(b.y-a.y)*.45);d=`M${a.x} ${a.y+dir*a.h/2}C${a.x} ${a.y+dir*dy} ${b.x} ${b.y-dir*dy} ${b.x} ${b.y-dir*b.h/2}`}
     const cap=e.ty==="capital",fin=e.ty==="financing",w=cap||fin?1.8:e.p!=null?Math.min(5.5,1.2+e.p/10):({H:3.4,M:2,L:1.1})[e.st]||1.5;
-    out+=`<path d="${d}" fill="none" stroke="var(${cap?"--fin":fin?"--warn":"--copper"})" stroke-width="${w}" stroke-linecap="round" ${cap?'stroke-dasharray="5 4"':fin?'stroke-dasharray="7 3"':e.cf==="I"?'stroke-dasharray="1.5 4"':""} opacity=".9"/>`;
+    const rum=e.cf==="R",hl=PROG&&SEL&&(e.f===SEL||e.t===SEL);
+    out+=`<path d="${d}" fill="none" stroke="var(${rum?"--muted":cap?"--fin":fin?"--warn":"--copper"})" stroke-width="${hl?w+1.5:w}" stroke-linecap="round" ${rum?'stroke-dasharray="3 5"':cap?'stroke-dasharray="5 4"':fin?'stroke-dasharray="7 3"':e.cf==="I"?'stroke-dasharray="1.5 4"':""} opacity="${PROG&&SEL&&!hl?0.45:0.9}"/>`;
   });
   svg.innerHTML=out;
 }
@@ -650,7 +682,7 @@ function tabNews(c){
   return `${own.length?`<p class="sec">About ${esc(c.lab)}</p><ul class="news">${own.map(li).join("")}</ul>`:`<p class="mut">No headlines naming ${esc(c.lab)} in the last four days.</p>`}${oth.length?`<p class="sec">Broader stories in its feed</p><ul class="news">${oth.map(li).join("")}</ul>`:""}<p class="note">Headlines from Yahoo Finance's feed for ${esc(c.yf||c.lab)}, refreshed every three hours.</p>`;
 }
 
-const CONFT={D:"Disclosed",E:"Estimated",I:"Inferred"};
+const CONFT={D:"Disclosed",E:"Estimated",I:"Inferred",R:"Rumoured"};
 function facts(e){const b=[];if(e.p!=null)b.push(`≈${e.p}% of ${esc(BY[e.f].lab)} revenue`);if(e.usd)b.push(`$${e.usd}B`);if(e.gw)b.push(`${e.gw} GW`);return b.join(" · ")}
 function linkRow(o,e){
   const f=facts(e),src=e.url?`<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.src||"source")}</a>`:"";
@@ -672,20 +704,22 @@ function tabLinks(c){
   if(known.length){const tot=known.reduce((x,e)=>x+e.p,0),hhi=known.reduce((x,e)=>x+(e.p/100)**2,0);
     h+=`<div class="stats">${stat("Revenue from mapped customers",pctP(tot))}${stat("Largest",BY[known[0].t].lab+" "+pctP(known[0].p))}${stat("Concentration (HHI)",hhi.toFixed(2),hhi>.15?"down":"")}</div>`}
   h+=discBlock(c);
-  if(sells.length)h+=`<p class="sec">Sells to</p><ul class="links">${sells.map(e=>linkRow(e.t,e)).join("")}</ul>`;
-  if(buys.length)h+=`<p class="sec">Buys from</p><ul class="links">${buys.map(e=>linkRow(e.f,e)).join("")}</ul>`;
+  if(c.fams&&c.fams.size||c.expo&&c.expo.length){h+=`<p class="sec">Chip programmes</p><p style="margin:0">${[...c.fams].map(f=>`<span class="fambadge">${esc(PNAME[f]||f)}</span>`).join("")}</p>`;
+    if(c.expo.length)h+=`<ul class="links" style="margin-top:6px">${c.expo.map(x=>`<li><span class="fambadge">${esc(PNAME[x.prog]||x.prog)}</span><span><b>${({H:"High",M:"Medium",L:"Low"})[x.level]} exposure</b> · ${esc(x.est)}<br><span class="mut">${esc(x.basis)}</span> <span class="srcl"><a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.src)}</a></span></span><span class="conf ${x.conf}">${x.conf}</span></li>`).join("")}</ul>`}
+  if(buys.length)h+=`<p class="sec">Upstream: buys from</p><ul class="links">${buys.map(e=>linkRow(e.f,e)).join("")}</ul>`;
+  if(sells.length)h+=`<p class="sec">Downstream: sells to</p><ul class="links">${sells.map(e=>linkRow(e.t,e)).join("")}</ul>`;
   if(fin.length)h+=`<p class="sec">Capital ties</p><ul class="links">${fin.map(e=>{const o=e.f===c.t?e.t:e.f;return linkRow(o,{...e,note:(e.f===c.t?"Invests in ":"Backed by ")+BY[o].lab+": "+e.note})}).join("")}</ul>`;
   if(fcs.length)h+=`<p class="sec">Credit support</p><ul class="links">${fcs.map(e=>{const o=e.f===c.t?e.t:e.f;return linkRow(o,{...e,note:(e.f===c.t?`Supports ${BY[o].lab} (${KIND[e.kind]||e.kind}): `:`Supported by ${BY[o].lab} (${KIND[e.kind]||e.kind}): `)+e.note})}).join("")}</ul>`;
   const circ=fin.concat(fcs).filter(f=>EDGES.some(e=>(e.ty==="supply"||e.ty==="contract")&&((e.f===f.f&&e.t===f.t)||(e.f===f.t&&e.t===f.f))));
   if(circ.length)h+=`<div class="flag"><b>Circularity flag.</b> ${esc(c.lab)} has capital ties to ${[...new Set(circ.map(f=>BY[f.f===c.t?f.t:f.f].lab))].map(esc).join(", ")} and also trades with them, so part of this demand is financed within the relationship.</div>`;
-  h+=`<p class="note">D = disclosed by a party in a filing or official release · E = estimated or reported, not confirmed · I = inferred; size not disclosed · C = announced contract.</p>`;
+  h+=`<p class="note">D = disclosed by a party in a filing or official release · E = estimated or reported, not confirmed · R = rumoured · I = inferred; size not disclosed · C = announced contract.</p>`;
   return h;
 }
 function tabThesis(c){
   const T=c.th||{},L=LAYERS[c.layer-1];
   return `<div class="thesis">${T.status?`<p class="mut" style="margin:0">Status: <b>${esc(T.status)}</b>${T.updated?` · updated ${esc(T.updated)}`:""}</p>`:""}
   <p class="sec">Bull case</p><p>${esc(T.bull||"—")}.</p><p class="sec">Bear case</p><p>${esc(T.bear||"—")}.</p><p class="sec">What to watch</p><p>${esc(T.watch||"—")}.</p>
-  <p class="sec">Position in the chain</p><p>Layer ${c.layer} of 9: ${esc(L.name)} · ${esc(c.segment||"")}. ${esc(c.role||"")}. Layer constraint: ${esc(L.neck)}.</p></div>
+  <p class="sec">Position in the chain</p><p>Layer ${c.layer} of ${LAYERS.length}: ${esc(L.name)} · ${esc(c.segment||"")}. ${esc(c.role||"")}. Layer constraint: ${esc(L.neck)}.</p></div>
   <p class="note">Thesis notes live in <span class="mono">data/theses.yaml</span> in the repository; edit them there and the page updates on the next deploy.</p>`;
 }
 
@@ -839,6 +873,71 @@ function clearStress(){STRESS=null;$("#stClear").hidden=true;map.classList.remov
   $("#stClear").addEventListener("click",clearStress);
 }
 
+/* ---------- programmes (chip ecosystems) ---------- */
+const PG=PR.programmes||{},EXPO=PR.exposure||[],ACC=PR.accel_revenue||null;
+const PNAME={GPU:"GPU",TPU:"TPU",Trainium:"Trainium",MTIA:"MTIA",Maia:"Maia","OpenAI-XPU":"OpenAI chip"};
+const STATUS={shipping:"s3",ramping:"s2",announced:"s1",reported:"s1",rumoured:"s0"};
+let PROG=null;
+function progMembers(p){const s=new Set();EDGES.forEach(e=>{if((e.fam||[]).includes(p)){s.add(e.f);s.add(e.t)}});if(PG[p]?.owner)s.add(PG[p].owner);EXPO.filter(x=>x.prog===p).forEach(x=>s.add(x.id));return s}
+COS.forEach(c=>{c.fams=new Set();EDGES.forEach(e=>{if(e.f===c.t||e.t===c.t)(e.fam||[]).forEach(f=>c.fams.add(f))});c.expo=EXPO.filter(x=>x.id===c.t)});
+function paintProg(){
+  const box=$("#progPanel");
+  document.querySelectorAll("#progSeg button").forEach(b=>b.setAttribute("aria-pressed",(b.dataset.p||null)===PROG));
+  map.classList.toggle("prog",!!PROG);
+  const mem=PROG?progMembers(PROG):new Set();
+  document.querySelectorAll(".chip").forEach(el=>el.classList.toggle("inprog",mem.has(el.dataset.t)));
+  drawWires();
+  if(!PROG){box.hidden=true;box.innerHTML="";return}
+  const P=PG[PROG]||{},ex=EXPO.filter(x=>x.prog===PROG).sort((a,b)=>"HML".indexOf(a.level)-"HML".indexOf(b.level));
+  const links=EDGES.filter(e=>(e.fam||[]).includes(PROG));
+  box.hidden=false;
+  box.innerHTML=`<div class="phead"><div><p class="eyebrow">Programme · ${mem.size} companies · ${links.length} links</p><h2>${esc(P.name||PNAME[PROG])}</h2></div>${P.owner?`<button class="go" type="button" data-go="${esc(P.owner)}">Owner: ${esc(BY[P.owner]?.lab||P.owner)}</button>`:""}</div>
+  ${P.summary?`<p class="psum">${esc(P.summary)}</p>`:""}
+  ${(P.generations||[]).length?`<p class="sec">Generations</p><ol class="tl">${P.generations.map(g=>`<li><span class="ddchip ${STATUS[g.status]||"s2"}">${esc(g.status)}</span><b>${esc(g.name)}</b><span class="mut num">${esc(g.date||"")}</span><span class="tln">${esc(g.note||"")} <a href="${esc(g.url)}" target="_blank" rel="noopener">${esc(g.src)}</a></span></li>`).join("")}</ol>`:""}
+  <div class="pgrid">
+  ${(P.users||[]).length?`<div><p class="sec">Who uses it</p><ul class="news">${P.users.map(u=>`<li><b>${esc(u.who)}</b> · ${esc(u.note)}<span class="meta"><a href="${esc(u.url)}" target="_blank" rel="noopener">${esc(u.src)}</a></span></li>`).join("")}</ul>${(P.volume||[]).length?`<p class="sec">Volumes</p><ul class="news">${P.volume.map(v=>`<li>${esc(v.note)}<span class="meta"><a href="${esc(v.url)}" target="_blank" rel="noopener">${esc(v.src)}</a></span></li>`).join("")}</ul>`:""}</div>`:""}
+  ${ex.length?`<div><p class="sec">Exposure: how much each company depends on it</p><ul class="links">${ex.map(x=>`<li><button class="go" type="button" data-go="${esc(x.id)}">${esc(BY[x.id]?.lab||x.id)}</button><span><b>${({H:"High",M:"Medium",L:"Low"})[x.level]}</b> · ${esc(x.est)}<br><span class="mut">${esc(x.basis)}</span> <span class="srcl"><a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.src)}</a></span></span><span class="conf ${x.conf}" title="${CONFT[x.conf]}">${x.conf}</span></li>`).join("")}</ul></div>`:""}
+  </div>
+  <p class="note">The map now shows only this programme's chain: dimmed companies have no tagged link to it. Tap a company for its own links, or choose All to reset.</p>`;
+  box.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>select(b.dataset.go,true)));
+}
+{
+  const seg=$("#progSeg");
+  ["",...Object.keys(PNAME).filter(k=>PG[k])].forEach(k=>{const b=document.createElement("button");b.type="button";b.id="pg-"+(k||"all");b.dataset.p=k;b.textContent=k?PNAME[k]:"All";b.setAttribute("aria-pressed",String(!k));b.addEventListener("click",()=>{PROG=k||null;store.set("aiscm-prog",k);paintProg()});seg.appendChild(b)});
+  const saved=store.get("aiscm-prog");if(saved&&PG[saved])PROG=saved;
+}
+
+/* ---------- GPU vs custom silicon ---------- */
+function renderAccel(){
+  const box=$("#accel");if(!ACC||!ACC.quarters?.length){box.hidden=true;return}
+  const side=ACC.side,lab=ACC.label,Q=ACC.quarters;
+  const tot=q=>{let g=0,c=0,gn=0,cn=0;Object.keys(side).forEach(k=>{if(q[k]!=null){if(side[k]==="gpu"){g+=q[k];gn++}else{c+=q[k];cn++}}});return{g:gn?g:null,c:cn?c:null,full:gn===Object.values(side).filter(v=>v==="gpu").length&&cn===Object.values(side).filter(v=>v==="custom").length}};
+  const rows=Q.map(q=>({q:q.q,...tot(q),raw:q}));
+  const full=rows.filter(r=>r.full);
+  const W=640,H=230,L=8,R=8,T=26,B=40,n=rows.length,mx=Math.max(...rows.map(r=>Math.max(r.g||0,r.c||0)))*1.15,gw=(W-L-R)/n,bw=Math.min(34,gw/3.2);
+  let g="";
+  rows.forEach((r,i)=>{const x0=L+i*gw+gw/2;
+    [[r.g,"var(--copper)",-1],[r.c,"var(--fin)",1]].forEach(([v,col,s])=>{if(v==null)return;const h=v/mx*(H-T-B),x=x0+(s<0?-bw-2:2),y=H-B-h;g+=`<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="3" fill="${col}" fill-opacity="${r.full?0.85:0.4}"/><text x="${x+bw/2}" y="${y-5}" text-anchor="middle" font-size="11" font-family="IBM Plex Mono, monospace" fill="var(--ink)">${v.toFixed(0)}</text>`});
+    if(r.full)g+=`<text x="${x0}" y="${H-B+30}" text-anchor="middle" font-size="11" font-family="IBM Plex Mono, monospace" fill="var(--fin)">${(r.c/(r.g+r.c)*100).toFixed(1)}%</text>`;
+    g+=`<text x="${x0}" y="${H-B+15}" text-anchor="middle" font-size="11" font-family="IBM Plex Mono, monospace" fill="var(--muted)">${esc(r.q.replace(" (guide)","*"))}</text>`;
+  });
+  const keys=Object.keys(side);
+  const qq=(k,i)=>{const a=Q[i]?.[k],b=Q[i-1]?.[k];return a!=null&&b!=null?(a/b-1)*100:null};
+  const last=full[full.length-1],first=full[0];
+  box.hidden=false;
+  box.innerHTML=`<h2>GPU vs custom silicon</h2><p class="hint">Quarterly AI revenue at the GPU makers against the custom-chip vendors, in USD billions. Blue figures under each quarter are the custom vendors' implied share.</p>
+  <div class="accgrid"><div class="svgbox">${`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="GPU vs custom silicon revenue by quarter">${g}</svg>`}</div>
+  <div><div class="legend" style="margin-bottom:8px"><span><span class="sw"></span>GPU makers (${keys.filter(k=>side[k]==="gpu").map(k=>esc(BY[k]?.lab||k)).join(" + ")})</span><span><span class="sw" style="border-top-color:var(--fin)"></span>Custom vendors (${keys.filter(k=>side[k]==="custom").map(k=>esc(BY[k]?.lab||k)).join(" + ")})</span></div>
+  ${last&&first?`<p class="psum">Custom vendors' share went from <b>${(first.c/(first.g+first.c)*100).toFixed(1)}%</b> in ${esc(first.q)} to <b>${(last.c/(last.g+last.c)*100).toFixed(1)}%</b> in ${esc(last.q)}. Over the same span GPU makers' revenue grew ${((last.g/first.g-1)*100).toFixed(0)}% and custom vendors' grew ${((last.c/first.c-1)*100).toFixed(0)}%.</p>`:""}
+  <div class="sttab"><table><thead><tr><th>Quarter</th>${keys.map(k=>`<th>${esc(lab[k]||k)}</th>`).join("")}</tr></thead><tbody>${Q.map((q,i)=>`<tr><td>${esc(q.q)}</td>${keys.map(k=>`<td>${q[k]==null?"—":"$"+q[k].toFixed(1)+"B"}${qq(k,i)!=null?` <span class="mut">${pct(qq(k,i),0)}</span>`:""}</td>`).join("")}</tr>`).join("")}</tbody></table></div></div></div>
+  <p class="note">* Guidance. These are reported segment figures, not pure accelerator revenue: NVIDIA Data Center includes networking, AMD Data Center includes EPYC CPUs, Broadcom AI includes AI networking (about 30–40%), Marvell Data Center includes optics. Fiscal quarters are mapped to the calendar quarter they mostly cover. Updated by hand after each earnings season. Sources: ${(ACC.sources||[]).map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.for)}</a>`).join(", ")}.</p>`;
+}
+renderAccel();
+{
+  const W=U.watchlist||[];const box=$("#watch");
+  if(W.length){box.hidden=false;box.innerHTML=`<h3>Under review, not on the map</h3><ul class="news">${W.map(w=>`<li><b>${esc(w.name)}</b> <span class="mono mut">${esc(w.id)}</span> · ${esc(w.segment)}<span class="meta">${esc(w.reason)}</span></li>`).join("")}</ul>`}
+}
+
 /* ---------- selection + sheet ---------- */
 const narrow=()=>window.matchMedia("(max-width:1039px)").matches;
 function select(t,keepOpen){
@@ -857,7 +956,7 @@ $("#openDetail").addEventListener("click",openSheet);
 $("#scrim").addEventListener("click",closeSheet);
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSheet()});
 
-paintChips();
+paintChips();paintProg();
 let start="NVDA";try{const h=decodeURIComponent(location.hash.slice(1));if(BY[h])start=h}catch(e){}
 select(start);
 window.addEventListener("hashchange",()=>{let h="";try{h=decodeURIComponent(location.hash.slice(1))}catch(e){}if(BY[h]&&h!==SEL)select(h)});

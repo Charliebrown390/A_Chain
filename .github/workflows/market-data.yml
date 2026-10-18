@@ -45,6 +45,7 @@ jobs:
           echo "mode=$m" >> "$GITHUB_OUTPUT"
       - run: python scripts/market_data.py --mode ${{ steps.mode.outputs.mode }}
       - run: python scripts/build_site_data.py
+      - run: python -m pytest -q tests
       - name: Commit results
         run: |
           git config user.name "a-chain-bot"
