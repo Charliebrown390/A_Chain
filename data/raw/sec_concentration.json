@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-17T07:28:19+00:00",
+ "generated": "2026-10-18T04:34:23+00:00",
  "companies": {
   "ASML": {
    "cik": 937966,
@@ -5449,6 +5449,706 @@
    ],
    "errors": []
   },
+  "ARM": {
+   "cik": 1973239,
+   "filings": [
+    {
+     "kind": "annual",
+     "form": "20-F",
+     "accession": "0001973239-26-000097",
+     "filed": "2026-05-26",
+     "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm",
+     "facts": [
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
+       "value": 294000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-03-31",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
+       "value": 209000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-03-31",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityNoncurrent",
+       "value": 752000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-03-31",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityNoncurrent",
+       "value": 702000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-03-31",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.42,
+       "unit": "number",
+       "start": "2025-04-01",
+       "end": "2026-03-31",
+       "dims": {
+        "srt:MajorCustomersAxis": "arm:ThreeLargestCustomersMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.16,
+       "unit": "number",
+       "start": "2025-04-01",
+       "end": "2026-03-31",
+       "dims": {
+        "srt:MajorCustomersAxis": "arm:LargestCustomerMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.14,
+       "unit": "number",
+       "start": "2025-04-01",
+       "end": "2026-03-31",
+       "dims": {
+        "srt:MajorCustomersAxis": "arm:SecondLargestCustomerMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.12,
+       "unit": "number",
+       "start": "2025-04-01",
+       "end": "2026-03-31",
+       "dims": {
+        "srt:MajorCustomersAxis": "arm:ThirdLargestCustomerMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.49,
+       "unit": "number",
+       "start": "2024-04-01",
+       "end": "2025-03-31",
+       "dims": {
+        "srt:MajorCustomersAxis": "arm:FourCustomersMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.17,
+       "unit": "number",
+       "start": "2024-04-01",
+       "end": "2025-03-31",
+       "dims": {
+        "srt:MajorCustomersAxis": "arm:LargestCustomerMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.11,
+       "unit": "number",
+       "start": "2024-04-01",
+       "end": "2025-03-31",
+       "dims": {
+        "srt:MajorCustomersAxis": "arm:SecondLargestCustomerMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.11,
+       "unit": "number",
+       "start": "2024-04-01",
+       "end": "2025-03-31",
+       "dims": {
+        "srt:MajorCustomersAxis": "arm:ThirdLargestCustomerMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.1,
+       "unit": "number",
+       "start": "2024-04-01",
+       "end": "2025-03-31",
+       "dims": {
+        "srt:MajorCustomersAxis": "arm:FourthLargestCustomerMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.42,
+       "unit": "number",
+       "start": "2023-04-01",
+       "end": "2024-03-31",
+       "dims": {
+        "srt:MajorCustomersAxis": "arm:ThreeLargestCustomersMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.21,
+       "unit": "number",
+       "start": "2023-04-01",
+       "end": "2024-03-31",
+       "dims": {
+        "srt:MajorCustomersAxis": "arm:LargestCustomerMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.11,
+       "unit": "number",
+       "start": "2023-04-01",
+       "end": "2024-03-31",
+       "dims": {
+        "srt:MajorCustomersAxis": "arm:SecondLargestCustomerMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.1,
+       "unit": "number",
+       "start": "2023-04-01",
+       "end": "2024-03-31",
+       "dims": {
+        "srt:MajorCustomersAxis": "arm:ThirdLargestCustomerMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.22,
+       "unit": "number",
+       "start": "2025-04-01",
+       "end": "2026-03-31",
+       "dims": {
+        "srt:MajorCustomersAxis": "arm:LargestCustomerMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:AccountsReceivableMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.12,
+       "unit": "number",
+       "start": "2025-04-01",
+       "end": "2026-03-31",
+       "dims": {
+        "srt:MajorCustomersAxis": "arm:SecondLargestCustomerMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:AccountsReceivableMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.11,
+       "unit": "number",
+       "start": "2025-04-01",
+       "end": "2026-03-31",
+       "dims": {
+        "srt:MajorCustomersAxis": "arm:ThirdLargestCustomerMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:AccountsReceivableMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.1,
+       "unit": "number",
+       "start": "2025-04-01",
+       "end": "2026-03-31",
+       "dims": {
+        "srt:MajorCustomersAxis": "arm:FourthLargestCustomerMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:AccountsReceivableMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.26,
+       "unit": "number",
+       "start": "2024-04-01",
+       "end": "2025-03-31",
+       "dims": {
+        "srt:MajorCustomersAxis": "arm:LargestCustomerMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:AccountsReceivableMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.19,
+       "unit": "number",
+       "start": "2024-04-01",
+       "end": "2025-03-31",
+       "dims": {
+        "srt:MajorCustomersAxis": "arm:SecondLargestCustomerMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:AccountsReceivableMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.12,
+       "unit": "number",
+       "start": "2024-04-01",
+       "end": "2025-03-31",
+       "dims": {
+        "srt:MajorCustomersAxis": "arm:ThirdLargestCustomerMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:AccountsReceivableMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 911000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-03-31",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 915000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2024-03-31",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 1046000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-03-31",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 911000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-03-31",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 2071400000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-03-31",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligationPercentage",
+       "value": 0.28,
+       "unit": "number",
+       "start": null,
+       "end": "2026-03-31",
+       "dims": {
+        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2026-04-01"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligationPercentage",
+       "value": 0.21,
+       "unit": "number",
+       "start": null,
+       "end": "2026-03-31",
+       "dims": {
+        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2027-04-01"
+       }
+      },
+      {
+       "concept": "us-gaap:LesseeOperatingLeaseLiabilityPaymentsDue",
+       "value": 549000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-03-31",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:FinanceLeaseLiabilityPaymentsDue",
+       "value": 62000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-03-31",
+       "dims": {}
+      },
+      {
+       "concept": "arm:LesseeOperatingLeaseLeaseNotYetCommencedNumberOfLeases",
+       "value": 7.0,
+       "unit": "lease",
+       "start": "2025-04-01",
+       "end": "2026-03-31",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+       "value": 76000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-03-31",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:PurchaseObligation",
+       "value": 1056500000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-03-31",
+       "dims": {}
+      }
+     ],
+     "instance": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331_htm.xml"
+    }
+   ],
+   "errors": []
+  },
+  "INTC": {
+   "cik": 50863,
+   "filings": [
+    {
+     "kind": "quarterly",
+     "form": "10-Q",
+     "accession": "0000050863-26-000157",
+     "filed": "2026-07-24",
+     "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000157/intc-20260627.htm",
+     "facts": [
+      {
+       "concept": "us-gaap:InterestPaidNet",
+       "value": 531000000.0,
+       "unit": "usd",
+       "start": "2025-12-28",
+       "end": "2026-06-27",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:InterestPaidNet",
+       "value": 514000000.0,
+       "unit": "usd",
+       "start": "2024-12-29",
+       "end": "2025-06-28",
+       "dims": {}
+      }
+     ],
+     "instance": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000157/intc-20260627_htm.xml"
+    },
+    {
+     "kind": "annual",
+     "form": "10-K",
+     "accession": "0000050863-26-000011",
+     "filed": "2026-01-23",
+     "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+     "facts": [
+      {
+       "concept": "us-gaap:InterestPaidNet",
+       "value": 1106000000.0,
+       "unit": "usd",
+       "start": "2024-12-29",
+       "end": "2025-12-27",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:InterestPaidNet",
+       "value": 987000000.0,
+       "unit": "usd",
+       "start": "2023-12-31",
+       "end": "2024-12-28",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:InterestPaidNet",
+       "value": 613000000.0,
+       "unit": "usd",
+       "start": "2023-01-01",
+       "end": "2023-12-30",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskCreditRiskFinancialInstrumentMaximumExposure",
+       "value": 5200000000.0,
+       "unit": "usd",
+       "start": "2024-12-29",
+       "end": "2025-12-27",
+       "dims": {
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CreditConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.47,
+       "unit": "number",
+       "start": "2024-12-29",
+       "end": "2025-12-27",
+       "dims": {
+        "srt:MajorCustomersAxis": "intc:ThreeLargestCustomersMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:AccountsReceivableMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CreditConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.19,
+       "unit": "number",
+       "start": "2024-12-29",
+       "end": "2025-12-27",
+       "dims": {
+        "srt:MajorCustomersAxis": "intc:DellIncMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.19,
+       "unit": "number",
+       "start": "2023-12-31",
+       "end": "2024-12-28",
+       "dims": {
+        "srt:MajorCustomersAxis": "intc:DellIncMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.19,
+       "unit": "number",
+       "start": "2023-01-01",
+       "end": "2023-12-30",
+       "dims": {
+        "srt:MajorCustomersAxis": "intc:DellIncMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.12,
+       "unit": "number",
+       "start": "2024-12-29",
+       "end": "2025-12-27",
+       "dims": {
+        "srt:MajorCustomersAxis": "intc:LenovoGroupLimitedMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.14,
+       "unit": "number",
+       "start": "2023-12-31",
+       "end": "2024-12-28",
+       "dims": {
+        "srt:MajorCustomersAxis": "intc:LenovoGroupLimitedMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.11,
+       "unit": "number",
+       "start": "2023-01-01",
+       "end": "2023-12-30",
+       "dims": {
+        "srt:MajorCustomersAxis": "intc:LenovoGroupLimitedMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.12,
+       "unit": "number",
+       "start": "2024-12-29",
+       "end": "2025-12-27",
+       "dims": {
+        "srt:MajorCustomersAxis": "intc:HPInc.Member",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.12,
+       "unit": "number",
+       "start": "2023-12-31",
+       "end": "2024-12-28",
+       "dims": {
+        "srt:MajorCustomersAxis": "intc:HPInc.Member",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.1,
+       "unit": "number",
+       "start": "2023-01-01",
+       "end": "2023-12-30",
+       "dims": {
+        "srt:MajorCustomersAxis": "intc:HPInc.Member",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.43,
+       "unit": "number",
+       "start": "2024-12-29",
+       "end": "2025-12-27",
+       "dims": {
+        "srt:MajorCustomersAxis": "intc:ThreeLargestCustomersMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.45,
+       "unit": "number",
+       "start": "2023-12-31",
+       "end": "2024-12-28",
+       "dims": {
+        "srt:MajorCustomersAxis": "intc:ThreeLargestCustomersMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.4,
+       "unit": "number",
+       "start": "2023-01-01",
+       "end": "2023-12-30",
+       "dims": {
+        "srt:MajorCustomersAxis": "intc:ThreeLargestCustomersMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInNextTwelveMonths",
+       "value": 2500000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-12-27",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInYearTwo",
+       "value": 3826000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-12-27",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInYearThree",
+       "value": 3173000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-12-27",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInYearFour",
+       "value": 3288000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-12-27",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInYearFive",
+       "value": 2750000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-12-27",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalAfterYearFive",
+       "value": 31698000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-12-27",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LesseeOperatingLeaseLiabilityPaymentsDue",
+       "value": 422000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-12-27",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:FinanceLeaseLiabilityPaymentsDue",
+       "value": 133000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-12-27",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+       "value": 6700000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-12-27",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+       "value": 7000000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2024-12-28",
+       "dims": {}
+      }
+     ],
+     "instance": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227_htm.xml"
+    }
+   ],
+   "errors": []
+  },
   "AVGO": {
    "cik": 1730168,
    "filings": [
@@ -6933,706 +7633,6 @@
    ],
    "errors": []
   },
-  "ARM": {
-   "cik": 1973239,
-   "filings": [
-    {
-     "kind": "annual",
-     "form": "20-F",
-     "accession": "0001973239-26-000097",
-     "filed": "2026-05-26",
-     "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm",
-     "facts": [
-      {
-       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
-       "value": 294000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-03-31",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
-       "value": 209000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-03-31",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:ContractWithCustomerLiabilityNoncurrent",
-       "value": 752000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-03-31",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:ContractWithCustomerLiabilityNoncurrent",
-       "value": 702000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-03-31",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.42,
-       "unit": "number",
-       "start": "2025-04-01",
-       "end": "2026-03-31",
-       "dims": {
-        "srt:MajorCustomersAxis": "arm:ThreeLargestCustomersMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.16,
-       "unit": "number",
-       "start": "2025-04-01",
-       "end": "2026-03-31",
-       "dims": {
-        "srt:MajorCustomersAxis": "arm:LargestCustomerMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.14,
-       "unit": "number",
-       "start": "2025-04-01",
-       "end": "2026-03-31",
-       "dims": {
-        "srt:MajorCustomersAxis": "arm:SecondLargestCustomerMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.12,
-       "unit": "number",
-       "start": "2025-04-01",
-       "end": "2026-03-31",
-       "dims": {
-        "srt:MajorCustomersAxis": "arm:ThirdLargestCustomerMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.49,
-       "unit": "number",
-       "start": "2024-04-01",
-       "end": "2025-03-31",
-       "dims": {
-        "srt:MajorCustomersAxis": "arm:FourCustomersMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.17,
-       "unit": "number",
-       "start": "2024-04-01",
-       "end": "2025-03-31",
-       "dims": {
-        "srt:MajorCustomersAxis": "arm:LargestCustomerMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.11,
-       "unit": "number",
-       "start": "2024-04-01",
-       "end": "2025-03-31",
-       "dims": {
-        "srt:MajorCustomersAxis": "arm:SecondLargestCustomerMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.11,
-       "unit": "number",
-       "start": "2024-04-01",
-       "end": "2025-03-31",
-       "dims": {
-        "srt:MajorCustomersAxis": "arm:ThirdLargestCustomerMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.1,
-       "unit": "number",
-       "start": "2024-04-01",
-       "end": "2025-03-31",
-       "dims": {
-        "srt:MajorCustomersAxis": "arm:FourthLargestCustomerMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.42,
-       "unit": "number",
-       "start": "2023-04-01",
-       "end": "2024-03-31",
-       "dims": {
-        "srt:MajorCustomersAxis": "arm:ThreeLargestCustomersMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.21,
-       "unit": "number",
-       "start": "2023-04-01",
-       "end": "2024-03-31",
-       "dims": {
-        "srt:MajorCustomersAxis": "arm:LargestCustomerMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.11,
-       "unit": "number",
-       "start": "2023-04-01",
-       "end": "2024-03-31",
-       "dims": {
-        "srt:MajorCustomersAxis": "arm:SecondLargestCustomerMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.1,
-       "unit": "number",
-       "start": "2023-04-01",
-       "end": "2024-03-31",
-       "dims": {
-        "srt:MajorCustomersAxis": "arm:ThirdLargestCustomerMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.22,
-       "unit": "number",
-       "start": "2025-04-01",
-       "end": "2026-03-31",
-       "dims": {
-        "srt:MajorCustomersAxis": "arm:LargestCustomerMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:AccountsReceivableMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.12,
-       "unit": "number",
-       "start": "2025-04-01",
-       "end": "2026-03-31",
-       "dims": {
-        "srt:MajorCustomersAxis": "arm:SecondLargestCustomerMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:AccountsReceivableMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.11,
-       "unit": "number",
-       "start": "2025-04-01",
-       "end": "2026-03-31",
-       "dims": {
-        "srt:MajorCustomersAxis": "arm:ThirdLargestCustomerMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:AccountsReceivableMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.1,
-       "unit": "number",
-       "start": "2025-04-01",
-       "end": "2026-03-31",
-       "dims": {
-        "srt:MajorCustomersAxis": "arm:FourthLargestCustomerMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:AccountsReceivableMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.26,
-       "unit": "number",
-       "start": "2024-04-01",
-       "end": "2025-03-31",
-       "dims": {
-        "srt:MajorCustomersAxis": "arm:LargestCustomerMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:AccountsReceivableMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.19,
-       "unit": "number",
-       "start": "2024-04-01",
-       "end": "2025-03-31",
-       "dims": {
-        "srt:MajorCustomersAxis": "arm:SecondLargestCustomerMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:AccountsReceivableMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.12,
-       "unit": "number",
-       "start": "2024-04-01",
-       "end": "2025-03-31",
-       "dims": {
-        "srt:MajorCustomersAxis": "arm:ThirdLargestCustomerMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:AccountsReceivableMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ContractWithCustomerLiability",
-       "value": 911000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-03-31",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:ContractWithCustomerLiability",
-       "value": 915000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2024-03-31",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:ContractWithCustomerLiability",
-       "value": 1046000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-03-31",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:ContractWithCustomerLiability",
-       "value": 911000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-03-31",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
-       "value": 2071400000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-03-31",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:RevenueRemainingPerformanceObligationPercentage",
-       "value": 0.28,
-       "unit": "number",
-       "start": null,
-       "end": "2026-03-31",
-       "dims": {
-        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2026-04-01"
-       }
-      },
-      {
-       "concept": "us-gaap:RevenueRemainingPerformanceObligationPercentage",
-       "value": 0.21,
-       "unit": "number",
-       "start": null,
-       "end": "2026-03-31",
-       "dims": {
-        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2027-04-01"
-       }
-      },
-      {
-       "concept": "us-gaap:LesseeOperatingLeaseLiabilityPaymentsDue",
-       "value": 549000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-03-31",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:FinanceLeaseLiabilityPaymentsDue",
-       "value": 62000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-03-31",
-       "dims": {}
-      },
-      {
-       "concept": "arm:LesseeOperatingLeaseLeaseNotYetCommencedNumberOfLeases",
-       "value": 7.0,
-       "unit": "lease",
-       "start": "2025-04-01",
-       "end": "2026-03-31",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
-       "value": 76000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-03-31",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:PurchaseObligation",
-       "value": 1056500000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-03-31",
-       "dims": {}
-      }
-     ],
-     "instance": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331_htm.xml"
-    }
-   ],
-   "errors": []
-  },
-  "INTC": {
-   "cik": 50863,
-   "filings": [
-    {
-     "kind": "quarterly",
-     "form": "10-Q",
-     "accession": "0000050863-26-000157",
-     "filed": "2026-07-24",
-     "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000157/intc-20260627.htm",
-     "facts": [
-      {
-       "concept": "us-gaap:InterestPaidNet",
-       "value": 531000000.0,
-       "unit": "usd",
-       "start": "2025-12-28",
-       "end": "2026-06-27",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:InterestPaidNet",
-       "value": 514000000.0,
-       "unit": "usd",
-       "start": "2024-12-29",
-       "end": "2025-06-28",
-       "dims": {}
-      }
-     ],
-     "instance": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000157/intc-20260627_htm.xml"
-    },
-    {
-     "kind": "annual",
-     "form": "10-K",
-     "accession": "0000050863-26-000011",
-     "filed": "2026-01-23",
-     "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
-     "facts": [
-      {
-       "concept": "us-gaap:InterestPaidNet",
-       "value": 1106000000.0,
-       "unit": "usd",
-       "start": "2024-12-29",
-       "end": "2025-12-27",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:InterestPaidNet",
-       "value": 987000000.0,
-       "unit": "usd",
-       "start": "2023-12-31",
-       "end": "2024-12-28",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:InterestPaidNet",
-       "value": 613000000.0,
-       "unit": "usd",
-       "start": "2023-01-01",
-       "end": "2023-12-30",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskCreditRiskFinancialInstrumentMaximumExposure",
-       "value": 5200000000.0,
-       "unit": "usd",
-       "start": "2024-12-29",
-       "end": "2025-12-27",
-       "dims": {
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CreditConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.47,
-       "unit": "number",
-       "start": "2024-12-29",
-       "end": "2025-12-27",
-       "dims": {
-        "srt:MajorCustomersAxis": "intc:ThreeLargestCustomersMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:AccountsReceivableMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CreditConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.19,
-       "unit": "number",
-       "start": "2024-12-29",
-       "end": "2025-12-27",
-       "dims": {
-        "srt:MajorCustomersAxis": "intc:DellIncMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.19,
-       "unit": "number",
-       "start": "2023-12-31",
-       "end": "2024-12-28",
-       "dims": {
-        "srt:MajorCustomersAxis": "intc:DellIncMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.19,
-       "unit": "number",
-       "start": "2023-01-01",
-       "end": "2023-12-30",
-       "dims": {
-        "srt:MajorCustomersAxis": "intc:DellIncMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.12,
-       "unit": "number",
-       "start": "2024-12-29",
-       "end": "2025-12-27",
-       "dims": {
-        "srt:MajorCustomersAxis": "intc:LenovoGroupLimitedMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.14,
-       "unit": "number",
-       "start": "2023-12-31",
-       "end": "2024-12-28",
-       "dims": {
-        "srt:MajorCustomersAxis": "intc:LenovoGroupLimitedMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.11,
-       "unit": "number",
-       "start": "2023-01-01",
-       "end": "2023-12-30",
-       "dims": {
-        "srt:MajorCustomersAxis": "intc:LenovoGroupLimitedMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.12,
-       "unit": "number",
-       "start": "2024-12-29",
-       "end": "2025-12-27",
-       "dims": {
-        "srt:MajorCustomersAxis": "intc:HPInc.Member",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.12,
-       "unit": "number",
-       "start": "2023-12-31",
-       "end": "2024-12-28",
-       "dims": {
-        "srt:MajorCustomersAxis": "intc:HPInc.Member",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.1,
-       "unit": "number",
-       "start": "2023-01-01",
-       "end": "2023-12-30",
-       "dims": {
-        "srt:MajorCustomersAxis": "intc:HPInc.Member",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.43,
-       "unit": "number",
-       "start": "2024-12-29",
-       "end": "2025-12-27",
-       "dims": {
-        "srt:MajorCustomersAxis": "intc:ThreeLargestCustomersMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.45,
-       "unit": "number",
-       "start": "2023-12-31",
-       "end": "2024-12-28",
-       "dims": {
-        "srt:MajorCustomersAxis": "intc:ThreeLargestCustomersMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:ConcentrationRiskPercentage1",
-       "value": 0.4,
-       "unit": "number",
-       "start": "2023-01-01",
-       "end": "2023-12-30",
-       "dims": {
-        "srt:MajorCustomersAxis": "intc:ThreeLargestCustomersMember",
-        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:SalesRevenueNetMember",
-        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
-       }
-      },
-      {
-       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInNextTwelveMonths",
-       "value": 2500000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-12-27",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInYearTwo",
-       "value": 3826000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-12-27",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInYearThree",
-       "value": 3173000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-12-27",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInYearFour",
-       "value": 3288000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-12-27",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInYearFive",
-       "value": 2750000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-12-27",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalAfterYearFive",
-       "value": 31698000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-12-27",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:LesseeOperatingLeaseLiabilityPaymentsDue",
-       "value": 422000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-12-27",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:FinanceLeaseLiabilityPaymentsDue",
-       "value": 133000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-12-27",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
-       "value": 6700000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-12-27",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
-       "value": 7000000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2024-12-28",
-       "dims": {}
-      }
-     ],
-     "instance": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227_htm.xml"
-    }
-   ],
-   "errors": []
-  },
   "TSM": {
    "cik": 1046179,
    "filings": [
@@ -8355,6 +8355,21 @@
       }
      ],
      "instance": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231_htm.xml"
+    }
+   ],
+   "errors": []
+  },
+  "ASX": {
+   "cik": 1122411,
+   "filings": [
+    {
+     "kind": "annual",
+     "form": "20-F",
+     "accession": "0001193125-26-135585",
+     "filed": "2026-04-01",
+     "url": "https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm",
+     "facts": [],
+     "instance": "https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f_htm.xml"
     }
    ],
    "errors": []
@@ -12941,6 +12956,778 @@
    ],
    "errors": []
   },
+  "CSCO": {
+   "cik": 858877,
+   "filings": [
+    {
+     "kind": "annual",
+     "form": "10-K",
+     "accession": "0000858877-26-000132",
+     "filed": "2026-09-02",
+     "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/csco-20260725.htm",
+     "facts": [
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
+       "value": 16988000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
+       "value": 16416000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityNoncurrent",
+       "value": 12793000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityNoncurrent",
+       "value": 12363000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.15,
+       "unit": "number",
+       "start": "2025-07-27",
+       "end": "2026-07-25",
+       "dims": {
+        "srt:MajorCustomersAxis": "csco:GlobalChannelPartnerMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:AccountsReceivableMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 29800000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 28800000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 23436000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {
+        "srt:ProductOrServiceAxis": "us-gaap:ProductMember"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 21572000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {
+        "srt:ProductOrServiceAxis": "us-gaap:ProductMember"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 23298000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {
+        "srt:ProductOrServiceAxis": "us-gaap:ServiceMember"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 21961000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {
+        "srt:ProductOrServiceAxis": "us-gaap:ServiceMember"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 46734000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 43533000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 22776000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {
+        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2026-07-26"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 21723000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {
+        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2025-07-27"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 23958000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {
+        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2027-07-24"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 21810000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {
+        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2026-07-26"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 46734000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 43533000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 29781000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 28779000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 16953000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {
+        "us-gaap:AccountsNotesLoansAndFinancingReceivablesByBillingStatusTypeAxis": "us-gaap:UnbilledRevenuesMember"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 14754000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {
+        "us-gaap:AccountsNotesLoansAndFinancingReceivablesByBillingStatusTypeAxis": "us-gaap:UnbilledRevenuesMember"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 46734000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 43533000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligationPercentage",
+       "value": 0.49,
+       "unit": "number",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {
+        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2026-07-26"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligationPercentage",
+       "value": 0.39,
+       "unit": "number",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {
+        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2027-07-24"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligationPercentage",
+       "value": 0.12,
+       "unit": "number",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {
+        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2028-07-29"
+       }
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 29781000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 28779000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
+       "value": 16988000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
+       "value": 16416000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityNoncurrent",
+       "value": 12793000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityNoncurrent",
+       "value": 12363000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 29781000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 28779000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LesseeOperatingLeaseLiabilityPaymentsDue",
+       "value": 1874000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInNextTwelveMonths",
+       "value": 3502000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInYearTwo",
+       "value": 1000000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInYearThree",
+       "value": 2500000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInYearFour",
+       "value": 1000000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInYearFive",
+       "value": 2500000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalAfterYearFive",
+       "value": 12500000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.11,
+       "unit": "number",
+       "start": "2025-07-27",
+       "end": "2026-07-25",
+       "dims": {
+        "srt:MajorCustomersAxis": "csco:OneCustomerMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember"
+       }
+      }
+     ],
+     "instance": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/csco-20260725_htm.xml"
+    },
+    {
+     "kind": "quarterly",
+     "form": "10-Q",
+     "accession": "0000858877-26-000078",
+     "filed": "2026-05-19",
+     "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000078/csco-20260425.htm",
+     "facts": [
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
+       "value": 16446000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
+       "value": 16416000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityNoncurrent",
+       "value": 12153000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityNoncurrent",
+       "value": 12363000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:InterestPaidNet",
+       "value": 1305000000.0,
+       "unit": "usd",
+       "start": "2025-07-27",
+       "end": "2026-04-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:InterestPaidNet",
+       "value": 1370000000.0,
+       "unit": "usd",
+       "start": "2024-07-28",
+       "end": "2025-04-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 28600000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 28800000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 22058000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {
+        "srt:ProductOrServiceAxis": "us-gaap:ProductMember"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 21572000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {
+        "srt:ProductOrServiceAxis": "us-gaap:ProductMember"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 21404000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {
+        "srt:ProductOrServiceAxis": "us-gaap:ServiceMember"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 21961000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {
+        "srt:ProductOrServiceAxis": "us-gaap:ServiceMember"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 43462000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 43533000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 21818000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {
+        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2026-04-26"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 21723000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {
+        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2025-07-27"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 21644000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {
+        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2027-04-25"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 21810000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {
+        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2026-07-26"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 43462000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 43533000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligationPercentage",
+       "value": 0.5,
+       "unit": "number",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {
+        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2026-04-26"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligationPercentage",
+       "value": 0.5,
+       "unit": "number",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {
+        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2025-07-27"
+       }
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 28599000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 28779000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 14863000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {
+        "us-gaap:AccountsNotesLoansAndFinancingReceivablesByBillingStatusTypeAxis": "us-gaap:UnbilledRevenuesMember"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 14754000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {
+        "us-gaap:AccountsNotesLoansAndFinancingReceivablesByBillingStatusTypeAxis": "us-gaap:UnbilledRevenuesMember"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 43462000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 43533000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 28599000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 28779000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
+       "value": 16446000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
+       "value": 16416000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityNoncurrent",
+       "value": 12153000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityNoncurrent",
+       "value": 12363000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 28599000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 28779000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-07-26",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LesseeOperatingLeaseLiabilityPaymentsDue",
+       "value": 1933000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalRemainderOfFiscalYear",
+       "value": 0.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInNextTwelveMonths",
+       "value": 3502000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInYearTwo",
+       "value": 1000000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInYearThree",
+       "value": 2500000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInYearFour",
+       "value": 1000000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-04-25",
+       "dims": {}
+      }
+     ],
+     "instance": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000078/csco-20260425_htm.xml"
+    }
+   ],
+   "errors": []
+  },
   "DELL": {
    "cik": 1571996,
    "filings": [
@@ -14827,6 +15614,880 @@
       }
      ],
      "instance": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031_htm.xml"
+    }
+   ],
+   "errors": []
+  },
+  "CLS": {
+   "cik": 1030894,
+   "filings": [
+    {
+     "kind": "quarterly",
+     "form": "10-Q",
+     "accession": "0001030894-26-000044",
+     "filed": "2026-07-27",
+     "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000044/cls-20260630.htm",
+     "facts": [
+      {
+       "concept": "us-gaap:InterestPaidNet",
+       "value": 20800000.0,
+       "unit": "usd",
+       "start": "2026-04-01",
+       "end": "2026-06-30",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:InterestPaidNet",
+       "value": 12500000.0,
+       "unit": "usd",
+       "start": "2025-04-01",
+       "end": "2025-06-30",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:InterestPaidNet",
+       "value": 39300000.0,
+       "unit": "usd",
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:InterestPaidNet",
+       "value": 27300000.0,
+       "unit": "usd",
+       "start": "2025-01-01",
+       "end": "2025-06-30",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.56,
+       "unit": "number",
+       "start": "2026-04-01",
+       "end": "2026-06-30",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember",
+        "us-gaap:SubsegmentsAxis": "cls:CCSCommunicationsMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.57,
+       "unit": "number",
+       "start": "2025-04-01",
+       "end": "2025-06-30",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember",
+        "us-gaap:SubsegmentsAxis": "cls:CCSCommunicationsMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.58,
+       "unit": "number",
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember",
+        "us-gaap:SubsegmentsAxis": "cls:CCSCommunicationsMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.56,
+       "unit": "number",
+       "start": "2025-01-01",
+       "end": "2025-06-30",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember",
+        "us-gaap:SubsegmentsAxis": "cls:CCSCommunicationsMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.25,
+       "unit": "number",
+       "start": "2026-04-01",
+       "end": "2026-06-30",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember",
+        "us-gaap:SubsegmentsAxis": "cls:CCSEnterpriseMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.15,
+       "unit": "number",
+       "start": "2025-04-01",
+       "end": "2025-06-30",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember",
+        "us-gaap:SubsegmentsAxis": "cls:CCSEnterpriseMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.23,
+       "unit": "number",
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember",
+        "us-gaap:SubsegmentsAxis": "cls:CCSEnterpriseMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.15,
+       "unit": "number",
+       "start": "2025-01-01",
+       "end": "2025-06-30",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember",
+        "us-gaap:SubsegmentsAxis": "cls:CCSEnterpriseMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.81,
+       "unit": "number",
+       "start": "2026-04-01",
+       "end": "2026-06-30",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.72,
+       "unit": "number",
+       "start": "2025-04-01",
+       "end": "2025-06-30",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.81,
+       "unit": "number",
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.71,
+       "unit": "number",
+       "start": "2025-01-01",
+       "end": "2025-06-30",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.19,
+       "unit": "number",
+       "start": "2026-04-01",
+       "end": "2026-06-30",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:ATSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.28,
+       "unit": "number",
+       "start": "2025-04-01",
+       "end": "2025-06-30",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:ATSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.19,
+       "unit": "number",
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:ATSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.29,
+       "unit": "number",
+       "start": "2025-01-01",
+       "end": "2025-06-30",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:ATSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.32,
+       "unit": "number",
+       "start": "2026-04-01",
+       "end": "2026-06-30",
+       "dims": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:MajorCustomersAxis": "cls:CustomerOneMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.17,
+       "unit": "number",
+       "start": "2026-04-01",
+       "end": "2026-06-30",
+       "dims": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:MajorCustomersAxis": "cls:CustomerTwoMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.14,
+       "unit": "number",
+       "start": "2026-04-01",
+       "end": "2026-06-30",
+       "dims": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:MajorCustomersAxis": "cls:CustomerThreeMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.34,
+       "unit": "number",
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "dims": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:MajorCustomersAxis": "cls:CustomerOneMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.16,
+       "unit": "number",
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "dims": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:MajorCustomersAxis": "cls:CustomerTwoMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.15,
+       "unit": "number",
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "dims": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:MajorCustomersAxis": "cls:CustomerThreeMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.31,
+       "unit": "number",
+       "start": "2025-04-01",
+       "end": "2025-06-30",
+       "dims": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:MajorCustomersAxis": "cls:CustomerOneMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.13,
+       "unit": "number",
+       "start": "2025-04-01",
+       "end": "2025-06-30",
+       "dims": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:MajorCustomersAxis": "cls:CustomerTwoMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.3,
+       "unit": "number",
+       "start": "2025-01-01",
+       "end": "2025-06-30",
+       "dims": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:MajorCustomersAxis": "cls:CustomerOneMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.13,
+       "unit": "number",
+       "start": "2025-01-01",
+       "end": "2025-06-30",
+       "dims": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:MajorCustomersAxis": "cls:CustomerTwoMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.1,
+       "unit": "number",
+       "start": "2025-01-01",
+       "end": "2025-06-30",
+       "dims": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:MajorCustomersAxis": "cls:CustomerThreeMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
+       "value": 481400000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-06-30",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
+       "value": 407100000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-12-31",
+       "dims": {}
+      }
+     ],
+     "instance": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000044/cls-20260630_htm.xml"
+    },
+    {
+     "kind": "annual",
+     "form": "10-K",
+     "accession": "0001030894-26-000011",
+     "filed": "2026-02-27",
+     "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+     "facts": [
+      {
+       "concept": "us-gaap:InterestPaidNet",
+       "value": 54100000.0,
+       "unit": "usd",
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:InterestPaidNet",
+       "value": 52900000.0,
+       "unit": "usd",
+       "start": "2024-01-01",
+       "end": "2024-12-31",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:InterestPaidNet",
+       "value": 68800000.0,
+       "unit": "usd",
+       "start": "2023-01-01",
+       "end": "2023-12-31",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
+       "value": 407100000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-12-31",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
+       "value": 511600000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2024-12-31",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LesseeOperatingLeaseLiabilityPaymentsDue",
+       "value": 171200000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-12-31",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:FinanceLeaseLiabilityPaymentsDue",
+       "value": 70900000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2025-12-31",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.26,
+       "unit": "number",
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:ATSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.33,
+       "unit": "number",
+       "start": "2024-01-01",
+       "end": "2024-12-31",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:ATSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.42,
+       "unit": "number",
+       "start": "2023-01-01",
+       "end": "2023-12-31",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:ATSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.57,
+       "unit": "number",
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember",
+        "us-gaap:SubsegmentsAxis": "cls:CCSCommunicationsMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.41,
+       "unit": "number",
+       "start": "2024-01-01",
+       "end": "2024-12-31",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember",
+        "us-gaap:SubsegmentsAxis": "cls:CCSCommunicationsMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.33,
+       "unit": "number",
+       "start": "2023-01-01",
+       "end": "2023-12-31",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember",
+        "us-gaap:SubsegmentsAxis": "cls:CCSCommunicationsMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.17,
+       "unit": "number",
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember",
+        "us-gaap:SubsegmentsAxis": "cls:CCSEnterpriseMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.26,
+       "unit": "number",
+       "start": "2024-01-01",
+       "end": "2024-12-31",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember",
+        "us-gaap:SubsegmentsAxis": "cls:CCSEnterpriseMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.25,
+       "unit": "number",
+       "start": "2023-01-01",
+       "end": "2023-12-31",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember",
+        "us-gaap:SubsegmentsAxis": "cls:CCSEnterpriseMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.74,
+       "unit": "number",
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.67,
+       "unit": "number",
+       "start": "2024-01-01",
+       "end": "2024-12-31",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.58,
+       "unit": "number",
+       "start": "2023-01-01",
+       "end": "2023-12-31",
+       "dims": {
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerSegmentBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "cls:SegmentConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.59,
+       "unit": "number",
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "dims": {
+        "srt:StatementGeographicalAxis": "country:TH",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:GeographicConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.53,
+       "unit": "number",
+       "start": "2024-01-01",
+       "end": "2024-12-31",
+       "dims": {
+        "srt:StatementGeographicalAxis": "country:TH",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:GeographicConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.46,
+       "unit": "number",
+       "start": "2023-01-01",
+       "end": "2023-12-31",
+       "dims": {
+        "srt:StatementGeographicalAxis": "country:TH",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:GeographicConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.1,
+       "unit": "number",
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "dims": {
+        "srt:StatementGeographicalAxis": "country:US",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:GeographicConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.1,
+       "unit": "number",
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "dims": {
+        "srt:StatementGeographicalAxis": "country:MY",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:GeographicConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.11,
+       "unit": "number",
+       "start": "2023-01-01",
+       "end": "2023-12-31",
+       "dims": {
+        "srt:StatementGeographicalAxis": "country:MY",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:GeographicConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.36,
+       "unit": "number",
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "dims": {
+        "srt:StatementGeographicalAxis": "country:TH",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "cls:PropertyPlantAndEquipmentAndOperatingLeaseRightOfUseAssetBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:GeographicConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.3,
+       "unit": "number",
+       "start": "2024-01-01",
+       "end": "2024-12-31",
+       "dims": {
+        "srt:StatementGeographicalAxis": "country:TH",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "cls:PropertyPlantAndEquipmentAndOperatingLeaseRightOfUseAssetBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:GeographicConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.18,
+       "unit": "number",
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "dims": {
+        "srt:StatementGeographicalAxis": "country:US",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "cls:PropertyPlantAndEquipmentAndOperatingLeaseRightOfUseAssetBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:GeographicConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.22,
+       "unit": "number",
+       "start": "2024-01-01",
+       "end": "2024-12-31",
+       "dims": {
+        "srt:StatementGeographicalAxis": "country:US",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "cls:PropertyPlantAndEquipmentAndOperatingLeaseRightOfUseAssetBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:GeographicConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.14,
+       "unit": "number",
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "dims": {
+        "srt:StatementGeographicalAxis": "country:MY",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "cls:PropertyPlantAndEquipmentAndOperatingLeaseRightOfUseAssetBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:GeographicConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.12,
+       "unit": "number",
+       "start": "2024-01-01",
+       "end": "2024-12-31",
+       "dims": {
+        "srt:StatementGeographicalAxis": "country:MY",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "cls:PropertyPlantAndEquipmentAndOperatingLeaseRightOfUseAssetBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:GeographicConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.1,
+       "unit": "number",
+       "start": "2024-01-01",
+       "end": "2024-12-31",
+       "dims": {
+        "srt:StatementGeographicalAxis": "country:MX",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "cls:PropertyPlantAndEquipmentAndOperatingLeaseRightOfUseAssetBenchmarkMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:GeographicConcentrationRiskMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.32,
+       "unit": "number",
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "dims": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:MajorCustomersAxis": "cls:CustomerOneMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.14,
+       "unit": "number",
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "dims": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:MajorCustomersAxis": "cls:CustomerTwoMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.12,
+       "unit": "number",
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "dims": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:MajorCustomersAxis": "cls:CustomerThreeMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.28,
+       "unit": "number",
+       "start": "2024-01-01",
+       "end": "2024-12-31",
+       "dims": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:MajorCustomersAxis": "cls:CustomerOneMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.11,
+       "unit": "number",
+       "start": "2024-01-01",
+       "end": "2024-12-31",
+       "dims": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:MajorCustomersAxis": "cls:CustomerTwoMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      },
+      {
+       "concept": "us-gaap:ConcentrationRiskPercentage1",
+       "value": 0.22,
+       "unit": "number",
+       "start": "2023-01-01",
+       "end": "2023-12-31",
+       "dims": {
+        "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+        "srt:MajorCustomersAxis": "cls:CustomerOneMember",
+        "us-gaap:ConcentrationRiskByBenchmarkAxis": "us-gaap:RevenueFromContractWithCustomerMember",
+        "us-gaap:ConcentrationRiskByTypeAxis": "us-gaap:CustomerConcentrationRiskMember",
+        "us-gaap:StatementBusinessSegmentsAxis": "cls:CCSSegmentMember"
+       }
+      }
+     ],
+     "instance": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231_htm.xml"
     }
    ],
    "errors": []

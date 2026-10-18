@@ -1,6 +1,6 @@
 {
- "built": "2026-10-18T04:33:54+00:00",
- "sec_pulled": "2026-10-17T07:28:19+00:00",
+ "built": "2026-10-18T04:35:22+00:00",
+ "sec_pulled": "2026-10-18T04:34:23+00:00",
  "companies": {
   "ASML": {
    "cik": 937966,
@@ -684,170 +684,6 @@
     }
    }
   },
-  "AVGO": {
-   "cik": 1730168,
-   "filings": [
-    {
-     "form": "10-K",
-     "kind": "annual",
-     "filed": "2025-12-18",
-     "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
-     "rows": [
-      {
-       "customer": "Major Customer One",
-       "member": "avgo:MajorCustomerOneMember",
-       "basis": "revenue",
-       "pct": 32.0,
-       "start": "2024-11-04",
-       "end": "2025-11-02",
-       "months": 12
-      },
-      {
-       "customer": "Major Customer One",
-       "member": "avgo:MajorCustomerOneMember",
-       "basis": "receivables",
-       "pct": 44.0,
-       "start": "2024-11-04",
-       "end": "2025-11-02",
-       "months": 12
-      }
-     ]
-    }
-   ],
-   "rpo": {
-    "usd_bn": 179.2,
-    "end": "2026-08-02",
-    "form": "10-Q",
-    "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm"
-   },
-   "credit": {
-    "maturities": {
-     "end": "2026-08-02",
-     "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
-     "ladder": [
-      [
-       "Rest of FY2026",
-       2.25
-      ],
-      [
-       "FY2027",
-       0.0
-      ],
-      [
-       "FY2028",
-       5.13
-      ],
-      [
-       "FY2029",
-       2.4
-      ],
-      [
-       "FY2030",
-       6.41
-      ]
-     ]
-    },
-    "purchase_obligations": {
-     "usd_bn": 126.82,
-     "end": "2026-08-02",
-     "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
-     "concept": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount"
-    },
-    "customer_prepayments": {
-     "usd_bn": 13.12,
-     "end": "2026-08-02",
-     "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
-     "concept": "ContractWithCustomerLiability"
-    },
-    "op_lease_payments": {
-     "usd_bn": 1.73,
-     "end": "2025-11-02",
-     "form": "10-K",
-     "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
-     "concept": "LesseeOperatingLeaseLiabilityPaymentsDue"
-    }
-   }
-  },
-  "MRVL": {
-   "cik": 1835632,
-   "filings": [
-    {
-     "form": "10-K",
-     "kind": "annual",
-     "filed": "2026-03-11",
-     "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
-     "rows": [
-      {
-       "customer": "Distributor A",
-       "member": "mrvl:DistributorAMember",
-       "basis": "revenue",
-       "pct": 37.0,
-       "start": "2025-02-02",
-       "end": "2026-01-31",
-       "months": 12
-      },
-      {
-       "customer": "Customer A",
-       "member": "mrvl:CustomerAMember",
-       "basis": "revenue",
-       "pct": 14.0,
-       "start": "2025-02-02",
-       "end": "2026-01-31",
-       "months": 12
-      },
-      {
-       "customer": "Four Customers",
-       "member": "mrvl:FourCustomersMember",
-       "basis": "receivables",
-       "pct": 73.0,
-       "start": "2025-02-02",
-       "end": "2026-01-31",
-       "months": 12
-      }
-     ]
-    }
-   ],
-   "rpo": null,
-   "credit": {
-    "maturities": {
-     "end": "2026-08-01",
-     "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000025/mrvl-20260801.htm",
-     "ladder": [
-      [
-       "Rest of FY2027",
-       0.0
-      ],
-      [
-       "FY2028",
-       0.0
-      ],
-      [
-       "FY2029",
-       1.25
-      ],
-      [
-       "FY2030",
-       0.5
-      ],
-      [
-       "FY2031",
-       0.5
-      ]
-     ]
-    },
-    "op_lease_payments": {
-     "usd_bn": 0.38,
-     "end": "2026-01-31",
-     "form": "10-K",
-     "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
-     "concept": "LesseeOperatingLeaseLiabilityPaymentsDue"
-    }
-   }
-  },
   "ARM": {
    "cik": 1973239,
    "filings": [
@@ -1082,6 +918,170 @@
     }
    }
   },
+  "AVGO": {
+   "cik": 1730168,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2025-12-18",
+     "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+     "rows": [
+      {
+       "customer": "Major Customer One",
+       "member": "avgo:MajorCustomerOneMember",
+       "basis": "revenue",
+       "pct": 32.0,
+       "start": "2024-11-04",
+       "end": "2025-11-02",
+       "months": 12
+      },
+      {
+       "customer": "Major Customer One",
+       "member": "avgo:MajorCustomerOneMember",
+       "basis": "receivables",
+       "pct": 44.0,
+       "start": "2024-11-04",
+       "end": "2025-11-02",
+       "months": 12
+      }
+     ]
+    }
+   ],
+   "rpo": {
+    "usd_bn": 179.2,
+    "end": "2026-08-02",
+    "form": "10-Q",
+    "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm"
+   },
+   "credit": {
+    "maturities": {
+     "end": "2026-08-02",
+     "form": "10-Q",
+     "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
+     "ladder": [
+      [
+       "Rest of FY2026",
+       2.25
+      ],
+      [
+       "FY2027",
+       0.0
+      ],
+      [
+       "FY2028",
+       5.13
+      ],
+      [
+       "FY2029",
+       2.4
+      ],
+      [
+       "FY2030",
+       6.41
+      ]
+     ]
+    },
+    "purchase_obligations": {
+     "usd_bn": 126.82,
+     "end": "2026-08-02",
+     "form": "10-Q",
+     "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
+     "concept": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount"
+    },
+    "customer_prepayments": {
+     "usd_bn": 13.12,
+     "end": "2026-08-02",
+     "form": "10-Q",
+     "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
+     "concept": "ContractWithCustomerLiability"
+    },
+    "op_lease_payments": {
+     "usd_bn": 1.73,
+     "end": "2025-11-02",
+     "form": "10-K",
+     "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+     "concept": "LesseeOperatingLeaseLiabilityPaymentsDue"
+    }
+   }
+  },
+  "MRVL": {
+   "cik": 1835632,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-03-11",
+     "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+     "rows": [
+      {
+       "customer": "Distributor A",
+       "member": "mrvl:DistributorAMember",
+       "basis": "revenue",
+       "pct": 37.0,
+       "start": "2025-02-02",
+       "end": "2026-01-31",
+       "months": 12
+      },
+      {
+       "customer": "Customer A",
+       "member": "mrvl:CustomerAMember",
+       "basis": "revenue",
+       "pct": 14.0,
+       "start": "2025-02-02",
+       "end": "2026-01-31",
+       "months": 12
+      },
+      {
+       "customer": "Four Customers",
+       "member": "mrvl:FourCustomersMember",
+       "basis": "receivables",
+       "pct": 73.0,
+       "start": "2025-02-02",
+       "end": "2026-01-31",
+       "months": 12
+      }
+     ]
+    }
+   ],
+   "rpo": null,
+   "credit": {
+    "maturities": {
+     "end": "2026-08-01",
+     "form": "10-Q",
+     "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000025/mrvl-20260801.htm",
+     "ladder": [
+      [
+       "Rest of FY2027",
+       0.0
+      ],
+      [
+       "FY2028",
+       0.0
+      ],
+      [
+       "FY2029",
+       1.25
+      ],
+      [
+       "FY2030",
+       0.5
+      ],
+      [
+       "FY2031",
+       0.5
+      ]
+     ]
+    },
+    "op_lease_payments": {
+     "usd_bn": 0.38,
+     "end": "2026-01-31",
+     "form": "10-K",
+     "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+     "concept": "LesseeOperatingLeaseLiabilityPaymentsDue"
+    }
+   }
+  },
   "TSM": {
    "cik": 1046179,
    "filings": [],
@@ -1180,6 +1180,12 @@
      "concept": "FinanceLeaseLiabilityPaymentsDue"
     }
    }
+  },
+  "ASX": {
+   "cik": 1122411,
+   "filings": [],
+   "rpo": null,
+   "credit": {}
   },
   "MU": {
    "cik": 723125,
@@ -2086,6 +2092,90 @@
     }
    }
   },
+  "CSCO": {
+   "cik": 858877,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-09-02",
+     "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/csco-20260725.htm",
+     "rows": [
+      {
+       "customer": "One Customer",
+       "member": "csco:OneCustomerMember",
+       "basis": "revenue",
+       "pct": 11.0,
+       "start": "2025-07-27",
+       "end": "2026-07-25",
+       "months": 12
+      },
+      {
+       "customer": "Global Channel Partner",
+       "member": "csco:GlobalChannelPartnerMember",
+       "basis": "receivables",
+       "pct": 15.0,
+       "start": "2025-07-27",
+       "end": "2026-07-25",
+       "months": 12
+      }
+     ]
+    }
+   ],
+   "rpo": {
+    "usd_bn": 46.73,
+    "end": "2026-07-25",
+    "form": "10-K",
+    "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/csco-20260725.htm"
+   },
+   "credit": {
+    "maturities": {
+     "end": "2026-07-25",
+     "form": "10-K",
+     "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/csco-20260725.htm",
+     "ladder": [
+      [
+       "FY2027",
+       3.5
+      ],
+      [
+       "FY2028",
+       1.0
+      ],
+      [
+       "FY2029",
+       2.5
+      ],
+      [
+       "FY2030",
+       1.0
+      ],
+      [
+       "FY2031",
+       2.5
+      ],
+      [
+       "FY2032+",
+       12.5
+      ]
+     ]
+    },
+    "customer_prepayments": {
+     "usd_bn": 29.8,
+     "end": "2026-07-25",
+     "form": "10-K",
+     "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/csco-20260725.htm",
+     "concept": "ContractWithCustomerLiability"
+    },
+    "op_lease_payments": {
+     "usd_bn": 1.87,
+     "end": "2026-07-25",
+     "form": "10-K",
+     "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/csco-20260725.htm",
+     "concept": "LesseeOperatingLeaseLiabilityPaymentsDue"
+    }
+   }
+  },
   "DELL": {
    "cik": 1571996,
    "filings": [
@@ -2384,6 +2474,105 @@
      "end": "2025-10-31",
      "form": "10-K",
      "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+     "concept": "FinanceLeaseLiabilityPaymentsDue"
+    }
+   }
+  },
+  "CLS": {
+   "cik": 1030894,
+   "filings": [
+    {
+     "form": "10-K",
+     "kind": "annual",
+     "filed": "2026-02-27",
+     "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+     "rows": [
+      {
+       "customer": "Customer One",
+       "member": "cls:CustomerOneMember",
+       "basis": "revenue",
+       "pct": 32.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      },
+      {
+       "customer": "Customer Two",
+       "member": "cls:CustomerTwoMember",
+       "basis": "revenue",
+       "pct": 14.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      },
+      {
+       "customer": "Customer Three",
+       "member": "cls:CustomerThreeMember",
+       "basis": "revenue",
+       "pct": 12.0,
+       "start": "2025-01-01",
+       "end": "2025-12-31",
+       "months": 12
+      }
+     ]
+    },
+    {
+     "form": "10-Q",
+     "kind": "quarterly",
+     "filed": "2026-07-27",
+     "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000044/cls-20260630.htm",
+     "rows": [
+      {
+       "customer": "Customer One",
+       "member": "cls:CustomerOneMember",
+       "basis": "revenue",
+       "pct": 34.0,
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "months": 6
+      },
+      {
+       "customer": "Customer Two",
+       "member": "cls:CustomerTwoMember",
+       "basis": "revenue",
+       "pct": 16.0,
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "months": 6
+      },
+      {
+       "customer": "Customer Three",
+       "member": "cls:CustomerThreeMember",
+       "basis": "revenue",
+       "pct": 15.0,
+       "start": "2026-01-01",
+       "end": "2026-06-30",
+       "months": 6
+      }
+     ]
+    }
+   ],
+   "rpo": null,
+   "credit": {
+    "customer_prepayments": {
+     "usd_bn": 0.48,
+     "end": "2026-06-30",
+     "form": "10-Q",
+     "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000044/cls-20260630.htm",
+     "concept": "ContractWithCustomerLiabilityCurrent"
+    },
+    "op_lease_payments": {
+     "usd_bn": 0.17,
+     "end": "2025-12-31",
+     "form": "10-K",
+     "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+     "concept": "LesseeOperatingLeaseLiabilityPaymentsDue"
+    },
+    "fin_lease_payments": {
+     "usd_bn": 0.07,
+     "end": "2025-12-31",
+     "form": "10-K",
+     "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
      "concept": "FinanceLeaseLiabilityPaymentsDue"
     }
    }
