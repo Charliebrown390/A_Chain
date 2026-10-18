@@ -2,6 +2,9 @@
 
 Purpose: analyse the AI supply chain (tools → chip design → foundry → memory → networking → servers → power/DCs → compute providers → models/apps) to identify investment candidates.
 
+Where this project lives
+- The GitHub repo Charliebrown390/A_Chain is the master copy, used from every device. There is no local copy on the owner's MacBook or in OneDrive; do not look for or create one. Pull before working, push when done; pushes redeploy https://charliebrown390.github.io/A_Chain/.
+
 Conventions
 - Static site in `site/`, deployed to GitHub Pages by `.github/workflows/pages.yml`. No server-side code.
 - Curated inputs: `data/universe.yaml`, `data/edges.yaml`. Pulled data: `data/raw/`. Compiled JSON for the page: `site/data/` (built by `scripts/build_site_data.py`, which also validates).
