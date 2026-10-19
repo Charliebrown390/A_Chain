@@ -332,6 +332,108 @@ def credit(tk, fin_ccy, mcap_usd, sigma_e, rate):
     return out
 
 
+# ---------------------------------------------------------------- returns (ROIC)
+ERP = 0.05   # equity risk premium used in the cost of equity
+
+
+def _col(df, col, *names):
+    row = _row(df, *names)
+    if row is None or col not in row.index:
+        return None
+    v = row[col]
+    return float(v) if v == v else None
+
+
+def returns(tk, fin_ccy, mcap_usd, beta, rf, credit_rec):
+    """ROIC history (annual), TTM ROIC, incremental ROIC, depreciation stress, WACC and inventory days.
+    Invested capital = total debt (Yahoo includes on-balance-sheet leases) + equity - cash, averaged over the year."""
+    f = fx_per_usd(fin_ccy)
+    if not f:
+        return {}
+    u = lambda x: None if x is None else x / f / 1e9
+    inc, bs, cf = tk.income_stmt, tk.balance_sheet, tk.cashflow
+    if inc is None or inc.empty or bs is None or bs.empty:
+        return {}
+    cols = sorted([c for c in inc.columns if c in bs.columns])
+    def tax(c):
+        t = _col(inc, c, "Tax Rate For Calcs")
+        return min(max(t, 0.0), 0.35) if t is not None else 0.21
+    def ic(c):
+        debt = _col(bs, c, "Total Debt") or 0
+        eq = _col(bs, c, "Stockholders Equity", "Common Stock Equity")
+        cash = _col(bs, c, "Cash Cash Equivalents And Short Term Investments", "Cash And Cash Equivalents") or 0
+        return None if eq is None else debt + eq - cash
+    hist, prev_ic = [], None
+    for c in cols:
+        ebit = _col(inc, c, "EBIT", "Operating Income")
+        rev = _col(inc, c, "Total Revenue")
+        cap = ic(c)
+        if ebit is None or not rev or cap is None:
+            prev_ic = cap
+            continue
+        avg = (cap + prev_ic) / 2 if prev_ic is not None and prev_ic > 0 else cap
+        nopat = ebit * (1 - tax(c))
+        capex = _col(cf, c, "Capital Expenditure") if cf is not None else None
+        ppe = _col(bs, c, "Net PPE")
+        da = _col(inc, c, "Reconciled Depreciation") or (_col(cf, c, "Depreciation And Amortization", "Depreciation Amortization Depletion") if cf is not None else None)
+        hist.append({"fy": str(c.date())[:7], "roic": r(nopat / avg * 100, 1) if avg and avg > 0 else None,
+                     "nopat_usd_bn": r(u(nopat), 2), "ic_usd_bn": r(u(cap), 2),
+                     "capex_rev": r(abs(capex) / rev * 100, 1) if capex is not None else None,
+                     "ppe_rev": r(ppe / rev, 2) if ppe is not None else None,
+                     "da_rev": r(da / rev * 100, 1) if da is not None else None})
+        prev_ic = cap
+    out = {"hist": hist[-5:]}
+    # TTM from quarterly statements
+    q_inc, q_bs = tk.quarterly_income_stmt, tk.quarterly_balance_sheet
+    ebit_q = _ttm(q_inc, "EBIT", "Operating Income")
+    da_q = _ttm(q_inc, "Reconciled Depreciation")
+    if ebit_q is not None and q_bs is not None and not q_bs.empty:
+        c0 = q_bs.columns[0]
+        debt = _col(q_bs, c0, "Total Debt") or 0
+        eq = _col(q_bs, c0, "Stockholders Equity", "Common Stock Equity")
+        cash = _col(q_bs, c0, "Cash Cash Equivalents And Short Term Investments", "Cash And Cash Equivalents") or 0
+        t = tax(cols[-1]) if cols else 0.21
+        if eq is not None and debt + eq - cash > 0:
+            icq = debt + eq - cash
+            out.update({"roic_ttm": r(ebit_q * (1 - t) / icq * 100, 1), "nopat_ttm_usd_bn": r(u(ebit_q * (1 - t)), 2),
+                        "ic_usd_bn": r(u(icq), 2), "tax": r(t, 3), "as_of": str(c0.date())})
+            if da_q:
+                out["roic_dep_stress"] = r((ebit_q - 0.3 * da_q) * (1 - t) / icq * 100, 1)
+                out["da_ttm_usd_bn"] = r(u(da_q), 2)
+    # incremental ROIC over two fiscal years
+    h = [x for x in hist if x["nopat_usd_bn"] is not None and x["ic_usd_bn"] is not None]
+    if len(h) >= 3:
+        a, b = h[-3], h[-1]
+        dic = b["ic_usd_bn"] - a["ic_usd_bn"]
+        if dic > 0.05 * max(abs(a["ic_usd_bn"]), 1):
+            out["incr_roic"] = r((b["nopat_usd_bn"] - a["nopat_usd_bn"]) / dic * 100, 1)
+            out["incr_span"] = f"{a['fy']} to {b['fy']}"
+    # WACC: CAPM cost of equity on the US 10-year; cost of debt from interest paid on debt
+    debt_usd = (credit_rec or {}).get("debt_usd_bn")
+    int_usd = (credit_rec or {}).get("interest_ttm_usd_bn")
+    if mcap_usd:
+        b = min(max(0.67 * (beta if beta is not None else 1.0) + 0.33, 0.5), 2.5)   # Blume-adjusted beta
+        ke = rf + b * ERP
+        kd = min(max(int_usd / debt_usd, 0.03), 0.18) if debt_usd and int_usd and debt_usd > 0.5 else rf + 0.015
+        t = out.get("tax", 0.21)
+        D = debt_usd or 0
+        wacc = (mcap_usd * ke + D * kd * (1 - t)) / (mcap_usd + D)
+        out.update({"wacc": r(wacc * 100, 1), "ke": r(ke * 100, 1), "kd": r(kd * 100, 1), "beta_used": r(b, 2)})
+        if out.get("roic_ttm") is not None:
+            out["spread"] = r(out["roic_ttm"] - out["wacc"], 1)
+    # inventory days (quarterly)
+    cogs = _row(q_inc, "Cost Of Revenue", "Reconciled Cost Of Revenue")
+    inv = _row(q_bs, "Inventory")
+    days = []
+    if cogs is not None and inv is not None:
+        for d in list(inv.index)[:6]:
+            if d in cogs.index and cogs[d] == cogs[d] and inv[d] == inv[d] and cogs[d] > 0:
+                days.append([str(d.date()), round(float(inv[d]) / float(cogs[d]) * 91.25, 1)])
+    days.reverse()
+    out["inv_days"] = days
+    return out
+
+
 # ---------------------------------------------------------------- implied vol
 def bs_price(s, k, t, rate, vol, call):
     if vol <= 0 or t <= 0:
@@ -519,6 +621,10 @@ def run_full(cos):
         rate = 0.04
     ivs = load(OUT / "iv.json", {}).get("companies", {})
     prev = load(OUT / "market.json", {}).get("companies", {})
+    try:
+        rf10 = float(yf.Ticker("^TNX").history(period="5d")["Close"].dropna().iloc[-1]) / 100
+    except Exception:
+        rf10 = 0.045
     syms = [c["yf"] for c in cos] + list(BENCH.values())
     px = download_prices(syms)
     got = sum(1 for c in cos if c["yf"] in px and len(px[c["yf"]]) > 30)
@@ -558,13 +664,20 @@ def run_full(cos):
                 rec["credit"]["dd_vol_source"] = "implied" if iv else "realised 1y"
         except Exception as e:
             rec["credit_error"] = str(e)
+        try:
+            rec["returns"] = returns(tk, rec.get("fin_ccy") or rec.get("ccy"), rec.get("mcap_usd_bn"), rec.get("beta_spx"),
+                                     rf10, rec.get("credit")) or old.get("returns") or {}
+        except Exception as e:
+            rec["returns"] = old.get("returns") or {}
+            rec["returns_error"] = str(e)
         summary[co["id"]] = rec
         cr = rec.get("credit") or {}
         print(f"{co['id']:>10} last={rec.get('last')} {rec.get('ccy')} mcap=${rec.get('mcap_usd_bn')}B pe={rec.get('fwd_pe')} "
-              f"nd/ebitda={cr.get('nd_ebitda')} cover={cr.get('ebitda_cover')} dd={cr.get('dd')} {cr.get('dd_note', '')}")
+              f"nd/ebitda={cr.get('nd_ebitda')} dd={cr.get('dd')} roic={(rec.get('returns') or {}).get('roic_ttm')} "
+              f"incr={(rec.get('returns') or {}).get('incr_roic')} wacc={(rec.get('returns') or {}).get('wacc')}")
         time.sleep(0.4)
     bm = {k: tech(v, {}) for k, v in bench.items()}
-    write(OUT / "market.json", {"built": NOW.isoformat(timespec="seconds"), "rate": r(rate, 4), "benchmarks": bm,
+    write(OUT / "market.json", {"built": NOW.isoformat(timespec="seconds"), "rate": r(rate, 4), "rf10": r(rf10, 4), "erp": ERP, "benchmarks": bm,
                                 "failures": failures, "companies": summary})
     if failures:
         print("FETCH FAILURES (kept last good values where available):")
