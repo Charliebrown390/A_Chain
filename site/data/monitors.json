@@ -1,0 +1,550 @@
+{
+ "built": "2026-10-19T13:02:06+00:00",
+ "bottlenecks": {
+  "indicators": [
+   {
+    "id": "b200_rent",
+    "layer": "Accelerators (rental)",
+    "name": "B200 rental rate (neocloud index)",
+    "unit": "$/GPU-hr",
+    "rule": {
+     "type": "change",
+     "tight_above": 5,
+     "loose_below": -10
+    },
+    "fresh_days": 45,
+    "update": "Monthly. Silicon Data posts SDB200RT updates on its blog (silicondata.com/blog). CME lists B200 rental futures (code GPU2) from 5 Oct 2026; settlement prices are on cmegroup.com.",
+    "series": [
+     [
+      "2026-01-01",
+      4.4
+     ],
+     [
+      "2026-06-01",
+      5.42
+     ],
+     [
+      "2026-07-01",
+      5.63
+     ],
+     [
+      "2026-08-01",
+      5.67
+     ],
+     [
+      "2026-09-01",
+      5.62
+     ]
+    ],
+    "note": "Jan value derived from the reported +27.6% year-to-date change at 1 Sep.",
+    "sources": [
+     {
+      "src": "Silicon Data, B200 rental price update (Aug 2026)",
+      "url": "https://www.silicondata.com/blog/b200-rental-price-august-2026-update"
+     }
+    ]
+   },
+   {
+    "id": "b200_curve",
+    "layer": "Accelerators (rental)",
+    "name": "B200 rental term structure",
+    "unit": "$/GPU-hr",
+    "rule": {
+     "type": "curve",
+     "margin": 2
+    },
+    "fresh_days": 45,
+    "update": "Monthly, from the same Silicon Data post (spot and 3/6/12-month quoted rates), or from GPU2 futures prices once trading is established.",
+    "curve": {
+     "date": "2026-09-07",
+     "points": [
+      [
+       "Spot",
+       5.69
+      ],
+      [
+       "3m",
+       5.73
+      ],
+      [
+       "6m",
+       5.64
+      ],
+      [
+       "12m",
+       5.39
+      ]
+     ]
+    },
+    "sources": [
+     {
+      "src": "Silicon Data, B200 rental price update (Aug 2026)",
+      "url": "https://www.silicondata.com/blog/b200-rental-price-august-2026-update"
+     }
+    ]
+   },
+   {
+    "id": "h100_rent",
+    "layer": "Accelerators (rental)",
+    "name": "H100 rental rate (neocloud)",
+    "unit": "$/GPU-hr",
+    "rule": {
+     "type": "change",
+     "tight_above": 5,
+     "loose_below": -10
+    },
+    "fresh_days": 60,
+    "update": "Monthly, from the same Silicon Data posts. A falling older-generation rate signals ageing, not necessarily overcapacity; compare with the B200 trend.",
+    "series": [
+     [
+      "2026-07-27",
+      2.75
+     ],
+     [
+      "2026-09-07",
+      2.63
+     ]
+    ],
+    "sources": [
+     {
+      "src": "Silicon Data, B200 rental price update (Aug 2026)",
+      "url": "https://www.silicondata.com/blog/b200-rental-price-august-2026-update"
+     }
+    ]
+   },
+   {
+    "id": "dram_contract",
+    "layer": "Memory",
+    "name": "Conventional DRAM contract price, quarter on quarter",
+    "unit": "% q/q",
+    "rule": {
+     "type": "level",
+     "tight_above": 10,
+     "loose_below": 0
+    },
+    "fresh_days": 120,
+    "update": "Quarterly. TrendForce publishes contract-price surveys and forecasts each quarter (trendforce.com/presscenter); use the midpoint of a forecast range and say so in `note`.",
+    "series": [
+     [
+      "2026-03-31",
+      98
+     ],
+     [
+      "2026-06-30",
+      60
+     ],
+     [
+      "2026-09-30",
+      15.5
+     ]
+    ],
+    "note": "Q1: 'up to 98%'. Q2: ~60% (forecast 58-63%). Q3: forecast 13-18%, midpoint shown. Still rising, but decelerating.",
+    "sources": [
+     {
+      "src": "AI Weekly, citing TrendForce (Jun 2026)",
+      "url": "https://aiweekly.co/alerts/trendforce-dram-prices-to-jump-63-again-in-q2"
+     },
+     {
+      "src": "Hardware Busters, citing TrendForce (Jul 2026)",
+      "url": "https://hwbusters.com/news/memory-prices-keep-climbing-in-q3-but-the-surge-is-finally-cooling/"
+     }
+    ]
+   },
+   {
+    "id": "dc_vacancy",
+    "layer": "Data centres",
+    "name": "Vacancy, primary North American markets",
+    "unit": "%",
+    "rule": {
+     "type": "level",
+     "tight_below": 3,
+     "loose_above": 8
+    },
+    "fresh_days": 200,
+    "update": "Twice a year. CBRE's North America Data Center Trends (H1 in Sep, H2 in Feb/Mar) and JLL's North America Data Center Report.",
+    "series": [
+     [
+      "2025-12-31",
+      1.4
+     ],
+     [
+      "2026-06-30",
+      1.4
+     ]
+    ],
+    "sources": [
+     {
+      "src": "CBRE H1 2026 press release",
+      "url": "https://www.cbre.com/press-releases/north-american-data-center-demand-continues-to-outpace-supply-despite-record-construction"
+     }
+    ]
+   },
+   {
+    "id": "dc_vacancy_nova",
+    "layer": "Data centres",
+    "name": "Vacancy, Northern Virginia",
+    "unit": "%",
+    "rule": {
+     "type": "level",
+     "tight_below": 3,
+     "loose_above": 8
+    },
+    "fresh_days": 200,
+    "update": "Twice a year, from the CBRE report.",
+    "series": [
+     [
+      "2025-06-30",
+      0.7
+     ],
+     [
+      "2026-06-30",
+      0.2
+     ]
+    ],
+    "sources": [
+     {
+      "src": "CBRE H1 2026 press release",
+      "url": "https://www.cbre.com/press-releases/north-american-data-center-demand-continues-to-outpace-supply-despite-record-construction"
+     }
+    ]
+   },
+   {
+    "id": "dc_preleased",
+    "layer": "Data centres",
+    "name": "Capacity under construction already preleased",
+    "unit": "%",
+    "rule": {
+     "type": "level",
+     "tight_above": 75,
+     "loose_below": 50
+    },
+    "fresh_days": 200,
+    "update": "Twice a year, from the CBRE report. A falling share would be the first sign of speculative overbuild.",
+    "series": [
+     [
+      "2025-06-30",
+      74.3
+     ],
+     [
+      "2026-06-30",
+      80
+     ]
+    ],
+    "note": "H1 2026 reported as 'more than 80%'.",
+    "sources": [
+     {
+      "src": "CBRE H1 2026 press release",
+      "url": "https://www.cbre.com/press-releases/north-american-data-center-demand-continues-to-outpace-supply-despite-record-construction"
+     }
+    ]
+   },
+   {
+    "id": "dc_pipeline_months",
+    "layer": "Data centres",
+    "name": "Supply pipeline, months of absorption",
+    "unit": "months",
+    "rule": {
+     "type": "level",
+     "tight_below": 24,
+     "loose_above": 36
+    },
+    "fresh_days": 200,
+    "update": "Twice a year: MW under construction divided by monthly net absorption, both from the CBRE report (H1 2026: 7,481 MW / (1,456 MW / 6)).",
+    "series": [
+     [
+      "2026-06-30",
+      30.8
+     ]
+    ],
+    "sources": [
+     {
+      "src": "CBRE H1 2026 press release",
+      "url": "https://www.cbre.com/press-releases/north-american-data-center-demand-continues-to-outpace-supply-despite-record-construction"
+     }
+    ]
+   },
+   {
+    "id": "dc_rent_change",
+    "layer": "Data centres",
+    "name": "Asking rent change",
+    "unit": "% (period)",
+    "rule": {
+     "type": "level",
+     "tight_above": 5,
+     "loose_below": 0
+    },
+    "fresh_days": 200,
+    "update": "Twice a year, from CBRE (largest segment increase) or JLL (annual).",
+    "series": [
+     [
+      "2025-12-31",
+      9
+     ],
+     [
+      "2026-06-30",
+      8.3
+     ]
+    ],
+    "note": "2025: JLL, rents +9% for the year. H1 2026: CBRE, +8.3% for 3-10 MW users (largest segment rise).",
+    "sources": [
+     {
+      "src": "w.media, citing JLL year-end 2025",
+      "url": "https://w.media/north-america-data-centers-feel-the-squeeze-as-vacancy-shrinks-to-1-percent-jll/"
+     },
+     {
+      "src": "CBRE H1 2026 press release",
+      "url": "https://www.cbre.com/press-releases/north-american-data-center-demand-continues-to-outpace-supply-despite-record-construction"
+     }
+    ]
+   },
+   {
+    "id": "cowos",
+    "layer": "Packaging",
+    "name": "Advanced packaging (CoWoS) allocation",
+    "unit": "k wafers (Broadcom, 2026)",
+    "rule": {
+     "type": "change",
+     "tight_above": 5,
+     "loose_below": -10
+    },
+    "fresh_days": 120,
+    "update": "When analysts revise CoWoS allocations (SemiAnalysis, TrendForce, DIGITIMES). A cut caused by a slow ramp is a constraint, not weak demand; record why in `note`.",
+    "series": [
+     [
+      "2026-06-30",
+      250
+     ],
+     [
+      "2026-08-17",
+      215
+     ]
+    ],
+    "note": "Cut because CoWoS-S capacity is ramping slowly; Ironwood TPU estimate cut from 3.2M to 2.7M units. Read as a supply constraint.",
+    "override": "tight",
+    "sources": [
+     {
+      "src": "DatacenterDynamics, citing SemiAnalysis",
+      "url": "https://www.datacenterdynamics.com/en/news/google-rumored-to-have-partnered-with-amd-on-tpu-v10-as-shipments-of-current-generations-revised-down-report/"
+     }
+    ]
+   }
+  ]
+ },
+ "compute_econ": {
+  "gpu_rates": [
+   {
+    "gpu": "B200",
+    "series": [
+     [
+      "2026-01-01",
+      4.4
+     ],
+     [
+      "2026-06-01",
+      5.42
+     ],
+     [
+      "2026-07-01",
+      5.63
+     ],
+     [
+      "2026-08-01",
+      5.67
+     ],
+     [
+      "2026-09-01",
+      5.62
+     ]
+    ],
+    "src": "Silicon Data SDB200RT",
+    "url": "https://www.silicondata.com/blog/b200-rental-price-august-2026-update"
+   },
+   {
+    "gpu": "H200",
+    "series": [
+     [
+      "2026-09-07",
+      3.29
+     ]
+    ],
+    "src": "Silicon Data",
+    "url": "https://www.silicondata.com/blog/b200-rental-price-august-2026-update"
+   },
+   {
+    "gpu": "H100",
+    "series": [
+     [
+      "2026-07-27",
+      2.75
+     ],
+     [
+      "2026-09-07",
+      2.63
+     ]
+    ],
+    "src": "Silicon Data",
+    "url": "https://www.silicondata.com/blog/b200-rental-price-august-2026-update"
+   }
+  ],
+  "on_demand": {
+   "date": "2026-10-01",
+   "src": "Thunder Compute market survey (a competing provider; self-reported)",
+   "url": "https://www.thundercompute.com/blog/ai-gpu-rental-market-trends",
+   "rows": [
+    {
+     "gpu": "H100",
+     "dedicated": 4.17,
+     "hyperscaler": 7.89
+    },
+    {
+     "gpu": "H200",
+     "dedicated": 4.5,
+     "hyperscaler": 10.44
+    },
+    {
+     "gpu": "B200",
+     "dedicated": 7.88,
+     "hyperscaler": 15.18
+    }
+   ]
+  },
+  "price_trends": [
+   {
+    "what": "Price of a fixed level of capability (frontier models)",
+    "value": "falls 5-10x a year",
+    "src": "MIT, The Price of Progress (2025)",
+    "url": "https://arxiv.org/html/2511.23455v1"
+   },
+   {
+    "what": "Algorithmic efficiency",
+    "value": "~3x a year",
+    "src": "MIT, The Price of Progress (2025)",
+    "url": "https://arxiv.org/html/2511.23455v1"
+   },
+   {
+    "what": "Hardware price-performance",
+    "value": "~30% a year",
+    "src": "MIT, The Price of Progress (2025)",
+    "url": "https://arxiv.org/html/2511.23455v1"
+   },
+   {
+    "what": "Total cost to run a benchmark task",
+    "value": "flat or rising: reasoning models use more tokens",
+    "src": "MIT, The Price of Progress (2025)",
+    "url": "https://arxiv.org/html/2511.23455v1"
+   }
+  ],
+  "calculator": {
+   "tokens_per_sec": 1500,
+   "price_per_m_tokens": 2.0,
+   "utilisation": 0.6,
+   "gpu": "B200"
+  }
+ },
+ "capital": {
+  "issuance": [
+   {
+    "date": "2025-09",
+    "issuer": "ORCL",
+    "usd_bn": 18.0,
+    "note": "Senior notes",
+    "src": "Reuters via Yahoo Finance",
+    "url": "https://finance.yahoo.com/news/ai-hyperscalers-drive-higher-us-225314460.html"
+   },
+   {
+    "date": "2025-10",
+    "issuer": "META",
+    "usd_bn": 30.0,
+    "note": "Largest non-M&A high-grade bond sale on record",
+    "src": "Reuters via Yahoo Finance",
+    "url": "https://finance.yahoo.com/news/ai-hyperscalers-drive-higher-us-225314460.html"
+   },
+   {
+    "date": "2025-10",
+    "issuer": "META",
+    "usd_bn": 27.0,
+    "note": "Hyperion JV bonds (off Meta's balance sheet), bought via Pimco",
+    "src": "Bisnow",
+    "url": "https://www.bisnow.com/news/national/data-center-capital-markets/meta-pushes-its-largest-data-center-project-off-its-books-with-27b-joint-venture-131490"
+   },
+   {
+    "date": "2025-11",
+    "issuer": "GOOGL",
+    "usd_bn": 17.5,
+    "note": "Senior notes; a GBP century bond followed in Feb 2026",
+    "src": "Reuters via Yahoo Finance",
+    "url": "https://finance.yahoo.com/news/ai-hyperscalers-drive-higher-us-225314460.html"
+   },
+   {
+    "date": "2025-11",
+    "issuer": "AMZN",
+    "usd_bn": 15.0,
+    "note": "Senior notes",
+    "src": "Reuters via Yahoo Finance",
+    "url": "https://finance.yahoo.com/news/ai-hyperscalers-drive-higher-us-225314460.html"
+   },
+   {
+    "date": "2026-02",
+    "issuer": "ORCL",
+    "usd_bn": 25.0,
+    "note": "Eight tranches, 2029-2066, 4.55-6.85%",
+    "src": "BTW Media",
+    "url": "https://btw.media/en/oracle-financing-stack-effective-conditional-break-points"
+   },
+   {
+    "date": "2026-09",
+    "issuer": "CRWV",
+    "usd_bn": 4.2,
+    "note": "Convertible notes due 2033, 2.875%",
+    "src": "StockTitan",
+    "url": "https://www.stocktitan.net/articles/coreweave-nebius-ai-cloud-debt-when-it-comes-due"
+   },
+   {
+    "date": "2026-08",
+    "issuer": "NBIS",
+    "usd_bn": 5.75,
+    "note": "Convertible notes due 2030 and 2034",
+    "src": "StockTitan",
+    "url": "https://www.stocktitan.net/articles/coreweave-nebius-ai-cloud-debt-when-it-comes-due"
+   }
+  ],
+  "facts": [
+   {
+    "text": "The five hyperscalers issued $121B of US corporate bonds in 2025, against an average of $28B a year in 2020-24.",
+    "src": "Reuters via Yahoo Finance (BofA data)",
+    "url": "https://finance.yahoo.com/news/ai-hyperscalers-drive-higher-us-225314460.html"
+   },
+   {
+    "text": "BofA expects roughly $140B a year of hyperscaler borrowing over the next three years, possibly over $300B.",
+    "src": "Reuters via Yahoo Finance",
+    "url": "https://finance.yahoo.com/news/ai-hyperscalers-drive-higher-us-225314460.html"
+   },
+   {
+    "text": "To late May 2026, hyperscalers were ~13% of 10-year IG supply but over 30% of 30-year supply (~$32B); their 10s30s spread curves steepened while other non-financials flattened.",
+    "src": "PIMCO (Jun 2026)",
+    "url": "https://www.pimco.com/gbl/en/insights/ai-financing-needs-do-not-override-cyclical-drivers-of-yield"
+   },
+   {
+    "text": "PIMCO attributes only ~13bp of a 51bp rise in the 10-year yield (Feb-May 2026) to term premium; the rest to rate expectations.",
+    "src": "PIMCO (Jun 2026)",
+    "url": "https://www.pimco.com/gbl/en/insights/ai-financing-needs-do-not-override-cyclical-drivers-of-yield"
+   },
+   {
+    "text": "CoreWeave is courting life insurers for cheaper funding; its $8.5B Meta-backed loan has Blackstone Credit & Insurance as anchor lender.",
+    "src": "Forbes / Global Data Center Hub",
+    "url": "https://www.forbes.com/sites/jimosman/2026/10/14/coreweave-bonds-are-warning-of-a-bigger-problem-for-ai-stocks/"
+   }
+  ],
+  "marker_bonds": [
+   {
+    "issuer": "CRWV",
+    "bond": "9.625% unsecured notes due 2032",
+    "date": "2026-10-14",
+    "price": 79.5,
+    "yield": 15.06,
+    "src": "Forbes, citing Barron's",
+    "url": "https://www.forbes.com/sites/jimosman/2026/10/14/coreweave-bonds-are-warning-of-a-bigger-problem-for-ai-stocks/"
+   }
+  ]
+ }
+}

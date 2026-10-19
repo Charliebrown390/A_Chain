@@ -44,6 +44,9 @@ jobs:
           esac
           echo "mode=$m" >> "$GITHUB_OUTPUT"
       - run: python scripts/market_data.py --mode ${{ steps.mode.outputs.mode }}
+      - name: Capital-market backdrop (FRED)
+        if: steps.mode.outputs.mode == 'full'
+        run: python scripts/macro_data.py
       - run: python scripts/build_site_data.py
       - run: python -m pytest -q tests
       - name: Commit results

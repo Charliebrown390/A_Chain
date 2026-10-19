@@ -203,6 +203,21 @@ footer p{margin:0}
 .warnbox{margin-top:10px;padding:8px 10px;border-radius:7px;border:1px solid var(--warn);color:var(--ink);font-size:12.5px;background:color-mix(in srgb,var(--warn) 8%,var(--surface))}
 .seg{flex-wrap:wrap}
 @media (max-width:700px){.acts li{grid-template-columns:64px 1fr}.acts .pt{grid-column:2;text-align:left}}
+/* Phase 5: returns, capital, bottlenecks, compute */
+.secnav{display:flex;flex-wrap:wrap;gap:6px 14px;margin:14px 0 0;font-size:12.5px}
+.secnav a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:1px}
+.secnav a:hover{color:var(--copper);border-color:var(--copper)}
+.mon{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;scroll-margin-top:12px}
+.mon h2{font-size:18px;font-weight:650}.mon .hint{color:var(--muted);font-size:12px;margin:2px 0 0}
+.bgrid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));margin-top:10px}
+.bcard{border:1px solid var(--line);border-radius:8px;padding:10px 12px;display:grid;gap:4px;background:var(--bg);min-width:0}
+.bhead{display:flex;justify-content:space-between;align-items:center;font-size:11.5px}
+.bval{font-family:var(--f-mono);font-size:15px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.bmeta{font-size:11.5px;color:var(--muted)}.bmeta a{color:var(--copper)}
+.calc{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr))}
+.calc label{display:grid;gap:4px;font-size:12px;color:var(--muted)}
+.calc input,.calc select{font:inherit;font-family:var(--f-mono);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:6px 8px}
+.sttab td svg{vertical-align:middle}
 /* Phase 4: programmes, rumoured links, GPU vs custom */
 .legend .sw.rum{border-top:2px dashed var(--muted);opacity:.8}
 .map.prog .chip:not(.inprog){opacity:.18!important}
@@ -282,6 +297,8 @@ footer p{margin:0}
     </div>
   </header>
 
+  <nav class="secnav" aria-label="Sections"><a href="#mapsec">Supply-chain map</a><a href="#returns">Returns on spending</a><a href="#capital">Capital and yields</a><a href="#bottlenecks">Bottlenecks</a><a href="#compute">Compute economics</a><a href="#accel">GPU vs custom silicon</a><a href="#stress">Stress test</a></nav>
+
   <section class="pulse four">
     <div class="card">
       <h2>Biggest moves</h2>
@@ -328,10 +345,14 @@ footer p{margin:0}
     <div id="stOut"></div>
   </section>
 
+  <section class="mon" id="returns"></section>
+  <section class="mon" id="capital"></section>
+  <section class="mon" id="bottlenecks"></section>
+  <section class="mon" id="compute"></section>
   <section class="accel" id="accel" hidden></section>
   <section class="watch" id="watch" hidden></section>
 
-  <div class="controls">
+  <div class="controls" id="mapsec">
     <div><span class="ctl-label">Colour by</span>
       <div class="seg" id="seg" role="group" aria-label="Colour companies by">
         <button type="button" id="cb-1d" data-m="d1" aria-pressed="false">1D</button>
@@ -340,6 +361,7 @@ footer p{margin:0}
         <button type="button" id="cb-pe" data-m="pe" aria-pressed="false">Fwd P/E</button>
         <button type="button" id="cb-iv" data-m="iv" aria-pressed="false">Vol cheap/rich</button>
         <button type="button" id="cb-cr" data-m="cr" aria-pressed="false">Credit</button>
+        <button type="button" id="cb-rs" data-m="rs" aria-pressed="false">ROIC vs cost</button>
       </div>
     </div>
     <div class="legend">
@@ -394,10 +416,10 @@ const load=u=>fetch(u,{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error(u+" 
 const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
 
 (async()=>{
-let U,E,D,M,NW,IV,PR;
+let U,E,D,M,NW,IV,PR,MN,MC;
 try{
   [U,E]=await Promise.all([load("data/universe.json"),load("data/edges.json")]);
-  [D,M,NW,IV,PR]=await Promise.all(["data/disclosures.json","data/market.json","data/news.json","data/iv.json","data/programmes.json"].map(u=>load(u).catch(()=>({companies:{}}))));
+  [D,M,NW,IV,PR,MN,MC]=await Promise.all(["data/disclosures.json","data/market.json","data/news.json","data/iv.json","data/programmes.json","data/monitors.json","data/macro.json"].map(u=>load(u).catch(()=>({companies:{}}))));
 }catch(err){$("#map").insertAdjacentHTML("beforeend",`<p class="flag">The data files could not be loaded (${esc(err.message)}). Refresh the page; if it persists, the last data build may have failed.</p>`);return}
 
 const LAYERS=U.layers, MK=M.companies||{}, NEWS=NW.companies||{}, IVS=IV.companies||{}, DISC=D.companies||{};
@@ -553,7 +575,7 @@ function lineChart({ds,series,ccy,yFmt,W=640,H=230,dots=[]}){
   const path=a=>a.map((v,i)=>v==null?"":`${i&&a[i-1]!=null?"L":"M"}${X(i).toFixed(1)} ${Y(v).toFixed(1)}`).join("");
   let g="";
   for(let k=0;k<=4;k++){const v=lo+(hi-lo)*k/4,y=Y(v);g+=`<line x1="${L}" x2="${L+iw}" y1="${y}" y2="${y}" stroke="var(--line)" stroke-width="1"/><text x="${W-4}" y="${y+4}" text-anchor="end" font-size="11" font-family="IBM Plex Mono, monospace" fill="var(--muted)">${yFmt(v)}</text>`}
-  const step=n>300?3:n>140?2:1;let lm=-1,cnt=0;
+  const nMon=new Set(ds.map(d=>d.slice(0,7))).size,step=Math.max(1,Math.ceil(nMon/11));let lm=-1,cnt=0;
   ds.forEach((d,i)=>{const m=+d.slice(5,7)-1;if(m!==lm){if(lm!==-1&&cnt++%step===0&&i>2&&i<n-3){const lab=m===0?`${MON[m]} '${d.slice(2,4)}`:MON[m];g+=`<text x="${X(i)}" y="${H-7}" font-size="11" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="var(--muted)">${lab}</text>`}lm=m}});
   series.forEach(s=>{
     if(s.area){const p=path(s.v);g+=`<path d="${p}L${X(n-1)} ${T+ih}L${X(0)} ${T+ih}Z" fill="${s.color}" fill-opacity=".09"/>`}
@@ -585,7 +607,7 @@ function bindCross(box,geom,valueAt,tipAt){
 
 /* ---------- panel ---------- */
 const panel=$("#panel");let TAB="price";
-const TABS=[["price","Price"],["risk","Vol & risk"],["credit","Credit"],["fin","Financials"],["ana","Analysts"],["news","News"],["links","Links"],["thesis","Thesis"]];
+const TABS=[["price","Price"],["risk","Vol & risk"],["credit","Credit"],["returns","Returns"],["fin","Financials"],["ana","Analysts"],["news","News"],["links","Links"],["thesis","Thesis"]];
 
 function tabPrice(c){
   if(!c.has)return `<p class="mut">No price data for this company yet.</p>`;
@@ -731,7 +753,7 @@ function renderPanel(){
   const head=`<div class="ph"><div><p class="eyebrow">L${L.n} · ${esc(L.short)}</p><h2>${esc(c.lab)}</h2></div>
   ${c.has?`<div><div class="px">${fpx(c.px,c.ccy)}</div><div class="chg ${cls(c.chg1d)}">${pct(c.chg1d)} 1D · <span class="${cls(c.r1m)}">${pct(c.r1m)} 1M</span></div></div>`:"<div></div>"}
   <div class="nm">${esc(c.name)}${c.mcap_usd_bn?` · ${usd(c.mcap_usd_bn)} market cap`:""}${c.priv?" · private":""}</div><button class="close" type="button" id="closeP">Close</button></div>`;
-  const fn={price:tabPrice,risk:tabRisk,credit:tabCredit,fin:tabFin,ana:tabAna,news:tabNews,links:tabLinks,thesis:tabThesis}[TAB];
+  const fn={price:tabPrice,risk:tabRisk,credit:tabCredit,returns:tabReturns,fin:tabFin,ana:tabAna,news:tabNews,links:tabLinks,thesis:tabThesis}[TAB];
   panel.innerHTML=head+`<div class="tabs" role="tablist">${tabs.map(([k,l])=>`<button role="tab" type="button" id="tab-${k}" data-tab="${k}" aria-selected="${k===TAB}">${l}${k==="news"&&c.news.some(n=>n.r)?` <span class="mut">${c.news.filter(n=>n.r).length}</span>`:""}</button>`).join("")}</div><div role="tabpanel">${c.priv?`<div class="flag" style="border-color:var(--line);margin-top:4px">Private company with no share price or analyst coverage. It is tracked as a demand node so you can see who depends on its spending.</div>`:""}${fn(c)}</div>`;
   panel.querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()=>{TAB=b.dataset.tab;renderPanel()}));
   panel.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>select(b.dataset.go,true)));
@@ -937,6 +959,149 @@ renderAccel();
   const W=U.watchlist||[];const box=$("#watch");
   if(W.length){box.hidden=false;box.innerHTML=`<h3>Under review, not on the map</h3><ul class="news">${W.map(w=>`<li><b>${esc(w.name)}</b> <span class="mono mut">${esc(w.id)}</span> · ${esc(w.segment)}<span class="meta">${esc(w.reason)}</span></li>`).join("")}</ul>`}
 }
+
+/* ---------- phase 5: returns, capital, bottlenecks, compute ---------- */
+const MON5=MN||{},MAC=(MC&&MC.series)||{};
+const num=(v,d=1)=>v==null||isNaN(v)?"—":minus(Number(v).toFixed(d));
+const pc=(v,d=1)=>v==null||isNaN(v)?"—":minus(Number(v).toFixed(d))+"%";
+const lncOf=c=>{const it=(c.funding?.items||[]).find(i=>i.kind==="lease");const sv=(DISC[c.t]||{}).credit?.leases_not_commenced;return it?it.usd_bn:sv?sv.usd_bn:null};
+COS.forEach(c=>{const R=c.returns||{};c.ret=R;
+  const l=lncOf(c);if(R.nopat_ttm_usd_bn!=null&&R.ic_usd_bn&&l){c.ret.roic_lease=R.nopat_ttm_usd_bn/(R.ic_usd_bn+0.5*l)*100}
+});
+MODES.rs={get:c=>c.ret?.spread??null,lo:-10,hi:20,mid:0,fmt:c=>c.ret?.spread==null?"—":"ROIC−WACC "+(c.ret.spread>0?"+":"")+c.ret.spread.toFixed(0),lab:["−10","+20"]};
+function spark(vals,{W=120,H=28,col="var(--copper)"}={}){
+  const v=vals.filter(x=>x!=null);if(v.length<2)return "";
+  const lo=Math.min(0,...v),hi=Math.max(...v),X=i=>4+i/(vals.length-1)*(W-8),Y=x=>H-3-(x-lo)/((hi-lo)||1)*(H-6);
+  const z=lo<0?`<line x1="0" x2="${W}" y1="${Y(0)}" y2="${Y(0)}" stroke="var(--line)"/>`:"";
+  const d=vals.map((x,i)=>x==null?"":`${i&&vals[i-1]!=null?"L":"M"}${X(i).toFixed(1)} ${Y(x).toFixed(1)}`).join("");
+  const li=vals.length-1;return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" aria-hidden="true">${z}<path d="${d}" fill="none" stroke="${col}" stroke-width="1.8"/>${vals[li]!=null?`<circle cx="${X(li)}" cy="${Y(vals[li])}" r="2.6" fill="${col}"/>`:""}</svg>`;
+}
+const spreadChip=s=>s==null?"—":`<span class="ddchip ${s<0?"s0":s<5?"s1":"s3"}">${s>0?"+":""}${s.toFixed(0)} pts</span>`;
+
+/* Returns monitor */
+let RGRP=store.get("aiscm-rgrp")||"buyers";
+function renderReturns(){
+  const box=$("#returns");
+  const grp={buyers:c=>c.layer===9||c.t==="META",sup:c=>c.layer<=8,all:()=>true}[RGRP]||(()=>true);
+  const rows=COS.filter(c=>c.has&&c.ret&&(c.ret.roic_ttm!=null||c.ret.hist?.length)&&grp(c)).sort((a,b)=>a.layer-b.layer||(b.ret.roic_ttm??-1e9)-(a.ret.roic_ttm??-1e9));
+  const med=a=>median(a.filter(x=>x!=null));
+  const buy=COS.filter(c=>(c.layer===9||c.t==="META")&&c.ret?.roic_ttm!=null),sup=COS.filter(c=>c.layer<=8&&c.ret?.roic_ttm!=null&&c.ret.ic_basis!=="incl. cash");
+  const neg=COS.filter(c=>c.ret?.spread!=null&&c.ret.spread<0&&c.ret.ic_basis!=="incl. cash").map(c=>c.lab);
+  box.innerHTML=`<h2>Is the spending paying off?</h2><p class="hint">Return on invested capital (ROIC) against each company's cost of capital. Compute providers are the ones spending; suppliers are the ones being paid.</p>
+  <p class="psum">Median ROIC: compute providers <b>${pc(med(buy.map(c=>c.ret.roic_ttm)),0)}</b> vs chip and hardware suppliers <b>${pc(med(sup.map(c=>c.ret.roic_ttm)),0)}</b>. ${neg.length?`Earning below their cost of capital on reported figures: <b>${neg.map(esc).join(", ")}</b>. Several are acquirers whose goodwill depresses ROIC; see the ex-goodwill column.`:""}</p>
+  <div class="seg" id="rgSeg" role="group" aria-label="Which companies" style="margin:8px 0">${[["buyers","Compute providers"],["sup","Suppliers"],["all","All"]].map(([k,l])=>`<button type="button" id="rg-${k}" data-g="${k}" aria-pressed="${k===RGRP}">${l}</button>`).join("")}</div>
+  <div class="sttab"><table><thead><tr><th>Company</th><th>ROIC by year</th><th>ROIC (TTM)</th><th title="Change in operating profit after tax divided by change in invested capital over two fiscal years">Incremental</th><th title="Excludes goodwill and acquired intangibles from invested capital">Ex goodwill</th><th title="Adds half of leases signed but not yet started to invested capital">Lease-adjusted</th><th title="If depreciation were 30% higher (shorter server lives)">D&amp;A +30%</th><th>Cost of capital</th><th>ROIC − cost</th><th>Capex / revenue</th><th>Net PP&amp;E / revenue</th></tr></thead><tbody>
+  ${rows.map(c=>{const R=c.ret,h=R.hist||[],last=h[h.length-1]||{};return `<tr><td><button class="go" type="button" data-rg="${esc(c.t)}">${esc(c.lab)}</button>${R.ic_basis==="incl. cash"?' <span class="mut" title="Cash-rich: capital measured including cash">ᶜ</span>':""}</td><td>${spark(h.map(x=>x.roic))} <span class="mut">${h.length?esc(h[0].fy.slice(0,4))+"–"+esc(last.fy.slice(2,4)):""}</span></td><td>${pc(R.roic_ttm,0)}</td><td>${pc(R.incr_roic,0)}</td><td>${pc(R.roic_ex_gw,0)}</td><td>${pc(c.ret.roic_lease,0)}</td><td>${pc(R.roic_dep_stress,0)}</td><td>${pc(R.wacc,1)}</td><td>${spreadChip(R.spread)}</td><td>${pc(last.capex_rev,0)}</td><td>${num(last.ppe_rev,2)}×</td></tr>`}).join("")}
+  </tbody></table></div>
+  <p class="note">ROIC = operating profit after tax ÷ invested capital (debt including on-balance-sheet leases + equity − cash, averaged over the year; ᶜ = cash-rich companies measured including cash, which understates their returns, so they are left out of the below-cost list). Incremental ROIC covers the last two fiscal years and is the cleanest test of whether new spending earns its keep. Cost of capital uses the US 10-year yield (${pc((M.rf10||0)*100,2)}), a ${((M.erp||0.05)*100).toFixed(0)}% equity risk premium, Blume-adjusted beta and each company's interest cost; foreign listings are measured in USD terms. Source: Yahoo Finance statements, refreshed nightly.</p>`;
+  box.querySelectorAll("[data-g]").forEach(b=>b.addEventListener("click",()=>{RGRP=b.dataset.g;store.set("aiscm-rgrp",RGRP);renderReturns()}));
+  box.querySelectorAll("[data-rg]").forEach(b=>b.addEventListener("click",()=>{TAB="returns";select(b.dataset.rg,true)}));
+}
+
+/* Per-company Returns tab */
+function tabReturns(c){
+  const R=c.ret||{};if(!R.hist&&R.roic_ttm==null)return `<p class="mut">No return data for this company.</p>`;
+  const h=R.hist||[];let s=`<div class="stats">${stat("ROIC (TTM)",pc(R.roic_ttm,1),R.roic_ttm<(R.wacc||0)?"down":"up")}${stat("Incremental ROIC",pc(R.incr_roic,0))}${stat("Cost of capital",pc(R.wacc,1))}${stat("ROIC − cost of capital",R.spread==null?"—":(R.spread>0?"+":"")+R.spread.toFixed(1)+" pts",R.spread<0?"down":"up")}${stat("ROIC excluding goodwill",pc(R.roic_ex_gw,1))}${stat("Lease-adjusted ROIC",pc(c.ret.roic_lease,1))}${stat("If D&A were 30% higher",pc(R.roic_dep_stress,1))}</div>`;
+  if(R.incr_span)s+=`<p class="note">Incremental ROIC measured ${esc(R.incr_span)}. Cost of capital: equity ${pc(R.ke,1)} (beta ${num(R.beta_used,2)}), debt ${pc(R.kd,1)} before tax.${R.ic_basis==="incl. cash"?" Capital measured including cash because the company is cash-rich.":""}</p>`;
+  if(h.length){s+=`<p class="sec">ROIC by fiscal year</p><div class="svgbox">${barChart(h.map(x=>["FY"+x.fy.slice(2,4),Math.max(0,x.roic??0)]),{fmt:v=>v.toFixed(0)+"%",H:140,color:"var(--copper)"})}</div>`;
+    s+=`<p class="sec">Capital intensity</p><table class="fin"><tbody>${h.map(x=>`<tr><td>FY${esc(x.fy)}</td><td>capex ${pc(x.capex_rev,0)} of revenue · PP&amp;E ${num(x.ppe_rev,2)}× revenue · D&amp;A ${pc(x.da_rev,0)}</td></tr>`).join("")}</tbody></table>`}
+  if(R.inv_days&&R.inv_days.length>=2)s+=`<p class="sec">Inventory days</p><div class="svgbox">${barChart(R.inv_days.map(([d,v])=>[MON[+d.slice(5,7)-1]+" '"+d.slice(2,4),v]),{fmt:v=>v.toFixed(0)+"d",H:120,color:"var(--fin)"})}</div><p class="note">Inventory ÷ quarterly cost of sales × 91 days. Rising inventory at a supplier is an early sign that demand is cooling.</p>`;
+  return s;
+}
+
+/* Capital and the yield curve */
+function mser(id){return (MAC[id]?.weekly)||[]}
+function renderCapital(){
+  const box=$("#capital");if(!MAC.DGS10){box.innerHTML=`<h2>Capital and the yield curve</h2><p class="mut">Market data from FRED has not loaded yet.</p>`;return}
+  const idx=new Map();["DGS3MO","DGS2","DGS5","DGS10","DGS30","THREEFYTP10","BAMLC0A0CM","BAMLH0A0HYM2","BAMLC8A0C15PYEY"].forEach(k=>mser(k).forEach(([d,v])=>{if(!idx.has(d))idx.set(d,{});idx.get(d)[k]=v}));
+  const ds=[...idx.keys()].sort(),row=d=>idx.get(d);
+  const ffill=k=>{let last=null;return ds.map(d=>{const v=row(d)[k];if(v!=null)last=v;return last})};
+  const t3=ffill("DGS3MO"),t2=ffill("DGS2"),t5=ffill("DGS5"),t10=ffill("DGS10"),t30=ffill("DGS30"),tp=ffill("THREEFYTP10"),ig=ffill("BAMLC0A0CM"),hy=ffill("BAMLH0A0HYM2"),lc=ffill("BAMLC8A0C15PYEY");
+  const s1=ds.map((_,i)=>t10[i]!=null&&t3[i]!=null?(t10[i]-t3[i])*100:null),s2=ds.map((_,i)=>t30[i]!=null&&t10[i]!=null?(t30[i]-t10[i])*100:null),tpb=tp.map(v=>v==null?null:v*100);
+  const at=i=>({d:ds[i],t3:t3[i],t2:t2[i],t5:t5[i],t10:t10[i],t30:t30[i],tp:tp[i],ig:ig[i],hy:hy[i],lc:lc[i]});
+  const L=ds.length-1,y1=Math.max(0,L-52),y3=0,now=at(L),ya=at(y1),y3a=at(y3);
+  const ch1=lineChart({ds,yFmt:v=>v.toFixed(0),series:[{v:s1,color:"var(--copper)",width:2},{v:s2,color:"var(--fin)",width:1.6},{v:tpb,color:"var(--warn)",width:1.6,dash:"4 3"}],H:220});
+  const ch2=lineChart({ds,yFmt:v=>v.toFixed(0),series:[{v:ig.map(v=>v==null?null:v*100),color:"var(--copper)",width:2},{v:hy.map(v=>v==null?null:v*100),color:"var(--down)",width:1.6}],H:180});
+  // off-balance-sheet tally
+  const ob=[];COS.forEach(c=>{const l=lncOf(c);const spv=(c.funding?.items||[]).filter(i=>i.kind==="spv").reduce((a,i)=>a+(i.usd_bn||0),0);if(l||spv)ob.push([c,l||0,spv])});ob.sort((a,b)=>(b[1]+b[2])-(a[1]+a[2]));
+  const obT=ob.reduce((a,x)=>a+x[1]+x[2],0),obM=ob[0]?ob[0][1]+ob[0][2]:1;
+  const C=MON5.capital||{};
+  const snap=[["3-month","t3"],["2-year","t2"],["5-year","t5"],["10-year","t10"],["30-year","t30"]];
+  box.innerHTML=`<h2>Capital and the yield curve</h2><p class="hint">Who is funding the build-out, at what price, and how much sits off balance sheets. Rates, term premium and spreads from FRED, refreshed nightly.</p>
+  <div class="accgrid"><div><p class="sec">Curve slopes and term premium, basis points</p><div class="legend"><span><span class="sw"></span>3m–10y</span><span><span class="sw" style="border-top-color:var(--fin)"></span>10y–30y</span><span><span class="sw" style="border-top:2px dashed var(--warn)"></span>10y term premium</span></div><div class="svgbox" id="capc1">${ch1.html}</div>
+  <p class="sec">Credit spreads, basis points</p><div class="legend"><span><span class="sw"></span>Investment grade</span><span><span class="sw" style="border-top-color:var(--down)"></span>High yield</span></div><div class="svgbox" id="capc2">${ch2.html}</div></div>
+  <div><p class="sec">Treasury curve</p><table class="fin"><tbody><tr><td class="mut">Tenor</td><td class="mut">${esc(fdate(y3a.d))} · ${esc(fdate(ya.d))} · ${esc(fdate(now.d))}</td></tr>${snap.map(([l,k])=>`<tr><td>${l}</td><td>${num(y3a[k],2)} · ${num(ya[k],2)} · <b>${num(now[k],2)}%</b></td></tr>`).join("")}
+  <tr><td>10y term premium</td><td>${num(y3a.tp,2)} · ${num(ya.tp,2)} · <b>${num(now.tp,2)}%</b></td></tr><tr><td>IG corporates 15y+ yield</td><td>${num(y3a.lc,2)} · ${num(ya.lc,2)} · <b>${num(now.lc,2)}%</b></td></tr></tbody></table>
+  <p class="psum">The 3m–10y slope is <b>${num(s1[L],0)}bp</b> (was ${num(s1[y1],0)}bp a year ago); 10y–30y is <b>${num(s2[L],0)}bp</b> (was ${num(s2[y1],0)}bp). The term premium has gone from ${num(y3a.tp,2)}% to ${num(now.tp,2)}% in three years.</p>
+  <p class="sec">Signed leases not yet on balance sheets, plus off-balance-sheet vehicles</p><ul class="lease">${ob.slice(0,7).map(([c,l,s])=>`<li><button class="go" type="button" data-cg="${esc(c.t)}">${esc(c.lab)}</button><span class="bar" style="width:${((l+s)/obM*100).toFixed(0)}%"></span><span class="num" style="text-align:right">${usd(l+s)}</span></li>`).join("")}</ul><p class="note">Total across the map: <b>${usd(obT)}</b>. Leases are undiscounted future payments; vehicles are deal sizes. From funding.yaml and SEC filings.</p></div></div>
+  ${(C.issuance||[]).length?`<p class="sec">Large AI-related bond deals</p><div class="sttab"><table><thead><tr><th>Date</th><th>Issuer</th><th>Size</th><th style="text-align:left">Detail</th></tr></thead><tbody>${[...C.issuance].sort((a,b)=>b.date.localeCompare(a.date)).map(i=>`<tr><td>${esc(i.date)}</td><td>${esc(BY[i.issuer]?.lab||i.issuer)}</td><td>${usd(i.usd_bn)}</td><td style="text-align:left;font-family:var(--f-body);white-space:normal">${esc(i.note)} · <a href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.src)}</a></td></tr>`).join("")}</tbody></table></div>`:""}
+  ${(C.marker_bonds||[]).length?`<p class="sec">Marker bonds</p><ul class="news">${C.marker_bonds.map(b=>`<li><b>${esc(BY[b.issuer]?.lab||b.issuer)} ${esc(b.bond)}</b>: ${num(b.price,1)}c, yield ${num(b.yield,2)}%<span class="meta">${esc(b.date)} · <a href="${esc(b.url)}" target="_blank" rel="noopener">${esc(b.src)}</a></span></li>`).join("")}</ul>`:""}
+  ${(C.facts||[]).length?`<p class="sec">Context</p><ul class="news">${C.facts.map(f=>`<li>${esc(f.text)}<span class="meta"><a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.src)}</a></span></li>`).join("")}</ul>`:""}
+  <p class="note">Source for rates and spreads: FRED (Federal Reserve Bank of St. Louis), pulled ${esc((MC.built||"").slice(0,10))}. Term premium is the Kim-Wright estimate (THREEFYTP10). Deal and bond tables are maintained by hand in data/capital.yaml.</p>`;
+  const tipC=i=>`<b>${fdate(ds[i])}</b><br>3m–10y ${num(s1[i],0)}bp · 10y–30y ${num(s2[i],0)}bp<br><span class="mutd">term premium ${num(tp[i],2)}% · 10y ${num(t10[i],2)}% · 30y ${num(t30[i],2)}%</span>`;
+  bindCross($("#capc1"),ch1.geom,i=>s1[i],tipC);
+  bindCross($("#capc2"),ch2.geom,i=>ig[i]==null?null:ig[i]*100,i=>`<b>${fdate(ds[i])}</b><br>IG ${num(ig[i]*100,0)}bp · HY ${num(hy[i]*100,0)}bp`);
+  box.querySelectorAll("[data-cg]").forEach(b=>b.addEventListener("click",()=>{TAB="credit";select(b.dataset.cg,true)}));
+}
+
+/* Bottleneck monitor */
+function sigOf(ind){
+  if(ind.override)return ind.override;
+  const r=ind.rule||{},s=ind.series||[];
+  if(r.type==="curve"){const p=ind.curve?.points||[],sp=p[0]?.[1],lg=p[p.length-1]?.[1];if(sp==null||lg==null)return "balanced";const d=(lg/sp-1)*100;return d<-(r.margin||2)?"tight":d>(r.margin||2)?"loose":"balanced"}
+  if(!s.length)return "balanced";
+  const v=r.type==="change"?(s.length>=2?(s[s.length-1][1]/s[s.length-2][1]-1)*100:null):s[s.length-1][1];
+  if(v==null)return "balanced";
+  if(r.tight_above!=null&&v>=r.tight_above)return "tight";if(r.tight_below!=null&&v<=r.tight_below)return "tight";
+  if(r.loose_below!=null&&v<=r.loose_below)return "loose";if(r.loose_above!=null&&v>=r.loose_above)return "loose";
+  return "balanced";
+}
+const SIGC={tight:"s0",balanced:"s2",loose:"s3"},SIGL={tight:"Tight",balanced:"Balanced",loose:"Slack"};
+function autoInds(){
+  const out=[],grp=(name,f,layers)=>{const cs=COS.filter(c=>layers.includes(c.layer));const ch=cs.map(c=>{const d=f(c);if(!d||d.length<5)return null;const a=d[d.length-1][1],b=d[d.length-5][1];return b?(a/b-1)*100:null}).filter(x=>x!=null);if(ch.length<3)return;const m=median(ch);out.push({auto:true,name,layer:"Suppliers (automated)",unit:"% change in a year, median",val:m,n:ch.length,sig:m>15?"loose":m<-10?"tight":"balanced"})};
+  grp("Inventory days, chip and hardware suppliers",c=>c.ret?.inv_days,[2,3,4,5,6,7]);
+  grp("Days to get paid, chip and hardware suppliers",c=>c.cr?.dso,[2,3,4,5,6,7]);
+  return out;
+}
+function renderBottlenecks(){
+  const box=$("#bottlenecks");const inds=(MON5.bottlenecks?.indicators)||[];const today=Date.now();
+  const cards=inds.map(ind=>{const s=ind.series||[],last=s[s.length-1],prev=s[s.length-2],sig=sigOf(ind);
+    const lastDate=ind.curve?.date||last?.[0];const stale=lastDate&&(today-Date.parse(lastDate))/864e5>(ind.fresh_days||120);
+    let val="",sub="";
+    if(ind.curve){const p=ind.curve.points;val=p.map(x=>`${esc(x[0])} ${num(x[1],2)}`).join(" · ");sub=`${p[p.length-1][1]<p[0][1]?"Backwardated: near-term capacity costs more than term":"Upward-sloping: no near-term squeeze"}`}
+    else if(last){val=`${num(last[1],last[1]<20?2:1)} <span class="mut">${esc(ind.unit)}</span>`;if(prev)sub=`was ${num(prev[1],prev[1]<20?2:1)} on ${esc(fdate(prev[0]))}`}
+    return `<div class="bcard"><div class="bhead"><span class="mut">${esc(ind.layer)}</span><span class="ddchip ${SIGC[sig]}">${SIGL[sig]}</span></div><b>${esc(ind.name)}</b><div class="bval">${val}</div>${sub?`<div class="mut" style="font-size:12px">${sub}</div>`:""}${s.length>=2?spark(s.map(x=>x[1]),{W:180,H:30}):""}
+    <div class="bmeta">${lastDate?`as of ${esc(fdate(lastDate))}`:""}${stale?` · <span class="down">stale: due for an update</span>`:""} · ${(ind.sources||[]).map(x=>`<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.src)}</a>`).join(", ")}</div>${ind.note?`<div class="bmeta">${esc(ind.note)}</div>`:""}</div>`});
+  const autos=autoInds().map(a=>`<div class="bcard"><div class="bhead"><span class="mut">${esc(a.layer)}</span><span class="ddchip ${SIGC[a.sig]}">${SIGL[a.sig]}</span></div><b>${esc(a.name)}</b><div class="bval">${a.val>0?"+":""}${num(a.val,0)}% <span class="mut">${esc(a.unit)}</span></div><div class="bmeta">Median of ${a.n} companies from quarterly statements, refreshed nightly. Rising inventory or slower payment means demand is cooling; falling means tightness.</div></div>`);
+  const counts={tight:0,balanced:0,loose:0};inds.forEach(i=>counts[sigOf(i)]++);autoInds().forEach(a=>counts[a.sig]++);
+  box.innerHTML=`<h2>Bottleneck monitor</h2><p class="hint">Where the chain is tight and where slack is building. Each indicator is scored from its own rule; tight means demand is running ahead of supply.</p>
+  <p class="psum"><span class="ddchip s0">${counts.tight} tight</span> <span class="ddchip s2">${counts.balanced} balanced</span> <span class="ddchip s3">${counts.loose} slack</span></p>
+  <div class="bgrid">${cards.join("")}${autos.join("")}</div>
+  <p class="note">Hand-maintained indicators live in data/bottlenecks.yaml, each with its update source and schedule; cards marked stale are overdue. Supplier inventory and payment-time cards update automatically.</p>`;
+}
+
+/* Compute economics */
+function renderCompute(){
+  const box=$("#compute"),CE=MON5.compute_econ||{};if(!CE.gpu_rates){box.hidden=true;return}
+  const rates=CE.gpu_rates,latest=g=>{const r=rates.find(x=>x.gpu===g);return r?r.series[r.series.length-1]:null};
+  const cal=CE.calculator||{};
+  box.innerHTML=`<h2>Compute economics</h2><p class="hint">What an hour of AI compute costs, how fast the price of intelligence is falling, and whether serving tokens covers the rent.</p>
+  <div class="accgrid"><div><p class="sec">GPU rental rates, $ per GPU-hour (neocloud benchmark)</p><table class="fin"><tbody>${rates.map(r=>{const s=r.series,l=s[s.length-1],f=s[0];return `<tr><td><b>${esc(r.gpu)}</b> ${s.length>1?spark(s.map(x=>x[1]),{W:90,H:22}):""}</td><td>$${num(l[1],2)} <span class="mut">${esc(fdate(l[0]))}${s.length>1?` · ${pct((l[1]/f[1]-1)*100,0)} since ${esc(fdate(f[0]))}`:""}</span></td></tr>`}).join("")}</tbody></table>
+  ${CE.on_demand?`<p class="sec">On-demand list prices: dedicated GPU clouds vs hyperscalers</p><table class="fin"><tbody>${CE.on_demand.rows.map(r=>`<tr><td>${esc(r.gpu)}</td><td>$${num(r.dedicated,2)} vs $${num(r.hyperscaler,2)} <span class="mut">(${(r.hyperscaler/r.dedicated).toFixed(1)}×)</span></td></tr>`).join("")}</tbody></table><p class="note">${esc(CE.on_demand.date)} · <a href="${esc(CE.on_demand.url)}" target="_blank" rel="noopener">${esc(CE.on_demand.src)}</a></p>`:""}
+  <p class="sec">How fast the price of intelligence falls</p><ul class="news">${(CE.price_trends||[]).map(t=>`<li><b>${esc(t.value)}</b> · ${esc(t.what)}<span class="meta"><a href="${esc(t.url)}" target="_blank" rel="noopener">${esc(t.src)}</a></span></li>`).join("")}</ul></div>
+  <div><p class="sec">Does serving tokens cover the rent? (example calculator)</p>
+  <div class="calc"><label for="cTps">Output tokens per second per GPU<input id="cTps" type="number" min="1" step="50" value="${cal.tokens_per_sec||1500}"></label>
+  <label for="cPx">Price, $ per million tokens<input id="cPx" type="number" min="0" step="0.1" value="${cal.price_per_m_tokens||2}"></label>
+  <label for="cUt">Utilisation, %<input id="cUt" type="number" min="1" max="100" step="5" value="${Math.round((cal.utilisation||0.6)*100)}"></label>
+  <label for="cGpu">GPU rented<select id="cGpu">${rates.map(r=>`<option value="${esc(r.gpu)}" ${r.gpu===cal.gpu?"selected":""}>${esc(r.gpu)} · $${num(latest(r.gpu)[1],2)}/hr</option>`).join("")}</select></label></div>
+  <div class="stats" id="cOut"></div><p class="note">Inputs are illustrations you can change, not data. Revenue per GPU-hour = tokens/sec × 3,600 × utilisation × price ÷ 1,000,000. Rent is the latest benchmark rate above. Excludes power, staff and networking.</p></div></div>
+  <p class="note">Rates and trend studies are maintained by hand in data/compute_econ.yaml; update monthly.</p>`;
+  const calc=()=>{const tps=+$("#cTps").value||0,px=+$("#cPx").value||0,ut=(+$("#cUt").value||0)/100,g=$("#cGpu").value,rent=latest(g)?.[1]||0;
+    const rev=tps*3600*ut*px/1e6,mg=rev?((rev-rent)/rev*100):null,be=tps&&ut?rent*1e6/(tps*3600*ut):null;
+    $("#cOut").innerHTML=stat("Revenue per GPU-hour","$"+rev.toFixed(2))+stat("Rent per GPU-hour","$"+rent.toFixed(2))+stat("Margin over rent",mg==null?"—":pc(mg,0),mg<0?"down":"up")+stat("Break-even price",be==null?"—":"$"+be.toFixed(2)+" /M tokens");};
+  ["cTps","cPx","cUt","cGpu"].forEach(id=>$("#"+id).addEventListener("input",calc));calc();
+}
+renderReturns();renderCapital();renderBottlenecks();renderCompute();
 
 /* ---------- selection + sheet ---------- */
 const narrow=()=>window.matchMedia("(max-width:1039px)").matches;

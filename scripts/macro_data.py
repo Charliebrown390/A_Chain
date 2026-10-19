@@ -8,6 +8,7 @@ import io
 import json
 import sys
 import time
+import time
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
@@ -24,7 +25,7 @@ SERIES = {
     "THREEFYTP10": "10-year term premium (Kim-Wright)",
     "BAMLC0A0CM": "US investment-grade OAS",
     "BAMLH0A0HYM2": "US high-yield OAS",
-    "BAMLC4A0C15PYEY": "IG corporates 15y+ effective yield",
+    "BAMLC8A0C15PYEY": "IG corporates 15y+ effective yield",
 }
 
 
@@ -33,7 +34,7 @@ def fetch(sid, start):
     last = None
     for attempt in range(4):
         try:
-            r = requests.get(url, timeout=40, headers={"User-Agent": "A_Chain research"})
+            r = requests.get(url, timeout=40)
             r.raise_for_status()
             break
         except Exception as e:
@@ -75,6 +76,7 @@ def main():
                 raise ValueError("no observations")
             data[sid] = {"label": label, "last": obs[-1], "weekly": weekly(obs)}
             print(f"{sid:18} {obs[-1]}")
+            time.sleep(1.5)
         except Exception as e:
             failed.append(sid)
             if sid in prev.get("series", {}):

@@ -358,14 +358,22 @@ def returns(tk, fin_ccy, mcap_usd, beta, rf, credit_rec):
     def tax(c):
         t = _col(inc, c, "Tax Rate For Calcs")
         return min(max(t, 0.0), 0.35) if t is not None else 0.21
+    def ic_of(debt, eq, cash):
+        """Net-of-cash invested capital; for cash-rich firms (cash > 70% of debt+equity) use debt+equity instead."""
+        if eq is None:
+            return None, None
+        gross, net = debt + eq, debt + eq - cash
+        if gross > 0 and net < 0.3 * gross:
+            return gross, "incl. cash"
+        return net, "net of cash"
     def ic(c):
         debt = _col(bs, c, "Total Debt") or 0
         eq = _col(bs, c, "Stockholders Equity", "Common Stock Equity")
         cash = _col(bs, c, "Cash Cash Equivalents And Short Term Investments", "Cash And Cash Equivalents") or 0
-        return None if eq is None else debt + eq - cash
+        return ic_of(debt, eq, cash)[0]
     hist, prev_ic = [], None
     for c in cols:
-        ebit = _col(inc, c, "EBIT", "Operating Income")
+        ebit = _col(inc, c, "Operating Income", "EBIT")   # operating, so one-off non-operating items do not swamp it
         rev = _col(inc, c, "Total Revenue")
         cap = ic(c)
         if ebit is None or not rev or cap is None:
@@ -385,7 +393,7 @@ def returns(tk, fin_ccy, mcap_usd, beta, rf, credit_rec):
     out = {"hist": hist[-5:]}
     # TTM from quarterly statements
     q_inc, q_bs = tk.quarterly_income_stmt, tk.quarterly_balance_sheet
-    ebit_q = _ttm(q_inc, "EBIT", "Operating Income")
+    ebit_q = _ttm(q_inc, "Operating Income", "EBIT")
     da_q = _ttm(q_inc, "Reconciled Depreciation")
     if ebit_q is not None and q_bs is not None and not q_bs.empty:
         c0 = q_bs.columns[0]
@@ -393,10 +401,15 @@ def returns(tk, fin_ccy, mcap_usd, beta, rf, credit_rec):
         eq = _col(q_bs, c0, "Stockholders Equity", "Common Stock Equity")
         cash = _col(q_bs, c0, "Cash Cash Equivalents And Short Term Investments", "Cash And Cash Equivalents") or 0
         t = tax(cols[-1]) if cols else 0.21
-        if eq is not None and debt + eq - cash > 0:
-            icq = debt + eq - cash
+        icq, basis = ic_of(debt, eq, cash)
+        if icq is not None and icq > 0:
+            out["ic_basis"] = basis
             out.update({"roic_ttm": r(ebit_q * (1 - t) / icq * 100, 1), "nopat_ttm_usd_bn": r(u(ebit_q * (1 - t)), 2),
                         "ic_usd_bn": r(u(icq), 2), "tax": r(t, 3), "as_of": str(c0.date())})
+            gw = _col(q_bs, c0, "Goodwill And Other Intangible Assets", "Goodwill")
+            if gw and icq - gw > 0.1 * icq:
+                out["roic_ex_gw"] = r(ebit_q * (1 - t) / (icq - gw) * 100, 1)
+                out["goodwill_usd_bn"] = r(u(gw), 2)
             if da_q:
                 out["roic_dep_stress"] = r((ebit_q - 0.3 * da_q) * (1 - t) / icq * 100, 1)
                 out["da_ttm_usd_bn"] = r(u(da_q), 2)

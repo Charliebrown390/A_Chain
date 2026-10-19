@@ -1,0 +1,26 @@
+# Capital monitor: hand-maintained facts on how the build-out is financed.
+# Treasury curve, term premium and credit spreads are pulled automatically from FRED (scripts/macro_data.py).
+# Off-balance-sheet totals are added up automatically from data/funding.yaml and SEC filings.
+# Update this file when a large AI-related bond deal prices or a marker bond moves.
+
+issuance:
+  # Large AI-related bond deals. usd_bn = deal size.
+  - {date: "2025-09", issuer: ORCL, usd_bn: 18.0, note: "Senior notes", src: "Reuters via Yahoo Finance", url: "https://finance.yahoo.com/news/ai-hyperscalers-drive-higher-us-225314460.html"}
+  - {date: "2025-10", issuer: META, usd_bn: 30.0, note: "Largest non-M&A high-grade bond sale on record", src: "Reuters via Yahoo Finance", url: "https://finance.yahoo.com/news/ai-hyperscalers-drive-higher-us-225314460.html"}
+  - {date: "2025-10", issuer: META, usd_bn: 27.0, note: "Hyperion JV bonds (off Meta's balance sheet), bought via Pimco", src: "Bisnow", url: "https://www.bisnow.com/news/national/data-center-capital-markets/meta-pushes-its-largest-data-center-project-off-its-books-with-27b-joint-venture-131490"}
+  - {date: "2025-11", issuer: GOOGL, usd_bn: 17.5, note: "Senior notes; a GBP century bond followed in Feb 2026", src: "Reuters via Yahoo Finance", url: "https://finance.yahoo.com/news/ai-hyperscalers-drive-higher-us-225314460.html"}
+  - {date: "2025-11", issuer: AMZN, usd_bn: 15.0, note: "Senior notes", src: "Reuters via Yahoo Finance", url: "https://finance.yahoo.com/news/ai-hyperscalers-drive-higher-us-225314460.html"}
+  - {date: "2026-02", issuer: ORCL, usd_bn: 25.0, note: "Eight tranches, 2029-2066, 4.55-6.85%", src: "BTW Media", url: "https://btw.media/en/oracle-financing-stack-effective-conditional-break-points"}
+  - {date: "2026-09", issuer: CRWV, usd_bn: 4.2, note: "Convertible notes due 2033, 2.875%", src: "StockTitan", url: "https://www.stocktitan.net/articles/coreweave-nebius-ai-cloud-debt-when-it-comes-due"}
+  - {date: "2026-08", issuer: NBIS, usd_bn: 5.75, note: "Convertible notes due 2030 and 2034", src: "StockTitan", url: "https://www.stocktitan.net/articles/coreweave-nebius-ai-cloud-debt-when-it-comes-due"}
+
+facts:
+  - {text: "The five hyperscalers issued $121B of US corporate bonds in 2025, against an average of $28B a year in 2020-24.", src: "Reuters via Yahoo Finance (BofA data)", url: "https://finance.yahoo.com/news/ai-hyperscalers-drive-higher-us-225314460.html"}
+  - {text: "BofA expects roughly $140B a year of hyperscaler borrowing over the next three years, possibly over $300B.", src: "Reuters via Yahoo Finance", url: "https://finance.yahoo.com/news/ai-hyperscalers-drive-higher-us-225314460.html"}
+  - {text: "To late May 2026, hyperscalers were ~13% of 10-year IG supply but over 30% of 30-year supply (~$32B); their 10s30s spread curves steepened while other non-financials flattened.", src: "PIMCO (Jun 2026)", url: "https://www.pimco.com/gbl/en/insights/ai-financing-needs-do-not-override-cyclical-drivers-of-yield"}
+  - {text: "PIMCO attributes only ~13bp of a 51bp rise in the 10-year yield (Feb-May 2026) to term premium; the rest to rate expectations.", src: "PIMCO (Jun 2026)", url: "https://www.pimco.com/gbl/en/insights/ai-financing-needs-do-not-override-cyclical-drivers-of-yield"}
+  - {text: "CoreWeave is courting life insurers for cheaper funding; its $8.5B Meta-backed loan has Blackstone Credit & Insurance as anchor lender.", src: "Forbes / Global Data Center Hub", url: "https://www.forbes.com/sites/jimosman/2026/10/14/coreweave-bonds-are-warning-of-a-bigger-problem-for-ai-stocks/"}
+
+marker_bonds:
+  # Bonds whose price tells you how lenders view the riskiest part of the chain. Add a new row each time you check.
+  - {issuer: CRWV, bond: "9.625% unsecured notes due 2032", date: "2026-10-14", price: 79.5, yield: 15.06, src: "Forbes, citing Barron's", url: "https://www.forbes.com/sites/jimosman/2026/10/14/coreweave-bonds-are-warning-of-a-bigger-problem-for-ai-stocks/"}

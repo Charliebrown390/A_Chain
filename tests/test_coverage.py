@@ -57,3 +57,13 @@ def test_market_data_covers_universe():
     listed = [c["id"] for c in UNI["companies"] if c.get("yf")]
     missing = [i for i in listed if i not in m or m[i].get("last") is None]
     assert len(missing) <= max(2, len(listed) // 10), f"too many listed companies without prices: {missing}"
+
+
+def test_monitor_datasets_present_and_sourced():
+    for name in ("bottlenecks", "compute_econ", "capital"):
+        p = ROOT / f"data/{name}.yaml"
+        assert p.exists(), f"data/{name}.yaml missing"
+    b = yaml.safe_load((ROOT / "data/bottlenecks.yaml").read_text())
+    for ind in b["indicators"]:
+        assert ind.get("update"), f"{ind['id']}: missing update instructions"
+        assert all(s.get("url") for s in ind.get("sources", [])), f"{ind['id']}: source without url"

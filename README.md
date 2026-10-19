@@ -13,7 +13,8 @@ A network model of the AI build-out, from chip tools to applications. It maps wh
 | 2 | Market data: prices, fundamentals, analyst ratings and rating changes, implied vs realised vol, beta, news (Yahoo Finance) | Done |
 | 3 | Credit layer: financing links, funding sources, leverage and coverage, debt maturities, off-balance-sheet leases, Merton distance-to-default, stress-test tool | Done |
 | 4 | Custom silicon and TPU: 55 names over 10 layers (custom-ASIC layer, MediaTek, Alchip, GUC, Celestica, Ibiden, ASE and others), chip-programme filter and timelines, exposure scores, GPU-vs-custom revenue view, rumoured tag, coverage tests | Done |
-| 5 | Screening and scoring across the chain, Taiwan monthly sales | Next |
+| 5 | Returns on spending (ROIC, incremental, ex-goodwill, lease-adjusted, vs cost of capital), capital and yield-curve monitor (FRED), bottleneck monitor, compute economics | Done |
+| 6 | Screening and scoring across the chain, Taiwan monthly sales | Next |
 | 3 | Analytics: fundamentals, technicals, network metrics | Planned |
 | 4 | Dashboard wired to live data | Planned |
 | 5 | Thesis notes and nightly refresh via GitHub Actions | Planned |
@@ -29,6 +30,8 @@ A network model of the AI build-out, from chip tools to applications. It maps wh
 - `data/theses.yaml` — bull/bear/what-to-watch notes per company (edit by hand)
 - `data/programmes.yaml` — chip programmes (TPU, Trainium, MTIA, Maia, OpenAI chip, GPU): generations, users, exposure estimates, and the quarterly GPU-vs-custom revenue table (update by hand after earnings)
 - `tests/test_coverage.py` — must-have tickers, sourcing rules and TPU-chain checks; runs before every deploy and data refresh
+- `data/bottlenecks.yaml`, `data/compute_econ.yaml`, `data/capital.yaml` — hand-maintained monitor data; see UPDATING.md
+- `scripts/macro_data.py` — FRED pull (Treasury curve, term premium, credit spreads), no API key
 - `data/funding.yaml` — funding sources, guarantees, backstops, off-balance-sheet vehicles and credit signals per company (edit by hand; every item needs a source)
 - `data/history/iv.csv` — daily 30-day implied vol log, so IV percentiles build up over time
 - `scripts/market_data.py` — Yahoo Finance pull: `--mode full` (prices, fundamentals, analysts, news), `options` (implied vol), `news`
@@ -57,6 +60,10 @@ Link types: `supply` (ongoing sales), `contract` (announced multi-year commitmen
 ## Editing the map
 
 Edit `data/edges.yaml` on GitHub and commit. The deploy job validates it (unknown company ids, missing sources for D/E links and duplicates all fail the build) and republishes the site.
+
+## Updating hand-maintained data
+
+See [UPDATING.md](UPDATING.md) for what refreshes itself, what needs a person, sources and formats.
 
 ## Disclaimer
 

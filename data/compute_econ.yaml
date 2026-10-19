@@ -1,0 +1,42 @@
+# Compute economics: what a unit of AI compute costs and what it can earn.
+# Hand-maintained; update monthly. Every point needs a source.
+
+gpu_rates:
+  # Neocloud benchmark rates (Silicon Data). Add [date, $/GPU-hr] points, newest last.
+  - gpu: B200
+    series: [["2026-01-01", 4.40], ["2026-06-01", 5.42], ["2026-07-01", 5.63], ["2026-08-01", 5.67], ["2026-09-01", 5.62]]
+    src: "Silicon Data SDB200RT"
+    url: "https://www.silicondata.com/blog/b200-rental-price-august-2026-update"
+  - gpu: H200
+    series: [["2026-09-07", 3.29]]
+    src: "Silicon Data"
+    url: "https://www.silicondata.com/blog/b200-rental-price-august-2026-update"
+  - gpu: H100
+    series: [["2026-07-27", 2.75], ["2026-09-07", 2.63]]
+    src: "Silicon Data"
+    url: "https://www.silicondata.com/blog/b200-rental-price-august-2026-update"
+
+on_demand:
+  # Median on-demand list prices, for the gap between dedicated GPU clouds and hyperscalers.
+  date: "2026-10-01"
+  src: "Thunder Compute market survey (a competing provider; self-reported)"
+  url: "https://www.thundercompute.com/blog/ai-gpu-rental-market-trends"
+  rows:
+    - {gpu: H100, dedicated: 4.17, hyperscaler: 7.89}
+    - {gpu: H200, dedicated: 4.50, hyperscaler: 10.44}
+    - {gpu: B200, dedicated: 7.88, hyperscaler: 15.18}
+
+price_trends:
+  # Rates of change in the cost of intelligence. Add new studies as they appear.
+  - {what: "Price of a fixed level of capability (frontier models)", value: "falls 5-10x a year", src: "MIT, The Price of Progress (2025)", url: "https://arxiv.org/html/2511.23455v1"}
+  - {what: "Algorithmic efficiency", value: "~3x a year", src: "MIT, The Price of Progress (2025)", url: "https://arxiv.org/html/2511.23455v1"}
+  - {what: "Hardware price-performance", value: "~30% a year", src: "MIT, The Price of Progress (2025)", url: "https://arxiv.org/html/2511.23455v1"}
+  - {what: "Total cost to run a benchmark task", value: "flat or rising: reasoning models use more tokens", src: "MIT, The Price of Progress (2025)", url: "https://arxiv.org/html/2511.23455v1"}
+
+calculator:
+  # Example inputs for the revenue-per-GPU-hour calculator on the page. These are illustrations, not data;
+  # the viewer can change them on the page.
+  tokens_per_sec: 1500
+  price_per_m_tokens: 2.0
+  utilisation: 0.6
+  gpu: B200

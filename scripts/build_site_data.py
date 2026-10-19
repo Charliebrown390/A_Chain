@@ -302,6 +302,35 @@ def main():
     for w in uni.get("watchlist") or []:
         if w["id"] in idset:
             errs.append(f"watchlist id {w['id']} is also in the universe")
+    monitors = {}
+    for name in ("bottlenecks", "compute_econ", "capital"):
+        fp2 = ROOT / f"data/{name}.yaml"
+        monitors[name] = yaml.safe_load(fp2.read_text()) if fp2.exists() else {}
+    def need_url(where, items):
+        for it in items or []:
+            if not it.get("url"):
+                errs.append(f"{where}: item without url: {it}")
+    for ind in monitors["bottlenecks"].get("indicators") or []:
+        tag = f"bottlenecks.yaml {ind.get('id')}"
+        if not ind.get("sources"):
+            errs.append(f"{tag}: needs sources")
+        need_url(tag, ind.get("sources"))
+        if not ind.get("update"):
+            errs.append(f"{tag}: needs update instructions")
+        ser = ind.get("series") or []
+        if ser and [p[0] for p in ser] != sorted(p[0] for p in ser):
+            errs.append(f"{tag}: series must be in date order, newest last")
+        if ind.get("rule", {}).get("type") not in ("level", "change", "curve"):
+            errs.append(f"{tag}: rule type must be level, change or curve")
+    ce = monitors["compute_econ"]
+    need_url("compute_econ.yaml gpu_rates", ce.get("gpu_rates"))
+    need_url("compute_econ.yaml price_trends", ce.get("price_trends"))
+    cap = monitors["capital"]
+    for k in ("issuance", "facts", "marker_bonds"):
+        need_url(f"capital.yaml {k}", cap.get(k))
+    for it in cap.get("issuance") or []:
+        if it.get("issuer") not in idset:
+            errs.append(f"capital.yaml issuance: unknown issuer {it.get('issuer')}")
     tp = ROOT / "data/theses.yaml"
     theses = (yaml.safe_load(tp.read_text()) or {}).get("theses", {}) if tp.exists() else {}
     for c in uni["companies"]:
@@ -318,6 +347,7 @@ def main():
     stamp = datetime.now(timezone.utc).isoformat(timespec="seconds")
     (OUT / "universe.json").write_text(json.dumps({"built": stamp, **uni}, indent=1))
     (OUT / "edges.json").write_text(json.dumps({"built": stamp, "edges": edges}, indent=1))
+    (OUT / "monitors.json").write_text(json.dumps({"built": stamp, **monitors}, indent=1))
     (OUT / "programmes.json").write_text(json.dumps({"built": stamp, **(progs or {})}, indent=1))
     (OUT / "disclosures.json").write_text(json.dumps({"built": stamp, "sec_pulled": generated, "companies": disc}, indent=1))
     n_conf = {k: sum(1 for e in edges if e["conf"] == k) for k in "DEIR"}
