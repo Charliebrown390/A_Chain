@@ -34,7 +34,7 @@ Each indicator in `bottlenecks.yaml` carries its own `update` note and a `fresh_
 
 1. **Ask Claude.** In any Claude chat, on any device: *"In my GitHub repo Charliebrown390/A_Chain, add the latest DRAM contract price data to data/bottlenecks.yaml."* Claude finds the source, edits the file, runs the checks and pushes. This is the easiest route.
 2. **Edit on github.com.** Open the file, click the pencil icon, add a line, commit. The deploy runs the checks; if something is wrong (missing source, wrong date order) the build fails and the live site keeps the previous version. You get an email saying so.
-3. **A scheduled Claude task.** A monthly task can do route 1 automatically: research the latest figures, update the files and push. Ask Claude to set one up.
+3. **A scheduled Claude task (set up).** "A_Chain monthly data update" runs on the 8th of each month at about 09:00 Singapore time. It checks every hand-maintained indicator for staleness or newer figures, adds only dated and sourced points, runs the build and tests, and pushes; if nothing new is found it makes no commit. You get a push notification and email with what changed and what it couldn't find. Pause, edit or run it early from your scheduled tasks list in Claude.
 
 ## Formats
 
