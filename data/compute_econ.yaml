@@ -4,17 +4,61 @@
 gpu_rates:
   # Neocloud benchmark rates (Silicon Data). Add [date, $/GPU-hr] points, newest last.
   - gpu: B200
-    series: [["2026-01-01", 4.40], ["2026-06-01", 5.42], ["2026-07-01", 5.63], ["2026-08-01", 5.67], ["2026-09-01", 5.62]]
-    src: "Silicon Data SDB200RT"
-    url: "https://www.silicondata.com/blog/b200-rental-price-august-2026-update"
+    series: [["2026-01-01", 4.40], ["2026-06-01", 5.42], ["2026-07-01", 5.63], ["2026-08-01", 5.67], ["2026-09-01", 5.62], ["2026-10-20", 6.14]]
+    src: "Silicon Data SDB200RT (blog Aug 2026; index page 20 Oct)"
+    url: "https://www.silicondata.com/products/silicon-index/b200"
   - gpu: H200
-    series: [["2026-09-07", 3.29]]
-    src: "Silicon Data"
-    url: "https://www.silicondata.com/blog/b200-rental-price-august-2026-update"
+    series: [["2026-09-07", 3.29], ["2026-10-20", 3.53]]
+    src: "Silicon Data (blog Aug 2026; index page 20 Oct)"
+    url: "https://www.silicondata.com/products/silicon-index/h200"
   - gpu: H100
-    series: [["2026-07-27", 2.75], ["2026-09-07", 2.63]]
-    src: "Silicon Data"
-    url: "https://www.silicondata.com/blog/b200-rental-price-august-2026-update"
+    series: [["2026-04-01", 2.63], ["2026-05-31", 2.73], ["2026-07-27", 2.75], ["2026-09-07", 2.63], ["2026-10-20", 2.85]]
+    src: "Silicon Data SDH100RT (blog posts; index page 20 Oct)"
+    url: "https://www.silicondata.com/products/silicon-index/h100"
+
+tier_spread:
+  # H100 hyperscaler vs neocloud rental rates over time ($/GPU-hr). The multiple (hyperscaler / neocloud) is the
+  # hyperscaler premium. Figures are quoted from Silicon Data's public blog posts and index pages, with links;
+  # Silicon Data's terms do not allow copying its daily series, so add one dated reading a month, not the feed.
+  gpu: H100
+  break: "2025-12-05"
+  break_note: "Silicon Data revised its H100 index and launched a new hyperscaler on-demand index on 5 Dec 2025. Levels either side of the line come from different methods; compare the direction of the multiple, not the levels."
+  periods:
+    # Before the revision: period medians from Silicon Data's own price history (published Dec 2025).
+    - {from: "2023-08-01", to: "2023-12-31", hyperscaler: 7.76, src: "Silicon Data, H100 rental price over time", url: "https://www.silicondata.com/blog/h100-rental-price-over-time"}
+    - {from: "2024-01-01", to: "2024-05-31", hyperscaler: 7.92, src: "Silicon Data, H100 rental price over time", url: "https://www.silicondata.com/blog/h100-rental-price-over-time"}
+    - {from: "2024-06-01", to: "2024-12-31", hyperscaler: 9.34, neocloud: 2.99, src: "Silicon Data, H100 rental price over time", url: "https://www.silicondata.com/blog/h100-rental-price-over-time"}
+    - {from: "2025-01-01", to: "2025-05-31", hyperscaler: 8.96, neocloud: 3.50, src: "Silicon Data, H100 rental price over time", url: "https://www.silicondata.com/blog/h100-rental-price-over-time"}
+    - {from: "2025-06-01", to: "2025-06-30", hyperscaler: 6.94, neocloud: 3.29, src: "Silicon Data, H100 rental price over time", url: "https://www.silicondata.com/blog/h100-rental-price-over-time"}
+    - {from: "2025-07-01", to: "2025-12-04", hyperscaler: 6.26, neocloud: 3.33, src: "Silicon Data, H100 rental price over time", url: "https://www.silicondata.com/blog/h100-rental-price-over-time"}
+  points:
+    # After the revision: daily index readings (neocloud = SDH100RT; hyperscaler = H100 Hyperscaler On-Demand Index).
+    - {date: "2025-12-09", neocloud: 2.00, src: "Silicon Data, H100 price spike", url: "https://www.silicondata.com/blog/h100-price-spike"}
+    - {date: "2026-01-06", neocloud: 2.20, src: "Silicon Data, H100 price spike", url: "https://www.silicondata.com/blog/h100-price-spike"}
+    - {date: "2026-03-01", hyperscaler: 7.50, src: "Silicon Data, H100 hyperscaler index (Apr 2026)", url: "https://www.silicondata.com/blog/h100-hyperscaler-index-april-2026"}
+    - {date: "2026-04-01", hyperscaler: 7.44, neocloud: 2.63, src: "Silicon Data, H100 index May 2026", url: "https://www.silicondata.com/blog/h100-index-may-2026-two-tiers-two-regimes"}
+    - {date: "2026-04-30", hyperscaler: 7.51, neocloud: 2.59, src: "Silicon Data, H100 index May 2026", url: "https://www.silicondata.com/blog/h100-index-may-2026-two-tiers-two-regimes"}
+    - {date: "2026-05-31", hyperscaler: 7.46, neocloud: 2.73, src: "Silicon Data, H100 index May 2026", url: "https://www.silicondata.com/blog/h100-index-may-2026-two-tiers-two-regimes"}
+    - {date: "2026-07-27", neocloud: 2.75, src: "Silicon Data, H200 vs H100 (May-Jul 2026)", url: "https://www.silicondata.com/blog/h200-vs-h100-rental-prices-may-july-2026"}
+    - {date: "2026-09-07", neocloud: 2.63, src: "Silicon Data, B200 update (Aug 2026)", url: "https://www.silicondata.com/blog/b200-rental-price-august-2026-update"}
+    - {date: "2026-09-21", hyperscaler: 7.17, neocloud: 2.60, src: "Silicon Data index pages (H100)", url: "https://www.silicondata.com/products/silicon-index/h100"}
+    - {date: "2026-10-20", hyperscaler: 7.14, neocloud: 2.85, src: "Silicon Data index pages (H100)", url: "https://www.silicondata.com/products/silicon-index/h100"}
+  events:
+    - {date: "2025-06-15", label: "AWS price cut", text: "AWS cuts H100 instance prices (~44-45%)", src: "Silicon Data, H100 price spike", url: "https://www.silicondata.com/blog/h100-price-spike"}
+  regional:
+    # Quarterly medians, consistent method across Q1 2025 - Q3 2026 (Q3 2026 partial). nh = non-hyperscaler.
+    # Values are the approximate figures Silicon Data quotes in the text; null where it gives none.
+    headline: "Across seven regions the hyperscaler premium fell from roughly 250% (Q1 2025) to about 120% (Q3 2026), from both sides: hyperscaler rates fell 26-54% while non-hyperscaler rates recovered."
+    src: "Silicon Data, H100 rental prices by region (Q3 2026)"
+    url: "https://www.silicondata.com/blog/h100-rental-prices-by-region-q3-2026"
+    rows:
+      - {region: "US East", hs0: 7.25, hs1: 5.40, nh1: 2.90, note: "hyperscaler flat for a year; non-hyperscaler up from ~$1.35 (Q3 2025)"}
+      - {region: "US West", hs0: 8.90, hs1: 6.10, nh0: 2.70, nh1: 2.00, note: "one of two regions where hyperscaler rates rebounded"}
+      - {region: "Canada", hs0: 9.30, hs1: 5.40, nh1: 2.30, note: "non-hyperscaler bottomed ~$1.60 in Q1 2026"}
+      - {region: "Nordics", hs0: 8.90, hs1: 5.20, nh1: 3.30, note: "narrowest multiple; non-hyperscaler tightness"}
+      - {region: "Europe", hs0: 10.40, hs1: 5.60, nh0: 2.50, nh1: 2.90, note: ""}
+      - {region: "Middle East", hs0: 8.30, hs1: 6.10, multiple: 3.0, note: "low coverage through 2025"}
+      - {region: "Asia-Pacific", hs0: 10.40, hs1: 4.80, note: "non-hyperscaler $2.00-2.30 throughout; steepest hyperscaler cut"}
 
 on_demand:
   # Median on-demand list prices, for the gap between dedicated GPU clouds and hyperscalers.

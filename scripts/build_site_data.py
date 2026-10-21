@@ -325,6 +325,19 @@ def main():
     ce = monitors["compute_econ"]
     need_url("compute_econ.yaml gpu_rates", ce.get("gpu_rates"))
     need_url("compute_econ.yaml price_trends", ce.get("price_trends"))
+    ts = ce.get("tier_spread") or {}
+    if ts:
+        need_url("compute_econ.yaml tier_spread periods", ts.get("periods"))
+        need_url("compute_econ.yaml tier_spread points", ts.get("points"))
+        need_url("compute_econ.yaml tier_spread events", ts.get("events"))
+        if (ts.get("regional") or {}).get("rows") and not ts["regional"].get("url"):
+            errs.append("compute_econ.yaml tier_spread regional: needs url")
+        pd = [p.get("date") for p in ts.get("points") or []]
+        if pd != sorted(pd):
+            errs.append("compute_econ.yaml tier_spread points: must be in date order, newest last")
+        for p in (ts.get("points") or []) + (ts.get("periods") or []):
+            if p.get("hyperscaler") is None and p.get("neocloud") is None:
+                errs.append(f"compute_econ.yaml tier_spread: entry without a rate: {p}")
     cap = monitors["capital"]
     for k in ("issuance", "facts", "marker_bonds"):
         need_url(f"capital.yaml {k}", cap.get(k))

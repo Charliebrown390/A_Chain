@@ -25,9 +25,11 @@ indicators:
       - ["2026-07-01", 5.63]
       - ["2026-08-01", 5.67]
       - ["2026-09-01", 5.62]
-    note: "Jan value derived from the reported +27.6% year-to-date change at 1 Sep."
+      - ["2026-10-20", 6.14]
+    note: "Jan value derived from the reported +27.6% year-to-date change at 1 Sep. 20 Oct reading from the public B200 index page."
     sources:
       - {src: "Silicon Data, B200 rental price update (Aug 2026)", url: "https://www.silicondata.com/blog/b200-rental-price-august-2026-update"}
+      - {src: "Silicon Data B200 index page", url: "https://www.silicondata.com/products/silicon-index/b200"}
   - id: b200_curve
     layer: Accelerators (rental)
     name: B200 rental term structure
@@ -50,8 +52,10 @@ indicators:
     series:
       - ["2026-07-27", 2.75]
       - ["2026-09-07", 2.63]
+      - ["2026-10-20", 2.85]
     sources:
       - {src: "Silicon Data, B200 rental price update (Aug 2026)", url: "https://www.silicondata.com/blog/b200-rental-price-august-2026-update"}
+      - {src: "Silicon Data H100 index page", url: "https://www.silicondata.com/products/silicon-index/h100"}
   - id: dram_contract
     layer: Memory
     name: Conventional DRAM contract price, quarter on quarter

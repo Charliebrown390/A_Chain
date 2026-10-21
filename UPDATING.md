@@ -23,6 +23,7 @@ Most of the site refreshes itself. This page covers the few datasets that free s
 | | Data-centre vacancy, preleasing, construction, absorption, rents | Twice a year (Feb–Mar, Aug–Sep) | CBRE North America Data Center Trends; JLL North America Data Center Report |
 | | CoWoS / packaging allocation | When revised | SemiAnalysis, TrendForce, DIGITIMES (often via press coverage) |
 | `data/compute_econ.yaml` | GPU rates by generation, on-demand list prices, price-of-intelligence studies | Monthly | Silicon Data; provider price pages; Epoch AI, Artificial Analysis, academic studies |
+| | H100 hyperscaler vs neocloud readings (`tier_spread.points`) | Monthly, one dated reading | Silicon Data index pages (silicondata.com/products/silicon-index/h100 shows both tiers with dates) and blog posts. Their terms bar copying the daily series, so add one quoted reading a month with its link |
 | `data/capital.yaml` | Large AI bond deals, marker bond prices, context | When a deal prices or a bond moves | Press coverage (Reuters, Bloomberg, FT), company 8-Ks, FINRA bond lookups |
 | `data/programmes.yaml` | GPU-vs-custom quarterly revenue table, TPU/Trainium timelines, exposure | After each earnings season | Company earnings releases and calls |
 | `data/funding.yaml` | Funding sources, guarantees, off-balance-sheet vehicles | When announced | 8-Ks, 10-Qs, press |
@@ -60,6 +61,13 @@ Add a quarter to the GPU-vs-custom table in `programmes.yaml` (USD billions, cal
 
 ```yaml
     - {q: "CQ3 2026", NVDA: 104.0, AMD: 7.5, AVGO: 21.7, MRVL: 2.5, notes: "NVDA FQ3'27; AVGO FQ4'26; ..."}
+```
+
+Add a monthly H100 tier reading to `compute_econ.yaml` (newest last):
+
+```yaml
+  points:
+    - {date: "2026-11-20", hyperscaler: 7.10, neocloud: 2.90, src: "Silicon Data index pages (H100)", url: "https://www.silicondata.com/products/silicon-index/h100"}
 ```
 
 Add a bond deal to `capital.yaml`:

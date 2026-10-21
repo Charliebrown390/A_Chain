@@ -67,3 +67,12 @@ def test_monitor_datasets_present_and_sourced():
     for ind in b["indicators"]:
         assert ind.get("update"), f"{ind['id']}: missing update instructions"
         assert all(s.get("url") for s in ind.get("sources", [])), f"{ind['id']}: source without url"
+
+
+def test_tier_spread_history():
+    ce = yaml.safe_load((ROOT / "data/compute_econ.yaml").read_text())
+    ts = ce.get("tier_spread") or {}
+    paired = [p for p in (ts.get("points") or []) + (ts.get("periods") or [])
+              if p.get("hyperscaler") is not None and p.get("neocloud") is not None]
+    assert len(paired) >= 4, "tier_spread needs at least four dated readings with both tiers"
+    assert all(p.get("url") for p in (ts.get("points") or []) + (ts.get("periods") or [])), "tier_spread entry without url"

@@ -1086,6 +1086,7 @@ function renderCompute(){
   const rates=CE.gpu_rates,latest=g=>{const r=rates.find(x=>x.gpu===g);return r?r.series[r.series.length-1]:null};
   const cal=CE.calculator||{};
   box.innerHTML=`<h2>Compute economics</h2><p class="hint">What an hour of AI compute costs, how fast the price of intelligence is falling, and whether serving tokens covers the rent.</p>
+  ${spreadBlock(CE.tier_spread)}
   <div class="accgrid"><div><p class="sec">GPU rental rates, $ per GPU-hour (neocloud benchmark)</p><table class="fin"><tbody>${rates.map(r=>{const s=r.series,l=s[s.length-1],f=s[0];return `<tr><td><b>${esc(r.gpu)}</b> ${s.length>1?spark(s.map(x=>x[1]),{W:90,H:22}):""}</td><td>$${num(l[1],2)} <span class="mut">${esc(fdate(l[0]))}${s.length>1?` · ${pct((l[1]/f[1]-1)*100,0)} since ${esc(fdate(f[0]))}`:""}</span></td></tr>`}).join("")}</tbody></table>
   ${CE.on_demand?`<p class="sec">On-demand list prices: dedicated GPU clouds vs hyperscalers</p><table class="fin"><tbody>${CE.on_demand.rows.map(r=>`<tr><td>${esc(r.gpu)}</td><td>$${num(r.dedicated,2)} vs $${num(r.hyperscaler,2)} <span class="mut">(${(r.hyperscaler/r.dedicated).toFixed(1)}×)</span></td></tr>`).join("")}</tbody></table><p class="note">${esc(CE.on_demand.date)} · <a href="${esc(CE.on_demand.url)}" target="_blank" rel="noopener">${esc(CE.on_demand.src)}</a></p>`:""}
   <p class="sec">How fast the price of intelligence falls</p><ul class="news">${(CE.price_trends||[]).map(t=>`<li><b>${esc(t.value)}</b> · ${esc(t.what)}<span class="meta"><a href="${esc(t.url)}" target="_blank" rel="noopener">${esc(t.src)}</a></span></li>`).join("")}</ul></div>
@@ -1100,6 +1101,75 @@ function renderCompute(){
     const rev=tps*3600*ut*px/1e6,mg=rev?((rev-rent)/rev*100):null,be=tps&&ut?rent*1e6/(tps*3600*ut):null;
     $("#cOut").innerHTML=stat("Revenue per GPU-hour","$"+rev.toFixed(2))+stat("Rent per GPU-hour","$"+rent.toFixed(2))+stat("Margin over rent",mg==null?"—":pc(mg,0),mg<0?"down":"up")+stat("Break-even price",be==null?"—":"$"+be.toFixed(2)+" /M tokens");};
   ["cTps","cPx","cUt","cGpu"].forEach(id=>$("#"+id).addEventListener("input",calc));calc();
+  bindSpread(CE.tier_spread);
+}
+
+/* Hyperscaler vs neocloud spread (time-scaled; pre-revision period medians drawn as steps) */
+let SPG=null;
+function spreadRows(TS){
+  const rows=[];const brk=TS.break||"9999";
+  const mlab=d=>`${MON[+d.slice(5,7)-1]} '${d.slice(2,4)}`;
+  (TS.periods||[]).forEach(p=>{if(p.hyperscaler!=null&&p.neocloud!=null)rows.push({lab:p.from.slice(0,7)===p.to.slice(0,7)?mlab(p.from):`${mlab(p.from)} – ${mlab(p.to)}`,d:p.to,hs:p.hyperscaler,nc:p.neocloud,kind:"median",pre:true})});
+  (TS.points||[]).forEach(p=>{if(p.hyperscaler!=null&&p.neocloud!=null)rows.push({lab:fdate(p.date),d:p.date,hs:p.hyperscaler,nc:p.neocloud,kind:"reading",pre:p.date<brk})});
+  rows.forEach((r,i)=>{r.m=r.hs/r.nc;const q=rows[i-1];if(!q)return;if(q.pre!==r.pre){r.drv="Index revised: not comparable";return}
+    const dh=Math.log(r.hs/q.hs),dn=Math.log(r.nc/q.nc),dm=dh-dn;
+    if(Math.abs(dm)<0.02){r.drv="Little change";return}
+    if(dm<0)r.drv=(-dh>dn)?`Narrowed: hyperscaler cut (${pct(dh*100,0)})`:`Narrowed: neocloud rose (${pct(dn*100,0)})`;
+    else r.drv=(dh>-dn)?`Widened: hyperscaler rose (${pct(dh*100,0)})`:`Widened: neocloud fell (${pct(dn*100,0)})`;
+    r.sig=dm<0?(-dh>dn?"down":"up"):(dh>-dn?"up":"down");});
+  return rows;
+}
+function spreadBlock(TS){
+  if(!TS||!(TS.points||TS.periods))return "";
+  const t=d=>Date.parse(d),brk=TS.break;
+  const all=[...(TS.periods||[]).flatMap(p=>[p.from,p.to]),...(TS.points||[]).map(p=>p.date)];
+  const t0=Math.min(...all.map(t)),t1=Math.max(...all.map(t))+20*864e5;
+  const W=640,L=8,R=52,iw=W-L-R,H1=150,H2=110,G=26,T=10,B=24,H=T+H1+G+H2+B;
+  const X=d=>L+(t(d)-t0)/(t1-t0)*iw;
+  const lvl=[...(TS.periods||[]),...(TS.points||[])].flatMap(p=>[p.hyperscaler,p.neocloud]).filter(v=>v!=null);
+  const lo1=0,hi1=Math.ceil(Math.max(...lvl)+0.5);const Y1=v=>T+(1-(v-lo1)/(hi1-lo1))*H1;
+  const rows=spreadRows(TS);const ms=rows.map(r=>r.m);const lo2=Math.floor((Math.min(...ms)-0.3)*2)/2,hi2=Math.ceil((Math.max(...ms)+0.3)*2)/2;
+  const top2=T+H1+G,Y2=v=>top2+(1-(v-lo2)/(hi2-lo2))*H2;
+  const HC="var(--copper)",NC="var(--fin)";
+  let g="";
+  const grid=(lo,hi,Y,n,fmt)=>{for(let k=0;k<=n;k++){const v=lo+(hi-lo)*k/n,y=Y(v);g+=`<line x1="${L}" x2="${L+iw}" y1="${y}" y2="${y}" stroke="var(--line)"/><text x="${W-4}" y="${y+4}" text-anchor="end" font-size="11" font-family="IBM Plex Mono, monospace" fill="var(--muted)">${fmt(v)}</text>`}};
+  grid(lo1,hi1,Y1,hi1%2?hi1:hi1/2,v=>"$"+v.toFixed(0));grid(lo2,hi2,Y2,2,v=>v.toFixed(1)+"×");
+  g+=`<text x="${L}" y="${T+10}" font-size="11" fill="var(--muted)">$ per GPU-hour</text><text x="${L}" y="${top2-6}" font-size="11" fill="var(--muted)">Hyperscaler premium (hyperscaler ÷ neocloud)</text>`;
+  for(let y=new Date(t0).getUTCFullYear()+1;t(`${y}-01-01`)<t1;y++){const x=X(`${y}-01-01`);g+=`<line x1="${x}" x2="${x}" y1="${T}" y2="${top2+H2}" stroke="var(--line)" stroke-dasharray="2 3"/><text x="${x}" y="${H-7}" text-anchor="middle" font-size="11" font-family="IBM Plex Mono, monospace" fill="var(--muted)">${y}</text>`}
+  if(brk){const x=X(brk);g+=`<line x1="${x}" x2="${x}" y1="${T}" y2="${top2+H2}" stroke="var(--ink)" stroke-dasharray="4 3" opacity=".55"/><text x="${x-4}" y="${top2+H2-6}" text-anchor="end" font-size="10.5" fill="var(--muted)">index revised ▸</text>`}
+  (TS.events||[]).forEach(e=>{const x=X(e.date);g+=`<circle cx="${x}" cy="${T+H1-6}" r="3.5" fill="var(--warn)"/><text x="${x-6}" y="${T+H1-3}" text-anchor="end" font-size="10.5" fill="var(--muted)">${esc(e.label||e.text)}</text>`});
+  (TS.periods||[]).forEach(p=>{[["hyperscaler",HC],["neocloud",NC]].forEach(([k,c])=>{if(p[k]!=null)g+=`<line x1="${X(p.from)}" x2="${X(p.to)}" y1="${Y1(p[k])}" y2="${Y1(p[k])}" stroke="${c}" stroke-width="3" stroke-linecap="round"/>`})});
+  [["hyperscaler",HC],["neocloud",NC]].forEach(([k,c])=>{const pts=(TS.points||[]).filter(p=>p[k]!=null);if(pts.length>1)g+=`<path d="${pts.map((p,i)=>`${i?"L":"M"}${X(p.date).toFixed(1)} ${Y1(p[k]).toFixed(1)}`).join("")}" fill="none" stroke="${c}" stroke-width="1.6"/>`;pts.forEach(p=>{g+=`<circle cx="${X(p.date)}" cy="${Y1(p[k])}" r="3" fill="${c}"/>`})});
+  const pre=rows.filter(r=>r.kind==="median"),post=rows.filter(r=>r.kind==="reading");
+  (TS.periods||[]).forEach(p=>{if(p.hyperscaler!=null&&p.neocloud!=null){const m=p.hyperscaler/p.neocloud;g+=`<line x1="${X(p.from)}" x2="${X(p.to)}" y1="${Y2(m)}" y2="${Y2(m)}" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>`}});
+  if(post.length>1)g+=`<path d="${post.map((r,i)=>`${i?"L":"M"}${X(r.d).toFixed(1)} ${Y2(r.m).toFixed(1)}`).join("")}" fill="none" stroke="var(--ink)" stroke-width="1.6"/>`;
+  post.forEach(r=>{g+=`<circle cx="${X(r.d)}" cy="${Y2(r.m)}" r="3" fill="var(--ink)"/>`});
+  g+=`<line class="cx" x1="0" x2="0" y1="${T}" y2="${top2+H2}" stroke="var(--ink)" stroke-dasharray="3 3" visibility="hidden"/><rect x="${L}" y="${T}" width="${iw}" height="${top2+H2-T}" fill="transparent"/>`;
+  // hover targets: each period and reading
+  const items=[...(TS.periods||[]).map(p=>({x:(X(p.from)+X(p.to))/2,x0:X(p.from),x1:X(p.to),tip:`<b>${esc(p.from.slice(0,7))} to ${esc(p.to.slice(0,7))}</b> <span class="mutd">median, pre-revision</span><br>Hyperscaler $${num(p.hyperscaler,2)}${p.neocloud!=null?` · Neocloud $${num(p.neocloud,2)} · ${(p.hyperscaler/p.neocloud).toFixed(2)}×`:" · no neocloud series yet"}`})),
+    ...(TS.points||[]).map(p=>({x:X(p.date),tip:`<b>${esc(fdate(p.date))}</b><br>${p.hyperscaler!=null?`Hyperscaler $${num(p.hyperscaler,2)}`:"Hyperscaler —"} · ${p.neocloud!=null?`Neocloud $${num(p.neocloud,2)}`:"Neocloud —"}${p.hyperscaler!=null&&p.neocloud!=null?` · ${(p.hyperscaler/p.neocloud).toFixed(2)}×`:""}`})),
+    ...(TS.events||[]).map(e=>({x:X(e.date),tip:`<b>${esc(fdate(e.date))}</b><br>${esc(e.text)}`}))];
+  SPG={W,items};
+  const RG=TS.regional;
+  const table=`<table class="fin"><thead><tr><th>Period</th><th>Hyperscaler</th><th>Neocloud</th><th>Premium</th><th>What moved the premium</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.lab)}${r.kind==="median"?` <span class="mut">median</span>`:""}</td><td>$${num(r.hs,2)}</td><td>$${num(r.nc,2)}</td><td><b>${r.m.toFixed(2)}×</b></td><td class="${r.sig||"mut"}">${esc(r.drv||"—")}</td></tr>`).join("")}</tbody></table>`;
+  const reg=RG?`<p class="sec">By region, quarterly medians (one consistent method, Q1 2025 to Q3 2026)</p><p class="note" style="margin-top:0">${esc(RG.headline)}</p><table class="fin"><thead><tr><th>Region</th><th>Hyperscaler</th><th>Non-hyperscaler</th><th>Premium now</th></tr></thead><tbody>${RG.rows.map(r=>{const m=r.multiple||(r.hs1&&r.nh1?r.hs1/r.nh1:null);return `<tr><td>${esc(r.region)}${r.note?`<div class="mut" style="font-size:11.5px">${esc(r.note)}</div>`:""}</td><td>$${num(r.hs0,2)} → $${num(r.hs1,2)} <span class="down">${pct((r.hs1/r.hs0-1)*100,0)}</span></td><td>${r.nh1!=null?`${r.nh0!=null?`$${num(r.nh0,2)} → `:""}$${num(r.nh1,2)}`:'<span class="mut">—</span>'}</td><td>${m?`<b>${m.toFixed(1)}×</b>`:'<span class="mut">—</span>'}</td></tr>`}).join("")}</tbody></table><p class="note"><a href="${esc(RG.url)}" target="_blank" rel="noopener">${esc(RG.src)}</a>. Approximate values as quoted in the text; Q3 2026 is a partial quarter.</p>`:"";
+  const srcs=[...new Map([...(TS.periods||[]),...(TS.points||[]),...(TS.events||[])].map(x=>[x.url,x.src])).entries()];
+  return `<p class="sec">${esc(TS.gpu)} rental rates: hyperscaler vs neocloud, and the premium between them</p>
+  <div class="svgbox" id="spchart" style="max-width:780px"><svg class="interactive" viewBox="0 0 ${W} ${H}" role="img" aria-label="H100 hyperscaler and neocloud rental rates and the premium between them over time; hover for values">${g}</svg><div class="tip" hidden></div></div>
+  <div class="legend" style="margin-top:6px;max-width:780px"><span><span class="sw"></span>Hyperscaler (AWS, Azure, Google on-demand)</span><span><span class="sw" style="border-top:3px solid var(--fin)"></span>Neocloud (SDH100RT)</span><span><span class="sw" style="border-top:3px solid var(--ink)"></span>Premium</span><span class="mut">Thick bars are period medians; dots are daily readings.</span></div>
+  <p class="note">${esc(TS.break_note||"")} A narrowing premium is bearish for hyperscaler GPU margins if hyperscalers cut, but a sign of tight capacity if the neocloud rate rises; the last column says which.</p>
+  <div class="accgrid"><div>${table}</div><div>${reg}</div></div>
+  <p class="note">Sources: ${srcs.map(([u,s])=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(s)}</a>`).join(" · ")}. Figures quoted from Silicon Data's public pages; its full daily history needs a subscription.</p>`;
+}
+function bindSpread(TS){
+  const box=$("#spchart");if(!box||!SPG)return;const sv=box.querySelector("svg"),tip=box.querySelector(".tip"),cx=sv.querySelector(".cx");
+  const show=e=>{const r=sv.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*SPG.W;
+    let best=null,bd=1e9;SPG.items.forEach(it=>{const d=it.x0!=null&&x>=it.x0&&x<=it.x1?0:Math.abs(it.x-x);if(d<bd){bd=d;best=it}});
+    if(!best||bd>40){cx.setAttribute("visibility","hidden");tip.hidden=true;return}
+    cx.setAttribute("x1",best.x);cx.setAttribute("x2",best.x);cx.setAttribute("visibility","visible");tip.innerHTML=best.tip;tip.hidden=false;
+    const f=best.x/SPG.W;tip.style.left=f<.6?`calc(${(f*100).toFixed(1)}% + 10px)`:"";tip.style.right=f>=.6?`calc(${((1-f)*100).toFixed(1)}% + 10px)`:"";};
+  sv.addEventListener("pointermove",show);sv.addEventListener("pointerdown",show);
+  sv.addEventListener("pointerleave",e=>{if(e.pointerType==="mouse"){cx.setAttribute("visibility","hidden");tip.hidden=true}});
 }
 renderReturns();renderCapital();renderBottlenecks();renderCompute();
 
