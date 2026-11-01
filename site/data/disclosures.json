@@ -1,6 +1,6 @@
 {
- "built": "2026-11-01T19:28:44+00:00",
- "sec_pulled": "2026-10-25T22:43:51+00:00",
+ "built": "2026-11-01T23:45:01+00:00",
+ "sec_pulled": "2026-11-01T23:44:15+00:00",
  "companies": {
   "ASML": {
    "cik": 937966,
@@ -284,26 +284,26 @@
     {
      "form": "10-Q",
      "kind": "quarterly",
-     "filed": "2026-04-30",
-     "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000016/klac-20260331.htm",
+     "filed": "2026-10-29",
+     "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000034/klac-20260930.htm",
      "rows": [
       {
        "customer": "Largest Customer",
        "member": "klac:LargestCustomerMember",
        "basis": "revenue",
-       "pct": 17.0,
-       "start": "2025-07-01",
-       "end": "2026-03-31",
-       "months": 9
+       "pct": 21.0,
+       "start": "2026-07-01",
+       "end": "2026-09-30",
+       "months": 3
       },
       {
-       "customer": "Group Of Three Customers",
-       "member": "klac:GroupOfThreeCustomersMember",
-       "basis": "receivables",
-       "pct": 10.0,
-       "start": "2025-07-01",
-       "end": "2026-03-31",
-       "months": 9
+       "customer": "Second Largest Customer",
+       "member": "klac:SecondLargestCustomerMember",
+       "basis": "revenue",
+       "pct": 13.0,
+       "start": "2026-07-01",
+       "end": "2026-09-30",
+       "months": 3
       }
      ]
     }
@@ -311,17 +311,17 @@
    "rpo": null,
    "credit": {
     "customer_prepayments": {
-     "usd_bn": 1.78,
-     "end": "2026-06-30",
-     "form": "10-K",
-     "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm",
+     "usd_bn": 1.71,
+     "end": "2026-09-30",
+     "form": "10-Q",
+     "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000034/klac-20260930.htm",
      "concept": "ContractWithCustomerLiability"
     },
     "op_lease_payments": {
-     "usd_bn": 0.3,
-     "end": "2026-06-30",
-     "form": "10-K",
-     "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm",
+     "usd_bn": 0.31,
+     "end": "2026-09-30",
+     "form": "10-Q",
+     "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000034/klac-20260930.htm",
      "concept": "LesseeOperatingLeaseLiabilityPaymentsDue"
     }
    }
@@ -401,10 +401,10 @@
    "cik": 813672,
    "filings": [],
    "rpo": {
-    "usd_bn": 8.1,
-    "end": "2026-06-30",
+    "usd_bn": 8.2,
+    "end": "2026-09-30",
     "form": "10-Q",
-    "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000092/cdns-20260630.htm"
+    "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000121/cdns-20260930.htm"
    },
    "credit": {
     "purchase_obligations": {
@@ -415,10 +415,10 @@
      "concept": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount"
     },
     "customer_prepayments": {
-     "usd_bn": 1.17,
-     "end": "2026-06-30",
+     "usd_bn": 1.15,
+     "end": "2026-09-30",
      "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000092/cdns-20260630.htm",
+     "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000121/cdns-20260930.htm",
      "concept": "ContractWithCustomerLiability"
     },
     "op_lease_payments": {
@@ -1159,10 +1159,10 @@
      "concept": "PurchaseObligation"
     },
     "customer_prepayments": {
-     "usd_bn": 0.39,
-     "end": "2026-06-30",
+     "usd_bn": 0.55,
+     "end": "2026-09-30",
      "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000046/amkr-20260630.htm",
+     "url": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000052/amkr-20260930.htm",
      "concept": "ContractWithCustomerLiability"
     },
     "op_lease_payments": {
@@ -1338,56 +1338,83 @@
     {
      "form": "10-Q",
      "kind": "quarterly",
-     "filed": "2026-05-01",
-     "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026029401/sndk-20260403.htm",
+     "filed": "2026-10-30",
+     "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068601/sndk-20261002.htm",
      "rows": [
       {
-       "customer": "Top Ten Customers",
-       "member": "sndk:TopTenCustomersMember",
+       "customer": "Customer Two",
+       "member": "sndk:CustomerTwoMember",
        "basis": "revenue",
-       "pct": 41.0,
-       "start": "2025-06-28",
-       "end": "2026-04-03",
-       "months": 9
+       "pct": 12.0,
+       "start": "2026-07-04",
+       "end": "2026-10-02",
+       "months": 3
       },
       {
-       "customer": "Unis Venture",
-       "member": "sndk:UnisVentureMember",
+       "customer": "Customer One",
+       "member": "sndk:CustomerOneMember",
+       "basis": "revenue",
+       "pct": 12.0,
+       "start": "2026-07-04",
+       "end": "2026-10-02",
+       "months": 3
+      },
+      {
+       "customer": "Customer1",
+       "member": "sndk:Customer1Member",
        "basis": "receivables",
-       "pct": 5.0,
-       "start": "2025-06-28",
-       "end": "2026-04-03",
-       "months": 9
+       "pct": 16.0,
+       "start": "2026-07-04",
+       "end": "2026-10-02",
+       "months": 3
+      },
+      {
+       "customer": "Customer2",
+       "member": "sndk:Customer2Member",
+       "basis": "receivables",
+       "pct": 15.0,
+       "start": "2026-07-04",
+       "end": "2026-10-02",
+       "months": 3
+      },
+      {
+       "customer": "Customer3",
+       "member": "sndk:Customer3Member",
+       "basis": "receivables",
+       "pct": 11.0,
+       "start": "2026-07-04",
+       "end": "2026-10-02",
+       "months": 3
       }
      ]
     }
    ],
    "rpo": {
-    "usd_bn": 59.8,
-    "end": "2026-07-03",
-    "form": "10-K",
-    "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm"
+    "usd_bn": 88.9,
+    "end": "2026-10-02",
+    "form": "10-Q",
+    "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068601/sndk-20261002.htm"
    },
    "credit": {
     "purchase_obligations": {
-     "usd_bn": 5.89,
-     "end": "2026-07-03",
-     "form": "10-K",
-     "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm",
+     "usd_bn": 6.79,
+     "end": "2026-10-02",
+     "form": "10-Q",
+     "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068601/sndk-20261002.htm",
      "concept": "PurchaseObligation"
     },
     "customer_prepayments": {
-     "usd_bn": 1.24,
-     "end": "2026-07-03",
-     "form": "10-K",
-     "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm",
+     "usd_bn": 1.5,
+     "end": "2026-10-02",
+     "form": "10-Q",
+     "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068601/sndk-20261002.htm",
      "concept": "ContractWithCustomerLiability"
     },
     "op_lease_payments": {
      "usd_bn": 0.3,
-     "end": "2026-07-03",
-     "form": "10-K",
-     "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm",
+     "end": "2026-10-02",
+     "form": "10-Q",
+     "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068601/sndk-20261002.htm",
      "concept": "LesseeOperatingLeaseLiabilityPaymentsDue"
     }
    }
@@ -2519,8 +2546,8 @@
     {
      "form": "10-Q",
      "kind": "quarterly",
-     "filed": "2026-07-27",
-     "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000044/cls-20260630.htm",
+     "filed": "2026-10-26",
+     "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000050/cls-20260930.htm",
      "rows": [
       {
        "customer": "Customer One",
@@ -2528,8 +2555,8 @@
        "basis": "revenue",
        "pct": 34.0,
        "start": "2026-01-01",
-       "end": "2026-06-30",
-       "months": 6
+       "end": "2026-09-30",
+       "months": 9
       },
       {
        "customer": "Customer Two",
@@ -2537,8 +2564,8 @@
        "basis": "revenue",
        "pct": 16.0,
        "start": "2026-01-01",
-       "end": "2026-06-30",
-       "months": 6
+       "end": "2026-09-30",
+       "months": 9
       },
       {
        "customer": "Customer Three",
@@ -2546,8 +2573,8 @@
        "basis": "revenue",
        "pct": 15.0,
        "start": "2026-01-01",
-       "end": "2026-06-30",
-       "months": 6
+       "end": "2026-09-30",
+       "months": 9
       }
      ]
     }
@@ -2555,10 +2582,10 @@
    "rpo": null,
    "credit": {
     "customer_prepayments": {
-     "usd_bn": 0.48,
-     "end": "2026-06-30",
-     "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000044/cls-20260630.htm",
+     "usd_bn": 0.41,
+     "end": "2025-12-31",
+     "form": "10-K",
+     "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
      "concept": "ContractWithCustomerLiabilityCurrent"
     },
     "op_lease_payments": {
@@ -2610,10 +2637,10 @@
      ]
     },
     "customer_prepayments": {
-     "usd_bn": 3.75,
-     "end": "2026-06-30",
+     "usd_bn": 4.25,
+     "end": "2026-09-30",
      "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026050609/vrt-20260630.htm",
+     "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067893/vrt-20260930.htm",
      "concept": "ContractWithCustomerLiabilityCurrent"
     },
     "op_lease_payments": {
@@ -2684,17 +2711,17 @@
    "cik": 1996810,
    "filings": [],
    "rpo": {
-    "usd_bn": 176.28,
-    "end": "2026-06-30",
+    "usd_bn": 196.72,
+    "end": "2026-09-30",
     "form": "10-Q",
-    "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000148/gev-20260630.htm"
+    "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000163/gev-20260930.htm"
    },
    "credit": {
     "customer_prepayments": {
-     "usd_bn": 40.04,
-     "end": "2026-06-30",
+     "usd_bn": 45.75,
+     "end": "2026-09-30",
      "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000148/gev-20260630.htm",
+     "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000163/gev-20260930.htm",
      "concept": "ContractWithCustomerLiability"
     },
     "op_lease_payments": {
@@ -2760,65 +2787,65 @@
    "cik": 1101239,
    "filings": [],
    "rpo": {
-    "usd_bn": 15.0,
-    "end": "2026-06-30",
+    "usd_bn": 15.9,
+    "end": "2026-09-30",
     "form": "10-Q",
-    "url": "https://www.sec.gov/Archives/edgar/data/1101239/000110123926000147/eqix-20260630.htm"
+    "url": "https://www.sec.gov/Archives/edgar/data/1101239/000110123926000180/eqix-20260930.htm"
    },
    "credit": {
     "maturities": {
-     "end": "2026-06-30",
+     "end": "2026-09-30",
      "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1101239/000110123926000147/eqix-20260630.htm",
+     "url": "https://www.sec.gov/Archives/edgar/data/1101239/000110123926000180/eqix-20260930.htm",
      "ladder": [
       [
        "Rest of 2026",
-       0.61
+       0.6
       ],
       [
        "2027",
-       1.08
+       1.07
       ],
       [
        "2028",
-       1.43
+       1.41
       ],
       [
        "2029",
-       2.19
+       3.02
       ],
       [
        "2030",
-       3.19
+       3.2
       ]
      ]
     },
     "purchase_obligations": {
-     "usd_bn": 0.71,
-     "end": "2026-06-30",
+     "usd_bn": 0.69,
+     "end": "2026-09-30",
      "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1101239/000110123926000147/eqix-20260630.htm",
+     "url": "https://www.sec.gov/Archives/edgar/data/1101239/000110123926000180/eqix-20260930.htm",
      "concept": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount"
     },
     "customer_prepayments": {
-     "usd_bn": 0.37,
-     "end": "2026-06-30",
+     "usd_bn": 0.4,
+     "end": "2026-09-30",
      "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1101239/000110123926000147/eqix-20260630.htm",
+     "url": "https://www.sec.gov/Archives/edgar/data/1101239/000110123926000180/eqix-20260930.htm",
      "concept": "ContractWithCustomerLiabilityCurrent"
     },
     "op_lease_payments": {
-     "usd_bn": 1.83,
-     "end": "2026-06-30",
+     "usd_bn": 1.85,
+     "end": "2026-09-30",
      "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1101239/000110123926000147/eqix-20260630.htm",
+     "url": "https://www.sec.gov/Archives/edgar/data/1101239/000110123926000180/eqix-20260930.htm",
      "concept": "LesseeOperatingLeaseLiabilityPaymentsDue"
     },
     "fin_lease_payments": {
-     "usd_bn": 3.21,
-     "end": "2026-06-30",
+     "usd_bn": 3.37,
+     "end": "2026-09-30",
      "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1101239/000110123926000147/eqix-20260630.htm",
+     "url": "https://www.sec.gov/Archives/edgar/data/1101239/000110123926000180/eqix-20260930.htm",
      "concept": "FinanceLeaseLiabilityPaymentsDue"
     }
    }
@@ -2827,10 +2854,10 @@
    "cik": 789019,
    "filings": [],
    "rpo": {
-    "usd_bn": 684.0,
-    "end": "2026-06-30",
-    "form": "10-K",
-    "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+    "usd_bn": 683.0,
+    "end": "2026-09-30",
+    "form": "10-Q",
+    "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436133/msft-20260930.htm"
    },
    "credit": {}
   },
@@ -2843,21 +2870,21 @@
      "usd_bn": 25.0,
      "end": "2025-12-31",
      "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm",
+     "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm",
      "concept": "ContractWithCustomerLiability"
     },
     "op_lease_payments": {
-     "usd_bn": 116.35,
-     "end": "2026-06-30",
+     "usd_bn": 121.49,
+     "end": "2026-09-30",
      "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm",
+     "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm",
      "concept": "LesseeOperatingLeaseLiabilityPaymentsDue"
     },
     "fin_lease_payments": {
-     "usd_bn": 16.66,
-     "end": "2026-06-30",
+     "usd_bn": 17.95,
+     "end": "2026-09-30",
      "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm",
+     "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm",
      "concept": "FinanceLeaseLiabilityPaymentsDue"
     }
    }
@@ -2866,10 +2893,10 @@
    "cik": 1652044,
    "filings": [],
    "rpo": {
-    "usd_bn": 519.5,
-    "end": "2026-06-30",
+    "usd_bn": 567.7,
+    "end": "2026-09-30",
     "form": "10-Q",
-    "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm"
+    "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000084/goog-20260930.htm"
    },
    "credit": {
     "maturities": {
@@ -2918,24 +2945,24 @@
      "concept": "PurchaseObligation"
     },
     "customer_prepayments": {
-     "usd_bn": 10.1,
-     "end": "2026-06-30",
+     "usd_bn": 12.6,
+     "end": "2026-09-30",
      "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm",
+     "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000084/goog-20260930.htm",
      "concept": "ContractWithCustomerLiability"
     },
     "op_lease_payments": {
-     "usd_bn": 21.33,
-     "end": "2026-06-30",
+     "usd_bn": 24.44,
+     "end": "2026-09-30",
      "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm",
+     "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000084/goog-20260930.htm",
      "concept": "LesseeOperatingLeaseLiabilityPaymentsDue"
     },
     "fin_lease_payments": {
-     "usd_bn": 2.92,
-     "end": "2026-06-30",
+     "usd_bn": 4.33,
+     "end": "2026-09-30",
      "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm",
+     "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000084/goog-20260930.htm",
      "concept": "FinanceLeaseLiabilityPaymentsDue"
     }
    }
@@ -3293,42 +3320,42 @@
     {
      "form": "10-Q",
      "kind": "quarterly",
-     "filed": "2026-07-23",
-     "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000076/now-20260630.htm",
+     "filed": "2026-10-28",
+     "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000096/now-20260930.htm",
      "rows": [
       {
        "customer": "One Customer",
        "member": "now:OneCustomerMember",
        "basis": "revenue",
-       "pct": 13.0,
+       "pct": 12.0,
        "start": "2026-01-01",
-       "end": "2026-06-30",
-       "months": 6
+       "end": "2026-09-30",
+       "months": 9
       },
       {
        "customer": "One Customer",
        "member": "now:OneCustomerMember",
        "basis": "receivables",
-       "pct": 12.0,
+       "pct": 20.0,
        "start": "2026-01-01",
-       "end": "2026-06-30",
-       "months": 6
+       "end": "2026-09-30",
+       "months": 9
       }
      ]
     }
    ],
    "rpo": {
-    "usd_bn": 29.0,
-    "end": "2026-06-30",
+    "usd_bn": 29.7,
+    "end": "2026-09-30",
     "form": "10-Q",
-    "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000076/now-20260630.htm"
+    "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000096/now-20260930.htm"
    },
    "credit": {
     "leases_not_commenced": {
-     "usd_bn": 0.33,
-     "end": "2026-06-30",
+     "usd_bn": 0.35,
+     "end": "2026-09-30",
      "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000076/now-20260630.htm",
+     "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000096/now-20260930.htm",
      "concept": "LesseeLeaseNotYetCommencedUndiscountedCashFlows"
     },
     "purchase_obligations": {
@@ -3339,17 +3366,17 @@
      "concept": "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount"
     },
     "customer_prepayments": {
-     "usd_bn": 8.2,
-     "end": "2026-06-30",
+     "usd_bn": 7.73,
+     "end": "2026-09-30",
      "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000076/now-20260630.htm",
+     "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000096/now-20260930.htm",
      "concept": "ContractWithCustomerLiabilityCurrent"
     },
     "op_lease_payments": {
-     "usd_bn": 1.08,
-     "end": "2026-06-30",
+     "usd_bn": 1.03,
+     "end": "2026-09-30",
      "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000076/now-20260630.htm",
+     "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000096/now-20260930.htm",
      "concept": "LesseeOperatingLeaseLiabilityPaymentsDue"
     }
    }
