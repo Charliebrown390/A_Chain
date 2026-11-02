@@ -14,10 +14,8 @@ A network model of the AI build-out, from chip tools to applications. It maps wh
 | 3 | Credit layer: financing links, funding sources, leverage and coverage, debt maturities, off-balance-sheet leases, Merton distance-to-default, stress-test tool | Done |
 | 4 | Custom silicon and TPU: 55 names over 10 layers (custom-ASIC layer, MediaTek, Alchip, GUC, Celestica, Ibiden, ASE and others), chip-programme filter and timelines, exposure scores, GPU-vs-custom revenue view, rumoured tag, coverage tests | Done |
 | 5 | Returns on spending (ROIC, incremental, ex-goodwill, lease-adjusted, vs cost of capital), capital and yield-curve monitor (FRED), bottleneck monitor, compute economics | Done |
+| 5b | After the Oct 2026 correction: what the market is pricing (move split into market, rates and other; estimate revisions vs multiple; implied growth; recent targets), 3-year betas, hyperscaler self-funding monitor, AI lab nodes (OpenAI, Anthropic, SpaceXAI), inflation/real-yield/oil from FRED, direction-of-travel on bottleneck indicators | Done |
 | 6 | Screening and scoring across the chain, Taiwan monthly sales | Next |
-| 3 | Analytics: fundamentals, technicals, network metrics | Planned |
-| 4 | Dashboard wired to live data | Planned |
-| 5 | Thesis notes and nightly refresh via GitHub Actions | Planned |
 
 ## Layout
 
@@ -28,6 +26,7 @@ A network model of the AI build-out, from chip tools to applications. It maps wh
 - `scripts/build_site_data.py` — validates the map, merges filing figures into links, writes `site/data/*.json`
 - `site/` — the static web page served by GitHub Pages
 - `data/theses.yaml` — bull/bear/what-to-watch notes per company (edit by hand)
+- `data/labs.yaml` — AI lab metrics: run-rate revenue, valuation, burn, commitments (edit by hand, sourced)
 - `data/programmes.yaml` — chip programmes (TPU, Trainium, MTIA, Maia, OpenAI chip, GPU): generations, users, exposure estimates, and the quarterly GPU-vs-custom revenue table (update by hand after earnings)
 - `tests/test_coverage.py` — must-have tickers, sourcing rules and TPU-chain checks; runs before every deploy and data refresh
 - `data/bottlenecks.yaml`, `data/compute_econ.yaml`, `data/capital.yaml` — hand-maintained monitor data; see UPDATING.md

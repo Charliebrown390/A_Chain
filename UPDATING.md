@@ -9,7 +9,9 @@ Most of the site refreshes itself. This page covers the few datasets that free s
 | Prices, technicals, fundamentals, analyst ratings | Yahoo Finance | Weekdays after the US close |
 | ROIC, cost of capital, capital intensity, inventory days | Yahoo Finance statements | Weekdays after the US close |
 | Credit metrics, distance-to-default | Yahoo Finance | Weekdays after the US close |
-| Treasury curve, term premium, credit spreads | FRED (no key needed) | Weekdays after the US close |
+| Treasury curve, term premium, credit spreads, real yield, breakevens, CPI, Fed funds, Brent | FRED (no key needed) | Weekdays after the US close |
+| Move split (market, rates, other), 3-year betas, EPS estimate revisions, implied growth | Yahoo Finance prices and consensus | Weekdays after the US close |
+| Hyperscaler capex vs operating cash flow | Yahoo Finance cash-flow statements | Weekdays after the US close |
 | Implied volatility | Option quotes via Yahoo | During US trading hours |
 | Headlines | Yahoo Finance feeds | Every 3 hours |
 | Customer concentration, backlog, maturities, leases | SEC XBRL filings | Weekly (Mondays) |
@@ -26,6 +28,8 @@ Most of the site refreshes itself. This page covers the few datasets that free s
 | | H100 hyperscaler vs neocloud readings (`tier_spread.points`) | Monthly, one dated reading | Silicon Data index pages (silicondata.com/products/silicon-index/h100 shows both tiers with dates) and blog posts. Their terms bar copying the daily series, so add one quoted reading a month with its link |
 | `data/capital.yaml` | Large AI bond deals, marker bond prices, context | When a deal prices or a bond moves | Press coverage (Reuters, Bloomberg, FT), company 8-Ks, FINRA bond lookups |
 | `data/programmes.yaml` | GPU-vs-custom quarterly revenue table, TPU/Trainium timelines, exposure | After each earnings season | Company earnings releases and calls |
+| `data/capital.yaml` (`capex_guidance`) | Latest capex figures and guidance for Microsoft, Alphabet, Amazon, Meta, Oracle | After each earnings season | Company results and press coverage |
+| `data/labs.yaml` | OpenAI, Anthropic, SpaceXAI: run-rate revenue, valuation, burn, commitments | When a figure is published (monthly check) | Company announcements (tag D); Bloomberg, Reuters, FT, The Information via press (tag E); SpaceX filings |
 | `data/funding.yaml` | Funding sources, guarantees, off-balance-sheet vehicles | When announced | 8-Ks, 10-Qs, press |
 | `data/edges.yaml`, `data/theses.yaml` | Relationships and thesis notes | Any time | Your own research |
 
@@ -68,6 +72,13 @@ Add a monthly H100 tier reading to `compute_econ.yaml` (newest last):
 ```yaml
   points:
     - {date: "2026-11-20", hyperscaler: 7.10, neocloud: 2.90, src: "Silicon Data index pages (H100)", url: "https://www.silicondata.com/products/silicon-index/h100"}
+```
+
+Add a revenue run-rate point to `labs.yaml` (newest last; D = company said it, E = reported):
+
+```yaml
+    revenue:
+      - {date: "2026-12-31", usd_bn: 72, conf: E, src: "Bloomberg via Reuters", url: "https://..."}
 ```
 
 Add a bond deal to `capital.yaml`:

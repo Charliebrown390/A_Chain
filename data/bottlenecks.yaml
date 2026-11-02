@@ -8,6 +8,9 @@
 #   level   -> tight if value >= tight_above (or <= tight_below); loose if value <= loose_below (or >= loose_above)
 #   change  -> % change between the last two points, compared with tight_above / loose_below
 #   curve   -> term structure: tight when the 12-month rate is below spot by more than `margin`% (backwardation)
+# Direction (Tightening / Easing / Steady) comes from the last step: level rules compare the last two values, change
+# rules the last two % changes. Optional `mom_band` sets how big a step counts (default: 5% of the tight threshold
+# for level rules; 2 percentage points for change rules).
 # Automated indicators (supplier inventory days, days to get paid, backlog) are computed on the page from
 # the nightly market and SEC data and need no editing here.
 

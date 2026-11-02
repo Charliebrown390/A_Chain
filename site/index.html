@@ -1183,6 +1183,16 @@ function sigOf(ind){
   return "balanced";
 }
 const SIGC={tight:"s0",balanced:"s2",loose:"s3"},SIGL={tight:"Tight",balanced:"Balanced",loose:"Slack"};
+/* Direction of travel: is the indicator moving towards tightness or away from it? Uses the last two steps of the series.
+   level rules compare the last two values; change rules compare the last two % changes (needs three points). */
+function momOf(ind){
+  const r=ind.rule||{},s=ind.series||[];if(r.type==="curve")return null;
+  const up=r.tight_above!=null?1:r.tight_below!=null?-1:0;if(!up)return null;
+  let d=null,band=ind.mom_band;
+  if(r.type==="change"){if(s.length<3)return null;const c1=(s[s.length-1][1]/s[s.length-2][1]-1)*100,c0=(s[s.length-2][1]/s[s.length-3][1]-1)*100;d=c1-c0;band=band??2}
+  else{if(s.length<2)return null;d=s[s.length-1][1]-s[s.length-2][1];band=band??Math.max(0.05,Math.abs(r.tight_above??r.tight_below??0)*0.05)}
+  const t=d*up;return t>band?{k:"up",lab:"Tightening",d}:t<-band?{k:"down",lab:"Easing",d}:{k:"flat",lab:"Steady",d}}
+const MOMC={up:"s0",down:"s3",flat:"s2"};
 function autoInds(){
   const out=[],grp=(name,f,layers)=>{const cs=COS.filter(c=>layers.includes(c.layer));const ch=cs.map(c=>{const d=f(c);if(!d||d.length<5)return null;const a=d[d.length-1][1],b=d[d.length-5][1];return b?(a/b-1)*100:null}).filter(x=>x!=null);if(ch.length<3)return;const m=median(ch);out.push({auto:true,name,layer:"Suppliers (automated)",unit:"% change in a year, median",val:m,n:ch.length,sig:m>15?"loose":m<-10?"tight":"balanced"})};
   grp("Inventory days, chip and hardware suppliers",c=>c.ret?.inv_days,[2,3,4,5,6,7]);
@@ -1196,14 +1206,16 @@ function renderBottlenecks(){
     let val="",sub="";
     if(ind.curve){const p=ind.curve.points;val=p.map(x=>`${esc(x[0])} ${num(x[1],2)}`).join(" · ");sub=`${p[p.length-1][1]<p[0][1]?"Backwardated: near-term capacity costs more than term":"Upward-sloping: no near-term squeeze"}`}
     else if(last){val=`${num(last[1],last[1]<20?2:1)} <span class="mut">${esc(ind.unit)}</span>`;if(prev)sub=`was ${num(prev[1],prev[1]<20?2:1)} on ${esc(fdate(prev[0]))}`}
-    return `<div class="bcard"><div class="bhead"><span class="mut">${esc(ind.layer)}</span><span class="ddchip ${SIGC[sig]}">${SIGL[sig]}</span></div><b>${esc(ind.name)}</b><div class="bval">${val}</div>${sub?`<div class="mut" style="font-size:12px">${sub}</div>`:""}${s.length>=2?spark(s.map(x=>x[1]),{W:180,H:30}):""}
+    const mo=momOf(ind);
+    return `<div class="bcard"><div class="bhead"><span class="mut">${esc(ind.layer)}</span><span><span class="ddchip ${SIGC[sig]}">${SIGL[sig]}</span>${mo?` <span class="ddchip ${MOMC[mo.k]}" title="Direction of the latest step: ${mo.k==="up"?"moving towards tightness":mo.k==="down"?"moving away from tightness":"little change"}">${mo.k==="up"?"▲":mo.k==="down"?"▼":"■"} ${mo.lab}</span>`:""}</span></div><b>${esc(ind.name)}</b><div class="bval">${val}</div>${sub?`<div class="mut" style="font-size:12px">${sub}</div>`:""}${s.length>=2?spark(s.map(x=>x[1]),{W:180,H:30}):""}
     <div class="bmeta">${lastDate?`as of ${esc(fdate(lastDate))}`:""}${stale?` · <span class="down">stale: due for an update</span>`:""} · ${(ind.sources||[]).map(x=>`<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.src)}</a>`).join(", ")}</div>${ind.note?`<div class="bmeta">${esc(ind.note)}</div>`:""}</div>`});
   const autos=autoInds().map(a=>`<div class="bcard"><div class="bhead"><span class="mut">${esc(a.layer)}</span><span class="ddchip ${SIGC[a.sig]}">${SIGL[a.sig]}</span></div><b>${esc(a.name)}</b><div class="bval">${a.val>0?"+":""}${num(a.val,0)}% <span class="mut">${esc(a.unit)}</span></div><div class="bmeta">Median of ${a.n} companies from quarterly statements, refreshed nightly. Rising inventory or slower payment means demand is cooling; falling means tightness.</div></div>`);
   const counts={tight:0,balanced:0,loose:0};inds.forEach(i=>counts[sigOf(i)]++);autoInds().forEach(a=>counts[a.sig]++);
+  const te=inds.filter(i=>sigOf(i)==="tight"&&momOf(i)?.k==="down").map(i=>i.name),tu=inds.filter(i=>momOf(i)?.k==="up").map(i=>i.name);
   box.innerHTML=`<h2>Bottleneck monitor</h2><p class="hint">Where the chain is tight and where slack is building. Each indicator is scored from its own rule; tight means demand is running ahead of supply.</p>
-  <p class="psum"><span class="ddchip s0">${counts.tight} tight</span> <span class="ddchip s2">${counts.balanced} balanced</span> <span class="ddchip s3">${counts.loose} slack</span></p>
+  <p class="psum"><span class="ddchip s0">${counts.tight} tight</span> <span class="ddchip s2">${counts.balanced} balanced</span> <span class="ddchip s3">${counts.loose} slack</span>${tu.length?` · Tightening: <b>${tu.map(esc).join("; ")}</b>.`:""}${te.length?` · <span class="down">Tight but easing: <b>${te.map(esc).join("; ")}</b></span>, which is where a turn would show first.`:""}</p>
   <div class="bgrid">${cards.join("")}${autos.join("")}</div>
-  <p class="note">Hand-maintained indicators live in data/bottlenecks.yaml, each with its update source and schedule; cards marked stale are overdue. Supplier inventory and payment-time cards update automatically.</p>`;
+  <p class="note">Hand-maintained indicators live in data/bottlenecks.yaml, each with its update source and schedule; cards marked stale are overdue. ▲/▼ shows the direction of the latest step: markets trade the change in tightness, so a tight indicator that is easing (DRAM price growth slowing, say) is an early warning even before its level changes. Supplier inventory and payment-time cards update automatically.</p>`;
 }
 
 /* Compute economics */
