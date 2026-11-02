@@ -339,8 +339,11 @@ def main():
             if p.get("hyperscaler") is None and p.get("neocloud") is None:
                 errs.append(f"compute_econ.yaml tier_spread: entry without a rate: {p}")
     cap = monitors["capital"]
-    for k in ("issuance", "facts", "marker_bonds"):
+    for k in ("issuance", "facts", "marker_bonds", "capex_guidance"):
         need_url(f"capital.yaml {k}", cap.get(k))
+    for it in cap.get("capex_guidance") or []:
+        if it.get("id") not in idset:
+            errs.append(f"capital.yaml capex_guidance: unknown company {it.get('id')}")
     for it in cap.get("issuance") or []:
         if it.get("issuer") not in idset:
             errs.append(f"capital.yaml issuance: unknown issuer {it.get('issuer')}")

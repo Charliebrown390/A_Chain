@@ -24,3 +24,11 @@ facts:
 marker_bonds:
   # Bonds whose price tells you how lenders view the riskiest part of the chain. Add a new row each time you check.
   - {issuer: CRWV, bond: "9.625% unsecured notes due 2032", date: "2026-10-14", price: 79.5, yield: 15.06, src: "Forbes, citing Barron's", url: "https://www.forbes.com/sites/jimosman/2026/10/14/coreweave-bonds-are-warning-of-a-bigger-problem-for-ai-stocks/"}
+
+capex_guidance:
+  # Latest capex figures and guidance from results (USD). Update after each earnings season.
+  - {id: AMZN, date: "2026-10-29", text: "About $220B of cash capex in 2026; 'meaningfully more' in 2027. Trailing 12-month free cash flow -$42.4B to 30 Sep (was +$14.8B a year earlier).", src: "24/7 Wall St, Q3 2026 results", url: "https://247wallst.com/investing/2026/10/30/amazon-slides-7-as-earnings-miss-and-ai-spending-turn-free-cash-flow-negative-meta-falls-2-alphabet-dips-walmart-gains-2/"}
+  - {id: META, date: "2026-10-29", text: "2026 capex guidance raised to $135-145B. Free cash flow negative in Q3 for the first time since 2012.", src: "Yahoo Finance", url: "https://finance.yahoo.com/markets/stocks/articles/amazon-slides-3-alphabet-12-162243527.html"}
+  - {id: GOOGL, date: "2026-10-28", text: "Q3 capex $51.4B (consensus $55.1B); quarterly free cash flow -$9.1B (consensus -$3.5B). Google Cloud revenue +103%.", src: "Yahoo Finance", url: "https://finance.yahoo.com/markets/stocks/articles/amazon-slides-3-alphabet-12-162243527.html"}
+  - {id: MSFT, date: "2026-10-28", text: "Capex including finance leases $45.2B in the September quarter (consensus $50.7B), held back by delayed third-party capacity; demand 'continues to exceed available supply'.", src: "Yahoo Finance", url: "https://finance.yahoo.com/markets/stocks/articles/amazon-slides-3-alphabet-12-162243527.html"}
+  - {id: ORCL, date: "2026-09-09", text: "Q1 FY27 operating cash flow $23.1B against capex $28.5B; net debt about $132B; remaining performance obligations $664B.", src: "Admiral Markets", url: "https://admiralmarkets.com/analytics/traders-blog/openai-revenue-ai-selloff-october-2026"}

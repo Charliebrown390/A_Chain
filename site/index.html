@@ -297,7 +297,7 @@ footer p{margin:0}
     </div>
   </header>
 
-  <nav class="secnav" aria-label="Sections"><a href="#mapsec">Supply-chain map</a><a href="#expect">What the market is pricing</a><a href="#returns">Returns on spending</a><a href="#capital">Capital and yields</a><a href="#bottlenecks">Bottlenecks</a><a href="#compute">Compute economics</a><a href="#accel">GPU vs custom silicon</a><a href="#stress">Stress test</a></nav>
+  <nav class="secnav" aria-label="Sections"><a href="#mapsec">Supply-chain map</a><a href="#expect">What the market is pricing</a><a href="#returns">Returns on spending</a><a href="#selffund">Self-funding</a><a href="#capital">Capital and yields</a><a href="#bottlenecks">Bottlenecks</a><a href="#compute">Compute economics</a><a href="#accel">GPU vs custom silicon</a><a href="#stress">Stress test</a></nav>
 
   <section class="pulse four">
     <div class="card">
@@ -347,6 +347,7 @@ footer p{margin:0}
 
   <section class="mon" id="expect"></section>
   <section class="mon" id="returns"></section>
+  <section class="mon" id="selffund"></section>
   <section class="mon" id="capital"></section>
   <section class="mon" id="bottlenecks"></section>
   <section class="mon" id="compute"></section>
@@ -402,7 +403,7 @@ const $=s=>document.querySelector(s);
 const minus=s=>String(s).replace(/^-/,"−");
 const pct=(v,d=1)=>v==null?"—":minus((v>0?"+":"")+Number(v).toFixed(d))+"%";
 const pctP=v=>v==null?"—":minus(Number(v).toFixed(0))+"%";
-const usd=v=>v==null?"—":(Math.abs(v)>=1000?minus("$"+(v/1000).toFixed(2)+"T"):Math.abs(v)<10?minus("$"+v.toFixed(1)+"B"):minus("$"+Math.round(v)+"B"));
+const usd=v=>{if(v==null)return "—";const a=Math.abs(v),sg=v<0?"−":"";return sg+(a>=1000?"$"+(a/1000).toFixed(2)+"T":a<10?"$"+a.toFixed(1)+"B":"$"+Math.round(a)+"B")};
 const CUR={USD:"$",KRW:"₩",TWD:"NT$",EUR:"€",JPY:"¥",GBP:"£"};
 const fpx=(v,ccy)=>{if(v==null)return "—";const s=CUR[ccy]??"";const n=Math.abs(v)>=1000?Math.round(v).toLocaleString("en-US"):Number(v).toFixed(2);return s?s+n:n+" "+(ccy||"")};
 const cls=v=>v>0?"up":v<0?"down":"mut";
@@ -1031,6 +1032,36 @@ function renderExpect(){
   box.querySelectorAll("[data-xg]").forEach(b=>b.addEventListener("click",()=>{TAB="ana";select(b.dataset.xg,true)}));
 }
 
+/* Can the spenders pay for it? capex against operating cash flow */
+function pairBars(q,{W=300,H=110}={}){if(!q.length)return "";const T=14,B=20,ih=H-T-B,mx=Math.max(...q.flatMap(x=>[x.ocf,x.capex]),1),mn=Math.min(0,...q.map(x=>x.ocf));
+  const Y=v=>T+(mx-v)/(mx-mn)*ih,n=q.length,gw=(W-8)/n,bw=Math.min(16,gw/2-3);let g=`<line x1="0" x2="${W}" y1="${Y(0)}" y2="${Y(0)}" stroke="var(--line)"/>`;
+  q.forEach((x,i)=>{const cx=4+gw*i+gw/2;const o=x.ocf,c=x.capex;
+    g+=`<rect x="${cx-bw-1}" y="${Math.min(Y(o),Y(0))}" width="${bw}" height="${Math.abs(Y(o)-Y(0))}" fill="var(--fin)" opacity=".75"><title>${esc(x.p)} operating cash flow ${usd(o)}</title></rect><rect x="${cx+1}" y="${Y(c)}" width="${bw}" height="${Y(0)-Y(c)}" fill="var(--copper)"><title>${esc(x.p)} capex ${usd(c)}</title></rect>`;
+    g+=`<text x="${cx}" y="${H-6}" text-anchor="middle" font-size="10" font-family="IBM Plex Mono, monospace" fill="var(--muted)">${MON[+x.p.slice(5,7)-1]} '${x.p.slice(2,4)}</text>`;
+    if(x.capex>x.ocf)g+=`<circle cx="${cx}" cy="${T-6}" r="3" fill="var(--down)"><title>Capex exceeded operating cash flow</title></circle>`});
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Quarterly operating cash flow and capex">${g}</svg>`}
+function renderSelfFund(){
+  const box=$("#selffund");const ids=["MSFT","GOOGL","AMZN","META","ORCL","CRWV","NBIS"];const cs=ids.map(i=>BY[i]).filter(c=>c&&c.sf&&c.sf.q?.length);
+  if(!cs.length){box.hidden=true;return}
+  const G=(MON5.capital?.capex_guidance)||[];
+  const latestAll=Math.max(...cs.map(c=>Date.parse(c.sf.q[c.sf.q.length-1].p)));
+  const ttm=c=>{const q=c.sf.q.slice(-4);if(q.length<4)return null;const o=q.reduce((a,x)=>a+x.ocf,0),k=q.reduce((a,x)=>a+x.capex,0);return {ocf:o,capex:k,fcf:o-k,ratio:o>0?k/o:null,to:q[3].p}};
+  const fyr=c=>{const f=c.sf.fy||[];const a=f[f.length-1],b=f[f.length-2];return {now:a&&a.ocf>0?a.capex/a.ocf:null,prev:b&&b.ocf>0?b.capex/b.ocf:null,fy:a?.p,fyPrev:b?.p}};
+  const big=cs.filter(c=>["MSFT","GOOGL","AMZN","META","ORCL"].includes(c.t)),T5=big.map(ttm).filter(Boolean);
+  const lagging=big.filter(c=>latestAll-Date.parse(c.sf.q[c.sf.q.length-1].p)>100*864e5);
+  const sum=k=>T5.reduce((a,x)=>a+x[k],0);
+  const yrs={};big.forEach(c=>(c.sf.fy||[]).forEach(x=>{const y=x.p.slice(0,4);(yrs[y]=yrs[y]||{n:0,ocf:0,capex:0});yrs[y].n++;yrs[y].ocf+=x.ocf;yrs[y].capex+=x.capex}));
+  const yrRows=Object.entries(yrs).filter(([y,v])=>v.n===big.length).sort();
+  box.innerHTML=`<h2>Can the spenders pay for it?</h2><p class="hint">Capital spending against operating cash flow, quarter by quarter. Above 100% the build-out is being paid for with debt, leases, equity or cash on hand. Free cash flow turning negative at Amazon, Alphabet and Meta set off the late-October sell-off.</p>
+  <p class="psum">Across Microsoft, Alphabet, Amazon, Meta and Oracle, the last four reported quarters show operating cash flow of <b>${usd(sum("ocf"))}</b> against capex of <b>${usd(sum("capex"))}</b>: capex is <b>${pc(sum("capex")/sum("ocf")*100,0)}</b> of cash generated, leaving <b>${usd(sum("fcf"))}</b> of free cash flow.${lagging.length?` <span class="down">${lagging.map(c=>esc(c.lab)).join(", ")}: Yahoo's quarterly figures stop earlier, so this total is flattered; see the company's own results below.</span>`:""} ${yrRows.length?`By fiscal year: ${yrRows.map(([y,v])=>`${y} ${pc(v.capex/v.ocf*100,0)}`).join(" → ")}.`:""}</p>
+  <div class="sttab"><table><thead><tr><th>Company</th><th>Last 4 quarters to</th><th>Operating cash flow</th><th>Capex</th><th>Free cash flow</th><th>Capex ÷ cash flow</th><th>Latest fiscal year</th><th>Year before</th></tr></thead><tbody>${cs.map(c=>{const t=ttm(c),f=fyr(c),stale=latestAll-Date.parse(c.sf.q[c.sf.q.length-1].p)>100*864e5;
+    return `<tr><td><button class="go" type="button" data-sf="${esc(c.t)}">${esc(c.lab)}</button></td><td>${t?esc(fdate(t.to)):"—"}${stale?' <span class="down" title="Yahoo has not yet loaded the latest quarters">lagging</span>':""}</td><td>${usd(t?.ocf)}</td><td>${usd(t?.capex)}</td><td class="${t&&t.fcf<0?"down":""}">${usd(t?.fcf)}</td><td>${t?.ratio==null?"n/m":`<span class="ddchip ${t.ratio>1?"s0":t.ratio>0.8?"s1":"s3"}">${pc(t.ratio*100,0)}</span>`}</td><td>${f.now==null?"—":pc(f.now*100,0)}</td><td>${f.prev==null?"—":pc(f.prev*100,0)}</td></tr>`}).join("")}</tbody></table></div>
+  <div class="bgrid" style="margin-top:12px">${cs.map(c=>{const g=G.find(x=>x.id===c.t);return `<div class="bcard"><div class="bhead"><b>${esc(c.lab)}</b><span class="mut" style="font-size:11.5px">quarterly, USD</span></div>${pairBars(c.sf.q)}${g?`<div class="bmeta">${esc(g.text)} <a href="${esc(g.url)}" target="_blank" rel="noopener">${esc(g.src)}</a>, ${esc(fdate(g.date))}</div>`:""}</div>`}).join("")}</div>
+  <div class="legend" style="margin-top:6px"><span><span class="sw" style="border-top:6px solid var(--fin)"></span>Operating cash flow</span><span><span class="sw" style="border-top:6px solid var(--copper)"></span>Capex</span><span><span class="dot" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--down);margin-right:4px"></span>Capex above cash flow</span></div>
+  <p class="note">Source: Yahoo Finance quarterly cash-flow statements (refreshed nightly) and company results for the guidance lines (data/capital.yaml). Capex here is purchases of property and equipment; it excludes assets taken on finance leases, which are material for Microsoft and Amazon, so true spending is higher. Fiscal years differ: Microsoft ends in June, Oracle in May. "Lagging" means Yahoo has not yet loaded the most recent quarters for that company.</p>`;
+  box.querySelectorAll("[data-sf]").forEach(b=>b.addEventListener("click",()=>{TAB="credit";select(b.dataset.sf,true)}));
+}
+
 /* Returns monitor */
 let RGRP=store.get("aiscm-rgrp")||"buyers";
 function renderReturns(){
@@ -1234,7 +1265,7 @@ function bindSpread(TS){
   sv.addEventListener("pointermove",show);sv.addEventListener("pointerdown",show);
   sv.addEventListener("pointerleave",e=>{if(e.pointerType==="mouse"){cx.setAttribute("visibility","hidden");tip.hidden=true}});
 }
-renderExpect();renderReturns();renderCapital();renderBottlenecks();renderCompute();
+renderExpect();renderReturns();renderSelfFund();renderCapital();renderBottlenecks();renderCompute();
 
 /* ---------- selection + sheet ---------- */
 const narrow=()=>window.matchMedia("(max-width:1039px)").matches;
