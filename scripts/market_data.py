@@ -78,7 +78,7 @@ def load(path, default):
 
 # ---------------------------------------------------------------- prices
 def download_prices(symbols):
-    df = yf.download(symbols, period="2y", interval="1d", auto_adjust=True, group_by="ticker",
+    df = yf.download(symbols, period="3y", interval="1d", auto_adjust=True, group_by="ticker",
                      threads=True, progress=False)
     out = {}
     for s in symbols:
@@ -447,6 +447,133 @@ def returns(tk, fin_ccy, mcap_usd, beta, rf, credit_rec):
     return out
 
 
+# ---------------------------------------------------------------- long-run beta, rate sensitivity, move attribution
+def _weekly_log(close):
+    w = close.copy()
+    w.index = pd.to_datetime([d.date() for d in w.index])
+    return np.log(w.resample("W-FRI").last().dropna())
+
+
+def factors(sub, spx, tnx):
+    """3-year weekly beta to the S&P 500 (for the cost of capital), sensitivity to the US 10-year yield over two years,
+    and a split of the last 1- and 3-month moves into market, rates and everything else (sector and stock-specific)."""
+    if spx is None or tnx is None:
+        return {}
+    s = _weekly_log(sub["Close"]).diff()
+    m = _weekly_log(spx["Close"]).diff()
+    y = tnx["Close"].copy()
+    y.index = pd.to_datetime([d.date() for d in y.index])
+    dy = (y.resample("W-FRI").last().dropna().diff() * 100)          # weekly change in bp
+    j = pd.concat([s, m, dy], axis=1, join="inner").dropna()
+    j.columns = ["s", "m", "dy"]
+    out = {}
+    j3 = j.tail(156)
+    if len(j3) >= 80 and j3["m"].var() > 0:
+        out["beta_3y"] = r(float(np.cov(j3["s"], j3["m"])[0, 1] / j3["m"].var()), 2)
+        out["beta_weeks"] = int(len(j3))
+    j2 = j.tail(104)
+    if len(j2) >= 60 and j2["dy"].var() > 0:
+        tot = float(np.cov(j2["s"], j2["dy"])[0, 1] / j2["dy"].var())       # log-return per bp, all channels
+        X = np.column_stack([np.ones(len(j2)), j2["m"].values, j2["dy"].values])
+        coef, *_ = np.linalg.lstsq(X, j2["s"].values, rcond=None)
+        fit = X @ coef
+        ss = float(((j2["s"] - j2["s"].mean()) ** 2).sum())
+        r2 = 1 - float(((j2["s"].values - fit) ** 2).sum()) / ss if ss > 0 else None
+        out.update({"rate_beta": r(tot * 1000, 2), "rate_beta_partial": r(float(coef[2]) * 1000, 2),
+                    "mkt_beta_2y": r(float(coef[1]), 2), "factor_r2": r(r2, 2)})
+        # attribution of recent moves (daily data, so the window matches the price panel)
+        def lr(series, n):
+            c = series["Close"].dropna()
+            return float(np.log(c.iloc[-1] / c.iloc[-1 - n])) if len(c) > n else None
+        yy = tnx["Close"].dropna()
+        for n, tag in ((21, "1m"), (63, "3m")):
+            rs, rm = lr(sub, n), lr(spx, n)
+            if rs is None or rm is None or len(yy) <= n:
+                continue
+            d_bp = float(yy.iloc[-1] - yy.iloc[-1 - n]) * 100
+            mk, rt = float(coef[1]) * rm, float(coef[2]) * d_bp
+            out[f"attr_{tag}"] = {"total": r((math.exp(rs) - 1) * 100, 1), "market": r(mk * 100, 1), "rates": r(rt * 100, 1),
+                                  "other": r((rs - mk - rt) * 100, 1), "d10y_bp": r(d_bp, 0), "spx": r((math.exp(rm) - 1) * 100, 1)}
+    return out
+
+
+# ---------------------------------------------------------------- expectations: estimate revisions and implied growth
+TERMINAL_PE = 18.0   # exit multiple assumed in the implied-growth calculation
+
+
+def expectations(tk, last, price_ccy, r3m, r1m, ke):
+    """Forward EPS revisions (Yahoo consensus) and how much of the price move came from estimates versus the multiple.
+    Implied growth: the annual EPS growth over years 2-5 needed to justify today's price, given next year's EPS,
+    an exit P/E of TERMINAL_PE and the cost of equity."""
+    try:
+        tr = tk.eps_trend
+    except Exception:
+        return {}
+    if tr is None or tr.empty or "+1y" not in tr.index:
+        return {}
+    row = tr.loc["+1y"]
+    cur, d30, d90 = (float(row.get(k)) if row.get(k) == row.get(k) and row.get(k) is not None else None
+                     for k in ("current", "30daysAgo", "90daysAgo"))
+    out = {}
+    if cur and d90 and d90 > 0 and cur > 0:
+        out["eps_rev_3m"] = r((cur / d90 - 1) * 100, 1)
+        if r3m is not None:
+            out["derate_3m"] = r(((1 + r3m / 100) / (cur / d90) - 1) * 100, 1)
+    if cur and d30 and d30 > 0 and cur > 0:
+        out["eps_rev_1m"] = r((cur / d30 - 1) * 100, 1)
+        if r1m is not None:
+            out["derate_1m"] = r(((1 + r1m / 100) / (cur / d30) - 1) * 100, 1)
+    try:
+        rv = tk.eps_revisions
+        if rv is not None and "+1y" in rv.index:
+            out["rev_up_30d"] = int(rv.loc["+1y"].get("upLast30days") or 0)
+            out["rev_down_30d"] = int(rv.loc["+1y"].get("downLast30days") or 0)
+    except Exception:
+        pass
+    try:
+        ee = tk.earnings_estimate
+        if ee is not None and "+1y" in ee.index:
+            g = ee.loc["+1y"].get("growth")
+            out["eps_growth_next"] = r(float(g) * 100, 1) if g == g and g is not None else None
+    except Exception:
+        pass
+    eps_ccy = row.get("currency") if "currency" in row.index else None
+    if cur and cur > 0 and last and ke:
+        e = cur
+        if eps_ccy and price_ccy and eps_ccy != price_ccy:
+            fe, fp = fx_per_usd(eps_ccy), fx_per_usd(price_ccy)
+            e = cur / fe * fp if fe and fp else None
+        if e:
+            out["eps_fwd"] = r(e, 3)
+            g = (last * (1 + ke) ** 5 / (e * TERMINAL_PE)) ** 0.25 - 1
+            out["implied_g"] = r(g * 100, 1)
+    return out
+
+
+# ---------------------------------------------------------------- self-funding (capex against operating cash flow)
+SELF_FUND = {"MSFT", "GOOGL", "AMZN", "META", "ORCL", "CRWV", "NBIS"}
+
+
+def selffund(tk, fin_ccy):
+    f = fx_per_usd(fin_ccy)
+    if not f:
+        return {}
+    def series(cf, n):
+        if cf is None or cf.empty:
+            return []
+        ocf, capex = _row(cf, "Operating Cash Flow"), _row(cf, "Capital Expenditure")
+        if ocf is None or capex is None:
+            return []
+        rows = []
+        for d in cf.columns:
+            o, c = ocf.get(d), capex.get(d)
+            if o == o and c == c and o is not None and c is not None:
+                rows.append({"p": str(d.date()), "ocf": r(o / f / 1e9, 2), "capex": r(abs(c) / f / 1e9, 2),
+                             "fcf": r((o - abs(c)) / f / 1e9, 2)})
+        return sorted(rows, key=lambda x: x["p"])[-n:]
+    return {"q": series(tk.quarterly_cashflow, 8), "fy": series(tk.cashflow, 5)}
+
+
 # ---------------------------------------------------------------- implied vol
 def bs_price(s, k, t, rate, vol, call):
     if vol <= 0 or t <= 0:
@@ -638,8 +765,9 @@ def run_full(cos):
         rf10 = float(yf.Ticker("^TNX").history(period="5d")["Close"].dropna().iloc[-1]) / 100
     except Exception:
         rf10 = 0.045
-    syms = [c["yf"] for c in cos] + list(BENCH.values())
+    syms = [c["yf"] for c in cos] + list(BENCH.values()) + ["^TNX"]
     px = download_prices(syms)
+    tnx = px.get("^TNX")
     got = sum(1 for c in cos if c["yf"] in px and len(px[c["yf"]]) > 30)
     if got < 0.5 * len(cos):
         print(f"Only {got} of {len(cos)} price series came back; keeping the previous data unchanged.")
@@ -656,9 +784,15 @@ def run_full(cos):
             failures.append({"id": co["id"], "yf": co["yf"], "what": "prices"})
         if sub is not None and len(sub) > 30:
             rec.update(tech(sub, bench))
+            try:
+                rec["factors"] = factors(sub, bench.get("spx"), tnx)
+            except Exception as e:
+                rec["factors"] = old.get("factors") or {}
+                rec["factors_error"] = str(e)
+            s2 = sub.tail(520)    # two years for the price chart
             write(OUT / "px" / f"{co['id']}.json", {
-                "id": co["id"], "d": [str(d.date()) for d in sub.index],
-                "c": [r(x, 4) for x in sub["Close"]], "v": [int(x) if not math.isnan(x) else 0 for x in sub["Volume"]],
+                "id": co["id"], "d": [str(d.date()) for d in s2.index],
+                "c": [r(x, 4) for x in s2["Close"]], "v": [int(x) if not math.isnan(x) else 0 for x in s2["Volume"]],
             })
         tk = yf.Ticker(co["yf"])
         try:
@@ -678,11 +812,27 @@ def run_full(cos):
         except Exception as e:
             rec["credit_error"] = str(e)
         try:
-            rec["returns"] = returns(tk, rec.get("fin_ccy") or rec.get("ccy"), rec.get("mcap_usd_bn"), rec.get("beta_spx"),
+            b_long = (rec.get("factors") or {}).get("beta_3y")
+            rec["returns"] = returns(tk, rec.get("fin_ccy") or rec.get("ccy"), rec.get("mcap_usd_bn"),
+                                     b_long if b_long is not None else rec.get("beta_spx"),
                                      rf10, rec.get("credit")) or old.get("returns") or {}
+            if rec["returns"] and b_long is not None:
+                rec["returns"]["beta_source"] = "3y weekly"
         except Exception as e:
             rec["returns"] = old.get("returns") or {}
             rec["returns_error"] = str(e)
+        try:
+            ke = (rec.get("returns") or {}).get("ke")
+            rec["expect"] = expectations(tk, rec.get("last"), rec.get("ccy"), rec.get("r3m"), rec.get("r1m"),
+                                         ke / 100 if ke else None) or old.get("expect") or {}
+        except Exception as e:
+            rec["expect"] = old.get("expect") or {}
+            rec["expect_error"] = str(e)
+        if co["id"] in SELF_FUND:
+            try:
+                rec["selffund"] = selffund(tk, rec.get("fin_ccy") or rec.get("ccy")) or old.get("selffund") or {}
+            except Exception as e:
+                rec["selffund"] = old.get("selffund") or {}
         summary[co["id"]] = rec
         cr = rec.get("credit") or {}
         print(f"{co['id']:>10} last={rec.get('last')} {rec.get('ccy')} mcap=${rec.get('mcap_usd_bn')}B pe={rec.get('fwd_pe')} "
@@ -690,8 +840,13 @@ def run_full(cos):
               f"incr={(rec.get('returns') or {}).get('incr_roic')} wacc={(rec.get('returns') or {}).get('wacc')}")
         time.sleep(0.4)
     bm = {k: tech(v, {}) for k, v in bench.items()}
+    if tnx is not None and len(tnx):
+        yv = tnx["Close"].dropna()
+        bm["us10y"] = {"last": r(float(yv.iloc[-1]), 3), "date": str(yv.index[-1].date()),
+                       "chg1m_bp": r(float(yv.iloc[-1] - yv.iloc[-22]) * 100, 0) if len(yv) > 22 else None,
+                       "chg3m_bp": r(float(yv.iloc[-1] - yv.iloc[-64]) * 100, 0) if len(yv) > 64 else None}
     write(OUT / "market.json", {"built": NOW.isoformat(timespec="seconds"), "rate": r(rate, 4), "rf10": r(rf10, 4), "erp": ERP, "benchmarks": bm,
-                                "failures": failures, "companies": summary})
+                                "terminal_pe": TERMINAL_PE, "failures": failures, "companies": summary})
     if failures:
         print("FETCH FAILURES (kept last good values where available):")
         for f in failures:

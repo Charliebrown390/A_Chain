@@ -1,4 +1,5 @@
-"""Capital-market backdrop from FRED (free, no key): Treasury curve, term premium, credit spreads, long corporate yields.
+"""Capital-market backdrop from FRED (free, no key): Treasury curve, term premium, credit spreads, long corporate yields,
+real yields, inflation (CPI, breakevens), the policy rate and oil.
 
 Writes site/data/macro.json with ~3 years of weekly observations plus latest values.
 Run: python scripts/macro_data.py
@@ -7,7 +8,6 @@ import csv
 import io
 import json
 import sys
-import time
 import time
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -26,7 +26,28 @@ SERIES = {
     "BAMLC0A0CM": "US investment-grade OAS",
     "BAMLH0A0HYM2": "US high-yield OAS",
     "BAMLC8A0C15PYEY": "IG corporates 15y+ effective yield",
+    "DFII10": "10-year real yield (TIPS)",
+    "T10YIE": "10-year breakeven inflation",
+    "DFEDTARU": "Fed funds target, upper bound",
+    "DCOILBRENTEU": "Brent crude, $ per barrel",
 }
+# Monthly price indices published as levels; stored as year-on-year % change.
+YOY = {
+    "CPIAUCSL": ("CPI_YOY", "CPI inflation, % y/y"),
+    "CPILFESL": ("CORE_YOY", "Core CPI inflation, % y/y"),
+}
+
+
+def yoy(obs):
+    """Year-on-year % change of a monthly index; matches each month with the same month a year earlier."""
+    by = {d[:7]: v for d, v in obs}
+    out = []
+    for d, v in obs:
+        y, m = int(d[:4]), d[5:7]
+        base = by.get(f"{y - 1}-{m}")
+        if base:
+            out.append((d, round((v / base - 1) * 100, 2)))
+    return out
 
 
 def fetch(sid, start):
@@ -82,7 +103,21 @@ def main():
             if sid in prev.get("series", {}):
                 data[sid] = prev["series"][sid]      # keep the last good copy
             print(f"{sid:18} FAILED: {e}")
-    if len(failed) == len(SERIES):
+    start_yoy = (date.today() - timedelta(days=4 * 365 + 40)).isoformat()
+    for sid, (key, label) in YOY.items():
+        try:
+            obs = [o for o in yoy(fetch(sid, start_yoy)) if o[0] >= start]
+            if not obs:
+                raise ValueError("no observations")
+            data[key] = {"label": label, "last": list(obs[-1]), "weekly": [list(o) for o in obs]}
+            print(f"{key:18} {obs[-1]}")
+            time.sleep(1.5)
+        except Exception as e:
+            failed.append(key)
+            if key in prev.get("series", {}):
+                data[key] = prev["series"][key]
+            print(f"{key:18} FAILED: {e}")
+    if len(failed) == len(SERIES) + len(YOY):
         print("All FRED requests failed; keeping previous macro.json")
         return 0
     OUT.parent.mkdir(parents=True, exist_ok=True)

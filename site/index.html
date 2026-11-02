@@ -1011,6 +1011,15 @@ function tabReturns(c){
 
 /* Capital and the yield curve */
 function mser(id){return (MAC[id]?.weekly)||[]}
+function macroCards(){
+  const ids=[["CPI_YOY","%",2],["CORE_YOY","%",2],["T10YIE","%",2],["DFII10","%",2],["DFEDTARU","%",2],["DCOILBRENTEU","$",0]];
+  const ago=(ser,days)=>{const t=Date.parse(ser[ser.length-1][0])-days*864e5;let best=null;for(const p of ser){if(Date.parse(p[0])<=t)best=p}return best};
+  const cards=ids.map(([k,u,dp])=>{const ser=mser(k);if(!ser.length)return "";const lab=MAC[k]?.label||k,last=ser[ser.length-1],m3=ago(ser,91),y1=ago(ser,365);
+    const f=v=>v==null?"—":(u==="$"?"$"+num(v,dp):num(v,dp)+"%");const chg=(a,b)=>a&&b?(u==="$"?pct((a[1]/b[1]-1)*100,0):`${a[1]-b[1]>=0?"+":""}${num((a[1]-b[1])*100,0)}bp`):"—";
+    return `<div class="bcard"><b>${esc(lab)}</b><div class="bval">${f(last[1])}</div><div class="mut" style="font-size:12px">3 months ${chg(last,m3)} · 1 year ${chg(last,y1)}</div>${spark(ser.slice(-157).map(x=>x[1]),{W:180,H:30})}<div class="bmeta">as of ${esc(fdate(last[0]))}</div></div>`}).join("");
+  const ry=mser("DFII10"),r1=ry.length?ago(ry,365):null,rl=ry[ry.length-1];
+  return cards?`<p class="sec">Inflation, real rates, policy and oil</p><div class="bgrid">${cards}</div>${rl&&r1?`<p class="psum">The real 10-year yield, the part of the discount rate that hurts long-duration equities most, is <b>${num(rl[1],2)}%</b>, ${rl[1]>=r1[1]?"up":"down"} ${num(Math.abs(rl[1]-r1[1])*100,0)}bp in a year.</p>`:""}`:"";
+}
 function renderCapital(){
   const box=$("#capital");if(!MAC.DGS10){box.innerHTML=`<h2>Capital and the yield curve</h2><p class="mut">Market data from FRED has not loaded yet.</p>`;return}
   const idx=new Map();["DGS3MO","DGS2","DGS5","DGS10","DGS30","THREEFYTP10","BAMLC0A0CM","BAMLH0A0HYM2","BAMLC8A0C15PYEY"].forEach(k=>mser(k).forEach(([d,v])=>{if(!idx.has(d))idx.set(d,{});idx.get(d)[k]=v}));
@@ -1019,7 +1028,7 @@ function renderCapital(){
   const t3=ffill("DGS3MO"),t2=ffill("DGS2"),t5=ffill("DGS5"),t10=ffill("DGS10"),t30=ffill("DGS30"),tp=ffill("THREEFYTP10"),ig=ffill("BAMLC0A0CM"),hy=ffill("BAMLH0A0HYM2"),lc=ffill("BAMLC8A0C15PYEY");
   const s1=ds.map((_,i)=>t10[i]!=null&&t3[i]!=null?(t10[i]-t3[i])*100:null),s2=ds.map((_,i)=>t30[i]!=null&&t10[i]!=null?(t30[i]-t10[i])*100:null),tpb=tp.map(v=>v==null?null:v*100);
   const at=i=>({d:ds[i],t3:t3[i],t2:t2[i],t5:t5[i],t10:t10[i],t30:t30[i],tp:tp[i],ig:ig[i],hy:hy[i],lc:lc[i]});
-  const L=ds.length-1,y1=Math.max(0,L-52),y3=0,now=at(L),ya=at(y1),y3a=at(y3);
+  const L=ds.length-1,tY=Date.parse(ds[L])-365*864e5,y1=Math.max(0,ds.findLastIndex(d=>Date.parse(d)<=tY)),y3=0,now=at(L),ya=at(y1),y3a=at(y3);
   const ch1=lineChart({ds,yFmt:v=>v.toFixed(0),series:[{v:s1,color:"var(--copper)",width:2},{v:s2,color:"var(--fin)",width:1.6},{v:tpb,color:"var(--warn)",width:1.6,dash:"4 3"}],H:220});
   const ch2=lineChart({ds,yFmt:v=>v.toFixed(0),series:[{v:ig.map(v=>v==null?null:v*100),color:"var(--copper)",width:2},{v:hy.map(v=>v==null?null:v*100),color:"var(--down)",width:1.6}],H:180});
   // off-balance-sheet tally
@@ -1028,6 +1037,7 @@ function renderCapital(){
   const C=MON5.capital||{};
   const snap=[["3-month","t3"],["2-year","t2"],["5-year","t5"],["10-year","t10"],["30-year","t30"]];
   box.innerHTML=`<h2>Capital and the yield curve</h2><p class="hint">Who is funding the build-out, at what price, and how much sits off balance sheets. Rates, term premium and spreads from FRED, refreshed nightly.</p>
+  ${macroCards()}
   <div class="accgrid"><div><p class="sec">Curve slopes and term premium, basis points</p><div class="legend"><span><span class="sw"></span>3m–10y</span><span><span class="sw" style="border-top-color:var(--fin)"></span>10y–30y</span><span><span class="sw" style="border-top:2px dashed var(--warn)"></span>10y term premium</span></div><div class="svgbox" id="capc1">${ch1.html}</div>
   <p class="sec">Credit spreads, basis points</p><div class="legend"><span><span class="sw"></span>Investment grade</span><span><span class="sw" style="border-top-color:var(--down)"></span>High yield</span></div><div class="svgbox" id="capc2">${ch2.html}</div></div>
   <div><p class="sec">Treasury curve</p><table class="fin"><tbody><tr><td class="mut">Tenor</td><td class="mut">${esc(fdate(y3a.d))} · ${esc(fdate(ya.d))} · ${esc(fdate(now.d))}</td></tr>${snap.map(([l,k])=>`<tr><td>${l}</td><td>${num(y3a[k],2)} · ${num(ya[k],2)} · <b>${num(now[k],2)}%</b></td></tr>`).join("")}
