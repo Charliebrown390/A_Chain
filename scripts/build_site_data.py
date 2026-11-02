@@ -359,6 +359,8 @@ def main():
             it = lab.get(part)
             if it and (not it.get("url") or not it.get("date")):
                 errs.append(f"labs.yaml {k} {part}: needs url and date")
+        if lab.get("listed_id") and lab["listed_id"] not in idset:
+            errs.append(f"labs.yaml {k}: listed_id {lab['listed_id']} is not in the universe")
         for x in rv:
             if x.get("conf") not in ("D", "E"):
                 errs.append(f"labs.yaml {k} revenue: conf must be D or E")

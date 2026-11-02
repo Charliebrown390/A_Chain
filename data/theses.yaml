@@ -229,6 +229,12 @@ theses:
     watch: Backlog, cost of debt, utilisation
     updated: '2026-10-16'
     status: draft
+  SPCX:
+    bull: Owns Colossus, one of the largest GPU fleets; sells capacity to Anthropic and Google, so it earns from other labs' demand as well as its own; Starlink cash flow helps fund it
+    bear: AI segment loses money (2025 operating loss $6.4B on $3.2B revenue) and AI capex runs above $30B a year; Anthropic can cancel its $1.25B-a-month contract on 90 days' notice; priced at about $1.8T
+    watch: AI segment revenue and capex each quarter, free cash flow (−$9.9B in the September quarter), whether Anthropic renews or cancels, Grok usage
+    updated: '2026-11-02'
+    status: draft
   NBIS:
     bull: GPU cloud with a Microsoft anchor contract
     bear: Early stage and burning cash

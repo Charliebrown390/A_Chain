@@ -36,7 +36,8 @@ labs:
   SpaceXAI:
     name: SpaceXAI (xAI)
     short: "Inside SpaceX (SPCX)"
-    status: "Part of SpaceX since 2 Feb 2026; SpaceX listed on Nasdaq (SPCX) in June 2026 at about $1.75T. Not on the map; a candidate for the watchlist."
+    listed_id: SPCX
+    status: "Part of SpaceX since 2 Feb 2026; SpaceX listed on Nasdaq (SPCX) in June 2026 at about $1.75T; on the map as SPCX in the compute-provider layer."
     revenue:
       - {date: "2025-12-31", usd_bn: 3.2, conf: D, note: "2025 revenue of the AI segment (xAI, Grok, X); operating loss $6.4B", src: "The VC Corner (S-1 teardown)", url: "https://www.thevccorner.com/p/spacex-spcx-ipo-s1-teardown-valuation-2026"}
       - {date: "2026-03-31", usd_bn: 3.3, conf: D, note: "Q1 2026 segment revenue $818M, annualised", src: "The VC Corner (S-1 teardown)", url: "https://www.thevccorner.com/p/spacex-spcx-ipo-s1-teardown-valuation-2026"}

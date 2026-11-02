@@ -191,3 +191,7 @@ edges:
   - {from: "6669.TW", to: META, type: supply, strength: M, conf: I, note: "Hyperscale servers and racks"}
   - {from: "2308.TW", to: NVDA, type: supply, fam: [GPU], role: supplies_component, strength: M, conf: E, as_of: "Aug 2026", note: "Power supplies and a partner for NVIDIA's 800V DC rack power architecture", src: "SammyFans", url: "https://www.sammyfans.com/2026/08/17/nvidias-new-800vdc-plan-could-boost-delta-and-lite-on/amp/"}
   - {from: "2308.TW", to: MSFT, type: supply, strength: L, conf: I, note: "Power and cooling for data centres"}
+  # SpaceX (SpaceXAI / xAI), added Nov 2026
+  - {from: SPCX, to: Anthropic, type: contract, strength: H, conf: D, as_of: "May 2026", usd_bn: 45, note: "Colossus and Colossus II compute at $1.25B a month to May 2029 (about $45B); either side can cancel on 90 days' notice", src: "SpaceX S-1 via The VC Corner", url: "https://www.thevccorner.com/p/spacex-spcx-ipo-s1-teardown-valuation-2026"}
+  - {from: SPCX, to: GOOGL, type: contract, strength: M, conf: E, as_of: "Jun 2026", note: "Google reported to pay $920M a month for compute capacity at xAI data centres", src: "Wikipedia, citing CNBC", url: "https://en.wikipedia.org/wiki/SpaceXAI"}
+  - {from: NVDA, to: SPCX, type: supply, fam: [GPU], strength: H, conf: I, note: "GPUs for the Colossus clusters in Memphis (plan of at least 1M GPUs, ~2 GW)"}

@@ -443,6 +443,14 @@ companies:
   yf: CRWV
   sec: CRWV
   role: GPU cloud
+- id: SPCX
+  label: SPCX
+  name: SpaceX (incl. SpaceXAI / xAI)
+  layer: 9
+  segment: AI lab and compute provider
+  yf: SPCX
+  sec: SPCX
+  role: Runs the Colossus clusters; trains Grok and rents capacity to Anthropic and Google; also Starlink and launch
 - id: NBIS
   label: NBIS
   name: Nebius Group

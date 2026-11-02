@@ -1,5 +1,5 @@
 {
- "built": "2026-11-02T02:51:56+00:00",
+ "built": "2026-11-02T02:57:18+00:00",
  "bottlenecks": {
   "indicators": [
    {
@@ -941,7 +941,8 @@
   "SpaceXAI": {
    "name": "SpaceXAI (xAI)",
    "short": "Inside SpaceX (SPCX)",
-   "status": "Part of SpaceX since 2 Feb 2026; SpaceX listed on Nasdaq (SPCX) in June 2026 at about $1.75T. Not on the map; a candidate for the watchlist.",
+   "listed_id": "SPCX",
+   "status": "Part of SpaceX since 2 Feb 2026; SpaceX listed on Nasdaq (SPCX) in June 2026 at about $1.75T; on the map as SPCX in the compute-provider layer.",
    "revenue": [
     {
      "date": "2025-12-31",

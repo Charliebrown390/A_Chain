@@ -551,7 +551,7 @@ def expectations(tk, last, price_ccy, r3m, r1m, ke):
 
 
 # ---------------------------------------------------------------- self-funding (capex against operating cash flow)
-SELF_FUND = {"MSFT", "GOOGL", "AMZN", "META", "ORCL", "CRWV", "NBIS"}
+SELF_FUND = {"MSFT", "GOOGL", "AMZN", "META", "ORCL", "CRWV", "NBIS", "SPCX"}
 
 
 def selffund(tk, fin_ccy):

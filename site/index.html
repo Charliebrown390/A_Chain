@@ -668,7 +668,8 @@ function tabFin(c){
   if(rh.length){const W=640,H=150,T=22,B=24,n=rh.length,mx=Math.max(...rh.map(x=>x.usd_bn))*1.1,bw=Math.min(80,(W-40)/n-20),gap=(W-n*bw)/(n+1);
     bars=`<p class="sec">Annual revenue (USD)</p><div class="svgbox"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Annual revenue">${rh.map((x,i)=>{const h=x.usd_bn/mx*(H-T-B),X=gap+i*(bw+gap),y=H-B-h;return `<rect x="${X}" y="${y}" width="${bw}" height="${h}" rx="3" fill="var(${i===n-1?"--copper":"--surface-2"})"/><text x="${X+bw/2}" y="${y-6}" text-anchor="middle" font-size="12" font-family="IBM Plex Mono, monospace" fill="var(--ink)">${usd(x.usd_bn)}</text><text x="${X+bw/2}" y="${H-6}" text-anchor="middle" font-size="11" font-family="IBM Plex Mono, monospace" fill="var(--muted)">FY${x.fy.slice(2,4)}</text>`}).join("")}</svg></div>`}
   const ps=c.mcap_usd_bn&&c.rev_usd_bn?c.mcap_usd_bn/c.rev_usd_bn:null,fm=c.fcf_usd_bn!=null&&c.rev_usd_bn?c.fcf_usd_bn/c.rev_usd_bn*100:null;
-  return bars+`<table class="fin"><tbody>
+  const labL=Object.values(MN?.labs||{}).find(l=>l.listed_id===c.t);
+  return bars+(labL?`<p class="sec">${esc(labL.name)}: AI segment</p>${labCard(c.t,labL,true)}`:"")+`<table class="fin"><tbody>
   <tr><td>Market cap</td><td>${usd(c.mcap_usd_bn)}</td></tr>
   <tr><td>Revenue (TTM)</td><td>${usd(c.rev_usd_bn)}</td></tr>
   <tr><td>Revenue growth (latest quarter, YoY)</td><td class="${cls(c.rev_g)}">${pct(c.rev_g,0)}</td></tr>
@@ -1044,7 +1045,7 @@ function pairBars(q,{W=300,H=110}={}){if(!q.length)return "";const T=14,B=20,ih=
     if(x.capex>x.ocf)g+=`<circle cx="${cx}" cy="${T-6}" r="3" fill="var(--down)"><title>Capex exceeded operating cash flow</title></circle>`});
   return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Quarterly operating cash flow and capex">${g}</svg>`}
 function renderSelfFund(){
-  const box=$("#selffund");const ids=["MSFT","GOOGL","AMZN","META","ORCL","CRWV","NBIS"];const cs=ids.map(i=>BY[i]).filter(c=>c&&c.sf&&c.sf.q?.length);
+  const box=$("#selffund");const ids=["MSFT","GOOGL","AMZN","META","ORCL","SPCX","CRWV","NBIS"];const cs=ids.map(i=>BY[i]).filter(c=>c&&c.sf&&c.sf.q?.length);
   if(!cs.length){box.hidden=true;return}
   const G=(MON5.capital?.capex_guidance)||[];
   const latestAll=Math.max(...cs.map(c=>Date.parse(c.sf.q[c.sf.q.length-1].p)));
@@ -1086,7 +1087,7 @@ function renderLabs(){
     if(e.note)r.notes.push(`${lab}: ${e.note}`)});
   const rows=Object.values(ex).sort((a,b)=>(b.con+b.cap+b.fin)-(a.con+a.cap+a.fin)||b.gw-a.gw);
   const oa=LB.OpenAI,an=LB.Anthropic,ol=oa?.revenue?.slice(-1)[0],al=an?.revenue?.slice(-1)[0];
-  box.innerHTML=`<h2>The AI labs: who pays for all this</h2><p class="hint">OpenAI, Anthropic and SpaceX's xAI are the end buyers behind much of the contracted demand. Their revenue has to grow into the compute they have committed to, and the listed suppliers carry that exposure.</p>
+  box.innerHTML=`<h2>The AI labs: who pays for all this</h2><p class="hint">OpenAI, Anthropic and SpaceX's xAI (on the map as SPCX) are the end buyers behind much of the contracted demand. Their revenue has to grow into the compute they have committed to, and the listed suppliers carry that exposure.</p>
   <p class="psum">${ol&&al?`Latest run rates: OpenAI <b>$${num(ol.usd_bn,0)}B</b> (${esc(fdate(ol.date))}), Anthropic <b>$${num(al.usd_bn,0)}B</b> (${esc(fdate(al.date))}). `:""}${oa?.commitments?.usd_bn?`OpenAI's reported commitments of about ${usd(oa.commitments.usd_bn)} over ${oa.commitments.years} years work out at ${usd(oa.commitments.usd_bn/oa.commitments.years)} a year, against a run rate of ${usd(ol.usd_bn)}. `:""}The October sell-off began when OpenAI's run rate was reported well below what investors had assumed.</p>
   <div class="bgrid labs">${ids.map(id=>`<div class="bcard">${labCard(id,LB[id],false)}</div>`).join("")}</div>
   <p class="sec">Listed companies tied to the labs</p><div class="sttab"><table><thead><tr><th>Company</th><th>Labs</th><th>Contracts</th><th>Capacity</th><th>Investments</th><th>Credit support</th><th>Contracts ÷ market cap</th><th style="text-align:left">Detail</th></tr></thead><tbody>${rows.map(r=>`<tr><td><button class="go" type="button" data-lb="${esc(r.c.t)}">${esc(r.c.lab)}</button></td><td>${[...r.labs].map(esc).join(", ")}</td><td>${r.con?usd(r.con):"—"}</td><td>${r.gw?num(r.gw,1)+" GW":"—"}</td><td>${r.cap?usd(r.cap):"—"}</td><td>${r.fin?usd(r.fin):"—"}</td><td>${r.con&&r.c.mcap_usd_bn?pc(r.con/r.c.mcap_usd_bn*100,0):"—"}</td><td style="text-align:left;font-family:var(--f-body);white-space:normal;font-size:12px;min-width:260px">${esc(r.notes.slice(0,2).join(" · "))}</td></tr>`).join("")}</tbody></table></div>
