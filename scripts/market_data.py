@@ -515,6 +515,13 @@ def expectations(tk, last, price_ccy, r3m, r1m, ke):
     cur, d30, d90 = (float(row.get(k)) if row.get(k) == row.get(k) and row.get(k) is not None else None
                      for k in ("current", "30daysAgo", "90daysAgo"))
     out = {}
+    # estimates on a tiny or newly covered base (recent IPOs, turnarounds) swing by multiples; skip the revision split
+    if cur and d90 and d90 > 0 and not (1 / 3 <= cur / d90 <= 3):
+        d90 = None
+        out["est_unstable"] = True
+    if cur and d30 and d30 > 0 and not (1 / 3 <= cur / d30 <= 3):
+        d30 = None
+        out["est_unstable"] = True
     if cur and d90 and d90 > 0 and cur > 0:
         out["eps_rev_3m"] = r((cur / d90 - 1) * 100, 1)
         if r3m is not None:
