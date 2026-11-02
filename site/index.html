@@ -297,7 +297,7 @@ footer p{margin:0}
     </div>
   </header>
 
-  <nav class="secnav" aria-label="Sections"><a href="#mapsec">Supply-chain map</a><a href="#expect">What the market is pricing</a><a href="#returns">Returns on spending</a><a href="#selffund">Self-funding</a><a href="#capital">Capital and yields</a><a href="#bottlenecks">Bottlenecks</a><a href="#compute">Compute economics</a><a href="#accel">GPU vs custom silicon</a><a href="#stress">Stress test</a></nav>
+  <nav class="secnav" aria-label="Sections"><a href="#mapsec">Supply-chain map</a><a href="#expect">What the market is pricing</a><a href="#returns">Returns on spending</a><a href="#selffund">Self-funding</a><a href="#labs">AI labs</a><a href="#capital">Capital and yields</a><a href="#bottlenecks">Bottlenecks</a><a href="#compute">Compute economics</a><a href="#accel">GPU vs custom silicon</a><a href="#stress">Stress test</a></nav>
 
   <section class="pulse four">
     <div class="card">
@@ -348,6 +348,7 @@ footer p{margin:0}
   <section class="mon" id="expect"></section>
   <section class="mon" id="returns"></section>
   <section class="mon" id="selffund"></section>
+  <section class="mon" id="labs"></section>
   <section class="mon" id="capital"></section>
   <section class="mon" id="bottlenecks"></section>
   <section class="mon" id="compute"></section>
@@ -661,6 +662,7 @@ async function drawVol(c){
 }
 
 function tabFin(c){
+  if(c.priv&&(MN?.labs||{})[c.t])return labCard(c.t,(MN.labs)[c.t],true);
   if(!c.has&&c.mcap_usd_bn==null)return `<p class="mut">No financial data for this company.</p>`;
   const rh=(c.rev_hist||[]).filter(x=>x.usd_bn!=null);let bars="";
   if(rh.length){const W=640,H=150,T=22,B=24,n=rh.length,mx=Math.max(...rh.map(x=>x.usd_bn))*1.1,bw=Math.min(80,(W-40)/n-20),gap=(W-n*bw)/(n+1);
@@ -754,7 +756,8 @@ function tabThesis(c){
 function renderPanel(){
   const c=BY[SEL];if(!c){panel.innerHTML="";return}
   const L=LAYERS[c.layer-1];
-  const tabs=c.priv?(c.funding?[["links","Links"],["credit","Credit"],["thesis","Thesis"]]:[["links","Links"],["thesis","Thesis"]]):TABS;
+  const labT=c.priv&&(MN?.labs||{})[c.t]?[["fin","Lab metrics"]]:[];
+  const tabs=c.priv?(c.funding?[...labT,["links","Links"],["credit","Credit"],["thesis","Thesis"]]:[...labT,["links","Links"],["thesis","Thesis"]]):TABS;
   if(!tabs.some(t=>t[0]===TAB))TAB=tabs[0][0];
   const head=`<div class="ph"><div><p class="eyebrow">L${L.n} · ${esc(L.short)}</p><h2>${esc(c.lab)}</h2></div>
   ${c.has?`<div><div class="px">${fpx(c.px,c.ccy)}</div><div class="chg ${cls(c.chg1d)}">${pct(c.chg1d)} 1D · <span class="${cls(c.r1m)}">${pct(c.r1m)} 1M</span></div></div>`:"<div></div>"}
@@ -1062,6 +1065,35 @@ function renderSelfFund(){
   box.querySelectorAll("[data-sf]").forEach(b=>b.addEventListener("click",()=>{TAB="credit";select(b.dataset.sf,true)}));
 }
 
+/* AI labs: the demand hub */
+const confTag=x=>x?.conf?`<span class="mut" title="${x.conf==="D"?"Disclosed by the company":"Reported, not confirmed by the company"}">${x.conf==="D"?"disclosed":"reported"}</span>`:"";
+const srcA=x=>x?.url?`<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.src||"source")}</a>`:"";
+function labCard(id,L,inPanel){
+  const rv=L.revenue||[],last=rv[rv.length-1],first=rv[0];
+  const cov=L.commitments?.usd_bn&&L.commitments?.years&&last?last.usd_bn/(L.commitments.usd_bn/L.commitments.years):null;
+  let h=`${inPanel?"":`<div class="bhead"><b>${esc(L.name)}</b><span class="mut" style="font-size:11.5px">${esc(L.short||"")}</span></div>`}
+  <div class="stats">${stat("Revenue run rate",last?`$${num(last.usd_bn,last.usd_bn<10?1:0)}B <span class="mut" style="font-weight:400;font-size:11px">${esc(fdate(last.date))}</span>`:"—")}${first&&last&&first!==last?stat("Growth since "+esc(fdate(first.date)),(last.usd_bn/first.usd_bn).toFixed(1)+"×"):""}${L.valuation?stat(L.valuation.whole_company?"Valuation (all of SpaceX)":"Valuation",usd(L.valuation.usd_bn)+` <span class="mut" style="font-weight:400;font-size:11px">${esc(fdate(L.valuation.date))}</span>`):""}${L.valuation?.usd_bn&&last&&!L.valuation.whole_company?stat("Valuation ÷ run rate",(L.valuation.usd_bn/last.usd_bn).toFixed(0)+"×"):""}${cov!=null?stat("Run rate ÷ committed compute a year",pc(cov*100,0),cov<1?"down":"up"):""}</div>
+  ${rv.length>1?`<div style="margin:6px 0">${spark(rv.map(x=>x.usd_bn),{W:220,H:34})}<div class="mut" style="font-size:11.5px">Run rate, $B: ${rv.map(x=>`${MON[+x.date.slice(5,7)-1]} '${x.date.slice(2,4)} ${num(x.usd_bn,x.usd_bn<10?1:0)}`).join(" · ")}</div></div>`:""}
+  <ul class="news">${L.target?`<li><b>Target:</b> ${esc(L.target.text)}<span class="meta">${srcA(L.target)}</span></li>`:""}${L.valuation?`<li><b>Latest round:</b> ${usd(L.valuation.raised_bn)} at ${usd(L.valuation.usd_bn)}. ${esc(L.valuation.note||"")}<span class="meta">${esc(fdate(L.valuation.date))} · ${confTag(L.valuation)} · ${srcA(L.valuation)}</span></li>`:""}${L.burn?`<li><b>Cash burn / capex:</b> ${esc(L.burn.text)}<span class="meta">${confTag(L.burn)} · ${srcA(L.burn)}</span></li>`:""}${L.commitments?`<li><b>Compute commitments:</b> ${esc(L.commitments.text)}<span class="meta">${confTag(L.commitments)} · ${srcA(L.commitments)}</span></li>`:""}${(L.facts||[]).map(f=>`<li>${esc(f.text)}<span class="meta">${srcA(f)}</span></li>`).join("")}</ul>
+  ${inPanel?`<p class="note">${esc(L.status||"")} Run rates annualise a recent month or quarter; "reported" figures come from press citing people familiar and are not confirmed. Coverage compares the latest run rate with total commitments spread evenly over the stated years. Source data: data/labs.yaml.</p>`:""}`;
+  return h}
+function renderLabs(){
+  const box=$("#labs");const LB=MN?.labs||{};const ids=Object.keys(LB);if(!ids.length){box.hidden=true;return}
+  const labIds=new Set(ids);const ex={};
+  EDGES.forEach(e=>{const lab=labIds.has(e.t)?e.t:labIds.has(e.f)?e.f:null;if(!lab)return;const co=lab===e.t?e.f:e.t;if(!BY[co]||BY[co].priv)return;
+    const r=ex[co]=ex[co]||{c:BY[co],con:0,gw:0,cap:0,fin:0,labs:new Set(),notes:[]};r.labs.add(lab);
+    if(e.ty==="contract"){r.con+=e.usd||0;r.gw+=e.gw||0}else if(e.ty==="capital")r.cap+=e.usd||0;else if(e.ty==="financing")r.fin+=e.usd||0;
+    if(e.note)r.notes.push(`${lab}: ${e.note}`)});
+  const rows=Object.values(ex).sort((a,b)=>(b.con+b.cap+b.fin)-(a.con+a.cap+a.fin)||b.gw-a.gw);
+  const oa=LB.OpenAI,an=LB.Anthropic,ol=oa?.revenue?.slice(-1)[0],al=an?.revenue?.slice(-1)[0];
+  box.innerHTML=`<h2>The AI labs: who pays for all this</h2><p class="hint">OpenAI, Anthropic and SpaceX's xAI are the end buyers behind much of the contracted demand. Their revenue has to grow into the compute they have committed to, and the listed suppliers carry that exposure.</p>
+  <p class="psum">${ol&&al?`Latest run rates: OpenAI <b>$${num(ol.usd_bn,0)}B</b> (${esc(fdate(ol.date))}), Anthropic <b>$${num(al.usd_bn,0)}B</b> (${esc(fdate(al.date))}). `:""}${oa?.commitments?.usd_bn?`OpenAI's reported commitments of about ${usd(oa.commitments.usd_bn)} over ${oa.commitments.years} years work out at ${usd(oa.commitments.usd_bn/oa.commitments.years)} a year, against a run rate of ${usd(ol.usd_bn)}. `:""}The October sell-off began when OpenAI's run rate was reported well below what investors had assumed.</p>
+  <div class="bgrid labs">${ids.map(id=>`<div class="bcard">${labCard(id,LB[id],false)}</div>`).join("")}</div>
+  <p class="sec">Listed companies tied to the labs</p><div class="sttab"><table><thead><tr><th>Company</th><th>Labs</th><th>Contracts</th><th>Capacity</th><th>Investments</th><th>Credit support</th><th>Contracts ÷ market cap</th><th style="text-align:left">Detail</th></tr></thead><tbody>${rows.map(r=>`<tr><td><button class="go" type="button" data-lb="${esc(r.c.t)}">${esc(r.c.lab)}</button></td><td>${[...r.labs].map(esc).join(", ")}</td><td>${r.con?usd(r.con):"—"}</td><td>${r.gw?num(r.gw,1)+" GW":"—"}</td><td>${r.cap?usd(r.cap):"—"}</td><td>${r.fin?usd(r.fin):"—"}</td><td>${r.con&&r.c.mcap_usd_bn?pc(r.con/r.c.mcap_usd_bn*100,0):"—"}</td><td style="text-align:left;font-family:var(--f-body);white-space:normal;font-size:12px;min-width:260px">${esc(r.notes.slice(0,2).join(" · "))}</td></tr>`).join("")}</tbody></table></div>
+  <p class="note">Contracts, investments and credit support come from the relationship links in data/edges.yaml (each with its own source and confidence tag; see the Links tab). Dollar values are headline contract sizes over several years, and gigawatts are capacity, so the two are not added together. Lab figures are hand-maintained in data/labs.yaml.</p>`;
+  box.querySelectorAll("[data-lb]").forEach(b=>b.addEventListener("click",()=>{TAB="links";select(b.dataset.lb,true)}));
+}
+
 /* Returns monitor */
 let RGRP=store.get("aiscm-rgrp")||"buyers";
 function renderReturns(){
@@ -1265,7 +1297,7 @@ function bindSpread(TS){
   sv.addEventListener("pointermove",show);sv.addEventListener("pointerdown",show);
   sv.addEventListener("pointerleave",e=>{if(e.pointerType==="mouse"){cx.setAttribute("visibility","hidden");tip.hidden=true}});
 }
-renderExpect();renderReturns();renderSelfFund();renderCapital();renderBottlenecks();renderCompute();
+renderExpect();renderReturns();renderSelfFund();renderLabs();renderCapital();renderBottlenecks();renderCompute();
 
 /* ---------- selection + sheet ---------- */
 const narrow=()=>window.matchMedia("(max-width:1039px)").matches;

@@ -1,0 +1,47 @@
+# AI labs: the demand hub of the chain. Private (or newly listed) companies whose revenue has to cover the compute
+# commitments that the listed suppliers are booking. Hand-maintained; every figure needs a url and a date.
+# conf: D = company-disclosed, E = reported by press citing people familiar or trackers (not confirmed).
+# Run rates are annualised from a recent month or quarter, not booked annual revenue.
+# Contracts and investments between labs and listed companies live in data/edges.yaml; the page sums them from there.
+
+labs:
+  OpenAI:
+    name: OpenAI
+    short: "Private"
+    status: "Private (OpenAI Group PBC). Draft IPO paperwork filed confidentially."
+    revenue:
+      - {date: "2026-03-31", usd_bn: 24, conf: E, src: "Tech Insider (trackers)", url: "https://tech-insider.org/openai-122-billion-funding-round-852-billion-valuation-2026/"}
+      - {date: "2026-08-15", usd_bn: 40, conf: E, src: "Bloomberg via Tech Insider", url: "https://tech-insider.org/openai-122-billion-funding-round-852-billion-valuation-2026/"}
+      - {date: "2026-09-30", usd_bn: 50, conf: E, src: "Reports via Admiral Markets", url: "https://admiralmarkets.com/analytics/traders-blog/openai-revenue-ai-selloff-october-2026"}
+    target: {date: "2026-12-31", usd_bn: 70, text: "Expects a run rate of $70B or more by year-end (Bloomberg, 9 Oct 2026). Investors had assumed $68-70B was already reached; the gap was largely gross revenue booked by cloud partners.", src: "Admiral Markets", url: "https://admiralmarkets.com/analytics/traders-blog/openai-revenue-ai-selloff-october-2026"}
+    valuation: {date: "2026-03-31", usd_bn: 852, raised_bn: 122, note: "Amazon $50B, NVIDIA $30B (part deferred GPU revenue converted to equity), SoftBank $30B", conf: E, src: "Tech Insider", url: "https://tech-insider.org/openai-122-billion-funding-round-852-billion-valuation-2026/"}
+    burn: {date: "2026-03-31", usd_bn: 15, text: "Annualised cash burn above $15B in Q1 2026 (tracker estimate)", conf: E, src: "Tech Insider", url: "https://tech-insider.org/openai-122-billion-funding-round-852-billion-valuation-2026/"}
+    commitments: {date: "2026-03-31", usd_bn: 600, years: 5, text: "About $600B of take-or-pay compute commitments through 2030 across Microsoft, Oracle, AWS, CoreWeave, Google, NVIDIA, AMD, Broadcom and Cerebras (tracker estimate; no breakdown disclosed)", conf: E, src: "Tech Insider", url: "https://tech-insider.org/openai-122-billion-funding-round-852-billion-valuation-2026/"}
+    facts:
+      - {text: "S&P attributes about half of Oracle's contracted-but-undelivered volume to OpenAI and calls it a central credit risk.", src: "BTW Media", url: "https://btw.media/en/oracle-financing-stack-effective-conditional-break-points"}
+  Anthropic:
+    name: Anthropic
+    short: "Private"
+    status: "Private (public-benefit corporation). Draft IPO paperwork filed confidentially; expected to list first."
+    revenue:
+      - {date: "2025-12-31", usd_bn: 9, conf: D, src: "Anthropic", url: "https://www.anthropic.com/news/google-broadcom-partnership-compute"}
+      - {date: "2026-04-06", usd_bn: 30, conf: D, src: "Anthropic", url: "https://www.anthropic.com/news/google-broadcom-partnership-compute"}
+      - {date: "2026-05-15", usd_bn: 47, conf: D, src: "Anthropic, Series H", url: "https://www.anthropic.com/news/series-h"}
+      - {date: "2026-07-31", usd_bn: 65, conf: E, src: "Bloomberg via Unite.AI", url: "https://www.unite.ai/anthropic-run-rate-revenue-hits-65-billion-as-ipo-looms/"}
+    valuation: {date: "2026-05-28", usd_bn: 965, raised_bn: 65, note: "Series H led by Altimeter, Dragoneer, Greenoaks and Sequoia; includes $15B of earlier hyperscaler commitments ($5B from Amazon)", conf: D, src: "Anthropic, Series H", url: "https://www.anthropic.com/news/series-h"}
+    commitments: {date: "2026-05-28", text: "Up to 5 GW of new Amazon capacity; 5 GW of next-generation TPU capacity with Google and Broadcom from 2027; $30B of Azure; GPU capacity at SpaceX's Colossus 1 and 2 ($1.25B a month to May 2029, cancellable on 90 days' notice)", conf: D, src: "Anthropic, Series H", url: "https://www.anthropic.com/news/series-h"}
+    facts:
+      - {text: "SpaceX's S-1: Anthropic pays $1.25B a month for Colossus and Colossus II compute through May 2029; either party can terminate on 90 days' notice.", src: "The VC Corner (S-1 teardown)", url: "https://www.thevccorner.com/p/spacex-spcx-ipo-s1-teardown-valuation-2026"}
+      - {text: "FT reports Anthropic is seeking a public valuation of $2T or more; investors expect $100-120B of year-end run rate (not company guidance).", src: "Unite.AI", url: "https://www.unite.ai/anthropic-run-rate-revenue-hits-65-billion-as-ipo-looms/"}
+  SpaceXAI:
+    name: SpaceXAI (xAI)
+    short: "Inside SpaceX (SPCX)"
+    status: "Part of SpaceX since 2 Feb 2026; SpaceX listed on Nasdaq (SPCX) in June 2026 at about $1.75T. Not on the map; a candidate for the watchlist."
+    revenue:
+      - {date: "2025-12-31", usd_bn: 3.2, conf: D, note: "2025 revenue of the AI segment (xAI, Grok, X); operating loss $6.4B", src: "The VC Corner (S-1 teardown)", url: "https://www.thevccorner.com/p/spacex-spcx-ipo-s1-teardown-valuation-2026"}
+      - {date: "2026-03-31", usd_bn: 3.3, conf: D, note: "Q1 2026 segment revenue $818M, annualised", src: "The VC Corner (S-1 teardown)", url: "https://www.thevccorner.com/p/spacex-spcx-ipo-s1-teardown-valuation-2026"}
+    valuation: {date: "2026-06-12", usd_bn: 1750, raised_bn: 75, whole_company: true, note: "SpaceX IPO (whole company, not xAI alone); xAI was valued at $250B in the February merger", conf: E, src: "The VC Corner (S-1 teardown)", url: "https://www.thevccorner.com/p/spacex-spcx-ipo-s1-teardown-valuation-2026"}
+    burn: {date: "2026-03-31", usd_bn: 30.8, text: "AI segment capex $7.7B in Q1 2026, an annual pace above $30B (2025: $12.7B)", conf: D, src: "The VC Corner (S-1 teardown)", url: "https://www.thevccorner.com/p/spacex-spcx-ipo-s1-teardown-valuation-2026"}
+    commitments: {date: "2026-06-05", text: "Now also a seller of compute: Anthropic rents Colossus capacity ($1.25B a month), and Google is reported to pay $920M a month for capacity at xAI data centres", conf: E, src: "Wikipedia (citing CNBC)", url: "https://en.wikipedia.org/wiki/SpaceXAI"}
+    facts:
+      - {text: "SpaceX burned about $9.9B of free cash flow in the September quarter.", src: "Yahoo Finance", url: "https://finance.yahoo.com/markets/stocks/article/amazon-alphabet-spacex-and-meta-are-all-to-blame-for-the-new-tech-stock-rout-090324190.html"}

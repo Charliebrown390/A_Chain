@@ -347,6 +347,22 @@ def main():
     for it in cap.get("issuance") or []:
         if it.get("issuer") not in idset:
             errs.append(f"capital.yaml issuance: unknown issuer {it.get('issuer')}")
+    lp = ROOT / "data/labs.yaml"
+    labs = (yaml.safe_load(lp.read_text()) or {}).get("labs", {}) if lp.exists() else {}
+    for k, lab in labs.items():
+        rv = lab.get("revenue") or []
+        if [x.get("date") for x in rv] != sorted(x.get("date") for x in rv):
+            errs.append(f"labs.yaml {k}: revenue points must be in date order")
+        for part in ("revenue", "facts"):
+            need_url(f"labs.yaml {k} {part}", lab.get(part))
+        for part in ("valuation", "burn", "commitments", "target"):
+            it = lab.get(part)
+            if it and (not it.get("url") or not it.get("date")):
+                errs.append(f"labs.yaml {k} {part}: needs url and date")
+        for x in rv:
+            if x.get("conf") not in ("D", "E"):
+                errs.append(f"labs.yaml {k} revenue: conf must be D or E")
+    monitors["labs"] = labs
     tp = ROOT / "data/theses.yaml"
     theses = (yaml.safe_load(tp.read_text()) or {}).get("theses", {}) if tp.exists() else {}
     for c in uni["companies"]:

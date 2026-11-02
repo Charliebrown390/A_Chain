@@ -76,3 +76,12 @@ def test_tier_spread_history():
               if p.get("hyperscaler") is not None and p.get("neocloud") is not None]
     assert len(paired) >= 4, "tier_spread needs at least four dated readings with both tiers"
     assert all(p.get("url") for p in (ts.get("points") or []) + (ts.get("periods") or [])), "tier_spread entry without url"
+
+
+def test_labs_sourced():
+    labs = yaml.safe_load((ROOT / "data/labs.yaml").read_text())["labs"]
+    for k in ("OpenAI", "Anthropic"):
+        assert k in labs and labs[k].get("revenue"), f"labs.yaml: {k} needs revenue points"
+    for k, lab in labs.items():
+        for x in lab.get("revenue", []):
+            assert x.get("url") and x.get("date"), f"labs.yaml {k}: revenue point without url or date"
