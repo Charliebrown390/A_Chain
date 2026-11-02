@@ -297,7 +297,7 @@ footer p{margin:0}
     </div>
   </header>
 
-  <nav class="secnav" aria-label="Sections"><a href="#mapsec">Supply-chain map</a><a href="#returns">Returns on spending</a><a href="#capital">Capital and yields</a><a href="#bottlenecks">Bottlenecks</a><a href="#compute">Compute economics</a><a href="#accel">GPU vs custom silicon</a><a href="#stress">Stress test</a></nav>
+  <nav class="secnav" aria-label="Sections"><a href="#mapsec">Supply-chain map</a><a href="#expect">What the market is pricing</a><a href="#returns">Returns on spending</a><a href="#capital">Capital and yields</a><a href="#bottlenecks">Bottlenecks</a><a href="#compute">Compute economics</a><a href="#accel">GPU vs custom silicon</a><a href="#stress">Stress test</a></nav>
 
   <section class="pulse four">
     <div class="card">
@@ -345,6 +345,7 @@ footer p{margin:0}
     <div id="stOut"></div>
   </section>
 
+  <section class="mon" id="expect"></section>
   <section class="mon" id="returns"></section>
   <section class="mon" id="capital"></section>
   <section class="mon" id="bottlenecks"></section>
@@ -362,6 +363,8 @@ footer p{margin:0}
         <button type="button" id="cb-iv" data-m="iv" aria-pressed="false">Vol cheap/rich</button>
         <button type="button" id="cb-cr" data-m="cr" aria-pressed="false">Credit</button>
         <button type="button" id="cb-rs" data-m="rs" aria-pressed="false">ROIC vs cost</button>
+        <button type="button" id="cb-rv" data-m="rv" aria-pressed="false">Estimates 3M</button>
+        <button type="button" id="cb-dr" data-m="dr" aria-pressed="false">Multiple 3M</button>
       </div>
     </div>
     <div class="legend">
@@ -433,7 +436,7 @@ const COS=U.companies.map(u=>{
   if(c.ivHist.length>=20){const h=c.ivHist.map(x=>x[1]);c.ivPct=h.filter(x=>x<c.iv).length/h.length*100}
   c.upside=c.has&&c.tgt_mean&&!c.tgt_suspect?(c.tgt_mean/c.px-1)*100:null;
   c.news=NEWS[u.id]||[];
-  c.cr=m.credit||null;c.funding=u.funding||null;
+  c.cr=m.credit||null;c.funding=u.funding||null;c.fac=m.factors||{};c.ex=m.expect||{};c.sf=m.selffund||null;
   BY[c.t]=c;return c;
 });
 const EDGES=E.edges.map(e=>({f:e.from,t:e.to,ty:e.type,st:e.strength,p:e.pct??null,usd:e.usd_bn??null,gw:e.gw??null,cf:e.conf,kind:e.kind||null,fam:e.fam||[],role:e.role||null,note:e.note||"",src:e.src||"",url:e.url||"",asof:e.as_of||""}));
@@ -639,6 +642,7 @@ function tabRisk(c){
   if(c.hv20_pct1y!=null)h+=`<p class="sec">Where 20-day realised vol sits in its 1-year range</p><div class="pbar"><i style="left:${c.hv20_pct1y}%"></i></div><div class="pscale"><span>Calmest</span><span>${ord(c.hv20_pct1y)} percentile</span><span>Most volatile</span></div>`;
   if(c.ivPct!=null)h+=`<p class="sec">Where implied vol sits in its own history (${c.ivHist.length} days)</p><div class="pbar"><i style="left:${c.ivPct}%"></i></div><div class="pscale"><span>Cheapest</span><span>${ord(c.ivPct)} percentile</span><span>Richest</span></div>`;
   else if(c.iv)h+=`<p class="note">IV percentile needs about 20 trading days of history; ${c.ivHist.length} collected so far.</p>`;
+  h+=factorBlock(c);
   h+=`<p class="sec">20-day realised vol, last year${c.ivHist.length?" · dots = implied vol":""}</p><div class="svgbox" id="vchart"><p class="mut">Loading…</p></div>`;
   return h;
 }
@@ -694,6 +698,7 @@ function tabAna(c){
   const A=c.actions||[];
   if(A.length)h+=`<p class="sec">Recent rating changes (last 5 months)</p><ul class="acts">${A.map(a=>{const pt=a.pt?(a.pt_prior&&a.pt_prior!==a.pt?`${fpx(a.pt_prior,c.ccy)} → ${fpx(a.pt,c.ccy)}`:fpx(a.pt,c.ccy)):"";const col=a.action==="up"?"up":a.action==="down"?"down":"";
     return `<li><span class="dt">${esc(a.date.slice(5))}</span><span><b>${esc(a.firm)}</b> · <span class="${col}">${ACT[a.action]||esc(a.action)}</span>${a.to?` ${a.from&&a.from!==a.to?esc(a.from)+" → ":""}${esc(a.to)}`:""}</span><span class="pt">${pt}</span></li>`}).join("")}</ul>`;
+  h+=expectBlock(c);
   h+=`<p class="note">Source: Yahoo Finance, refreshed every weekday.</p>`;
   return h;
 }
@@ -968,6 +973,8 @@ const lncOf=c=>{const it=(c.funding?.items||[]).find(i=>i.kind==="lease");const 
 COS.forEach(c=>{const R=c.returns||{};c.ret=R;
   const l=lncOf(c);if(R.nopat_ttm_usd_bn!=null&&R.ic_usd_bn&&l){c.ret.roic_lease=R.nopat_ttm_usd_bn/(R.ic_usd_bn+0.5*l)*100}
 });
+MODES.rv={get:c=>c.ex?.eps_rev_3m??null,lo:-15,hi:15,mid:0,fmt:c=>c.ex?.eps_rev_3m==null?"—":"EPS est "+pct(c.ex.eps_rev_3m,0),lab:["−15%","+15%"]};
+MODES.dr={get:c=>c.ex?.derate_3m??null,lo:-30,hi:30,mid:0,fmt:c=>c.ex?.derate_3m==null?"—":"P/E "+pct(c.ex.derate_3m,0),lab:["−30%","+30%"]};
 MODES.rs={get:c=>c.ret?.spread??null,lo:-10,hi:20,mid:0,fmt:c=>c.ret?.spread==null?"—":"ROIC−WACC "+(c.ret.spread>0?"+":"")+c.ret.spread.toFixed(0),lab:["−10","+20"]};
 function spark(vals,{W=120,H=28,col="var(--copper)"}={}){
   const v=vals.filter(x=>x!=null);if(v.length<2)return "";
@@ -977,6 +984,52 @@ function spark(vals,{W=120,H=28,col="var(--copper)"}={}){
   const li=vals.length-1;return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" aria-hidden="true">${z}<path d="${d}" fill="none" stroke="${col}" stroke-width="1.8"/>${vals[li]!=null?`<circle cx="${X(li)}" cy="${Y(vals[li])}" r="2.6" fill="${col}"/>`:""}</svg>`;
 }
 const spreadChip=s=>s==null?"—":`<span class="ddchip ${s<0?"s0":s<5?"s1":"s3"}">${s>0?"+":""}${s.toFixed(0)} pts</span>`;
+
+/* What the market is pricing: move attribution, estimate revisions, implied growth */
+const recentTargets=c=>{const ref=Date.parse(c.date||new Date().toISOString().slice(0,10));const a=(c.actions||[]).filter(x=>x.pt&&ref-Date.parse(x.date)<=30*864e5).map(x=>x.pt);return a.length?{med:median(a),n:a.length}:null};
+const exClass=e=>{if(e?.eps_rev_3m==null||e?.derate_3m==null)return null;const r=e.eps_rev_3m,d=e.derate_3m;
+  if(r<=-3)return ["Estimates cut","s0"];if(r>=2&&d<=-10)return ["Estimates up, multiple down","s3"];if(d>=10)return ["Multiple expanding","s1"];return ["Little change","s2"]};
+function attrBar(a,{W=200,H=16}={}){if(!a)return "";const parts=[["market",a.market,"var(--muted)"],["rates",a.rates,"var(--warn)"],["other",a.other,"var(--copper)"]];
+  const mx=Math.max(20,...parts.map(p=>Math.abs(p[1]||0)),Math.abs(a.total||0)),X=v=>W/2+v/mx*(W/2-2);let g=`<line x1="${W/2}" x2="${W/2}" y1="0" y2="${H}" stroke="var(--line)"/>`;
+  let pos=0,neg=0;parts.forEach(([k,v,col])=>{if(!v)return;const a0=v>=0?pos:neg,a1=a0+v;if(v>=0)pos=a1;else neg=a1;g+=`<rect x="${Math.min(X(a0),X(a1)).toFixed(1)}" y="3" width="${Math.abs(X(a1)-X(a0)).toFixed(1)}" height="${H-6}" fill="${col}"><title>${k} ${pct(v,1)}</title></rect>`});
+  return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Market ${pct(a.market,1)}, rates ${pct(a.rates,1)}, other ${pct(a.other,1)}">${g}</svg>`}
+function factorBlock(c){const F=c.fac||{};if(F.beta_3y==null&&F.rate_beta==null)return "";
+  const a=F.attr_1m,a3=F.attr_3m;
+  let h=`<p class="sec">Market, rates and everything else</p><div class="stats">${stat("Beta vs S&amp;P 500 (3y weekly)",num(F.beta_3y,2))}${stat("Move per +10bp in the 10-year",F.rate_beta==null?"—":pct(F.rate_beta,1),"")}${stat("Same, after the market",F.rate_beta_partial==null?"—":pct(F.rate_beta_partial,1))}${stat("Explained by market and rates",F.factor_r2==null?"—":Math.round(F.factor_r2*100)+"%")}</div>`;
+  const row=(lab,x)=>x?`<tr><td>${lab} <span class="mut">(10-year ${x.d10y_bp>0?"+":""}${num(x.d10y_bp,0)}bp, S&amp;P ${pct(x.spx,1)})</span></td><td>${pct(x.total,1)} = market ${pct(x.market,1)} · rates ${pct(x.rates,1)} · <b>other ${pct(x.other,1)}</b></td></tr>`:"";
+  if(a||a3)h+=`<table class="fin"><tbody>${row("Last month",a)}${row("Last 3 months",a3)}</tbody></table>`;
+  h+=`<p class="note">From two years of weekly returns regressed on the S&amp;P 500 and weekly changes in the 10-year yield. "Other" is everything the market and rates do not explain: the AI trade, the sector and the company itself. A positive rate sensitivity means the stock has tended to rise when yields rise (yields up on stronger growth), not that higher rates help it.</p>`;
+  return h}
+function expectBlock(c){const e=c.ex||{};if(e.eps_rev_3m==null&&e.implied_g==null)return "";const k=exClass(e),rt=recentTargets(c);
+  let h=`<p class="sec">What the price implies</p>${k?`<p style="margin:0 0 8px"><span class="ddchip ${k[1]}">${esc(k[0])}</span></p>`:""}<div class="stats">${stat("Next-year EPS estimate, 3-month change",pct(e.eps_rev_3m,1),cls(e.eps_rev_3m))}${stat("Price, 3-month change",pct(c.r3m,1),cls(c.r3m))}${stat("Change in the multiple",pct(e.derate_3m,1),cls(e.derate_3m))}${stat("Estimate revisions, 30 days",e.rev_up_30d==null?"—":`${e.rev_up_30d} up · ${e.rev_down_30d} down`)}${stat("Consensus EPS growth next year",pct(e.eps_growth_next,0))}${stat("Growth the price implies (years 2–5)",pct(e.implied_g,1),e.implied_g!=null&&e.eps_growth_next!=null&&e.implied_g<e.eps_growth_next?"up":"")}${rt?stat(`Median target set in last 30 days (${rt.n})`,fpx(rt.med,c.ccy)+` <span class="mut" style="font-weight:400;font-size:11px">${pct((rt.med/c.px-1)*100,0)}</span>`):""}</div>
+  <p class="note">Change in the multiple = price change ÷ change in next-year EPS estimate. Implied growth is the yearly EPS growth after next year that today's price needs, assuming an exit P/E of ${num(M.terminal_pe||18,0)}× after five years and this company's cost of equity (${pc(c.ret?.ke,1)}); compare it with what analysts expect. Consensus mean targets lag fast markets, so targets set in the last 30 days are shown separately.</p>`;
+  return h}
+let EXSORT=store.get("aiscm-exsort")||"derate",EXALL=false;
+function renderExpect(){
+  const box=$("#expect");const rows=COS.filter(c=>c.has&&(c.fac?.attr_1m||c.ex?.eps_rev_3m!=null));
+  if(!rows.length){box.innerHTML=`<h2>What the market is pricing</h2><p class="mut">This view fills in after the next nightly refresh.</p>`;return}
+  const B=M.benchmarks||{},y=B.us10y||{},sox=B.sox||{};
+  const med=f=>median(rows.map(f).filter(v=>v!=null));
+  const mOther=med(c=>c.fac?.attr_1m?.other),mRates=med(c=>c.fac?.attr_1m?.rates),mMkt=med(c=>c.fac?.attr_1m?.market),mTot=med(c=>c.fac?.attr_1m?.total);
+  const mRev=med(c=>c.ex?.eps_rev_3m),mDr=med(c=>c.ex?.derate_3m);
+  const cnt={};rows.forEach(c=>{const k=exClass(c.ex);if(k)cnt[k[0]]=(cnt[k[0]]||0)+1});
+  const byL=LAYERS.map(L=>{const cs=rows.filter(c=>c.layer===L.n);const m=f=>median(cs.map(f).filter(v=>v!=null));return {L,n:cs.length,tot:m(c=>c.fac?.attr_1m?.total),mk:m(c=>c.fac?.attr_1m?.market),rt:m(c=>c.fac?.attr_1m?.rates),ot:m(c=>c.fac?.attr_1m?.other),rev:m(c=>c.ex?.eps_rev_3m),dr:m(c=>c.ex?.derate_3m),ig:m(c=>c.ex?.implied_g)}}).filter(x=>x.n);
+  const S={derate:(a,b)=>(a.ex?.derate_3m??1e9)-(b.ex?.derate_3m??1e9),rev:(a,b)=>(b.ex?.eps_rev_3m??-1e9)-(a.ex?.eps_rev_3m??-1e9),other:(a,b)=>(a.fac?.attr_1m?.other??1e9)-(b.fac?.attr_1m?.other??1e9),ig:(a,b)=>(a.ex?.implied_g??1e9)-(b.ex?.implied_g??1e9),rate:(a,b)=>(a.fac?.rate_beta??1e9)-(b.fac?.rate_beta??1e9)}[EXSORT]||(()=>0);
+  const listAll=[...rows].sort(S),list=EXALL?listAll:listAll.slice(0,15);
+  box.innerHTML=`<h2>What the market is pricing</h2><p class="hint">Splits each move into market, interest rates and everything else, and asks whether prices fell because earnings estimates fell or because investors will pay less for the same earnings.</p>
+  <p class="psum">Over the last month the S&amp;P 500's move explains a median <b>${pct(mMkt,1)}</b> and the 10-year yield (${y.chg1m_bp>0?"+":""}${num(y.chg1m_bp,0)}bp to ${num(y.last,2)}%) <b>${pct(mRates,1)}</b> of the typical company's <b>${pct(mTot,1)}</b>; the remaining <b>${pct(mOther,1)}</b> is specific to the AI trade and the companies. Over three months the median next-year EPS estimate moved <b>${pct(mRev,1)}</b> while the median multiple moved <b>${pct(mDr,1)}</b>. ${cnt["Estimates up, multiple down"]?`<b>${cnt["Estimates up, multiple down"]}</b> companies have rising estimates and a falling multiple; `:""}${cnt["Estimates cut"]?`<b>${cnt["Estimates cut"]}</b> have had estimates cut.`:""}</p>
+  <div class="sttab"><table><thead><tr><th>Layer</th><th>1-month move</th><th>Market</th><th>Rates</th><th>Other</th><th>EPS estimate, 3m</th><th>Multiple, 3m</th><th>Implied growth</th></tr></thead><tbody>${byL.map(x=>`<tr><td style="text-align:left">L${x.L.n} ${esc(x.L.name)}</td><td class="${cls(x.tot)}">${pct(x.tot,0)}</td><td>${pct(x.mk,0)}</td><td>${pct(x.rt,0)}</td><td class="${cls(x.ot)}">${pct(x.ot,0)}</td><td class="${cls(x.rev)}">${pct(x.rev,0)}</td><td class="${cls(x.dr)}">${pct(x.dr,0)}</td><td>${pct(x.ig,0)}</td></tr>`).join("")}</tbody></table></div>
+  <p class="sec">By company</p><div class="seg" role="group" aria-label="Sort companies" style="margin:4px 0 8px">${[["derate","Biggest fall in multiple"],["rev","Biggest estimate rises"],["other","Biggest stock-specific fall"],["ig","Lowest implied growth"],["rate","Most hurt by higher yields"]].map(([k,l])=>`<button type="button" data-xs="${k}" aria-pressed="${k===EXSORT}">${l}</button>`).join("")}</div>
+  <div class="sttab"><table><thead><tr><th>Company</th><th>1-month move split</th><th>1m</th><th>Other</th><th title="Change in consensus next-year EPS over 3 months">EPS est. 3m</th><th>Price 3m</th><th title="Price change divided by estimate change">Multiple 3m</th><th>Read</th><th title="EPS growth needed after next year, at an exit P/E of ${num(M.terminal_pe||18,0)}x">Implied growth</th><th>Consensus next yr</th><th title="Median of price targets set in the last 30 days, vs price">Recent targets</th><th title="Move per +10bp in the 10-year yield, 2y weekly">Per +10bp</th></tr></thead><tbody>
+  ${list.map(c=>{const a=c.fac?.attr_1m,e=c.ex||{},k=exClass(e),rt=recentTargets(c);return `<tr><td><button class="go" type="button" data-xg="${esc(c.t)}">${esc(c.lab)}</button></td><td>${attrBar(a,{W:150,H:14})}</td><td class="${cls(a?.total)}">${pct(a?.total,0)}</td><td class="${cls(a?.other)}">${pct(a?.other,0)}</td><td class="${cls(e.eps_rev_3m)}">${pct(e.eps_rev_3m,0)}</td><td class="${cls(c.r3m)}">${pct(c.r3m,0)}</td><td class="${cls(e.derate_3m)}">${pct(e.derate_3m,0)}</td><td style="text-align:left">${k?`<span class="ddchip ${k[1]}">${esc(k[0])}</span>`:'<span class="mut">—</span>'}</td><td>${pct(e.implied_g,0)}</td><td>${pct(e.eps_growth_next,0)}</td><td>${rt?pct((rt.med/c.px-1)*100,0)+` <span class="mut">(${rt.n})</span>`:'<span class="mut">—</span>'}</td><td>${pct(c.fac?.rate_beta,1)}</td></tr>`}).join("")}
+  </tbody></table></div>
+  ${listAll.length>15?`<button type="button" class="go" id="exAll" style="margin-top:6px">${EXALL?"Show top 15":"Show all "+listAll.length+" companies"}</button>`:""}
+  <div class="legend" style="margin-top:6px"><span><span class="sw" style="border-top:6px solid var(--muted)"></span>Market</span><span><span class="sw" style="border-top:6px solid var(--warn)"></span>Rates</span><span><span class="sw" style="border-top:6px solid var(--copper)"></span>Other (AI trade, sector, company)</span></div>
+  <p class="note">Move split: two years of weekly returns regressed on the S&amp;P 500 and on weekly changes in the US 10-year yield; the last month's move is then split using those sensitivities. Estimates are Yahoo Finance consensus for next fiscal year's EPS; consensus growth compares with reported EPS, so one-off gains or losses in the current year distort it. Multiple change = price change ÷ estimate change. Implied growth = yearly EPS growth in years 2–5 that justifies today's price at an exit P/E of ${num(M.terminal_pe||18,0)}× and each company's cost of equity; a figure far below consensus means the market expects estimates to fall (common at a cyclical peak). Estimates lag at turning points, so a falling multiple with rising estimates can mean either a bargain or a market that is ahead of the analysts.</p>`;
+  box.querySelectorAll("[data-xs]").forEach(b=>b.addEventListener("click",()=>{EXSORT=b.dataset.xs;store.set("aiscm-exsort",EXSORT);renderExpect()}));
+  $("#exAll")?.addEventListener("click",()=>{EXALL=!EXALL;renderExpect()});
+  box.querySelectorAll("[data-xg]").forEach(b=>b.addEventListener("click",()=>{TAB="ana";select(b.dataset.xg,true)}));
+}
 
 /* Returns monitor */
 let RGRP=store.get("aiscm-rgrp")||"buyers";
@@ -993,7 +1046,7 @@ function renderReturns(){
   <div class="sttab"><table><thead><tr><th>Company</th><th>ROIC by year</th><th>ROIC (TTM)</th><th title="Change in operating profit after tax divided by change in invested capital over two fiscal years">Incremental</th><th title="Excludes goodwill and acquired intangibles from invested capital">Ex goodwill</th><th title="Adds half of leases signed but not yet started to invested capital">Lease-adjusted</th><th title="If depreciation were 30% higher (shorter server lives)">D&amp;A +30%</th><th>Cost of capital</th><th>ROIC − cost</th><th>Capex / revenue</th><th>Net PP&amp;E / revenue</th></tr></thead><tbody>
   ${rows.map(c=>{const R=c.ret,h=R.hist||[],last=h[h.length-1]||{};return `<tr><td><button class="go" type="button" data-rg="${esc(c.t)}">${esc(c.lab)}</button>${R.ic_basis==="incl. cash"?' <span class="mut" title="Cash-rich: capital measured including cash">ᶜ</span>':""}</td><td>${spark(h.map(x=>x.roic))} <span class="mut">${h.length?esc(h[0].fy.slice(0,4))+"–"+esc(last.fy.slice(2,4)):""}</span></td><td>${pc(R.roic_ttm,0)}</td><td>${pc(R.incr_roic,0)}</td><td>${pc(R.roic_ex_gw,0)}</td><td>${pc(c.ret.roic_lease,0)}</td><td>${pc(R.roic_dep_stress,0)}</td><td>${pc(R.wacc,1)}</td><td>${spreadChip(R.spread)}</td><td>${pc(last.capex_rev,0)}</td><td>${num(last.ppe_rev,2)}×</td></tr>`}).join("")}
   </tbody></table></div>
-  <p class="note">ROIC = operating profit after tax ÷ invested capital (debt including on-balance-sheet leases + equity − cash, averaged over the year; ᶜ = cash-rich companies measured including cash, which understates their returns, so they are left out of the below-cost list). Incremental ROIC covers the last two fiscal years and is the cleanest test of whether new spending earns its keep. Cost of capital uses the US 10-year yield (${pc((M.rf10||0)*100,2)}), a ${((M.erp||0.05)*100).toFixed(0)}% equity risk premium, Blume-adjusted beta and each company's interest cost; foreign listings are measured in USD terms. Source: Yahoo Finance statements, refreshed nightly.</p>`;
+  <p class="note">ROIC = operating profit after tax ÷ invested capital (debt including on-balance-sheet leases + equity − cash, averaged over the year; ᶜ = cash-rich companies measured including cash, which understates their returns, so they are left out of the below-cost list). Incremental ROIC covers the last two fiscal years and is the cleanest test of whether new spending earns its keep. Cost of capital uses the US 10-year yield (${pc((M.rf10||0)*100,2)}), a ${((M.erp||0.05)*100).toFixed(0)}% equity risk premium, a Blume-adjusted beta from three years of weekly returns and each company's interest cost; foreign listings are measured in USD terms. Source: Yahoo Finance statements, refreshed nightly.</p>`;
   box.querySelectorAll("[data-g]").forEach(b=>b.addEventListener("click",()=>{RGRP=b.dataset.g;store.set("aiscm-rgrp",RGRP);renderReturns()}));
   box.querySelectorAll("[data-rg]").forEach(b=>b.addEventListener("click",()=>{TAB="returns";select(b.dataset.rg,true)}));
 }
@@ -1002,7 +1055,7 @@ function renderReturns(){
 function tabReturns(c){
   const R=c.ret||{};if(!R.hist&&R.roic_ttm==null)return `<p class="mut">No return data for this company.</p>`;
   const h=R.hist||[];let s=`<div class="stats">${stat("ROIC (TTM)",pc(R.roic_ttm,1),R.roic_ttm<(R.wacc||0)?"down":"up")}${stat("Incremental ROIC",pc(R.incr_roic,0))}${stat("Cost of capital",pc(R.wacc,1))}${stat("ROIC − cost of capital",R.spread==null?"—":(R.spread>0?"+":"")+R.spread.toFixed(1)+" pts",R.spread<0?"down":"up")}${stat("ROIC excluding goodwill",pc(R.roic_ex_gw,1))}${stat("Lease-adjusted ROIC",pc(c.ret.roic_lease,1))}${stat("If D&A were 30% higher",pc(R.roic_dep_stress,1))}</div>`;
-  if(R.incr_span)s+=`<p class="note">Incremental ROIC measured ${esc(R.incr_span)}. Cost of capital: equity ${pc(R.ke,1)} (beta ${num(R.beta_used,2)}), debt ${pc(R.kd,1)} before tax.${R.ic_basis==="incl. cash"?" Capital measured including cash because the company is cash-rich.":""}</p>`;
+  if(R.incr_span)s+=`<p class="note">Incremental ROIC measured ${esc(R.incr_span)}. Cost of capital: equity ${pc(R.ke,1)} (Blume-adjusted beta ${num(R.beta_used,2)}${R.beta_source?", from "+esc(R.beta_source)+" returns":""}), debt ${pc(R.kd,1)} before tax.${R.ic_basis==="incl. cash"?" Capital measured including cash because the company is cash-rich.":""}</p>`;
   if(h.length){s+=`<p class="sec">ROIC by fiscal year</p><div class="svgbox">${barChart(h.map(x=>["FY"+x.fy.slice(2,4),Math.max(0,x.roic??0)]),{fmt:v=>v.toFixed(0)+"%",H:140,color:"var(--copper)"})}</div>`;
     s+=`<p class="sec">Capital intensity</p><table class="fin"><tbody>${h.map(x=>`<tr><td>FY${esc(x.fy)}</td><td>capex ${pc(x.capex_rev,0)} of revenue · PP&amp;E ${num(x.ppe_rev,2)}× revenue · D&amp;A ${pc(x.da_rev,0)}</td></tr>`).join("")}</tbody></table>`}
   if(R.inv_days&&R.inv_days.length>=2)s+=`<p class="sec">Inventory days</p><div class="svgbox">${barChart(R.inv_days.map(([d,v])=>[MON[+d.slice(5,7)-1]+" '"+d.slice(2,4),v]),{fmt:v=>v.toFixed(0)+"d",H:120,color:"var(--fin)"})}</div><p class="note">Inventory ÷ quarterly cost of sales × 91 days. Rising inventory at a supplier is an early sign that demand is cooling.</p>`;
@@ -1181,7 +1234,7 @@ function bindSpread(TS){
   sv.addEventListener("pointermove",show);sv.addEventListener("pointerdown",show);
   sv.addEventListener("pointerleave",e=>{if(e.pointerType==="mouse"){cx.setAttribute("visibility","hidden");tip.hidden=true}});
 }
-renderReturns();renderCapital();renderBottlenecks();renderCompute();
+renderExpect();renderReturns();renderCapital();renderBottlenecks();renderCompute();
 
 /* ---------- selection + sheet ---------- */
 const narrow=()=>window.matchMedia("(max-width:1039px)").matches;
