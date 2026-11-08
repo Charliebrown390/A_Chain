@@ -13,6 +13,10 @@ issuance:
   - {date: "2026-02", issuer: ORCL, usd_bn: 25.0, note: "Eight tranches, 2029-2066, 4.55-6.85%", src: "BTW Media", url: "https://btw.media/en/oracle-financing-stack-effective-conditional-break-points"}
   - {date: "2026-09", issuer: CRWV, usd_bn: 4.2, note: "Convertible notes due 2033, 2.875%", src: "StockTitan", url: "https://www.stocktitan.net/articles/coreweave-nebius-ai-cloud-debt-when-it-comes-due"}
   - {date: "2026-08", issuer: NBIS, usd_bn: 5.75, note: "Convertible notes due 2030 and 2034", src: "StockTitan", url: "https://www.stocktitan.net/articles/coreweave-nebius-ai-cloud-debt-when-it-comes-due"}
+  - {date: "2026-10", issuer: MSFT, usd_bn: 25.0, note: "First US investment-grade bond sale since 2017; up to 10 tranches, 2-40 years; over $100B of orders (sources)", src: "Reuters via The Star", url: "https://www.thestar.com.my/tech/tech-news/2026/10/30/microsoft-expects-to-raise-25-billion-in-us-bond-sale-source-says"}
+  - {date: "2026-11", issuer: ORCL, usd_bn: 10.0, note: "Five tranches, 2029-2046, 7.000-8.650%; priced 2 Nov alongside a $10B common-stock sale", src: "Neoteo", url: "https://www.neoteo.com/en/oracle-priced-20-billion-in-stock-and-senior-notes"}
+  - {date: "2026-11", issuer: GOOGL, usd_bn: 6.7, note: "EUR 6B, seven tranches, 3.700-5.250%; priced 2 Nov", src: "24/7 Wall St", url: "https://247wallst.com/investing/2026/11/03/big-tech-just-tried-to-borrow-more-than-35-billion-in-a-single-day/"}
+  - {date: "2026-11", issuer: META, usd_bn: 15.0, note: "Five tranches, 5-30 years, yields 5.85-7.53%, $58B of orders; followed by a debut euro deal of about EUR 9B (4 Nov)", src: "CoinGape, citing Bloomberg", url: "https://coingape.com/meta-launches-first-ever-euro-denominated-bond-offering-following-15-billion-us-debt-sale/"}
 
 facts:
   - {text: "The five hyperscalers issued $121B of US corporate bonds in 2025, against an average of $28B a year in 2020-24.", src: "Reuters via Yahoo Finance (BofA data)", url: "https://finance.yahoo.com/news/ai-hyperscalers-drive-higher-us-225314460.html"}
@@ -24,6 +28,7 @@ facts:
 marker_bonds:
   # Bonds whose price tells you how lenders view the riskiest part of the chain. Add a new row each time you check.
   - {issuer: CRWV, bond: "9.625% unsecured notes due 2032", date: "2026-10-14", price: 79.5, yield: 15.06, src: "Forbes, citing Barron's", url: "https://www.forbes.com/sites/jimosman/2026/10/14/coreweave-bonds-are-warning-of-a-bigger-problem-for-ai-stocks/"}
+  - {issuer: CRWV, bond: "9.625% unsecured notes due 2032 (yield 'above 16%'; no price published)", date: "2026-11-06", yield: 16.0, src: "24/7 Wall St via Yahoo Finance", url: "https://finance.yahoo.com/markets/stocks/articles/coreweave-bonds-now-yield-more-153753330.html"}
 
 capex_guidance:
   # Latest capex figures and guidance from results (USD). Update after each earnings season.

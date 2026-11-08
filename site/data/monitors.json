@@ -1,5 +1,5 @@
 {
- "built": "2026-11-08T00:20:50+00:00",
+ "built": "2026-11-08T00:59:36+00:00",
  "bottlenecks": {
   "indicators": [
    {
@@ -38,9 +38,13 @@
      [
       "2026-10-20",
       6.14
+     ],
+     [
+      "2026-11-07",
+      6.8
      ]
     ],
-    "note": "Jan value derived from the reported +27.6% year-to-date change at 1 Sep. 20 Oct reading from the public B200 index page.",
+    "note": "Jan value derived from the reported +27.6% year-to-date change at 1 Sep. 20 Oct and 7 Nov readings from the public B200 index page.",
     "sources": [
      {
       "src": "Silicon Data, B200 rental price update (Aug 2026)",
@@ -152,9 +156,13 @@
      [
       "2026-09-30",
       15.5
+     ],
+     [
+      "2026-12-31",
+      12.5
      ]
     ],
-    "note": "Q1: 'up to 98%'. Q2: ~60% (forecast 58-63%). Q3: forecast 13-18%, midpoint shown. Still rising, but decelerating.",
+    "note": "Q1: 'up to 98%'. Q2: ~60% (forecast 58-63%). Q3: forecast 13-18%, midpoint shown. Q4: forecast 10-15% (TrendForce, 30 Sep 2026), midpoint shown; TrendForce expects the pace to moderate. Still rising, but decelerating.",
     "sources": [
      {
       "src": "AI Weekly, citing TrendForce (Jun 2026)",
@@ -163,6 +171,10 @@
      {
       "src": "Hardware Busters, citing TrendForce (Jul 2026)",
       "url": "https://hwbusters.com/news/memory-prices-keep-climbing-in-q3-but-the-surge-is-finally-cooling/"
+     },
+     {
+      "src": "TrendForce, 4Q26 memory contract price forecast (30 Sep 2026)",
+      "url": "https://www.trendforce.com/presscenter/news/20260930-13258.html"
      }
     ]
    },
@@ -374,9 +386,13 @@
      [
       "2026-10-20",
       6.14
+     ],
+     [
+      "2026-11-07",
+      6.8
      ]
     ],
-    "src": "Silicon Data SDB200RT (blog Aug 2026; index page 20 Oct)",
+    "src": "Silicon Data SDB200RT (blog Aug 2026; index page 20 Oct, 7 Nov)",
     "url": "https://www.silicondata.com/products/silicon-index/b200"
    },
    {
@@ -389,9 +405,13 @@
      [
       "2026-10-20",
       3.53
+     ],
+     [
+      "2026-11-07",
+      3.53
      ]
     ],
-    "src": "Silicon Data (blog Aug 2026; index page 20 Oct)",
+    "src": "Silicon Data (blog Aug 2026; index page 20 Oct, 7 Nov)",
     "url": "https://www.silicondata.com/products/silicon-index/h200"
    },
    {
@@ -728,6 +748,38 @@
     "note": "Convertible notes due 2030 and 2034",
     "src": "StockTitan",
     "url": "https://www.stocktitan.net/articles/coreweave-nebius-ai-cloud-debt-when-it-comes-due"
+   },
+   {
+    "date": "2026-10",
+    "issuer": "MSFT",
+    "usd_bn": 25.0,
+    "note": "First US investment-grade bond sale since 2017; up to 10 tranches, 2-40 years; over $100B of orders (sources)",
+    "src": "Reuters via The Star",
+    "url": "https://www.thestar.com.my/tech/tech-news/2026/10/30/microsoft-expects-to-raise-25-billion-in-us-bond-sale-source-says"
+   },
+   {
+    "date": "2026-11",
+    "issuer": "ORCL",
+    "usd_bn": 10.0,
+    "note": "Five tranches, 2029-2046, 7.000-8.650%; priced 2 Nov alongside a $10B common-stock sale",
+    "src": "Neoteo",
+    "url": "https://www.neoteo.com/en/oracle-priced-20-billion-in-stock-and-senior-notes"
+   },
+   {
+    "date": "2026-11",
+    "issuer": "GOOGL",
+    "usd_bn": 6.7,
+    "note": "EUR 6B, seven tranches, 3.700-5.250%; priced 2 Nov",
+    "src": "24/7 Wall St",
+    "url": "https://247wallst.com/investing/2026/11/03/big-tech-just-tried-to-borrow-more-than-35-billion-in-a-single-day/"
+   },
+   {
+    "date": "2026-11",
+    "issuer": "META",
+    "usd_bn": 15.0,
+    "note": "Five tranches, 5-30 years, yields 5.85-7.53%, $58B of orders; followed by a debut euro deal of about EUR 9B (4 Nov)",
+    "src": "CoinGape, citing Bloomberg",
+    "url": "https://coingape.com/meta-launches-first-ever-euro-denominated-bond-offering-following-15-billion-us-debt-sale/"
    }
   ],
   "facts": [
@@ -766,6 +818,14 @@
     "yield": 15.06,
     "src": "Forbes, citing Barron's",
     "url": "https://www.forbes.com/sites/jimosman/2026/10/14/coreweave-bonds-are-warning-of-a-bigger-problem-for-ai-stocks/"
+   },
+   {
+    "issuer": "CRWV",
+    "bond": "9.625% unsecured notes due 2032 (yield 'above 16%'; no price published)",
+    "date": "2026-11-06",
+    "yield": 16.0,
+    "src": "24/7 Wall St via Yahoo Finance",
+    "url": "https://finance.yahoo.com/markets/stocks/articles/coreweave-bonds-now-yield-more-153753330.html"
    }
   ],
   "capex_guidance": [
@@ -907,6 +967,14 @@
      "conf": "E",
      "src": "Bloomberg via Unite.AI",
      "url": "https://www.unite.ai/anthropic-run-rate-revenue-hits-65-billion-as-ipo-looms/"
+    },
+    {
+     "date": "2026-10-31",
+     "usd_bn": 80,
+     "conf": "E",
+     "note": "'Topped $80B' at end of October",
+     "src": "WSJ (person familiar) via TickerTrends",
+     "url": "https://blog.tickertrends.io/p/anthropics-october-arr-topped-80b"
     }
    ],
    "valuation": {
@@ -959,6 +1027,14 @@
      "note": "Q1 2026 segment revenue $818M, annualised",
      "src": "The VC Corner (S-1 teardown)",
      "url": "https://www.thevccorner.com/p/spacex-spcx-ipo-s1-teardown-valuation-2026"
+    },
+    {
+     "date": "2026-09-30",
+     "usd_bn": 30.4,
+     "conf": "D",
+     "note": "Q3 2026 AI segment revenue about $7.6B (52% of group revenue $14.6B), annualised; now larger than Starlink",
+     "src": "investingLive, SpaceX Q3 results",
+     "url": "https://investinglive.com/stocks/spacex-beats-q3-forecasts-across-all-three-segments-as-ai-revenue-tops-7-5-billion/"
     }
    ],
    "valuation": {
@@ -972,12 +1048,12 @@
     "url": "https://www.thevccorner.com/p/spacex-spcx-ipo-s1-teardown-valuation-2026"
    },
    "burn": {
-    "date": "2026-03-31",
-    "usd_bn": 30.8,
-    "text": "AI segment capex $7.7B in Q1 2026, an annual pace above $30B (2025: $12.7B)",
+    "date": "2026-09-30",
+    "usd_bn": 65.6,
+    "text": "AI segment capex about $16.4B in Q3 2026 (84% of group capex of $19.6B), an annual pace of about $66B (Q1 2026: $7.7B; 2025: $12.7B)",
     "conf": "D",
-    "src": "The VC Corner (S-1 teardown)",
-    "url": "https://www.thevccorner.com/p/spacex-spcx-ipo-s1-teardown-valuation-2026"
+    "src": "investingLive, SpaceX Q3 results",
+    "url": "https://investinglive.com/stocks/spacex-beats-q3-forecasts-across-all-three-segments-as-ai-revenue-tops-7-5-billion/"
    },
    "commitments": {
     "date": "2026-06-05",

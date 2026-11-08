@@ -29,7 +29,8 @@ indicators:
       - ["2026-08-01", 5.67]
       - ["2026-09-01", 5.62]
       - ["2026-10-20", 6.14]
-    note: "Jan value derived from the reported +27.6% year-to-date change at 1 Sep. 20 Oct reading from the public B200 index page."
+      - ["2026-11-07", 6.80]
+    note: "Jan value derived from the reported +27.6% year-to-date change at 1 Sep. 20 Oct and 7 Nov readings from the public B200 index page."
     sources:
       - {src: "Silicon Data, B200 rental price update (Aug 2026)", url: "https://www.silicondata.com/blog/b200-rental-price-august-2026-update"}
       - {src: "Silicon Data B200 index page", url: "https://www.silicondata.com/products/silicon-index/b200"}
@@ -70,10 +71,12 @@ indicators:
       - ["2026-03-31", 98]
       - ["2026-06-30", 60]
       - ["2026-09-30", 15.5]
-    note: "Q1: 'up to 98%'. Q2: ~60% (forecast 58-63%). Q3: forecast 13-18%, midpoint shown. Still rising, but decelerating."
+      - ["2026-12-31", 12.5]
+    note: "Q1: 'up to 98%'. Q2: ~60% (forecast 58-63%). Q3: forecast 13-18%, midpoint shown. Q4: forecast 10-15% (TrendForce, 30 Sep 2026), midpoint shown; TrendForce expects the pace to moderate. Still rising, but decelerating."
     sources:
       - {src: "AI Weekly, citing TrendForce (Jun 2026)", url: "https://aiweekly.co/alerts/trendforce-dram-prices-to-jump-63-again-in-q2"}
       - {src: "Hardware Busters, citing TrendForce (Jul 2026)", url: "https://hwbusters.com/news/memory-prices-keep-climbing-in-q3-but-the-surge-is-finally-cooling/"}
+      - {src: "TrendForce, 4Q26 memory contract price forecast (30 Sep 2026)", url: "https://www.trendforce.com/presscenter/news/20260930-13258.html"}
   - id: dc_vacancy
     layer: Data centres
     name: Vacancy, primary North American markets

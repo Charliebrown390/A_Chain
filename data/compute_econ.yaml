@@ -4,12 +4,12 @@
 gpu_rates:
   # Neocloud benchmark rates (Silicon Data). Add [date, $/GPU-hr] points, newest last.
   - gpu: B200
-    series: [["2026-01-01", 4.40], ["2026-06-01", 5.42], ["2026-07-01", 5.63], ["2026-08-01", 5.67], ["2026-09-01", 5.62], ["2026-10-20", 6.14]]
-    src: "Silicon Data SDB200RT (blog Aug 2026; index page 20 Oct)"
+    series: [["2026-01-01", 4.40], ["2026-06-01", 5.42], ["2026-07-01", 5.63], ["2026-08-01", 5.67], ["2026-09-01", 5.62], ["2026-10-20", 6.14], ["2026-11-07", 6.80]]
+    src: "Silicon Data SDB200RT (blog Aug 2026; index page 20 Oct, 7 Nov)"
     url: "https://www.silicondata.com/products/silicon-index/b200"
   - gpu: H200
-    series: [["2026-09-07", 3.29], ["2026-10-20", 3.53]]
-    src: "Silicon Data (blog Aug 2026; index page 20 Oct)"
+    series: [["2026-09-07", 3.29], ["2026-10-20", 3.53], ["2026-11-07", 3.53]]
+    src: "Silicon Data (blog Aug 2026; index page 20 Oct, 7 Nov)"
     url: "https://www.silicondata.com/products/silicon-index/h200"
   - gpu: H100
     series: [["2026-04-01", 2.63], ["2026-05-31", 2.73], ["2026-07-27", 2.75], ["2026-09-07", 2.63], ["2026-10-20", 2.85]]
