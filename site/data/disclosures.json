@@ -1,6 +1,6 @@
 {
- "built": "2026-11-15T20:16:37+00:00",
- "sec_pulled": "2026-11-08T23:52:26+00:00",
+ "built": "2026-11-16T00:09:51+00:00",
+ "sec_pulled": "2026-11-16T00:09:05+00:00",
  "companies": {
   "ASML": {
    "cik": 937966,
@@ -2710,10 +2710,10 @@
    "cik": 1868275,
    "filings": [],
    "rpo": {
-    "usd_bn": 11.86,
-    "end": "2026-06-30",
+    "usd_bn": 12.12,
+    "end": "2026-09-30",
     "form": "10-Q",
-    "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000104/ceg-20260630.htm"
+    "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000119/ceg-20260930.htm"
    },
    "credit": {
     "maturities": {
@@ -2992,101 +2992,119 @@
     {
      "form": "10-Q",
      "kind": "quarterly",
-     "filed": "2026-08-12",
-     "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
+     "filed": "2026-11-12",
+     "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000465/crwv-20260930.htm",
      "rows": [
       {
        "customer": "Customer A",
        "member": "crwv:CustomerAMember",
        "basis": "revenue",
-       "pct": 40.0,
+       "pct": 33.0,
        "start": "2026-01-01",
-       "end": "2026-06-30",
-       "months": 6
+       "end": "2026-09-30",
+       "months": 9
       },
       {
        "customer": "Customer B",
        "member": "crwv:CustomerBMember",
        "basis": "revenue",
-       "pct": 23.0,
+       "pct": 26.0,
        "start": "2026-01-01",
-       "end": "2026-06-30",
-       "months": 6
-      },
-      {
-       "customer": "Customer A",
-       "member": "crwv:CustomerAMember",
-       "basis": "receivables",
-       "pct": 32.0,
-       "start": "2026-01-01",
-       "end": "2026-06-30",
-       "months": 6
+       "end": "2026-09-30",
+       "months": 9
       },
       {
        "customer": "Customer B",
        "member": "crwv:CustomerBMember",
        "basis": "receivables",
-       "pct": 32.0,
+       "pct": 33.0,
        "start": "2026-01-01",
-       "end": "2026-06-30",
-       "months": 6
+       "end": "2026-09-30",
+       "months": 9
+      },
+      {
+       "customer": "Customer A",
+       "member": "crwv:CustomerAMember",
+       "basis": "receivables",
+       "pct": 18.0,
+       "start": "2026-01-01",
+       "end": "2026-09-30",
+       "months": 9
+      },
+      {
+       "customer": "Customer D",
+       "member": "crwv:CustomerDMember",
+       "basis": "receivables",
+       "pct": 14.0,
+       "start": "2026-01-01",
+       "end": "2026-09-30",
+       "months": 9
+      },
+      {
+       "customer": "Customer C",
+       "member": "crwv:CustomerCMember",
+       "basis": "receivables",
+       "pct": 12.0,
+       "start": "2026-01-01",
+       "end": "2026-09-30",
+       "months": 9
       }
      ]
     }
    ],
    "rpo": {
-    "usd_bn": 103.7,
-    "end": "2026-06-30",
+    "usd_bn": 132.3,
+    "end": "2026-09-30",
     "form": "10-Q",
-    "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm"
+    "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000465/crwv-20260930.htm"
    },
    "credit": {
     "maturities": {
-     "end": "2026-06-30",
+     "end": "2026-09-30",
      "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
+     "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000465/crwv-20260930.htm",
      "ladder": [
       [
        "Rest of 2026",
-       4.41
+       2.43
       ],
       [
        "2027",
-       6.18
+       10.97
       ],
       [
        "2028",
-       4.42
+       5.48
       ],
       [
        "2029",
-       2.42
+       4.73
       ],
       [
        "2030",
-       3.22
+       4.25
       ]
      ]
     },
     "customer_prepayments": {
-     "usd_bn": 9.7,
-     "end": "2026-06-30",
+     "usd_bn": 10.0,
+     "end": "2026-09-30",
      "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
+     "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000465/crwv-20260930.htm",
      "concept": "ContractWithCustomerLiability"
     },
     "op_lease_payments": {
-     "usd_bn": 29.14,
-     "end": "2026-06-30",
+     "usd_bn": 32.95,
+     "end": "2026-09-30",
      "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
+     "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000465/crwv-20260930.htm",
      "concept": "LesseeOperatingLeaseLiabilityPaymentsDue"
     },
     "fin_lease_payments": {
-     "usd_bn": 0.23,
-     "end": "2026-06-30",
+     "usd_bn": 0.82,
+     "end": "2026-09-30",
      "form": "10-Q",
-     "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
+     "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000465/crwv-20260930.htm",
      "concept": "FinanceLeaseLiabilityPaymentsDue"
     }
    }
