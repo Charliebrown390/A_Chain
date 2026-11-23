@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-16T00:09:05+00:00",
+ "generated": "2026-11-23T01:01:42+00:00",
  "companies": {
   "ASML": {
    "cik": 937966,
@@ -12040,6 +12040,386 @@
    "cik": 858877,
    "filings": [
     {
+     "kind": "quarterly",
+     "form": "10-Q",
+     "accession": "0000858877-26-000185",
+     "filed": "2026-11-17",
+     "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000185/csco-20261024.htm",
+     "facts": [
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
+       "value": 16854000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
+       "value": 16988000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityNoncurrent",
+       "value": 13204000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityNoncurrent",
+       "value": 12793000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 30100000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 29800000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 23396000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {
+        "srt:ProductOrServiceAxis": "us-gaap:ProductMember"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 23436000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {
+        "srt:ProductOrServiceAxis": "us-gaap:ProductMember"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 22773000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {
+        "srt:ProductOrServiceAxis": "us-gaap:ServiceMember"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 23298000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {
+        "srt:ProductOrServiceAxis": "us-gaap:ServiceMember"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 46169000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 46734000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 22324000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {
+        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2025-10-26"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 22776000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {
+        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2026-07-26"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 23845000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {
+        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2026-10-25"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 23958000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {
+        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2027-07-24"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 46169000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 46734000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 30058000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 29781000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 16111000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {
+        "us-gaap:AccountsNotesLoansAndFinancingReceivablesByBillingStatusTypeAxis": "us-gaap:UnbilledRevenuesMember"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 16953000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {
+        "us-gaap:AccountsNotesLoansAndFinancingReceivablesByBillingStatusTypeAxis": "us-gaap:UnbilledRevenuesMember"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 46169000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
+       "value": 46734000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligationPercentage",
+       "value": 0.48,
+       "unit": "number",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {
+        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2026-10-25"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligationPercentage",
+       "value": 0.4,
+       "unit": "number",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {
+        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2027-07-24"
+       }
+      },
+      {
+       "concept": "us-gaap:RevenueRemainingPerformanceObligationPercentage",
+       "value": 0.12,
+       "unit": "number",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {
+        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2028-07-29"
+       }
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 30058000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 29781000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
+       "value": 16854000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
+       "value": 16988000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityNoncurrent",
+       "value": 13204000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiabilityNoncurrent",
+       "value": 12793000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 30058000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:ContractWithCustomerLiability",
+       "value": 29781000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-07-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LesseeOperatingLeaseLiabilityPaymentsDue",
+       "value": 1884000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:InterestPaidNet",
+       "value": 600000000.0,
+       "unit": "usd",
+       "start": "2026-07-26",
+       "end": "2026-10-24",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:InterestPaidNet",
+       "value": 600000000.0,
+       "unit": "usd",
+       "start": "2025-07-27",
+       "end": "2025-10-25",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalRemainderOfFiscalYear",
+       "value": 2002000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInNextTwelveMonths",
+       "value": 1000000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInYearTwo",
+       "value": 2500000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInYearThree",
+       "value": 1000000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {}
+      },
+      {
+       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInYearFour",
+       "value": 2500000000.0,
+       "unit": "usd",
+       "start": null,
+       "end": "2026-10-24",
+       "dims": {}
+      }
+     ],
+     "instance": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000185/csco-20261024_htm.xml"
+    },
+    {
      "kind": "annual",
      "form": "10-K",
      "accession": "0000858877-26-000132",
@@ -12434,376 +12814,6 @@
       }
      ],
      "instance": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/csco-20260725_htm.xml"
-    },
-    {
-     "kind": "quarterly",
-     "form": "10-Q",
-     "accession": "0000858877-26-000078",
-     "filed": "2026-05-19",
-     "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000078/csco-20260425.htm",
-     "facts": [
-      {
-       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
-       "value": 16446000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
-       "value": 16416000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-07-26",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:ContractWithCustomerLiabilityNoncurrent",
-       "value": 12153000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:ContractWithCustomerLiabilityNoncurrent",
-       "value": 12363000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-07-26",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:InterestPaidNet",
-       "value": 1305000000.0,
-       "unit": "usd",
-       "start": "2025-07-27",
-       "end": "2026-04-25",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:InterestPaidNet",
-       "value": 1370000000.0,
-       "unit": "usd",
-       "start": "2024-07-28",
-       "end": "2025-04-26",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:ContractWithCustomerLiability",
-       "value": 28600000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:ContractWithCustomerLiability",
-       "value": 28800000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-07-26",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
-       "value": 22058000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {
-        "srt:ProductOrServiceAxis": "us-gaap:ProductMember"
-       }
-      },
-      {
-       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
-       "value": 21572000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-07-26",
-       "dims": {
-        "srt:ProductOrServiceAxis": "us-gaap:ProductMember"
-       }
-      },
-      {
-       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
-       "value": 21404000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {
-        "srt:ProductOrServiceAxis": "us-gaap:ServiceMember"
-       }
-      },
-      {
-       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
-       "value": 21961000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-07-26",
-       "dims": {
-        "srt:ProductOrServiceAxis": "us-gaap:ServiceMember"
-       }
-      },
-      {
-       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
-       "value": 43462000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
-       "value": 43533000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-07-26",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
-       "value": 21818000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {
-        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2026-04-26"
-       }
-      },
-      {
-       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
-       "value": 21723000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-07-26",
-       "dims": {
-        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2025-07-27"
-       }
-      },
-      {
-       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
-       "value": 21644000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {
-        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2027-04-25"
-       }
-      },
-      {
-       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
-       "value": 21810000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-07-26",
-       "dims": {
-        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2026-07-26"
-       }
-      },
-      {
-       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
-       "value": 43462000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
-       "value": 43533000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-07-26",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:RevenueRemainingPerformanceObligationPercentage",
-       "value": 0.5,
-       "unit": "number",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {
-        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2026-04-26"
-       }
-      },
-      {
-       "concept": "us-gaap:RevenueRemainingPerformanceObligationPercentage",
-       "value": 0.5,
-       "unit": "number",
-       "start": null,
-       "end": "2025-07-26",
-       "dims": {
-        "us-gaap:RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis": "2025-07-27"
-       }
-      },
-      {
-       "concept": "us-gaap:ContractWithCustomerLiability",
-       "value": 28599000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:ContractWithCustomerLiability",
-       "value": 28779000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-07-26",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
-       "value": 14863000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {
-        "us-gaap:AccountsNotesLoansAndFinancingReceivablesByBillingStatusTypeAxis": "us-gaap:UnbilledRevenuesMember"
-       }
-      },
-      {
-       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
-       "value": 14754000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-07-26",
-       "dims": {
-        "us-gaap:AccountsNotesLoansAndFinancingReceivablesByBillingStatusTypeAxis": "us-gaap:UnbilledRevenuesMember"
-       }
-      },
-      {
-       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
-       "value": 43462000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:RevenueRemainingPerformanceObligation",
-       "value": 43533000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-07-26",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:ContractWithCustomerLiability",
-       "value": 28599000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:ContractWithCustomerLiability",
-       "value": 28779000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-07-26",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
-       "value": 16446000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:ContractWithCustomerLiabilityCurrent",
-       "value": 16416000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-07-26",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:ContractWithCustomerLiabilityNoncurrent",
-       "value": 12153000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:ContractWithCustomerLiabilityNoncurrent",
-       "value": 12363000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-07-26",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:ContractWithCustomerLiability",
-       "value": 28599000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:ContractWithCustomerLiability",
-       "value": 28779000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2025-07-26",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:LesseeOperatingLeaseLiabilityPaymentsDue",
-       "value": 1933000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalRemainderOfFiscalYear",
-       "value": 0.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInNextTwelveMonths",
-       "value": 3502000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInYearTwo",
-       "value": 1000000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInYearThree",
-       "value": 2500000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {}
-      },
-      {
-       "concept": "us-gaap:LongTermDebtMaturitiesRepaymentsOfPrincipalInYearFour",
-       "value": 1000000000.0,
-       "unit": "usd",
-       "start": null,
-       "end": "2026-04-25",
-       "dims": {}
-      }
-     ],
-     "instance": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000078/csco-20260425_htm.xml"
     }
    ],
    "errors": []

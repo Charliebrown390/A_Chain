@@ -1,6 +1,6 @@
 {
- "built": "2026-11-22T19:23:53+00:00",
- "sec_pulled": "2026-11-16T00:09:05+00:00",
+ "built": "2026-11-23T01:02:29+00:00",
+ "sec_pulled": "2026-11-23T01:01:42+00:00",
  "companies": {
   "ASML": {
    "cik": 937966,
@@ -2141,20 +2141,20 @@
     }
    ],
    "rpo": {
-    "usd_bn": 46.73,
-    "end": "2026-07-25",
-    "form": "10-K",
-    "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/csco-20260725.htm"
+    "usd_bn": 46.17,
+    "end": "2026-10-24",
+    "form": "10-Q",
+    "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000185/csco-20261024.htm"
    },
    "credit": {
     "maturities": {
-     "end": "2026-07-25",
-     "form": "10-K",
-     "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/csco-20260725.htm",
+     "end": "2026-10-24",
+     "form": "10-Q",
+     "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000185/csco-20261024.htm",
      "ladder": [
       [
-       "FY2027",
-       3.5
+       "Rest of FY2027",
+       2.0
       ],
       [
        "FY2028",
@@ -2171,25 +2171,21 @@
       [
        "FY2031",
        2.5
-      ],
-      [
-       "FY2032+",
-       12.5
       ]
      ]
     },
     "customer_prepayments": {
-     "usd_bn": 29.8,
-     "end": "2026-07-25",
-     "form": "10-K",
-     "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/csco-20260725.htm",
+     "usd_bn": 30.1,
+     "end": "2026-10-24",
+     "form": "10-Q",
+     "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000185/csco-20261024.htm",
      "concept": "ContractWithCustomerLiability"
     },
     "op_lease_payments": {
-     "usd_bn": 1.87,
-     "end": "2026-07-25",
-     "form": "10-K",
-     "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/csco-20260725.htm",
+     "usd_bn": 1.88,
+     "end": "2026-10-24",
+     "form": "10-Q",
+     "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000185/csco-20261024.htm",
      "concept": "LesseeOperatingLeaseLiabilityPaymentsDue"
     }
    }
