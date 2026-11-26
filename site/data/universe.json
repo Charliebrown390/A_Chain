@@ -1,5 +1,5 @@
 {
- "built": "2026-11-26T01:45:47+00:00",
+ "built": "2026-11-26T01:54:40+00:00",
  "layers": [
   {
    "n": 1,
@@ -1354,12 +1354,11 @@
   {
    "id": "Anthropic",
    "label": "Anthropic",
-   "name": "Anthropic",
+   "name": "Anthropic, PBC",
    "layer": 10,
-   "segment": "Model lab (private)",
-   "yf": null,
-   "sec": null,
-   "private": true,
+   "segment": "Model lab",
+   "yf": "ANT",
+   "sec": "ANT",
    "role": "Large buyer of AWS and Google compute",
    "thesis": {
     "bull": "Large buyer of AWS Trainium and Google TPU capacity",

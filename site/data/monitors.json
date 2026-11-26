@@ -1,5 +1,5 @@
 {
- "built": "2026-11-26T01:45:47+00:00",
+ "built": "2026-11-26T01:54:40+00:00",
  "bottlenecks": {
   "indicators": [
    {
@@ -937,8 +937,9 @@
   },
   "Anthropic": {
    "name": "Anthropic",
-   "short": "Private",
-   "status": "Private (public-benefit corporation). Draft IPO paperwork filed confidentially; expected to list first.",
+   "short": "Listed (Nasdaq: ANT)",
+   "listed_id": "Anthropic",
+   "status": "Listed on Nasdaq (ANT) on 19 Nov 2026 after pricing its IPO at $83 a share on 18 Nov (above the $70-78 range); 980M Class A shares, $81.3B raised, plus a $26B concurrent sale of non-voting Class N shares to tech companies. Closed its first day at $97.17. Public-benefit corporation (Anthropic, PBC).",
    "revenue": [
     {
      "date": "2025-12-31",
@@ -978,13 +979,14 @@
     }
    ],
    "valuation": {
-    "date": "2026-05-28",
-    "usd_bn": 965,
-    "raised_bn": 65,
-    "note": "Series H led by Altimeter, Dragoneer, Greenoaks and Sequoia; includes $15B of earlier hyperscaler commitments ($5B from Amazon)",
+    "date": "2026-11-18",
+    "usd_bn": 1100,
+    "raised_bn": 81.3,
+    "ipo": true,
+    "note": "IPO at $83 x about 13.2B shares of all classes, including the Class N side sale (StockTitan's count); some press quote about $1.5T, which the sources do not reconcile. Prior round: Series H, $965B (May 2026)",
     "conf": "D",
-    "src": "Anthropic, Series H",
-    "url": "https://www.anthropic.com/news/series-h"
+    "src": "StockTitan, from the 424B4 prospectus",
+    "url": "https://www.stocktitan.net/articles/anthropic-ipo-live-ant-first-trading-day-2026"
    },
    "commitments": {
     "date": "2026-05-28",

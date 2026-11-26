@@ -496,12 +496,11 @@ companies:
   role: Largest single buyer of new compute
 - id: Anthropic
   label: Anthropic
-  name: Anthropic
+  name: Anthropic, PBC
   layer: 10
-  segment: Model lab (private)
-  yf: null
-  sec: null
-  private: true
+  segment: Model lab
+  yf: ANT                 # Nasdaq, Class A; IPO priced 18 Nov 2026 at $83, first traded 19 Nov
+  sec: ANT
   role: Large buyer of AWS and Google compute
 watchlist:
 - id: 300308.SZ
