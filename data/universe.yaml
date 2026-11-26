@@ -224,7 +224,9 @@ companies:
   name: SK Hynix
   layer: 5
   segment: DRAM & HBM
-  yf: 000660.KS
+  yf: SKHY                # US ADR (Nasdaq, listed 10 Jul 2026): price, technicals, options, analysts
+  yf_home: 000660.KS      # Seoul listing: market cap, long-history factors, ADR premium
+  adr_ratio: 10           # ADS per Seoul share
   sec: null
   role: HBM market leader
 - id: MU

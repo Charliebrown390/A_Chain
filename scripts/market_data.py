@@ -168,6 +168,24 @@ def usd_bn(x, ccy):
     return r(x / f / 1e9, 2) if (x is not None and f) else None
 
 
+def adr_info(co, px):
+    """For a company quoted through a US ADR: market cap from the home listing (Yahoo's ADR market cap prices every
+    share at the ADR price, so it carries the ADR premium) and the ADR's premium to the home share in USD."""
+    hi = yf.Ticker(co["yf_home"]).info or {}
+    out = {}
+    mc = usd_bn(hi.get("marketCap"), hi.get("currency"))
+    if mc:
+        out["mcap_usd_bn"] = mc
+    adr, home, f = px.get(co["yf"]), px.get(co["yf_home"]), fx_per_usd(hi.get("currency"))
+    ratio = co.get("adr_ratio") or 1
+    if adr is not None and home is not None and len(adr) and len(home) and f:
+        home_usd = float(home["Close"].iloc[-1]) / f / ratio
+        out["adr"] = {"home": co["yf_home"], "ratio": ratio, "home_px_usd": r(home_usd), "home_date": str(home.index[-1].date()),
+                      "premium": r((float(adr["Close"].iloc[-1]) / home_usd - 1) * 100, 1),
+                      "since": str(adr.index[0].date())}
+    return out
+
+
 def fundamentals(tk):
     i = tk.info or {}
     pc, fc = i.get("currency"), i.get("financialCurrency") or i.get("currency")
@@ -772,7 +790,7 @@ def run_full(cos):
         rf10 = float(yf.Ticker("^TNX").history(period="5d")["Close"].dropna().iloc[-1]) / 100
     except Exception:
         rf10 = 0.045
-    syms = [c["yf"] for c in cos] + list(BENCH.values()) + ["^TNX"]
+    syms = [c["yf"] for c in cos] + [c["yf_home"] for c in cos if c.get("yf_home")] + list(BENCH.values()) + ["^TNX"]
     px = download_prices(syms)
     tnx = px.get("^TNX")
     got = sum(1 for c in cos if c["yf"] in px and len(px[c["yf"]]) > 30)
@@ -792,7 +810,9 @@ def run_full(cos):
         if sub is not None and len(sub) > 30:
             rec.update(tech(sub, bench))
             try:
-                rec["factors"] = factors(sub, bench.get("spx"), tnx)
+                # ADRs with a short US history use the home listing for the 2-3 year regressions
+                home = px.get(co.get("yf_home") or "")
+                rec["factors"] = factors(home if home is not None and len(home) > len(sub) else sub, bench.get("spx"), tnx)
             except Exception as e:
                 rec["factors"] = old.get("factors") or {}
                 rec["factors_error"] = str(e)
@@ -807,6 +827,11 @@ def run_full(cos):
         except Exception as e:
             rec["error"] = f"fundamentals: {e}"
             failures.append({"id": co["id"], "yf": co["yf"], "what": "fundamentals"})
+        if co.get("yf_home"):
+            try:
+                rec.update(adr_info(co, px))
+            except Exception as e:
+                rec["adr_error"] = str(e)
         for k in ("mcap_usd_bn", "rev_usd_bn", "ratings", "tgt_mean", "fwd_pe", "rev_hist", "actions"):
             if rec.get(k) in (None, [], {}) and old.get(k) not in (None, [], {}):
                 rec[k] = old[k]            # Yahoo sometimes returns blanks; fall back to the last good value
