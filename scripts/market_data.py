@@ -803,11 +803,15 @@ def run_full(cos):
         sub = px.get(co["yf"])
         rec = {"yf": co["yf"]}
         old = prev.get(co["id"], {})
-        if (sub is None or len(sub) <= 30) and old:
+        # a short series is normally a bad download (keep the last good data); for a new listing it is all there is,
+        # so accept it while it is at least as long as the last one stored
+        ok = sub is not None and (len(sub) > 30 or (len(sub) >= 2 and len(sub) >= (old.get("n_px") or 0) and (old.get("n_px") or not old.get("last"))))
+        if not ok and old:
             rec.update({k: v for k, v in old.items() if k not in ("credit",)})   # keep last good prices
             rec["stale"] = True
             failures.append({"id": co["id"], "yf": co["yf"], "what": "prices"})
-        if sub is not None and len(sub) > 30:
+        if ok:
+            rec["n_px"] = len(sub)
             rec.update(tech(sub, bench))
             try:
                 # ADRs with a short US history use the home listing for the 2-3 year regressions
